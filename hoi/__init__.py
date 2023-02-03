@@ -1,0 +1,1 @@
+from hoi import oinfo  # noqa

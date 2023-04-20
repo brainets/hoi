@@ -108,12 +108,14 @@ def combinations(n, k, roi, task_related=False, sort=True):
     
     Parameters
     ----------
-    n : an integer representing the total number of elements in the set
-    k : an integer representing the size of the combinations to be generated
-    roi : a numpy array containing the names of the elements in the set
-    task_related : a boolean flag (default is False) indicating whether 
-    to add a final column to the combinations indicating the task-related 
-    behavior of each element
+    n : int
+        Represents the total number of elements in the set
+    k : int
+        Represents the size of the combinations to be generated
+    roi : array_like
+        Contains the names of the elements in the set
+    task_related : bool, optional 
+        If True, include an additional column in the returned array representing task-related behavior, by default False.
     sort : a boolean flag (default is True) indicating whether to sort the 
     combinations lexicographically
 

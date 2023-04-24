@@ -15,7 +15,20 @@ from frites.core import copnorm_nd
 
 
 def ent_g(x, biascorrect=True):
-    """Entropy of a tensor of shape (..., n_vars, n_trials)"""
+    """Entropy of a tensor of shape (..., n_vars, n_trials)
+    Parameters
+    ----------
+    x : array_like
+        The input data of shape (..., n_vars, n_trials).
+    biascorrect : bool, optional
+        Whether to apply bias correction, by default True.
+
+    Returns
+    -------
+    entropy : array_like
+        The entropy in nats which is is a measure of the 
+        uncertainty or disorder of the input tensor x.
+    """
     nvarx, ntrl = x.shape[-2], x.shape[-1]
 
     # covariance
@@ -39,8 +52,16 @@ def ent_g(x, biascorrect=True):
 
 def compute_oinfo(x, ind):
     """Compute the O-info.
-    x.shape = (..., n_vars, n_trials)
-    ind = indices for tensor-computations
+    x : array_like
+        Input data of shape (..., n_vars, n_trials).
+    ind : array_like
+        Indices for tensor-computations.
+    Returns
+    -------
+    o : array_like
+        The O-info array of shape (..., n_vars) where positive values reflect
+        redundant dominated interactions and negative values stand for
+        synergistic dominated interactions.
     """
     nvars = x.shape[-2]
     o = (nvars - 2) * ent_g(x)
@@ -49,7 +70,28 @@ def compute_oinfo(x, ind):
 
 
 def combinations(n, k, roi, task_related=False):
-    """Get combinations."""
+    """Get combinations. Generate all possible combinations of k 
+    elements from a set of n elements.
+
+    Parameters
+    ----------
+    n : int
+        Represents the total number of elements in the set
+    k : int
+        Represents the size of the combinations to be generated
+    roi : array_like
+        An array of strings representing the names of the elements to choose from.
+    task_related : bool, optional
+        If True, include an additional column in the returned array representing task-related behavior, by default False.
+
+    Returns
+    -------
+    Tuple[np.ndarray, List[str]]
+        A tuple containing two elements:
+            - A 2D array of shape (n_combinations, k+1) containing all possible combinations.
+            - A list of strings representing the names of the elements in each combination. 
+
+    """
     combs = np.array(list(itertools.combinations(np.arange(n), k)))
 
     # add behavior as a final columns

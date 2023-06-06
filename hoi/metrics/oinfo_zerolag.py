@@ -2,32 +2,16 @@ from math import comb
 import jax
 import jax.numpy as jnp
 import numpy as np
-from scipy.special import ndtri
 import logging
 
 logger = logging.getLogger("frites")
 from hoi.oinfo.conn_oinfo_jax import combinations
 from hoi.oinfo.conn_oinfo_jax import oinfo_mmult
 
-
-def ctransform(x):  # frites.core
-    xr = np.argsort(np.argsort(x)).astype(float)
-    xr += 1.0
-    xr /= float(xr.shape[-1] + 1)
-    return xr
+from hoi.core.it import ctransform, copnorm_1d, copnorm_nd
 
 
-def copnorm_1d(x):  # frites.core
-    assert isinstance(x, np.ndarray) and (x.ndim == 1)
-    return ndtri(ctransform(x))
-
-
-def copnorm_nd(x, axis=-1):  # frites.core
-    assert isinstance(x, np.ndarray) and (x.ndim >= 1)
-    return np.apply_along_axis(copnorm_1d, axis, x)
-
-
-def conn_oinfo_jax(
+def oinfo_zerolag(
     data,
     y=None,
     variables=None,

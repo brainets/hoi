@@ -2,6 +2,11 @@ from functools import partial
 import jax
 import jax.numpy as jnp
 import jax.scipy.special as jsp
+import numpy as np
+from scipy.special import ndtri
+import logging
+
+logger = logging.getLogger("frites")
 
 
 @partial(jax.jit, static_argnums=1)
@@ -41,3 +46,19 @@ def ent_g(x: jnp.array, biascorrect=True) -> jnp.array:
 
     return hx
 
+
+def ctransform(x):  # frites.core
+    xr = np.argsort(np.argsort(x)).astype(float)
+    xr += 1.0
+    xr /= float(xr.shape[-1] + 1)
+    return xr
+
+
+def copnorm_1d(x):  # frites.core
+    assert isinstance(x, np.ndarray) and (x.ndim == 1)
+    return ndtri(ctransform(x))
+
+
+def copnorm_nd(x, axis=-1):  # frites.core
+    assert isinstance(x, np.ndarray) and (x.ndim >= 1)
+    return np.apply_along_axis(copnorm_1d, axis, x)

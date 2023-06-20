@@ -3,6 +3,7 @@ import jax
 import jax.numpy as jnp
 import numpy as np
 import logging
+import itertools
 
 logger = logging.getLogger("frites")
 from hoi.oinfo.conn_oinfo_jax import combinations
@@ -11,16 +12,22 @@ from hoi.oinfo.conn_oinfo_jax import oinfo_mmult
 from hoi.core.it import ctransform, copnorm_1d, copnorm_nd
 
 
-def oinfo_zerolag(
-    data,
-    y=None,
-    variables=None,
-    features=None,
-    minsize=3,
-    maxsize=5,
-    sort=True,
-    verbose=None,
-):
+def combin(n, k, task_related=False, sort=True):
+    """Get combinations."""
+    combs = np.array(list(itertools.combinations(np.arange(n), k)))
+
+    # add behavior as a final column
+    if task_related:
+        combs = np.c_[combs, np.full((combs.shape[0],), n)]
+
+    features_o = np.arange(k)
+    if task_related:
+        features_o = np.append(features_o, "beh")
+
+    return jnp.asarray(combs), features_o.tolist()
+
+
+def oinfo_zerolag(data, y=None, minsize=3, maxsize=5):
     """Dynamic, possibly task-related oinfo.
 
     Parameters
@@ -46,16 +53,10 @@ def oinfo_zerolag(
     # ________________________________ INPUTS _________________________________
     # inputs conversion
     is_task_related = isinstance(y, (str, list, np.ndarray, tuple))
-    # kw_links = {"directed": False, "net": False}
 
     # extract variables
-    # x, attrs = data.data, cfg["attrs"]
-    y, features, variables = (
-        data["y"].data,
-        data["features"].data,
-        data["variables"].data,
-    )
-    n_features = len(features)
+    x = data
+    n_samples, n_features, n_variables = x.shape
 
     # get the maximum size of the multiplets investigated
     if not isinstance(maxsize, int):
@@ -74,13 +75,14 @@ def oinfo_zerolag(
     )
 
     # ________________________________ O-INFO _________________________________
+
     logger.info("    Copnorm the data")
 
     # for task-related, add behavior along spatial dimension
     if is_task_related:
-        y = np.tile(y.reshape(-1, 1, 1), (1, 1, len(variables)))
+        y = np.tile(y.reshape(-1, 1, 1), (1, 1, n_variables))
         x = np.concatenate((x, y), axis=1)
-        features = np.r_[features, ["beh"]]
+        n_features += 1
 
     # copnorm and demean the data
     x = copnorm_nd(x.copy(), axis=0)
@@ -91,17 +93,11 @@ def oinfo_zerolag(
 
     oinfo, features_o = [], []
     for msize in range(minsize, maxsize + 1):
-        # ----------------------------- MULTIPLETS ----------------------------
         logger.info(f"    Multiplets of size {msize}")
-        combs, _features_o = combinations(
-            n_features, msize, features, task_related=is_task_related, sort=sort
-        )
+        combs, _features_o = combin(n_features, msize, task_related=is_task_related)
         features_o += _features_o
 
-        # ------------------------------- O-INFO ------------------------------
         _, _oinfo = jax.lax.scan(oinfo_mmult, x, combs)
-
         oinfo.append(np.asarray(_oinfo))
     oinfo = np.concatenate(oinfo, axis=0)
-
     return oinfo

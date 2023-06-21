@@ -6,25 +6,10 @@ import logging
 import itertools
 
 logger = logging.getLogger("frites")
-from hoi.oinfo.conn_oinfo_jax import combinations
 from hoi.oinfo.conn_oinfo_jax import oinfo_mmult
 
 from hoi.core.it import ctransform, copnorm_1d, copnorm_nd
-
-
-def combin(n, k, task_related=False, sort=True):
-    """Get combinations."""
-    combs = np.array(list(itertools.combinations(np.arange(n), k)))
-
-    # add behavior as a final column
-    if task_related:
-        combs = np.c_[combs, np.full((combs.shape[0],), n)]
-
-    features_o = np.arange(k)
-    if task_related:
-        features_o = np.append(features_o, "beh")
-
-    return jnp.asarray(combs), features_o.tolist()
+from hoi.core.combinatory import combinations
 
 
 def oinfo_zerolag(data, y=None, minsize=3, maxsize=5):
@@ -36,10 +21,6 @@ def oinfo_zerolag(data, y=None, minsize=3, maxsize=5):
             Standard NumPy arrays of shape (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info.
-    features : array_like | None
-        Array of region of interest name of shape (n_features,)
-    variables : array_like | None
-        Array of time points of shape (n_variables,)
     minsize, maxsize : int | 3, 5
         Minimum and maximum size of the multiplets
 
@@ -82,7 +63,7 @@ def oinfo_zerolag(data, y=None, minsize=3, maxsize=5):
     if is_task_related:
         y = np.tile(y.reshape(-1, 1, 1), (1, 1, n_variables))
         data = np.concatenate((data, data), axis=1)
-        n_features += 1
+        # n_features += 1
 
     # copnorm and demean the data
     data = copnorm_nd(data.copy(), axis=0)
@@ -91,15 +72,13 @@ def oinfo_zerolag(data, y=None, minsize=3, maxsize=5):
     # make the data (n_variables, n_features, n_trials)
     data = jnp.asarray(data.transpose(2, 1, 0))
 
-    oinfo, features_o = [], []
+    oinfo = []
     for msize in range(minsize, maxsize + 1):
         logger.info(f"    Multiplets of size {msize}")
-        combs, _features_o = combinations(
-            n_features, msize, task_related=is_task_related
-        )
-        features_o += _features_o
+        combs = combinations(n_features, msize, task_related=is_task_related)
 
         _, _oinfo = jax.lax.scan(oinfo_mmult, data, combs)
         oinfo.append(np.asarray(_oinfo))
+
     oinfo = np.concatenate(oinfo, axis=0)
     return oinfo

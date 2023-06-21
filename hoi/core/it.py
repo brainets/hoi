@@ -5,12 +5,13 @@ import jax.scipy.special as jsp
 import numpy as np
 from scipy.special import ndtri
 import logging
+from jax.scipy.special import digamma as psi
 
 logger = logging.getLogger("frites")
 
 
 @partial(jax.jit, static_argnums=1)
-def ent_g(x: jnp.array, biascorrect=True) -> jnp.array:
+def ent_tensor_g(x: jnp.array, biascorrect=True) -> jnp.array:
     """Entropy of a tensor of shape (..., n_vars, n_trials)
     Parameters
     ----------
@@ -45,6 +46,31 @@ def ent_g(x: jnp.array, biascorrect=True) -> jnp.array:
         hx = hx - nvarx * dterm - psiterms.sum()
 
     return hx
+
+
+@partial(jax.jit, static_argnums=1)
+def ent_vector_g(x: jnp.array, biascorrect: bool = True) -> jnp.array:
+    """Entropy of an array of shape (n_features, n_samples)."""
+    nvarx, ntrl = x.shape
+
+    # demean data
+    # x = x - x.mean(axis=1, keepdims=True)
+
+    # covariance
+    c = jnp.dot(x, x.T) / float(ntrl - 1)
+    chc = jnp.linalg.cholesky(c)
+
+    # entropy in nats
+    hx = jnp.sum(jnp.log(jnp.diagonal(chc))) + 0.5 * nvarx * (jnp.log(2 * jnp.pi) + 1.0)
+
+    ln2 = jnp.log(2)
+    if biascorrect:
+        psiterms = psi((ntrl - jnp.arange(1, nvarx + 1).astype(float)) / 2.0) / 2.0
+        dterm = (ln2 - jnp.log(ntrl - 1.0)) / 2.0
+        hx = hx - nvarx * dterm - psiterms.sum()
+
+    # convert to bits
+    return hx / ln2
 
 
 def ctransform(x):  # frites.core

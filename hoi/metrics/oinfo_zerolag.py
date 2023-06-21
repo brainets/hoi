@@ -55,8 +55,8 @@ def oinfo_zerolag(data, y=None, minsize=3, maxsize=5):
     is_task_related = isinstance(y, (str, list, np.ndarray, tuple))
 
     # extract variables
-    x = data
-    n_samples, n_features, n_variables = x.shape
+    # x = data
+    n_samples, n_features, n_variables = data.shape
 
     # get the maximum size of the multiplets investigated
     if not isinstance(maxsize, int):
@@ -81,23 +81,25 @@ def oinfo_zerolag(data, y=None, minsize=3, maxsize=5):
     # for task-related, add behavior along spatial dimension
     if is_task_related:
         y = np.tile(y.reshape(-1, 1, 1), (1, 1, n_variables))
-        x = np.concatenate((x, y), axis=1)
+        data = np.concatenate((data, data), axis=1)
         n_features += 1
 
     # copnorm and demean the data
-    x = copnorm_nd(x.copy(), axis=0)
-    x = x - x.mean(axis=0, keepdims=True)
+    data = copnorm_nd(data.copy(), axis=0)
+    data = data - data.mean(axis=0, keepdims=True)
 
     # make the data (n_variables, n_features, n_trials)
-    x = jnp.asarray(x.transpose(2, 1, 0))
+    data = jnp.asarray(data.transpose(2, 1, 0))
 
     oinfo, features_o = [], []
     for msize in range(minsize, maxsize + 1):
         logger.info(f"    Multiplets of size {msize}")
-        combs, _features_o = combin(n_features, msize, task_related=is_task_related)
+        combs, _features_o = combinations(
+            n_features, msize, task_related=is_task_related
+        )
         features_o += _features_o
 
-        _, _oinfo = jax.lax.scan(oinfo_mmult, x, combs)
+        _, _oinfo = jax.lax.scan(oinfo_mmult, data, combs)
         oinfo.append(np.asarray(_oinfo))
     oinfo = np.concatenate(oinfo, axis=0)
     return oinfo

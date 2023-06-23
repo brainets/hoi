@@ -84,4 +84,3 @@ def oinfo_zerolag(data, y=None, minsize=3, maxsize=5):
 
     oinfo = np.concatenate(oinfo, axis=0)
     return oinfo
-

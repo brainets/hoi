@@ -7,11 +7,8 @@ import itertools
 
 logger = logging.getLogger("frites")
 
-from hoi.core.it import ctransform, copnorm_1d, copnorm_nd, oinfo_mmult, ent_vector_g
+from hoi.core.it import copnorm_nd, oinfo_mmult
 from hoi.core.combinatory import combinations
-
-# vmapping the ent_vector_g function
-ent_vector_vmap = jax.vmap(ent_vector_g)
 
 
 def oinfo_zerolag(data, y=None, minsize=3, maxsize=5):

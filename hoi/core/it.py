@@ -22,13 +22,11 @@ def ent_tensor_g(x: jnp.array, biascorrect=True) -> jnp.array:
     Returns
     -------
     jnp.array
-        Entropy of the input tensor in nats which is is a measure of the 
+        Entropy of the input tensor in nats which is is a measure of the
         uncertainty or disorder of the input tensor x.
     """
     nvarx, ntrl = x.shape[-2], x.shape[-1]
-    print("x.shape:", x.shape)
-    print("x.shape[-2]:", x.shape[-2])
-    print("x.shape[-1]:", x.shape[-1])
+
     # covariance
     c = jnp.einsum("...ij, ...kj->...ik", x, x)
     c /= float(ntrl - 1.0)
@@ -90,7 +88,7 @@ def copnorm_1d(x):  # frites.core
 
 
 def copnorm_nd(x, axis=-1):  # frites.core
-    assert isinstance(x, jnp.ndarray) and (x.ndim >= 1)
+    assert isinstance(x, np.ndarray) and (x.ndim >= 1)
     return np.apply_along_axis(copnorm_1d, axis, x)
 
 

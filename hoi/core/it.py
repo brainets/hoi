@@ -26,7 +26,9 @@ def ent_tensor_g(x: jnp.array, biascorrect=True) -> jnp.array:
         uncertainty or disorder of the input tensor x.
     """
     nvarx, ntrl = x.shape[-2], x.shape[-1]
-
+    print("x.shape:", x.shape)
+    print("x.shape[-2]:", x.shape[-2])
+    print("x.shape[-1]:", x.shape[-1])
     # covariance
     c = jnp.einsum("...ij, ...kj->...ik", x, x)
     c /= float(ntrl - 1.0)
@@ -51,7 +53,8 @@ def ent_tensor_g(x: jnp.array, biascorrect=True) -> jnp.array:
 @partial(jax.jit, static_argnums=1)
 def ent_vector_g(x: jnp.array, biascorrect: bool = True) -> jnp.array:
     """Entropy of an array of shape (n_features, n_samples)."""
-    nvarx, ntrl = x.shape
+    # nvarx, ntrl = x.shape
+    nvarx, ntrl = x.shape[-2], x.shape[-1]
 
     # demean data
     # x = x - x.mean(axis=1, keepdims=True)
@@ -60,6 +63,7 @@ def ent_vector_g(x: jnp.array, biascorrect: bool = True) -> jnp.array:
     c = jnp.dot(x, x.T) / float(ntrl - 1)
     chc = jnp.linalg.cholesky(c)
 
+    chc = jnp.linalg.cholesky(c)
     # entropy in nats
     hx = jnp.sum(jnp.log(jnp.diagonal(chc))) + 0.5 * nvarx * (jnp.log(2 * jnp.pi) + 1.0)
 
@@ -86,5 +90,28 @@ def copnorm_1d(x):  # frites.core
 
 
 def copnorm_nd(x, axis=-1):  # frites.core
-    assert isinstance(x, np.ndarray) and (x.ndim >= 1)
+    assert isinstance(x, jnp.ndarray) and (x.ndim >= 1)
     return np.apply_along_axis(copnorm_1d, axis, x)
+
+
+ent_vector_vmap = jax.vmap(ent_vector_g)
+ent_vector_vmap_4D = jax.vmap(ent_vector_vmap)
+
+
+@partial(jax.jit)
+def oinfo_smult(x: jnp.array, ind: jnp.array) -> jnp.array:
+    nvars = x.shape[-2]
+    o = (nvars - 2) * ent_vector_vmap(x) + (
+        ent_vector_vmap_4D(x[..., jnp.newaxis, :]) - ent_vector_vmap_4D(x[..., ind, :])
+    ).sum(1)
+
+    return o
+
+
+@partial(jax.jit)
+def oinfo_mmult(x: jnp.array, comb: jnp.array) -> (jnp.array, jnp.array):
+    # build indices
+    msize = len(comb)
+    ind = jnp.mgrid[0:msize, 0:msize].sum(0) % msize
+
+    return x, oinfo_smult(x[:, comb, :], ind[:, 1:])

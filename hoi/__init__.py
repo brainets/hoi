@@ -1,1 +1,1 @@
-from hoi import oinfo  # noqa
+from hoi import metrics  # noqa

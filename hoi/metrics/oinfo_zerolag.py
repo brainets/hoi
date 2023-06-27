@@ -47,6 +47,11 @@ def oinfo_zerolag(
         stand for synergistic dominated interactions.
     """
     # ________________________________ INPUTS _________________________________
+    # force data to be 3d
+    assert data.ndim >= 2
+    if data.ndim == 2:
+        data = data[..., np.newaxis]
+
     # inputs conversion
     is_task_related = isinstance(y, (str, list, np.ndarray, tuple))
 

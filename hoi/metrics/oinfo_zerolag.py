@@ -16,17 +16,18 @@ logger = logging.getLogger("frites")
 
 
 def oinfo_zerolag(
-        data, y=None, minsize=3, maxsize=None, method='gcmi', **kwargs
+        data, y=None, minsize=2, maxsize=None, method='gcmi', **kwargs
     ):
     """Dynamic, possibly task-related oinfo.
 
     Parameters
     ----------
     data : array_like
-            Standard NumPy arrays of shape (n_samples, n_features, n_variables)
+        Standard NumPy arrays of shape (n_samples, n_features) or
+        (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info.
-    minsize, maxsize : int | 3, 5
+    minsize, maxsize : int | 2, None
         Minimum and maximum size of the multiplets
     method : {'gcmi', 'binning', 'knn'}
         Name of the method to compute entropy. Use either :
@@ -35,7 +36,6 @@ def oinfo_zerolag(
             * 'binning': binning-based estimator of entropy. Note that to use
               this estimator, the data have be to discretized
             * 'knn': k-nearest neighbor estimator
-
     kwargs : dict | {}
         Additional arguments are sent to each entropy function
 

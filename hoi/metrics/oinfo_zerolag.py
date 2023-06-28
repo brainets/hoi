@@ -64,11 +64,6 @@ def oinfo_zerolag(
     maxsize = max(1, maxsize)
     assert maxsize >= minsize
 
-    # get the number of multiplets
-    n_mults = 0
-    for msize in range(minsize, maxsize + 1):
-        n_mults += comb(n_features, msize)
-
     logger.info(
         f"Compute the {'task-related ' * is_task_related} HOI "
         f"(min={minsize}; max={maxsize})"
@@ -108,7 +103,7 @@ def oinfo_zerolag(
     ))
 
     # use it to compute oinfo
-    oinfo_mmult = partial(oinfo_scan, entropy=entropy)
+    oinfo_mmult = jax.jit(partial(oinfo_scan, entropy=entropy))
 
 
     oinfo = []

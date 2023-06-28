@@ -88,8 +88,13 @@ def oinfo_zerolag(
                 "data dtype should be integer. Check that you discretized your"
                 " data. If so, use `data.astype(int)`"
             )
-        n_bins = len(np.unique(data))
-        logger.info(f'    {n_bins} bins detected from the data')
+        if 'n_bins' not in kwargs.keys():
+            kwargs['n_bins'] = len(np.unique(data))
+            logger.info(f"    {kwargs['n_bins']} bins detected from the data")
+        n_bins = kwargs['n_bins']
+        if (data.min() != 0) or (data.max() != n_bins - 1):
+            raise ValueError(f"Values in data should be comprised between "
+                             f"[0, n_bins={n_bins}]")
         kwargs['n_bins'] = n_bins
 
     # make the data (n_variables, n_features, n_trials)
@@ -124,7 +129,7 @@ if __name__ == '__main__':
     import seaborn as sns
     import time as tst
 
-    # from idtxl.idtxl_utils import discretise
+    # from idtxl.idtxl_utils import discretise,
 
     set_mpl_style()
 
@@ -167,15 +172,12 @@ if __name__ == '__main__':
     x = set_redundancy(x, redundancy, slice(20, 30), win, trials)
     x = set_synergy(x, synergy, slice(30, 40), win, trials)
 
-
     start_time = tst.time()
 
     # for nt in range(x.shape[-1]):
     #     x[:, :, nt] = discretise(x[:, :, nt], 8)
     # x = x.astype(int)
 
-
-    # x = x[:, :, 50:100]
     oinfo = oinfo_zerolag(x, minsize=3, maxsize=4, method='gcmi')
     print(oinfo)
 

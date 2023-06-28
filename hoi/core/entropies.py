@@ -184,8 +184,16 @@ def entropy_bin(
     hx : float
         Entropy of x
     """
-    counts = jnp.unique(x, return_counts=True, size=n_bins, axis=1)[1]
-    probs =  counts / x.shape[1]
+    n_features, n_samples = x.shape
+    # here, we count the number of possible multiplets. Each digit can take
+    # (n_bins,) values. Therefore, the maximum number of multiplets is going to
+    # be n_bins ** n_features. Missing values are going to be padded with zeros
+    # but it's going to be compensated by the entr function
+    counts = jnp.unique(
+        x, return_counts=True, size=n_bins ** n_features, axis=1,
+        fill_value=0
+    )[1]
+    probs =  counts / n_samples
     return jax.scipy.special.entr(probs).sum() / np.log(base)
 
 

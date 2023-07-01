@@ -134,7 +134,7 @@ def infotopo(
     # ______________________________ ENTROPIES ________________________________
 
     # get the function to compute entropy and vmap it one for 3D inputs
-    entropy = jax.vmap(get_entropy(method=method, **kwargs))
+    entropy = jax.jit(jax.vmap(get_entropy(method=method, **kwargs)))
     get_ent = jax.jit(partial(compute_entropies, entropy=entropy))
 
     logger.info(f"Compute entropies")
@@ -166,7 +166,7 @@ def infotopo(
 
         logger.info(f"    Order={msize}; mvmidx={len(mvmidx)}")
 
-        _hoi = np.zeros((len(combs), n_features))
+        _hoi = np.zeros((len(combs), n_variables))
         for n_m, m in enumerate(mvmidx):
             (_, _, _, _hoi), _ = jax.lax.scan(
                 partial(sum_entropies, m_order=n_m),
@@ -181,17 +181,20 @@ def infotopo(
 
 
 if __name__ == '__main__':
+    from math import comb as ccomb
     import matplotlib.pyplot as plt
     from frites import set_mpl_style
     import seaborn as sns
     import time as tst
     from hoi.utils import landscape, digitize
+    from matplotlib.colors import LogNorm
 
     set_mpl_style()
 
     np.random.seed(0)
 
     ###########################################################################
+    method = 'gcmi'
     n_trials = 600
     n_roi = 5
     n_times = 50
@@ -236,18 +239,24 @@ if __name__ == '__main__':
     # x = x.astype(int)
 
 
-    oinfo = infotopo(x[..., 100], minsize=3, maxsize=None, method='gcmi')
+    oinfo = infotopo(x[..., 100], minsize=1, maxsize=7, method=method)
     # plt.plot(oinfo)
     # plt.show()
-    0/0
+    # 0/0
     print(oinfo.shape)
     # print(oinfo.shape)
     # print(combs.shape)
 
-    # lscp = landscape(oinfo.squeeze(), combs, output='xarray')
-    # lscp.plot(x='order', y='bins')
-    # plt.show()
-    # 0/0
+    order = []
+    for o in range(1, 7 + 1):
+        order += [o] * ccomb(x.shape[1], o)
+    print(oinfo.shape, len(order))
+
+    lscp = landscape(oinfo.squeeze(), order, output='xarray', stat='count')
+    lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())
+    plt.title(method, fontsize=24, fontweight='bold')
+    plt.show()
+    0/0
 
     vmin, vmax = np.percentile(oinfo, [1, 99])
     minmax = min(abs(vmin), abs(vmax))

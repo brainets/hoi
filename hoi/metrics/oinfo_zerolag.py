@@ -82,6 +82,9 @@ def oinfo_zerolag(
         data = copnorm_nd(data, axis=0)
         data = data - data.mean(axis=0, keepdims=True)
         kwargs['demean'] = False
+    elif method == 'kernel':
+        data_norm = np.sqrt(np.sum(data * data, axis=1, keepdims=True))
+        data = data / data_norm
     elif method == 'binning':
         if data.dtype != int:
             raise ValueError(
@@ -103,9 +106,9 @@ def oinfo_zerolag(
     # ________________________________ O-INFO _________________________________
 
     # get the function to compute entropy and vmap it twice for 4D inputs
-    entropy = jax.vmap(jax.vmap(
+    entropy = jax.jit(jax.vmap(jax.vmap(
         get_entropy(method=method, **kwargs)
-    ))
+    )))
 
     # use it to compute oinfo
     oinfo_mmult = jax.jit(partial(oinfo_scan, entropy=entropy))
@@ -124,18 +127,21 @@ def oinfo_zerolag(
 
 
 if __name__ == '__main__':
+    from math import comb as ccomb
     import matplotlib.pyplot as plt
     from frites import set_mpl_style
     import seaborn as sns
     import time as tst
+    from matplotlib.colors import LogNorm
 
-    # from idtxl.idtxl_utils import discretise,
+    from hoi.utils import landscape, digitize
 
     set_mpl_style()
 
     np.random.seed(0)
 
     ###########################################################################
+    method = 'gcmi'
     n_trials = 600
     n_roi = 5
     n_times = 50
@@ -174,12 +180,24 @@ if __name__ == '__main__':
 
     start_time = tst.time()
 
+    x = np.load('/home/etienne/Downloads/data_time_evolution', allow_pickle=True)
     # for nt in range(x.shape[-1]):
-    #     x[:, :, nt] = discretise(x[:, :, nt], 8)
+    #     x[:, :, nt] = digitize(x[:, :, nt], 8)
     # x = x.astype(int)
+    x = x[..., 100]
 
-    oinfo = oinfo_zerolag(x, minsize=3, maxsize=4, method='gcmi')
+    oinfo = oinfo_zerolag(x, minsize=2, maxsize=7, method=method)
     print(oinfo)
+
+    order = []
+    for o in range(2, 7 + 1):
+        order += [o] * ccomb(x.shape[1], o)
+
+    lscp = landscape(oinfo.squeeze(), order, output='xarray')
+    lscp.plot(x='order', y='bins', cmap='turbo', norm=LogNorm())
+    plt.title(method, fontsize=24, fontweight='bold')
+    plt.show()
+    0/0
 
     vmin, vmax = np.percentile(oinfo, [1, 99])
     minmax = min(abs(vmin), abs(vmax))

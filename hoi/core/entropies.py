@@ -10,6 +10,7 @@ import jax
 import jax.numpy as jnp
 from jax.scipy.special import digamma as psi
 from jax.scipy.special import gamma
+from jax.scipy.stats import gaussian_kde
 
 
 ###############################################################################
@@ -41,8 +42,18 @@ def get_entropy(method='gcmi', **kwargs):
         return partial(entropy_bin, **kwargs)
     elif method == 'knn':
         return partial(entropy_knn, **kwargs)
+    elif method == 'kernel':
+        return entropy_kernel
+        # return partial(entropy_kernel, **kwargs)
     else:
         raise ValueError(f"Method {method} doesn't exist.")
+
+
+###############################################################################
+###############################################################################
+#                             PREPROCESSING
+###############################################################################
+###############################################################################
 
 
 ###############################################################################
@@ -78,7 +89,7 @@ def entropy_gcmi(
 
     # demean data
     if demean:
-        x = x - x.mean(axis=0, keepdims=True)
+        x = x - x.mean(axis=1, keepdims=True)
 
     # covariance
     c = jnp.dot(x, x.T) / float(nsamp - 1)
@@ -267,3 +278,32 @@ def entropy_knn(
             nfeat / nsamp) * (lr_k.sum())
 
     return h
+
+
+###############################################################################
+###############################################################################
+#                                  KERNEL
+###############################################################################
+###############################################################################
+
+
+@partial(jax.jit, static_argnums=(1,))
+def entropy_kernel(
+        x: jnp.array, base: int = 2
+    ) -> jnp.array:
+    """Entropy using gaussian kernel density.
+
+    Parameters
+    ----------
+    x : array_like
+        Input data of shape (n_features, n_samples)
+
+    Returns
+    -------
+    hx : float
+        Entropy of x
+    """
+    model = gaussian_kde(x)
+    return -jnp.mean(jnp.log2(model(x)))
+    # p = model.pdf(x)
+    # return jax.scipy.special.entr(p).sum() / np.log(base)

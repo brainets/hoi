@@ -20,9 +20,22 @@ def mvmi_combinations(n):
     combinations = []
     def_range = np.arange(n)
     for k in range(n):
-        combinations += [jnp.asarray(m) for m in itertools.combinations(
+        combinations += [np.array(m) for m in itertools.combinations(
             def_range, k + 1)]
     return combinations
+
+
+@partial(jax.jit, static_argnums=(2,))
+def compute_entropies(x, idx, entropy=None):
+    return x, entropy(x[:, idx, :])
+
+
+@partial(jax.jit)
+def find_entropy_index(comb_idxn, target):
+    n_comb, n_feat = comb_idxn.shape
+    target = target.reshape(1, -1)
+    at = jnp.where((comb_idxn == target).all(1), jnp.arange(n_comb), 0).sum()
+    return comb_idxn, at
 
 
 def infotopo(
@@ -101,37 +114,57 @@ def infotopo(
     # make the data (n_variables, n_features, n_trials)
     data = jnp.asarray(data.transpose(2, 1, 0))
 
-    # ________________________________ O-INFO _________________________________
+    # ______________________________ ENTROPIES ________________________________
 
     # get the function to compute entropy and vmap it one for 3D inputs
     entropy = jax.vmap(get_entropy(method=method, **kwargs))
+    get_ent = jax.jit(partial(compute_entropies, entropy=entropy))
 
-    oinfo = []
+    logger.info(f"Compute entropies")
+
+    h_x, h_idx = [], []
+    for msize in range(1, maxsize + 1):
+        # logger.info(f"    Order={msize}")
+
+        # compute all of the entropies at that order
+        _h_idx = combinations(n_features, msize)
+        _, _h_x = jax.lax.scan(get_ent, data, _h_idx)
+
+        # store entopies and indices associated to entropies
+        h_x.append(np.asarray(_h_x))
+        h_idx.append(_h_idx)
+
+    # _______________________________ INFOTOPO ________________________________
+
+    logger.info(f"Compute infotopo")
+
+    hoi = []
     for msize in range(minsize, maxsize + 1):
-        logger.info(f"    Multiplets of size {msize}")
 
         # combinations over spatial dimension
         combs = combinations(n_features, msize)
 
-        # combination of indices to compute entropy
-        hidx = mvmi_combinations(msize)
+        # get formula of entropy summation
+        mvmidx = mvmi_combinations(msize)
 
-        # define the function thats that will compute mvmi
-        @jax.jit
-        def compute_mvmi(x, comb):
-            # multiplet selection
-            x_mult = x[:, comb, :]
+        _hoi = np.zeros((len(combs), n_features))
+        for m in mvmidx:
+            # build indices specific to the multiplets
+            _idx = combs[:, m]
 
-            h = jnp.zeros((x.shape[0],), dtype=float)
-            for idx in hidx:
-                h += ((-1) ** (len(idx) - 1)) * entropy(x_mult[:, idx, :])
-            return x, h
+            # number of features in this entropy
+            m_order = len(m)
+            h_x_m, h_idx_mi = h_x[m_order - 1], h_idx[m_order - 1]
 
-        _, h = jax.lax.scan(compute_mvmi, data, combs)
-        oinfo.append(np.asarray(h))
+            # find _idx inside h_idx_mi
+            _, indices = jax.lax.scan(find_entropy_index, h_idx_mi, _idx)
+            _hoi += ((-1) ** (m_order - 1)) * h_x_m[indices, :]
 
-    oinfo = np.concatenate(oinfo, axis=0)
-    return oinfo
+        hoi.append(_hoi)
+
+    hoi = np.concatenate(hoi, axis=0)
+
+    return hoi
 
 
 if __name__ == '__main__':
@@ -190,14 +223,18 @@ if __name__ == '__main__':
     # x = x.astype(int)
 
 
-    oinfo = infotopo(x[..., 100], minsize=1, maxsize=7, method='gcmi')
+    oinfo = infotopo(x[..., 100], minsize=3, maxsize=None, method='gcmi')
+    # plt.plot(oinfo)
+    # plt.show()
+    0/0
+    print(oinfo.shape)
     # print(oinfo.shape)
     # print(combs.shape)
 
-    lscp = landscape(oinfo.squeeze(), combs, output='xarray')
-    lscp.plot(x='order', y='bins')
-    plt.show()
-    0/0
+    # lscp = landscape(oinfo.squeeze(), combs, output='xarray')
+    # lscp.plot(x='order', y='bins')
+    # plt.show()
+    # 0/0
 
     vmin, vmax = np.percentile(oinfo, [1, 99])
     minmax = min(abs(vmin), abs(vmax))
@@ -206,4 +243,3 @@ if __name__ == '__main__':
     plt.pcolormesh(oinfo, cmap='RdBu_r')
     plt.colorbar()
     plt.show()
-

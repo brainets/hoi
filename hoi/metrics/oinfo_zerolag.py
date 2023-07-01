@@ -9,7 +9,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.core.combinatory import combinations
-from hoi.core.entropies import get_entropy, copnorm_nd
+from hoi.core.entropies import get_entropy, prepare_for_entropy
 from hoi.core.oinfo import oinfo_scan
 
 logger = logging.getLogger("frites")
@@ -53,7 +53,7 @@ def oinfo_zerolag(
         data = data[..., np.newaxis]
 
     # inputs conversion
-    is_task_related = isinstance(y, (str, list, np.ndarray, tuple))
+    is_task_related = isinstance(y, (list, np.ndarray, tuple))
 
     # extract variables
     n_samples, n_features, n_variables = data.shape
@@ -71,37 +71,10 @@ def oinfo_zerolag(
 
     # ____________________________ PREPROCESSING ______________________________
 
-    # for task-related, add behavior along spatial dimension
-    if is_task_related:
-        y = np.tile(y.reshape(-1, 1, 1), (1, 1, n_variables))
-        data = np.concatenate((data, data), axis=1)
-
-    # method specific preprocessing
-    if method == 'gcmi':
-        logger.info('    copnorm data')
-        data = copnorm_nd(data, axis=0)
-        data = data - data.mean(axis=0, keepdims=True)
-        kwargs['demean'] = False
-    elif method == 'kernel':
-        data_norm = np.sqrt(np.sum(data * data, axis=1, keepdims=True))
-        data = data / data_norm
-    elif method == 'binning':
-        if data.dtype != int:
-            raise ValueError(
-                "data dtype should be integer. Check that you discretized your"
-                " data. If so, use `data.astype(int)`"
-            )
-        if 'n_bins' not in kwargs.keys():
-            kwargs['n_bins'] = len(np.unique(data))
-            logger.info(f"    {kwargs['n_bins']} bins detected from the data")
-        n_bins = kwargs['n_bins']
-        if (data.min() != 0) or (data.max() != n_bins - 1):
-            raise ValueError(f"Values in data should be comprised between "
-                             f"[0, n_bins={n_bins}]")
-        kwargs['n_bins'] = n_bins
-
-    # make the data (n_variables, n_features, n_trials)
-    data = jnp.asarray(data.transpose(2, 1, 0))
+    # prepare the data for computation
+    data, kwargs = prepare_for_entropy(
+        data, method, y, **kwargs
+    )
 
     # ________________________________ O-INFO _________________________________
 

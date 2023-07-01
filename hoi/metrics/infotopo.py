@@ -9,9 +9,8 @@ import numpy as np
 import jax
 import jax.numpy as jnp
 
-from hoi.core.entropies import get_entropy, copnorm_nd
+from hoi.core.entropies import get_entropy, prepare_for_entropy
 from hoi.core.combinatory import combinations
-from hoi.core.entropies import entropy_gcmi
 
 logger = logging.getLogger("frites")
 
@@ -107,29 +106,10 @@ def infotopo(
 
     # ____________________________ PREPROCESSING ______________________________
 
-    # method specific preprocessing
-    if method == 'gcmi':
-        logger.info('    copnorm data')
-        data = copnorm_nd(data, axis=0)
-        data = data - data.mean(axis=0, keepdims=True)
-        kwargs['demean'] = False
-    elif method == 'binning':
-        if data.dtype != int:
-            raise ValueError(
-                "data dtype should be integer. Check that you discretized your"
-                " data. If so, use `data.astype(int)`"
-            )
-        if 'n_bins' not in kwargs.keys():
-            kwargs['n_bins'] = len(np.unique(data))
-            logger.info(f"    {kwargs['n_bins']} bins detected from the data")
-        n_bins = kwargs['n_bins']
-        if (data.min() != 0) or (data.max() != n_bins - 1):
-            raise ValueError(f"Values in data should be comprised between "
-                             f"[0, n_bins={n_bins}]")
-        kwargs['n_bins'] = n_bins
-
-    # make the data (n_variables, n_features, n_trials)
-    data = jnp.asarray(data.transpose(2, 1, 0))
+    # prepare the data for computation
+    data, kwargs = prepare_for_entropy(
+        data, method, None, **kwargs
+    )
 
     # ______________________________ ENTROPIES ________________________________
 
@@ -194,7 +174,7 @@ if __name__ == '__main__':
     np.random.seed(0)
 
     ###########################################################################
-    method = 'gcmi'
+    method = 'kernel'
     n_trials = 600
     n_roi = 5
     n_times = 50
@@ -237,7 +217,6 @@ if __name__ == '__main__':
     # for nt in range(x.shape[-1]):
     #     x[:, :, nt] = digitize(x[:, :, nt], 8)
     # x = x.astype(int)
-
 
     oinfo = infotopo(x[..., 100], minsize=1, maxsize=7, method=method)
     # plt.plot(oinfo)

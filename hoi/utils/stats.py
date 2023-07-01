@@ -109,7 +109,7 @@ def digitize_1d(x, n_bins):
     dx = (x_max - x_min) / n_bins
     x_binned = ((x - x_min) / dx).astype(int)
     x_binned = np.minimum(x_binned, n_bins - 1)
-    return x_binned
+    return x_binned.astype(int)
 
 
 def digitize(x, n_bins, axis=0):

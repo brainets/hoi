@@ -2,6 +2,7 @@
 Functions to compute entropies.
 """
 from functools import partial
+import logging
 
 import numpy as np
 from scipy.special import ndtri
@@ -11,6 +12,8 @@ import jax.numpy as jnp
 from jax.scipy.special import digamma as psi
 from jax.scipy.special import gamma
 from jax.scipy.stats import gaussian_kde
+
+logger = logging.getLogger("frites")
 
 
 ###############################################################################
@@ -54,6 +57,50 @@ def get_entropy(method='gcmi', **kwargs):
 #                             PREPROCESSING
 ###############################################################################
 ###############################################################################
+
+
+def prepare_for_entropy(data, method, y, **kwargs):
+    """Prepare the data before computing entropy.
+    """
+    n_samples, n_features, n_variables = data.shape
+
+    # for task-related, add behavior along spatial dimension
+    if isinstance(y, (list, np.ndarray, tuple)):
+        y = np.tile(y.reshape(-1, 1, 1), (1, 1, n_variables))
+        data = np.concatenate((data, data), axis=1)
+
+    # type checking
+    if (method in ['binning']) and (data.dtype != int):
+        raise ValueError(
+            "data dtype should be integer. Check that you discretized your"
+            " data. If so, use `data.astype(int)`"
+        )
+    elif (method in ['kernel', 'gcmi', 'knn']) and (data.dtype != float):
+        raise ValueError(
+            f"data dtype should be float, not {data.dtype}"
+        )
+
+    # method specific preprocessing
+    if method == 'gcmi':
+        logger.info('    copnorm data')
+        data = copnorm_nd(data, axis=0)
+        data = data - data.mean(axis=0, keepdims=True)
+        kwargs['demean'] = False
+    elif method == 'kernel':
+        data_norm = np.sqrt(np.sum(data * data, axis=1, keepdims=True))
+        data = data / data_norm
+    elif method == 'binning':
+        if 'n_bins' not in kwargs.keys():
+            kwargs['n_bins'] = len(np.unique(data))
+            logger.info(f"    {kwargs['n_bins']} bins detected from the data")
+        n_bins = kwargs['n_bins']
+        kwargs['n_bins'] = n_bins
+
+
+    # make the data (n_variables, n_features, n_trials)
+    data = jnp.asarray(data.transpose(2, 1, 0))
+
+    return data, kwargs
 
 
 ###############################################################################

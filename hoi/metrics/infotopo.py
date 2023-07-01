@@ -20,8 +20,8 @@ def mvmi_combinations(n):
     combinations = []
     def_range = np.arange(n)
     for k in range(n):
-        combinations += [np.array(m) for m in itertools.combinations(
-            def_range, k + 1)]
+        combinations += [jnp.stack([np.array(m) for m in itertools.combinations(
+            def_range, k + 1)], axis=0)]
     return combinations
 
 
@@ -30,12 +30,29 @@ def compute_entropies(x, idx, entropy=None):
     return x, entropy(x[:, idx, :])
 
 
-@partial(jax.jit)
+@jax.jit
 def find_entropy_index(comb_idxn, target):
     n_comb, n_feat = comb_idxn.shape
     target = target.reshape(1, -1)
     at = jnp.where((comb_idxn == target).all(1), jnp.arange(n_comb), 0).sum()
     return comb_idxn, at
+
+
+@partial(jax.jit, static_argnums=(2,))
+def sum_entropies(inputs, m, m_order=None):
+    combs, h_x, h_idx, _hoi = inputs
+
+    # build indices specific to the multiplets
+    _idx = combs[:, m]
+
+    # number of features in this entropy
+    h_x_m, h_idx_mi = h_x[m_order], h_idx[m_order]
+
+    # find _idx inside h_idx_mi
+    _, indices = jax.lax.scan(find_entropy_index, h_idx_mi, _idx)
+    _hoi += ((-1) ** (m_order)) * h_x_m[indices, :]
+
+    return (combs, h_x, h_idx, _hoi), _
 
 
 def infotopo(
@@ -140,7 +157,6 @@ def infotopo(
 
     hoi = []
     for msize in range(minsize, maxsize + 1):
-        logger.info(f"    Order={msize}")
 
         # combinations over spatial dimension
         combs = combinations(n_features, msize)
@@ -148,18 +164,14 @@ def infotopo(
         # get formula of entropy summation
         mvmidx = mvmi_combinations(msize)
 
+        logger.info(f"    Order={msize}; mvmidx={len(mvmidx)}")
+
         _hoi = np.zeros((len(combs), n_features))
-        for m in mvmidx:
-            # build indices specific to the multiplets
-            _idx = combs[:, m]
-
-            # number of features in this entropy
-            m_order = len(m)
-            h_x_m, h_idx_mi = h_x[m_order - 1], h_idx[m_order - 1]
-
-            # find _idx inside h_idx_mi
-            _, indices = jax.lax.scan(find_entropy_index, h_idx_mi, _idx)
-            _hoi += ((-1) ** (m_order - 1)) * h_x_m[indices, :]
+        for n_m, m in enumerate(mvmidx):
+            (_, _, _, _hoi), _ = jax.lax.scan(
+                partial(sum_entropies, m_order=n_m),
+                (combs, h_x, h_idx, _hoi), m
+            )
 
         hoi.append(_hoi)
 

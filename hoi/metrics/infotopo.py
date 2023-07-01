@@ -124,7 +124,7 @@ def infotopo(
 
     h_x, h_idx = [], []
     for msize in range(1, maxsize + 1):
-        # logger.info(f"    Order={msize}")
+        logger.info(f"    Order={msize}")
 
         # compute all of the entropies at that order
         _h_idx = combinations(n_features, msize)
@@ -140,6 +140,7 @@ def infotopo(
 
     hoi = []
     for msize in range(minsize, maxsize + 1):
+        logger.info(f"    Order={msize}")
 
         # combinations over spatial dimension
         combs = combinations(n_features, msize)

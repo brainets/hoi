@@ -15,18 +15,41 @@ from hoi.core.combinatory import combinations
 logger = logging.getLogger("frites")
 
 
-def mvmi_combinations(n):
-    combinations = []
-    def_range = np.arange(n)
-    for k in range(n):
-        combinations += [jnp.stack([np.array(m) for m in itertools.combinations(
-            def_range, k + 1)], axis=0)]
-    return combinations
+###############################################################################
+###############################################################################
+#                                ITERATOR
+#
+# iterator to generate the combination of entropies i.e. :
+# (H1, H2, H3); (H12, H13, H23); (H123)
+###############################################################################
+###############################################################################
 
+
+def _micomb(n, k):
+    def_range = jnp.arange(n)
+    return jnp.stack([np.array(m) for m in itertools.combinations(
+        def_range, k + 1)], axis=0)
+
+def micomb(n):
+    return map(lambda k: _micomb(n, k), range(n))
+
+
+###############################################################################
+###############################################################################
+#                                 ENTROPY
+###############################################################################
+###############################################################################
 
 @partial(jax.jit, static_argnums=(2,))
 def compute_entropies(x, idx, entropy=None):
     return x, entropy(x[:, idx, :])
+
+
+###############################################################################
+###############################################################################
+#                            MUTUAL INFORMATION
+###############################################################################
+###############################################################################
 
 
 @jax.jit
@@ -142,9 +165,9 @@ def infotopo(
         combs = combinations(n_features, msize)
 
         # get formula of entropy summation
-        mvmidx = mvmi_combinations(msize)
+        mvmidx = micomb(msize)
 
-        logger.info(f"    Order={msize}; mvmidx={len(mvmidx)}")
+        logger.info(f"    Order={msize}")
 
         _hoi = np.zeros((len(combs), n_variables))
         for n_m, m in enumerate(mvmidx):
@@ -174,7 +197,7 @@ if __name__ == '__main__':
     np.random.seed(0)
 
     ###########################################################################
-    method = 'binning'
+    method = 'gcmi'
     n_trials = 600
     n_roi = 5
     n_times = 50
@@ -199,7 +222,6 @@ if __name__ == '__main__':
                 x[b, m[n_b], sl] += trials[b].reshape(-1, 1) * win[0, ...]
         return x
 
-
     # generate the data
     x = np.random.rand(n_trials, n_roi, n_times)
     roi = np.array([f"r{r}" for r in range(n_roi)])[::-1]
@@ -215,17 +237,17 @@ if __name__ == '__main__':
 
     x = np.load('/home/etienne/Downloads/data_time_evolution', allow_pickle=True)
 
-    x = digitize(x, 8, axis=0)
-    oinfo = infotopo(x[..., 100], minsize=1, maxsize=7, method=method)
+    # x = digitize(x, 8, axis=0)
+    oinfo = infotopo(x[..., 100], minsize=1, maxsize=None, method=method)
     # plt.plot(oinfo)
     # plt.show()
-    0/0
-    print(oinfo.shape)
+    # 0/0
+    # print(oinfo.shape)
     # print(oinfo.shape)
     # print(combs.shape)
 
     order = []
-    for o in range(1, 7 + 1):
+    for o in range(1, 12 + 1):
         order += [o] * ccomb(x.shape[1], o)
     print(oinfo.shape, len(order))
 

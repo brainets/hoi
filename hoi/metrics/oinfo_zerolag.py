@@ -114,7 +114,7 @@ if __name__ == '__main__':
     np.random.seed(0)
 
     ###########################################################################
-    method = 'gcmi'
+    method = 'binning'
     n_trials = 600
     n_roi = 5
     n_times = 50
@@ -157,9 +157,9 @@ if __name__ == '__main__':
     # for nt in range(x.shape[-1]):
     #     x[:, :, nt] = digitize(x[:, :, nt], 8)
     # x = x.astype(int)
-    x = x[..., 100]
 
-    oinfo = oinfo_zerolag(x, minsize=2, maxsize=7, method=method)
+    x = digitize(x, 8, axis=0)
+    oinfo = oinfo_zerolag(x[..., 100], minsize=2, maxsize=7, method=method)
     print(oinfo)
 
     order = []

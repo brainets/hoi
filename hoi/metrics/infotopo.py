@@ -174,7 +174,7 @@ if __name__ == '__main__':
     np.random.seed(0)
 
     ###########################################################################
-    method = 'kernel'
+    method = 'binning'
     n_trials = 600
     n_roi = 5
     n_times = 50
@@ -214,14 +214,12 @@ if __name__ == '__main__':
     start_time = tst.time()
 
     x = np.load('/home/etienne/Downloads/data_time_evolution', allow_pickle=True)
-    # for nt in range(x.shape[-1]):
-    #     x[:, :, nt] = digitize(x[:, :, nt], 8)
-    # x = x.astype(int)
 
+    x = digitize(x, 8, axis=0)
     oinfo = infotopo(x[..., 100], minsize=1, maxsize=7, method=method)
     # plt.plot(oinfo)
     # plt.show()
-    # 0/0
+    0/0
     print(oinfo.shape)
     # print(oinfo.shape)
     # print(combs.shape)

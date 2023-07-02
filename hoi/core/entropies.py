@@ -82,20 +82,16 @@ def prepare_for_entropy(data, method, y, **kwargs):
 
     # method specific preprocessing
     if method == 'gcmi':
-        logger.info('    copnorm data')
+        logger.info('    Copnorm data')
         data = copnorm_nd(data, axis=0)
         data = data - data.mean(axis=0, keepdims=True)
         kwargs['demean'] = False
     elif method == 'kernel':
+        logger.info('    Unit circle normalization')
         data_norm = np.sqrt(np.sum(data * data, axis=1, keepdims=True))
         data = data / data_norm
     elif method == 'binning':
-        if 'n_bins' not in kwargs.keys():
-            kwargs['n_bins'] = len(np.unique(data))
-            logger.info(f"    {kwargs['n_bins']} bins detected from the data")
-        n_bins = kwargs['n_bins']
-        kwargs['n_bins'] = n_bins
-
+        pass
 
     # make the data (n_variables, n_features, n_trials)
     data = jnp.asarray(data.transpose(2, 1, 0))
@@ -220,9 +216,9 @@ def copnorm_nd(x, axis=-1):
 ###############################################################################
 
 
-@partial(jax.jit, static_argnums=(1, 2))
+@partial(jax.jit, static_argnums=(1,))
 def entropy_bin(
-        x: jnp.array, n_bins: int = None, base: int = 2
+        x: jnp.array, base: int = 2
     ) -> jnp.array:
     """Entropy using binning.
 
@@ -231,9 +227,6 @@ def entropy_bin(
     x : array_like
         Input data of shape (n_features, n_samples). The data should already
         be discretize
-    n_bins : int | None
-        Number of unique bins that have been used to discretize the data. This
-        parameter is important to jit the function.
     base : int | 2
         The logarithmic base to use. Default is base 2.
 
@@ -243,13 +236,12 @@ def entropy_bin(
         Entropy of x
     """
     n_features, n_samples = x.shape
-    # here, we count the number of possible multiplets. Each digit can take
-    # (n_bins,) values. Therefore, the maximum number of multiplets is going to
-    # be n_bins ** n_features. Missing values are going to be padded with zeros
-    # but it's going to be compensated by the entr function
+    # here, we count the number of possible multiplets. The worst is that each
+    # trial is unique. So we can prepare the output to be at most (n_samples,)
+    # and if trials are repeated, just set to zero it's going to be compensated
+    # by the entr() function
     counts = jnp.unique(
-        x, return_counts=True, size=n_bins ** n_features, axis=1,
-        fill_value=0
+        x, return_counts=True, size=n_samples, axis=1, fill_value=0
     )[1]
     probs =  counts / n_samples
     return jax.scipy.special.entr(probs).sum() / np.log(base)

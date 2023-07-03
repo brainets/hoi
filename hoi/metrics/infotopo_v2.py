@@ -177,6 +177,8 @@ def infotopo(
         # get formula of entropy summation
         mvmidx, order = micomb(msize, maxsize)
 
+        logger.info(f"    Order={msize}")
+
         # sum entropies
         _, _hoi = jax.lax.scan(
             sum_entropies, (h_x, h_idx, mvmidx, order), combs

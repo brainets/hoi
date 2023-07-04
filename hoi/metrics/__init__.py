@@ -1,2 +1,2 @@
-from .oinfo_zerolag import oinfo_zerolag  # noqa
-from .infotopo import infotopo  # noqa
+from .oinfo_zerolag import OinfoZeroLag  # noqa
+from .infotopo import InfoTopo  # noqa

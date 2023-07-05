@@ -88,7 +88,7 @@ class InfoTopo(HOIEstimator):
     def __init__(self):
         HOIEstimator.__init__(self)
 
-    def fit(self, data, y=None, minsize=1, maxsize=None, method='gcmi',
+    def fit(self, data, y=None, maxsize=None, method='gcmi',
             **kwargs):
         """Compute Topological Information.
 
@@ -99,8 +99,8 @@ class InfoTopo(HOIEstimator):
             (n_samples, n_features, n_variables)
         y : array_like
             The feature of shape (n_trials,) for estimating task-related O-info.
-        minsize, maxsize : int | 2, None
-            Minimum and maximum size of the multiplets
+        maxsize : int | None
+            Maximum size of the multiplets
         method : {'gcmi', 'binning', 'knn'}
             Name of the method to compute entropy. Use either :
 
@@ -124,8 +124,7 @@ class InfoTopo(HOIEstimator):
         data = self._prepare_data(data)
 
         # check multiplets
-        self._prepare_multiplets(minsize, maxsize, y=y)
-        self.minsize = 1
+        self._prepare_multiplets(1, maxsize, y=y)
 
         # check entropy function
         data, entropy = self._prepare_for_entropy(data, method, y=y, **kwargs)
@@ -159,7 +158,7 @@ class InfoTopo(HOIEstimator):
 
         logger.info(f"Compute infotopo")
 
-        hoi, hoi_idx = [], []
+        hoi = []
         for msize in self:
 
             logger.info(f"    Order={msize}")
@@ -171,7 +170,6 @@ class InfoTopo(HOIEstimator):
             if msize == 1:
                 np.testing.assert_array_equal(
                     h_idx[0].squeeze(), combs.squeeze())
-                hoi_idx.append(h_idx[0])
                 hoi.append(h_x[0])
                 continue
 
@@ -180,12 +178,14 @@ class InfoTopo(HOIEstimator):
             if combs_prev.ndim == 1:
                 combs_prev = combs_prev[:, jnp.newaxis]
             _, mi_prev_idx = jax.lax.scan(
-                find_entropy_index, hoi_idx[-1], combs_prev)
+                find_entropy_index, h_idx[msize - 2], combs_prev)
             np.testing.assert_array_equal(
-                hoi_idx[-1][mi_prev_idx, :], combs_prev)
+                h_idx[msize - 2][mi_prev_idx, :], combs_prev)
+
+            # initialize cmi_{n + 1} = f(cmi_{n})
             _hoi = hoi[-1][mi_prev_idx ,:]
 
-            # get formula of entropy summation from cmi_{n-1}
+            # terms for entropy summation from cmi_{n+1}, without cmi_{n}
             mvmidx = micomb(msize)
 
 
@@ -196,7 +196,6 @@ class InfoTopo(HOIEstimator):
                 )
 
             hoi.append(_hoi)
-            hoi_idx.append(combs)
 
         hoi = np.concatenate(hoi, axis=0)
 
@@ -226,7 +225,7 @@ if __name__ == '__main__':
     # x = digitize(x, 8, axis=0)
     model = InfoTopo()
     hoi = model.fit(
-        x[..., 100], minsize=3, maxsize=None, method=method
+        x[..., 100], maxsize=None, method=method
     )
     0/0
 

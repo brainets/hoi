@@ -27,7 +27,7 @@ logger = logging.getLogger("frites")
 def _micomb(n, k):
     def_range = jnp.arange(n)
     return jnp.stack([np.array(m) for m in itertools.combinations(
-        def_range, k + 1)], axis=0)
+        def_range, k + 1) if n - 1 in m], axis=0)
 
 def micomb(n):
     return map(lambda k: _micomb(n, k), range(n))
@@ -63,21 +63,18 @@ def find_entropy_index(comb_idxn, target):
     return comb_idxn, at
 
 
-@partial(jax.jit, static_argnums=(2,))
-def sum_entropies(inputs, m, m_order=None):
-    combs, h_x, h_idx, _hoi = inputs
+@jax.jit
+def sum_entropies(inputs, m):
+    combs, h_x_m, h_idx_m, sgn, _hoi = inputs
 
     # build indices specific to the multiplets
     _idx = combs[:, m]
 
-    # number of features in this entropy
-    h_x_m, h_idx_mi = h_x[m_order], h_idx[m_order]
+    # find _idx inside h_idx_m
+    _, indices = jax.lax.scan(find_entropy_index, h_idx_m, _idx)
+    _hoi += sgn * h_x_m[indices, :]
 
-    # find _idx inside h_idx_mi
-    _, indices = jax.lax.scan(find_entropy_index, h_idx_mi, _idx)
-    _hoi += ((-1) ** (m_order)) * h_x_m[indices, :]
-
-    return (combs, h_x, h_idx, _hoi), _
+    return (combs, h_x_m, h_idx_m, sgn, _hoi), _
 
 
 
@@ -88,7 +85,7 @@ class InfoTopo(HOIEstimator):
     def __init__(self):
         HOIEstimator.__init__(self)
 
-    def fit(self, data, y=None, minsize=1, maxsize=None, method='gcmi',
+    def fit(self, data, y=None, maxsize=None, method='gcmi',
             **kwargs):
         """Compute Topological Information.
 
@@ -99,8 +96,8 @@ class InfoTopo(HOIEstimator):
             (n_samples, n_features, n_variables)
         y : array_like
             The feature of shape (n_trials,) for estimating task-related O-info.
-        minsize, maxsize : int | 2, None
-            Minimum and maximum size of the multiplets
+        maxsize : int | None
+            Maximum size of the multiplets
         method : {'gcmi', 'binning', 'knn'}
             Name of the method to compute entropy. Use either :
 
@@ -124,7 +121,7 @@ class InfoTopo(HOIEstimator):
         data = self._prepare_data(data)
 
         # check multiplets
-        self._prepare_multiplets(minsize, maxsize, y=y)
+        self._prepare_multiplets(1, maxsize, y=y)
 
         # check entropy function
         data, entropy = self._prepare_for_entropy(data, method, y=y, **kwargs)
@@ -143,7 +140,7 @@ class InfoTopo(HOIEstimator):
         logger.info(f"Compute entropies")
 
         h_x, h_idx = [], []
-        for msize in range(1, self.maxsize + 1):
+        for msize in self:
             logger.info(f"    Order={msize}")
 
             # compute all of the entropies at that order
@@ -151,7 +148,7 @@ class InfoTopo(HOIEstimator):
             _, _h_x = jax.lax.scan(get_ent, data, _h_idx)
 
             # store entopies and indices associated to entropies
-            h_x.append(np.asarray(_h_x))
+            h_x.append(_h_x)
             h_idx.append(_h_idx)
 
         # _____________________________ INFOTOPO ______________________________
@@ -161,19 +158,45 @@ class InfoTopo(HOIEstimator):
         hoi = []
         for msize in self:
 
+            logger.info(f"    Order={msize}")
+
             # combinations over spatial dimension
             combs = self.get_combinations(msize)
 
-            # get formula of entropy summation
+            # order 1, just select entropies
+            if msize == 1:
+                np.testing.assert_array_equal(
+                    h_idx[0].squeeze(), combs.squeeze())
+                hoi.append(h_x[0])
+                continue
+
+            # find indices associated to cmi_{n-1}
+            combs_prev = combs[:, 0:-1]
+            if combs_prev.ndim == 1:
+                combs_prev = combs_prev[:, jnp.newaxis]
+            _, mi_prev_idx = jax.lax.scan(
+                find_entropy_index, h_idx[msize - 2], combs_prev)
+            np.testing.assert_array_equal(
+                h_idx[msize - 2][mi_prev_idx, :], combs_prev)
+
+            # initialize cmi_{n + 1} = f(cmi_{n})
+            _hoi = hoi[-1][mi_prev_idx ,:]
+
+            # terms for entropy summation from cmi_{n+1}, without cmi_{n}
             mvmidx = micomb(msize)
 
-            logger.info(f"    Order={msize}")
 
-            _hoi = np.zeros((len(combs), self.n_variables))
             for n_m, m in enumerate(mvmidx):
-                (_, _, _, _hoi), _ = jax.lax.scan(
-                    partial(sum_entropies, m_order=n_m),
-                    (combs, h_x, h_idx, _hoi), m
+                # define order
+                m_order = m.shape[1] - 1
+
+                # order selection
+                h_x_m, h_idx_m = h_x[m_order], h_idx[m_order]
+                sgn = (-1.) ** m_order
+
+                # scan over tuples
+                (_, _, _, _, _hoi), _ = jax.lax.scan(
+                    sum_entropies, (combs, h_x_m, h_idx_m, sgn, _hoi), m
                 )
 
             hoi.append(_hoi)
@@ -206,9 +229,9 @@ if __name__ == '__main__':
     # x = digitize(x, 8, axis=0)
     model = InfoTopo()
     hoi = model.fit(
-        x[..., 100], minsize=1, maxsize=None, method=method
+        x[..., 100], maxsize=None, method=method
     )
-    0/0
+    # 0/0
 
     lscp = landscape(hoi.squeeze(), model.order, output='xarray')
     lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())

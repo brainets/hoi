@@ -8,7 +8,7 @@ import numpy as np
 import jax
 import jax.numpy as jnp
 
-from hoi.metrics.est_hoi import HOIEstimator
+from hoi.metrics.base_hoi import HOIEstimator
 
 logger = logging.getLogger("frites")
 

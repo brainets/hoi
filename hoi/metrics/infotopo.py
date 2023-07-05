@@ -220,13 +220,13 @@ if __name__ == '__main__':
     np.random.seed(0)
 
     ###########################################################################
-    method = 'gcmi'
+    method = 'binning'
     ###########################################################################
 
 
-    x = np.load('/home/etienne/Downloads/data_200_trials', allow_pickle=True)
+    x = np.load('/home/etienne/Downloads/data_400_trials', allow_pickle=True)
 
-    # x = digitize(x, 8, axis=0)
+    x = digitize(x, 9, axis=0)
     model = InfoTopo()
     hoi = model.fit(
         x[..., 100], maxsize=None, method=method

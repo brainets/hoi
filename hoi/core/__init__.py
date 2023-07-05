@@ -3,4 +3,3 @@ from .entropies import (  # noqa
     get_entropy, copnorm_nd, entropy_gcmi, entropy_bin, entropy_knn,
     prepare_for_entropy
 )
-from .oinfo import oinfo_scan  # noqa

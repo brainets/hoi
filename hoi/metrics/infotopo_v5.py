@@ -16,17 +16,6 @@ logger = logging.getLogger("frites")
 
 ###############################################################################
 ###############################################################################
-#                                 ENTROPY
-###############################################################################
-###############################################################################
-
-@partial(jax.jit, static_argnums=(2,))
-def compute_entropies(x, idx, entropy=None):
-    return x, entropy(x[:, idx, :])
-
-
-###############################################################################
-###############################################################################
 #                                ITERATOR
 #
 # iterator to generate the combination of entropies i.e. :
@@ -35,13 +24,28 @@ def compute_entropies(x, idx, entropy=None):
 ###############################################################################
 
 
-def micomb(n, maxsize):
-    combs, order = [], []
-    for k in range(n):
-        for i in itertools.combinations(range(n), k + 1):
-            combs += [jnp.asarray(list(i) + [-1] * (maxsize - k - 1))]
-            order += [len(i)]
-    return jnp.asarray(combs), jnp.asarray(order).reshape(-1, 1)
+def _micomb(n, k):
+    def_range = jnp.arange(n)
+    return jnp.stack([np.array(m) for m in itertools.combinations(
+        def_range, k + 1) if n - 1 in m], axis=0)
+
+def micomb(n):
+    return map(lambda k: _micomb(n, k), range(n))
+
+
+###############################################################################
+###############################################################################
+#                                 ENTROPY
+###############################################################################
+###############################################################################
+
+@partial(jax.jit, static_argnums=(2,))
+def compute_entropies(x, idx, entropy=None):
+    """Compute entropy for a specific multiplet.
+
+    This function has to be wrapped with the entropy function.
+    """
+    return x, entropy(x[:, idx, :])
 
 
 ###############################################################################
@@ -52,36 +56,28 @@ def micomb(n, maxsize):
 
 
 @jax.jit
-def find_entropy_index(all_comb, to_find):
-    n_comb, n_feat = all_comb.shape
-    to_find = to_find.reshape(1, -1)
-    at = jnp.where((all_comb == to_find).all(1), jnp.arange(n_comb), 0).sum()
-    return all_comb, at
+def find_entropy_index(comb_idxn, target):
+    n_comb, n_feat = comb_idxn.shape
+    target = target.reshape(1, -1)
+    at = jnp.where((comb_idxn == target).all(1), jnp.arange(n_comb), 0).sum()
+    return comb_idxn, at
 
 
-@jax.jit
-def sum_entropies(inputs, idxorder):
-    h_x, h_idx, combs, _hoi = inputs
-    mvmidx, order = idxorder
-
-    # get the number of -1 to pad
-    n_to_pad = jnp.where(mvmidx == -1, 1, 0).sum()
+@partial(jax.jit, static_argnums=(2,))
+def sum_entropies(inputs, m, m_order=None):
+    combs, h_x, h_idx, _hoi = inputs
 
     # build indices specific to the multiplets
-    _idx = combs[:, mvmidx]
+    _idx = combs[:, m]
 
-    # pad indices with -1
-    _idx = jnp.where(mvmidx.reshape(1, -1) == -1, -1, _idx)
+    # number of features in this entropy
+    h_x_m, h_idx_mi = h_x[m_order], h_idx[m_order]
 
-    # find _idx inside all of the multiplets
-    _, indices = jax.lax.scan(
-        find_entropy_index, h_idx, _idx
-    )
+    # find _idx inside h_idx_mi
+    _, indices = jax.lax.scan(find_entropy_index, h_idx_mi, _idx)
+    _hoi += ((-1) ** (m_order)) * h_x_m[indices, :]
 
-    # accumulate entropy on carry
-    _hoi += ((-1) ** (order - 1)) * h_x[indices, :]
-
-    return (h_x, h_idx, combs, _hoi), _
+    return (combs, h_x, h_idx, _hoi), _
 
 
 
@@ -129,6 +125,7 @@ class InfoTopo(HOIEstimator):
 
         # check multiplets
         self._prepare_multiplets(minsize, maxsize, y=y)
+        self.minsize = 1
 
         # check entropy function
         data, entropy = self._prepare_for_entropy(data, method, y=y, **kwargs)
@@ -147,47 +144,59 @@ class InfoTopo(HOIEstimator):
         logger.info(f"Compute entropies")
 
         h_x, h_idx = [], []
-        for msize in range(1, self.maxsize + 1):
+        for msize in self:
             logger.info(f"    Order={msize}")
 
             # compute all of the entropies at that order
             _h_idx = self.get_combinations(msize)
             _, _h_x = jax.lax.scan(get_ent, data, _h_idx)
 
-            # add -1 for missing indices
-            _h_idx = jnp.concatenate((
-                jnp.asarray(_h_idx), jnp.full((len(_h_idx), self.maxsize - msize), -1)
-            ), axis=1)
-
             # store entopies and indices associated to entropies
             h_x.append(_h_x)
             h_idx.append(_h_idx)
 
-        h_x = jnp.concatenate(h_x, axis=0)
-        h_idx = jnp.concatenate(h_idx, axis=0)
-
-        # _______________________________ INFOTOPO ________________________________
+        # _____________________________ INFOTOPO ______________________________
 
         logger.info(f"Compute infotopo")
 
-        hoi = []
+        hoi, hoi_idx = [], []
         for msize in self:
+
+            logger.info(f"    Order={msize}")
 
             # combinations over spatial dimension
             combs = self.get_combinations(msize)
 
-            # get formula of entropy summation
-            mvmidx, order = micomb(msize, self.maxsize)
+            # order 1, just select entropies
+            if msize == 1:
+                np.testing.assert_array_equal(
+                    h_idx[0].squeeze(), combs.squeeze())
+                hoi_idx.append(h_idx[0])
+                hoi.append(h_x[0])
+                continue
 
-            logger.info(f"    Order={msize}")
+            # find indices associated to cmi_{n-1}
+            combs_prev = combs[:, 0:-1]
+            if combs_prev.ndim == 1:
+                combs_prev = combs_prev[:, jnp.newaxis]
+            _, mi_prev_idx = jax.lax.scan(
+                find_entropy_index, hoi_idx[-1], combs_prev)
+            np.testing.assert_array_equal(
+                hoi_idx[-1][mi_prev_idx, :], combs_prev)
+            _hoi = hoi[-1][mi_prev_idx ,:]
 
-            # sum entropies
-            _hoi = np.zeros((len(combs), self.n_variables))
-            (_, _, _, _hoi), _ = jax.lax.scan(
-                sum_entropies, (h_x, h_idx, combs, _hoi), (mvmidx, order)
-            )
+            # get formula of entropy summation from cmi_{n-1}
+            mvmidx = micomb(msize)
+
+
+            for n_m, m in enumerate(mvmidx):
+                (_, _, _, _hoi), _ = jax.lax.scan(
+                    partial(sum_entropies, m_order=m.shape[1] - 1),
+                    (combs, h_x, h_idx, _hoi), m
+                )
 
             hoi.append(_hoi)
+            hoi_idx.append(combs)
 
         hoi = np.concatenate(hoi, axis=0)
 
@@ -219,6 +228,7 @@ if __name__ == '__main__':
     hoi = model.fit(
         x[..., 100], minsize=3, maxsize=None, method=method
     )
+    0/0
 
     lscp = landscape(hoi.squeeze(), model.order, output='xarray')
     lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())

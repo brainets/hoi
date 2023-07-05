@@ -208,6 +208,7 @@ if __name__ == '__main__':
     hoi = model.fit(
         x[..., 100], minsize=1, maxsize=None, method=method
     )
+    0/0
 
     lscp = landscape(hoi.squeeze(), model.order, output='xarray')
     lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())

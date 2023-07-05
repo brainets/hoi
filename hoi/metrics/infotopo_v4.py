@@ -9,8 +9,7 @@ import numpy as np
 import jax
 import jax.numpy as jnp
 
-from hoi.core.entropies import get_entropy, prepare_for_entropy
-from hoi.core.combinatory import combinations
+from hoi.metrics.est_hoi import HOIEstimator
 
 logger = logging.getLogger("frites")
 
@@ -86,114 +85,110 @@ def sum_entropies(inputs, idxorder):
 
 
 
-def infotopo(
-        data, minsize=2, maxsize=None, method='gcmi', **kwargs
-    ):
-    """Dynamic, possibly task-related oinfo.
+class InfoTopo(HOIEstimator):
 
-    Parameters
-    ----------
-    data : array_like
-        Standard NumPy arrays of shape (n_samples, n_features) or
-        (n_samples, n_features, n_variables)
-    y : array_like
-        The feature of shape (n_trials,) for estimating task-related O-info.
-    minsize, maxsize : int | 2, None
-        Minimum and maximum size of the multiplets
-    method : {'gcmi', 'binning', 'knn'}
-        Name of the method to compute entropy. Use either :
+    """Dynamic, possibly task-related Topological Information."""
 
-            * 'gcmi': gaussian copula entropy [default]
-            * 'binning': binning-based estimator of entropy. Note that to use
-              this estimator, the data have be to discretized
-            * 'knn': k-nearest neighbor estimator
-    kwargs : dict | {}
-        Additional arguments are sent to each entropy function
+    def __init__(self):
+        HOIEstimator.__init__(self)
 
-    Returns
-    -------
-    oinfo : array_like
-        The O-info array of shape (n_multiplets, n_variables) where positive
-        values reflect redundant dominated interactions and negative values
-        stand for synergistic dominated interactions.
-    """
-    # ________________________________ INPUTS _________________________________
-    # force data to be 3d
-    assert data.ndim >= 2
-    if data.ndim == 2:
-        data = data[..., np.newaxis]
+    def fit(self, data, y=None, minsize=1, maxsize=None, method='gcmi',
+            **kwargs):
+        """Compute Topological Information.
 
-    # extract variables
-    n_samples, n_features, n_variables = data.shape
+        Parameters
+        ----------
+        data : array_like
+            Standard NumPy arrays of shape (n_samples, n_features) or
+            (n_samples, n_features, n_variables)
+        y : array_like
+            The feature of shape (n_trials,) for estimating task-related O-info.
+        minsize, maxsize : int | 2, None
+            Minimum and maximum size of the multiplets
+        method : {'gcmi', 'binning', 'knn'}
+            Name of the method to compute entropy. Use either :
 
-    # get the maximum size of the multiplets investigated
-    if not isinstance(maxsize, int):
-        maxsize = n_features
-    maxsize = max(1, maxsize)
-    assert maxsize >= minsize
+                * 'gcmi': gaussian copula entropy [default]
+                * 'binning': binning-based estimator of entropy. Note that to use
+                  this estimator, the data have be to discretized
+                * 'knn': k-nearest neighbor estimator
+        kwargs : dict | {}
+            Additional arguments are sent to each entropy function
 
-    logger.info(
-        f"Compute the HOI (min={minsize}; max={maxsize})"
-    )
+        Returns
+        -------
+        oinfo : array_like
+            The O-info array of shape (n_multiplets, n_variables) where positive
+            values reflect redundant dominated interactions and negative values
+            stand for synergistic dominated interactions.
+        """
+        # ______________________________ INPUTS _______________________________
 
-    # ____________________________ PREPROCESSING ______________________________
+        # data checking
+        data = self._prepare_data(data)
 
-    # prepare the data for computation
-    data, kwargs = prepare_for_entropy(
-        data, method, None, **kwargs
-    )
+        # check multiplets
+        self._prepare_multiplets(minsize, maxsize, y=y)
 
-    # ______________________________ ENTROPIES ________________________________
+        # check entropy function
+        data, entropy = self._prepare_for_entropy(data, method, y=y, **kwargs)
 
-    # get the function to compute entropy and vmap it one for 3D inputs
-    entropy = jax.jit(jax.vmap(get_entropy(method=method, **kwargs)))
-    get_ent = jax.jit(partial(compute_entropies, entropy=entropy))
-
-    logger.info(f"Compute entropies")
-
-    h_x, h_idx, hoi = [], [], []
-    for msize in range(1, maxsize + 1):
-        logger.info(f"    Order={msize}")
-
-        # compute all of the entropies at that order
-        _h_idx = combinations(n_features, msize)
-        _, _h_x = jax.lax.scan(get_ent, data, _h_idx)
-
-        # add -1 for missing indices
-        _h_idx = jnp.concatenate((
-            jnp.asarray(_h_idx), jnp.full((len(_h_idx), maxsize - msize), -1)
-        ), axis=1)
-
-        # concatenate everything
-        if isinstance(h_x, list):
-            h_x = _h_x
-        else:
-            h_x = jnp.concatenate((h_x, _h_x), axis=0)
-
-        if isinstance(h_idx, list):
-            h_idx = _h_idx
-        else:
-            h_idx = jnp.concatenate((h_idx, _h_idx))
-
-        # combinations over spatial dimension
-        combs = combinations(n_features, msize)
-
-        # get formula of entropy summation
-        mvmidx, order = micomb(msize, maxsize)
-
-        logger.info(f"    Order={msize}")
-
-        # sum entropies
-        _hoi = np.zeros((len(combs), n_variables))
-        (_, _, _, _hoi), _ = jax.lax.scan(
-            sum_entropies, (h_x, h_idx, combs, _hoi), (mvmidx, order)
+        logger.info(
+            f"Compute the info topo (min={self.minsize}; max={self.maxsize})"
         )
 
-        hoi.append(_hoi)
+        # ____________________________ ENTROPIES ______________________________
 
-    hoi = np.concatenate(hoi, axis=0)
+        # get the function to compute entropy and vmap it one for 3D inputs
+        get_ent = jax.jit(partial(
+            compute_entropies, entropy=jax.vmap(entropy)
+        ))
 
-    return hoi
+        logger.info(f"Compute entropies")
+
+        h_x, h_idx, hoi = [], [], []
+        for msize in range(1, self.maxsize + 1):
+            logger.info(f"    Order={msize}")
+
+            # compute all of the entropies at that order
+            _h_idx = self.get_combinations(msize)
+            _, _h_x = jax.lax.scan(get_ent, data, _h_idx)
+
+            # add -1 for missing indices
+            _h_idx = jnp.concatenate((
+                jnp.asarray(_h_idx), jnp.full((len(_h_idx), self.maxsize - msize), -1)
+            ), axis=1)
+
+            # concatenate everything
+            if isinstance(h_x, list):
+                h_x = _h_x
+            else:
+                h_x = jnp.concatenate((h_x, _h_x), axis=0)
+
+            if isinstance(h_idx, list):
+                h_idx = _h_idx
+            else:
+                h_idx = jnp.concatenate((h_idx, _h_idx))
+
+            # combinations over spatial dimension
+            combs = self.get_combinations(msize)
+
+            # get formula of entropy summation
+            mvmidx, order = micomb(msize, self.maxsize)
+
+            logger.info(f"    Order={msize}")
+
+            # sum entropies
+            _hoi = np.zeros((len(combs), self.n_variables))
+            (_, _, _, _hoi), _ = jax.lax.scan(
+                sum_entropies, (h_x, h_idx, combs, _hoi), (mvmidx, order)
+            )
+
+            hoi.append(_hoi)
+
+        hoi = np.concatenate(hoi, axis=0)
+
+        return hoi
 
 
 if __name__ == '__main__':
@@ -211,70 +206,19 @@ if __name__ == '__main__':
 
     ###########################################################################
     method = 'gcmi'
-    n_trials = 600
-    n_roi = 5
-    n_times = 50
-
-    redundancy = [
-        (2, 3, 4)
-    ]
-    synergy = [
-        (0, 1, 2)
-    ]
     ###########################################################################
 
-    def set_redundancy(x, redundancy, sl, win, trials):
-        for m in redundancy:
-            x[:, m, sl] += .8 * trials.reshape(-1, 1, 1) * win
-        return x
 
-    def set_synergy(x, synergy, sl, win, trials):
-        for m in synergy:
-            blocks = np.array_split(np.arange(n_trials), len(m))
-            for n_b, b in enumerate(blocks):
-                x[b, m[n_b], sl] += trials[b].reshape(-1, 1) * win[0, ...]
-        return x
-
-    # generate the data
-    x = np.random.rand(n_trials, n_roi, n_times)
-    roi = np.array([f"r{r}" for r in range(n_roi)])[::-1]
-    trials = np.random.rand(n_trials)
-    times = np.arange(n_times)
-    win = np.hanning(10).reshape(1, 1, -1)
-
-    # introduce (redundant, synergistic) information
-    x = set_redundancy(x, redundancy, slice(20, 30), win, trials)
-    x = set_synergy(x, synergy, slice(30, 40), win, trials)
-
-    start_time = tst.time()
-
-    x = np.load('/home/etienne/Downloads/data_time_evolution', allow_pickle=True)
+    x = np.load('/home/etienne/Downloads/data_200_trials', allow_pickle=True)
 
     # x = digitize(x, 8, axis=0)
-    oinfo = infotopo(x[..., 100], minsize=3, maxsize=4, method=method)
-    # 0/0
-    # plt.plot(oinfo)
-    # plt.show()
-    # 0/0
-    # print(oinfo.shape)
-    # print(oinfo.shape)
-    # print(combs.shape)
+    model = InfoTopo()
+    hoi = model.fit(
+        x[..., 100], minsize=3, maxsize=None, method=method
+    )
 
-    order = []
-    for o in range(1, 4 + 1):
-        order += [o] * ccomb(x.shape[1], o)
-    print(oinfo.shape, len(order))
-
-    lscp = landscape(oinfo.squeeze(), order, output='xarray', stat='count')
+    lscp = landscape(hoi.squeeze(), model.order, output='xarray')
     lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())
+    plt.axvline(model.undersampling, linestyle='--', color='k')
     plt.title(method, fontsize=24, fontweight='bold')
-    plt.show()
-    0/0
-
-    vmin, vmax = np.percentile(oinfo, [1, 99])
-    minmax = min(abs(vmin), abs(vmax))
-
-    # plt.pcolormesh(oinfo, cmap='RdBu_r', vmin=-minmax, vmax=minmax)
-    plt.pcolormesh(oinfo, cmap='RdBu_r')
-    plt.colorbar()
     plt.show()

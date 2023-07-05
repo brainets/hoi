@@ -38,9 +38,11 @@ class HOIEstimator(object):
         # check minsize / maxsize
         if not isinstance(maxsize, int):
             maxsize = self.n_features
-        maxsize = max(1, min(maxsize, self.n_features))
-        minsize = max(2, minsize)
+        assert isinstance(maxsize, int)
+        assert isinstance(minsize, int)
         assert maxsize >= minsize
+        maxsize = max(1, min(maxsize, self.n_features))
+        minsize = max(1, minsize)
 
         self.minsize = minsize
         self.maxsize = maxsize

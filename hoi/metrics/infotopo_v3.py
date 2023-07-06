@@ -4,6 +4,8 @@ import itertools
 from functools import partial
 import logging
 
+from tqdm import tqdm
+
 import numpy as np
 
 import jax
@@ -71,10 +73,13 @@ def sum_entropies(inputs, m):
     _idx = combs[:, m]
 
     # find _idx inside h_idx_m
-    _, indices = jax.lax.scan(find_entropy_index, h_idx_m, _idx)
+    indices = (
+        _idx[..., jnp.newaxis] == h_idx_m.T[jnp.newaxis, ...]).sum(1).argmax(1)
+
+
     _hoi += sgn * h_x_m[indices, :]
 
-    return (combs, h_x_m, h_idx_m, sgn, _hoi), _
+    return (combs, h_x_m, h_idx_m, sgn, _hoi), None
 
 
 
@@ -137,31 +142,28 @@ class InfoTopo(HOIEstimator):
             compute_entropies, entropy=jax.vmap(entropy)
         ))
 
-        logger.info(f"Compute entropies")
+        pbar_out = self._get_pbar(
+            iterable=range(self.maxsize - self.minsize),
+            desc=f'Order {self.minsize}'
+        )
 
-        h_x, h_idx = [], []
+        h_x, h_idx, hoi = [], [], []
         for msize in self:
-            logger.info(f"    Order={msize}")
+            # logger.info(f"    Order={msize}")
+
+            # --------------------------- ENTROPIES ---------------------------
+
+            # combinations of features
+            combs = self.get_combinations(msize)
 
             # compute all of the entropies at that order
-            _h_idx = self.get_combinations(msize)
-            _, _h_x = jax.lax.scan(get_ent, data, _h_idx)
+            _, _h_x = jax.lax.scan(get_ent, data, combs)
 
             # store entopies and indices associated to entropies
             h_x.append(_h_x)
-            h_idx.append(_h_idx)
+            h_idx.append(combs)
 
-        # _____________________________ INFOTOPO ______________________________
-
-        logger.info(f"Compute infotopo")
-
-        hoi = []
-        for msize in self:
-
-            logger.info(f"    Order={msize}")
-
-            # combinations over spatial dimension
-            combs = self.get_combinations(msize)
+            # ---------------------- MUTUAL INFORMATION -----------------------
 
             # order 1, just select entropies
             if msize == 1:
@@ -201,6 +203,9 @@ class InfoTopo(HOIEstimator):
 
             hoi.append(_hoi)
 
+            pbar_out.set_description(desc=f'Order {msize}', refresh=False)
+            pbar_out.update(1)
+
         hoi = np.concatenate(hoi, axis=0)
 
         return hoi
@@ -211,7 +216,6 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     from frites import set_mpl_style
     import seaborn as sns
-    import time as tst
     from hoi.utils import landscape, digitize
     from matplotlib.colors import LogNorm
 
@@ -224,7 +228,9 @@ if __name__ == '__main__':
     ###########################################################################
 
 
-    x = np.load('/home/etienne/Downloads/data_400_trials', allow_pickle=True)
+    x = np.load('/home/etienne/Downloads/data_200_trials', allow_pickle=True)
+
+    logger.setLevel('INFO')
 
     # x = digitize(x, 9, axis=0)
     model = InfoTopo()

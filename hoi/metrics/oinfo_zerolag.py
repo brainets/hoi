@@ -10,7 +10,7 @@ import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
 
-logger = logging.getLogger("frites")
+logger = logging.getLogger("hoi")
 
 
 @partial(jax.jit, static_argnums=(2,))

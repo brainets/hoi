@@ -19,25 +19,6 @@ logger = logging.getLogger("hoi")
 
 ###############################################################################
 ###############################################################################
-#                                ITERATOR
-#
-# iterator to generate the combination of entropies i.e. :
-# (H1, H2, H3); (H12, H13, H23); (H123)
-###############################################################################
-###############################################################################
-
-
-def _micomb(n, k):
-    def_range = jnp.arange(n)
-    return jnp.stack([np.array(m) for m in itertools.combinations(
-        def_range, k + 1) if n - 1 in m], axis=0)
-
-def micomb(n):
-    return map(lambda k: _micomb(n, k), range(n))
-
-
-###############################################################################
-###############################################################################
 #                                 ENTROPY
 ###############################################################################
 ###############################################################################
@@ -216,24 +197,18 @@ if __name__ == '__main__':
     set_mpl_style()
 
     ###########################################################################
-    method = 'gcmi'
+    method = 'binning'
     ###########################################################################
 
 
     x = np.load('/home/etienne/Downloads/data_200_trials', allow_pickle=True)
 
-    logger.setLevel('ERROR')
-
-    # x = digitize(x, 9, axis=0)
+    logger.setLevel('INFO')
     model = InfoTopo()
+    x = digitize(x, 9, axis=0)
     hoi = model.fit(
         x[..., 100], maxsize=None, method=method
     )
-    0/0
-    print(hoi)
-    # print(model.entropies.shape)
-    # print(model.entropies_indices)
-    # 0/0
 
     lscp = landscape(hoi.squeeze(), model.order, output='xarray')
     lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())

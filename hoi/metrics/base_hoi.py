@@ -1,4 +1,4 @@
-import tqdm
+from tqdm.auto import tqdm
 import logging
 
 import numpy as np
@@ -86,7 +86,7 @@ class HOIEstimator(object):
         kwargs["bar_format"] = (
             "{percentage:3.0f}%|{bar}| {desc} : {n_fmt}/{total_fmt} [{elapsed}"
             "<{remaining}, {rate_fmt:>11}{postfix}]")
-        return tqdm.tqdm(**kwargs)
+        return tqdm(**kwargs)
 
 
     ###########################################################################

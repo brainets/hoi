@@ -4,10 +4,13 @@ import itertools
 from functools import partial
 import logging
 
+from tqdm import tqdm
+
 import numpy as np
 
 import jax
 import jax.numpy as jnp
+from jax_tqdm import scan_tqdm
 
 from hoi.metrics.base_hoi import HOIEstimator
 
@@ -56,25 +59,28 @@ def compute_entropies(x, idx, entropy=None):
 
 
 @jax.jit
-def find_entropy_index(comb_idxn, target):
-    n_comb, n_feat = comb_idxn.shape
-    target = target.reshape(1, -1)
-    at = jnp.where((comb_idxn == target).all(1), jnp.arange(n_comb), 0).sum()
-    return comb_idxn, at
+def find_indices(inputs, c):
+    combs, keep = inputs
+
+    keep = jnp.add(keep, (combs == c).any(1).astype(int))
+
+    return (combs, keep), None
 
 
 @jax.jit
-def sum_entropies(inputs, m):
-    combs, h_x_m, h_idx_m, sgn, _hoi = inputs
+def compute_mi(inputs, iterators):
+    combs, h, order = inputs
+    _, comb = iterators
 
-    # build indices specific to the multiplets
-    _idx = combs[:, m]
+    # scanning over indices
+    # is_inside = jnp.zeros((combs.shape[0],), dtype=int)
+    # (_, is_inside), _ = jax.lax.scan(find_indices, (combs, is_inside), comb)
 
-    # find _idx inside h_idx_m
-    _, indices = jax.lax.scan(find_entropy_index, h_idx_m, _idx)
-    _hoi += sgn * h_x_m[indices, :]
+    # tensor implementation
+    is_inside = (combs == comb[jnp.newaxis, ...]).any(1).sum(1)
 
-    return (combs, h_x_m, h_idx_m, sgn, _hoi), _
+
+    return inputs, jnp.sum(h, where=(is_inside == order).reshape(-1, 1))
 
 
 
@@ -102,8 +108,8 @@ class InfoTopo(HOIEstimator):
             Name of the method to compute entropy. Use either :
 
                 * 'gcmi': gaussian copula entropy [default]
-                * 'binning': binning-based estimator of entropy. Note that to use
-                  this estimator, the data have be to discretized
+                * 'binning': binning-based estimator of entropy. Note that to
+                  use this estimator, the data have be to discretized
                 * 'knn': k-nearest neighbor estimator
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
@@ -137,73 +143,66 @@ class InfoTopo(HOIEstimator):
             compute_entropies, entropy=jax.vmap(entropy)
         ))
 
-        logger.info(f"Compute entropies")
+        logger.info("    Compute entropies")
 
-        h_x, h_idx = [], []
+        # compute infotopo
+        h_x, h_idx, order = [], [], []
         for msize in self:
-            logger.info(f"    Order={msize}")
+            # combinations of features
+            combs = self.get_combinations(msize)
 
             # compute all of the entropies at that order
-            _h_idx = self.get_combinations(msize)
-            _, _h_x = jax.lax.scan(get_ent, data, _h_idx)
+            _, _h_x = jax.lax.scan(get_ent, data, combs)
+
+            # appen -1 to the combinations
+            combs = jnp.concatenate(
+                (combs, jnp.full((combs.shape[0], self.maxsize - msize), -1)),
+                axis=1
+            )
 
             # store entopies and indices associated to entropies
             h_x.append(_h_x)
-            h_idx.append(_h_idx)
+            h_idx.append(combs)
+            order.append([msize] * _h_x.shape[0])
 
-        # _____________________________ INFOTOPO ______________________________
+        h_x = jnp.concatenate(h_x, axis=0)
+        h_idx = jnp.concatenate(h_idx, axis=0)
+        order = jnp.asarray(np.concatenate(order, axis=0))
+        n_mult = h_x.shape[0]
 
-        logger.info(f"Compute infotopo")
+        # ________________________ MUTUAL-INFORMATION _________________________
 
-        hoi = []
-        for msize in self:
+        # compute order and multiply entropies
+        h_x_sgn = jnp.multiply(((-1.) ** (order.reshape(-1, 1) - 1)), h_x)
+        h_idx_2 = jnp.where(h_idx == -1, -2, h_idx)
 
-            logger.info(f"    Order={msize}")
+        logger.info("    Compute mutual information")
 
-            # combinations over spatial dimension
-            combs = self.get_combinations(msize)
+        pbar = scan_tqdm(n_mult, message='Mutual information')
 
-            # order 1, just select entropies
-            if msize == 1:
-                np.testing.assert_array_equal(
-                    h_idx[0].squeeze(), combs.squeeze())
-                hoi.append(h_x[0])
-                continue
+        _, hoi = jax.lax.scan(
+            pbar(compute_mi), (h_idx[..., jnp.newaxis], h_x_sgn, order),
+            (jnp.arange(n_mult), h_idx_2)
+        )
 
-            # find indices associated to cmi_{n-1}
-            combs_prev = combs[:, 0:-1]
-            if combs_prev.ndim == 1:
-                combs_prev = combs_prev[:, jnp.newaxis]
-            _, mi_prev_idx = jax.lax.scan(
-                find_entropy_index, h_idx[msize - 2], combs_prev)
-            np.testing.assert_array_equal(
-                h_idx[msize - 2][mi_prev_idx, :], combs_prev)
+        # self._h = np.asarray(h_x)
+        # self._h_idx = np.asarray(h_idx)
 
-            # initialize cmi_{n + 1} = f(cmi_{n})
-            _hoi = hoi[-1][mi_prev_idx ,:]
+        return np.asarray(hoi)
 
-            # terms for entropy summation from cmi_{n+1}, without cmi_{n}
-            mvmidx = micomb(msize)
+    # @property
+    # def entropies(self):
+    #     """Computed entropies."""
+    #     return np.concatenate([np.asarray(k) for k in self._h], axis=0)
 
+    # @property
+    # def entropies_indices(self):
+    #     """Get multiplets associated to entropies."""
+    #     mult = []
+    #     for c in self._h_idx:
+    #         mult += np.asarray(c).tolist()
+    #     return mult
 
-            for n_m, m in enumerate(mvmidx):
-                # define order
-                m_order = m.shape[1] - 1
-
-                # order selection
-                h_x_m, h_idx_m = h_x[m_order], h_idx[m_order]
-                sgn = (-1.) ** m_order
-
-                # scan over tuples
-                (_, _, _, _, _hoi), _ = jax.lax.scan(
-                    sum_entropies, (combs, h_x_m, h_idx_m, sgn, _hoi), m
-                )
-
-            hoi.append(_hoi)
-
-        hoi = np.concatenate(hoi, axis=0)
-
-        return hoi
 
 
 if __name__ == '__main__':
@@ -211,20 +210,19 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     from frites import set_mpl_style
     import seaborn as sns
-    import time as tst
     from hoi.utils import landscape, digitize
     from matplotlib.colors import LogNorm
 
     set_mpl_style()
-
-    np.random.seed(0)
 
     ###########################################################################
     method = 'gcmi'
     ###########################################################################
 
 
-    x = np.load('/home/etienne/Downloads/data_400_trials', allow_pickle=True)
+    x = np.load('/home/etienne/Downloads/data_200_trials', allow_pickle=True)
+
+    logger.setLevel('ERROR')
 
     # x = digitize(x, 9, axis=0)
     model = InfoTopo()
@@ -232,6 +230,10 @@ if __name__ == '__main__':
         x[..., 100], maxsize=None, method=method
     )
     0/0
+    print(hoi)
+    # print(model.entropies.shape)
+    # print(model.entropies_indices)
+    # 0/0
 
     lscp = landscape(hoi.squeeze(), model.order, output='xarray')
     lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())

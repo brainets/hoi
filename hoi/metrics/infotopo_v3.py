@@ -107,8 +107,8 @@ class InfoTopo(HOIEstimator):
             Name of the method to compute entropy. Use either :
 
                 * 'gcmi': gaussian copula entropy [default]
-                * 'binning': binning-based estimator of entropy. Note that to use
-                  this estimator, the data have be to discretized
+                * 'binning': binning-based estimator of entropy. Note that to
+                  use this estimator, the data have be to discretized
                 * 'knn': k-nearest neighbor estimator
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
@@ -135,22 +135,16 @@ class InfoTopo(HOIEstimator):
             f"Compute the info topo (min={self.minsize}; max={self.maxsize})"
         )
 
-        # ____________________________ ENTROPIES ______________________________
+        # _____________________________ INFOTOPO ______________________________
 
         # get the function to compute entropy and vmap it one for 3D inputs
         get_ent = jax.jit(partial(
             compute_entropies, entropy=jax.vmap(entropy)
         ))
 
-        pbar_out = self._get_pbar(
-            iterable=range(self.maxsize - self.minsize),
-            desc=f'Order {self.minsize}'
-        )
-
+        # compute infotopo
         h_x, h_idx, hoi = [], [], []
         for msize in self:
-            # logger.info(f"    Order={msize}")
-
             # --------------------------- ENTROPIES ---------------------------
 
             # combinations of features
@@ -203,12 +197,26 @@ class InfoTopo(HOIEstimator):
 
             hoi.append(_hoi)
 
-            pbar_out.set_description(desc=f'Order {msize}', refresh=False)
-            pbar_out.update(1)
-
         hoi = np.concatenate(hoi, axis=0)
 
+        self._h = h_x
+        self._h_idx = h_idx
+
         return hoi
+
+    @property
+    def entropies(self):
+        """Computed entropies."""
+        return np.concatenate([np.asarray(k) for k in self._h], axis=0)
+
+    @property
+    def entropies_indices(self):
+        """Get multiplets associated to entropies."""
+        mult = []
+        for c in self._h_idx:
+            mult += np.asarray(c).tolist()
+        return mult
+
 
 
 if __name__ == '__main__':
@@ -220,8 +228,6 @@ if __name__ == '__main__':
     from matplotlib.colors import LogNorm
 
     set_mpl_style()
-
-    np.random.seed(0)
 
     ###########################################################################
     method = 'gcmi'
@@ -235,8 +241,10 @@ if __name__ == '__main__':
     # x = digitize(x, 9, axis=0)
     model = InfoTopo()
     hoi = model.fit(
-        x[..., 100], maxsize=None, method=method
+        x[..., 100], maxsize=3, method=method
     )
+    print(model.entropies.shape)
+    print(model.entropies_indices)
     0/0
 
     lscp = landscape(hoi.squeeze(), model.order, output='xarray')

@@ -16,7 +16,14 @@ class HOIEstimator(object):
         pass
 
     def __iter__(self):
-        for msize in range(self.minsize, self.maxsize + 1):
+        """Iteration over orders with progressbar."""
+        pbar = self._get_pbar(
+            iterable=range(self.minsize, self.maxsize + 1),
+            desc=f"Order {self.minsize}"
+        )
+
+        for msize in pbar:
+            pbar.set_description(desc=f"Order {msize}", refresh=False)
             yield msize
 
     ###########################################################################

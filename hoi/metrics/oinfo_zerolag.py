@@ -1,76 +1,66 @@
-from math import comb
+from math import comb as ccomb
 import itertools
 from functools import partial
 import logging
 
 import numpy as np
 
+
 import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
+from hoi.utils.progressbar import scan_tqdm
 
 logger = logging.getLogger("hoi")
 
 
-@partial(jax.jit, static_argnums=(2,))
-def oinfo_scan(
-        x: jnp.array, comb: jnp.array, entropy=None
-    ) -> (jnp.array, jnp.array):
-    """Compute the O-information.
+@jax.jit
+def compute_oinfo(inputs, iterators):
+    # h_x = (n_mult, n_var); h_idx = (n_mult, maxsize, 1)
+    h_x, h_idx, order = inputs
+    _, comb, msize = iterators
 
-    Parameters
-    ----------
-    x : array_like
-        Input data of shape (n_variables, n_features, n_trials)
-    comb : array_like
-        Combination to use (e.g. (0, 1, 2))
-    entropy : callable | None
-        Entropy function to use for the computation
+    # find all of the indices
+    isum = (h_idx == comb[jnp.newaxis, :]).sum((1, 2))
 
-    Returns
-    -------
-    oinfo : array_like
-        O-information for the multiplet comb
-    """
-    # build indices
-    msize = len(comb)
-    ind = jnp.mgrid[0:msize, 0:msize].sum(0) % msize
-    ind = ind[:, 1:]
+    # indices for H^(n), H^(j) and H^(-j)
+    i_n = jnp.logical_and(isum == msize, order == msize)
+    i_j = jnp.logical_and(isum == 1, order == 1)
+    i_mj = jnp.logical_and(isum == msize - 1, order == msize - 1)
 
-    # multiplet selection
-    x_mult = x[:, comb, :]
-    nvars = x_mult.shape[-2]
+    # sum entropies only when needed
+    h_n = jnp.sum(h_x, where=i_n.reshape(-1, 1))
+    h_j = jnp.sum(h_x, where=i_j.reshape(-1, 1))
+    h_mj = jnp.sum(h_x, where=i_mj.reshape(-1, 1))
 
-    # compute the entropies
-    h_n = entropy(x_mult[:, jnp.newaxis, ...])[:, 0]
-    h_j = entropy(x_mult[..., jnp.newaxis, :])
-    h_mj = entropy(x_mult[..., ind, :])
+    # compute o-info
+    o = (msize - 2.) * h_n + h_j - h_mj
 
-    o = (nvars - 2) * h_n + (h_j - h_mj).sum(1)
-
-    return x, o
-
+    return inputs, o
 
 
 class OinfoZeroLag(HOIEstimator):
 
-    """Dynamic, possibly task-related O-info."""
+    """Dynamic, possibly task-related O-info.
 
-    def __init__(self):
-        HOIEstimator.__init__(self)
+    Parameters
+    ----------
+    data : array_like
+        Standard NumPy arrays of shape (n_samples, n_features) or
+        (n_samples, n_features, n_variables)
+    y : array_like
+        The feature of shape (n_trials,) for estimating task-related O-info
+    """
 
-    def fit(self, data, y=None, minsize=2, maxsize=None, method='gcmi',
-            **kwargs):
+    def __init__(self, data, y=None):
+        HOIEstimator.__init__(self, data=data, y=y)
+
+    def fit(self, minsize=2, maxsize=None, method='gcmi', **kwargs):
         """Compute the O-information.
 
         Parameters
         ----------
-        data : array_like
-            Standard NumPy arrays of shape (n_samples, n_features) or
-            (n_samples, n_features, n_variables)
-        y : array_like
-            The feature of shape (n_trials,) for estimating task-related O-info
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
         method : {'gcmi', 'binning', 'knn'}
@@ -83,78 +73,57 @@ class OinfoZeroLag(HOIEstimator):
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
         """
-        # ______________________________ INPUTS _______________________________
+        # ____________________________ ENTROPIES ______________________________
 
-        # data checking
-        data = self._prepare_data(data)
-
-        # check multiplets
-        self._prepare_multiplets(minsize, maxsize, y=y)
-        self.minsize = max(2, self.minsize)
-
-        logger.info(
-            f"Compute the {'task-related ' * self.task_related} HOI "
-            f"(min={self.minsize}; max={self.maxsize})"
+        minsize, maxsize = self._check_minmax(minsize, maxsize)
+        h_x, h_idx, order = self.compute_entropies(
+            minsize=1, maxsize=maxsize, method=method, **kwargs
         )
 
-        # check entropy function
-        data, entropy = self._prepare_for_entropy(data, method, y=y, **kwargs)
+        # _______________________________ HOI _________________________________
 
-        # ______________________________ O-INFO _______________________________
+        # subselection of orders (minsize, maxsize)
+        keep = order >= minsize
+        n_mult = keep.sum()
 
-        # wrap the entropy function twice to support 4D inputs
-        entropy = jax.jit(jax.vmap(jax.vmap(entropy)))
+        # progress-bar definition
+        pbar = scan_tqdm(n_mult, message='Oinfo')
 
-        # use it to compute oinfo
-        oinfo_mmult = jax.jit(partial(oinfo_scan, entropy=entropy))
+        # compute o-info
+        h_idx_2 = jnp.where(h_idx == -1, -2, h_idx)
+        _, hoi = jax.lax.scan(
+            pbar(compute_oinfo), (h_x, h_idx[..., jnp.newaxis], order),
+            (jnp.arange(n_mult), h_idx_2[keep], order[keep])
+        )
 
-        oinfo = []
-        for msize in self:
-            combs = self.get_combinations(msize)
-
-            _, _oinfo = jax.lax.scan(oinfo_mmult, data, combs)
-            oinfo.append(np.asarray(_oinfo))
-
-        oinfo = np.concatenate(oinfo, axis=0)
-
-        return oinfo
+        return np.asarray(hoi)
 
 
 
 if __name__ == '__main__':
-    from math import comb as ccomb
     import matplotlib.pyplot as plt
-    from frites import set_mpl_style
-    import seaborn as sns
-    import time as tst
-    from matplotlib.colors import LogNorm
-
     from hoi.utils import landscape, digitize
-
-    set_mpl_style()
-
-    np.random.seed(0)
-
-    ###########################################################################
-    method = 'gcmi'
-    ###########################################################################
+    from matplotlib.colors import LogNorm
+    plt.style.use('ggplot')
 
 
-    x = np.load('/home/etienne/Downloads/data_200_trials', allow_pickle=True)
+    path = '/home/etienne/Downloads/data_200_trials'
+    x = np.load(path, allow_pickle=True)[..., 100]
+    x_min, x_max = x.min(), x.max()
+    x_amp = x_max - x_min
+    x_bin = np.ceil((( x - x_min) * (3 - 1)) / (x_amp)).astype(int)
+
 
     logger.setLevel('INFO')
-
-    # x = digitize(x, 8, axis=0)
-
-    model = OinfoZeroLag()
-    oinfo = model.fit(
-        x[..., 100], method=method, minsize=1, maxsize=None
+    # model = OinfoZeroLag(digitize(x, 3, axis=1))
+    # model = OinfoZeroLag(x[..., 100])
+    model = OinfoZeroLag(x)
+    hoi = model.fit(
+        maxsize=None, method="gcmi"
     )
-    # print(model.multiplets)
-    # print(model.order)
 
-    lscp = landscape(oinfo.squeeze(), model.order, output='xarray')
-    lscp.plot(x='order', y='bins', cmap='turbo', norm=LogNorm())
+    lscp = landscape(hoi.squeeze(), model.order, output='xarray')
+    lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())
     plt.axvline(model.undersampling, linestyle='--', color='k')
-    plt.title(method, fontsize=24, fontweight='bold')
+    plt.grid(True)
     plt.show()

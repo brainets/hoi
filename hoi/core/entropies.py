@@ -59,15 +59,10 @@ def get_entropy(method='gcmi', **kwargs):
 ###############################################################################
 
 
-def prepare_for_entropy(data, method, y, **kwargs):
+def prepare_for_entropy(data, method, **kwargs):
     """Prepare the data before computing entropy.
     """
     n_samples, n_features, n_variables = data.shape
-
-    # for task-related, add behavior along spatial dimension
-    if isinstance(y, (list, np.ndarray, tuple)):
-        y = np.tile(y.reshape(-1, 1, 1), (1, 1, n_variables))
-        data = np.concatenate((data, y), axis=1)
 
     # type checking
     if (method in ['binning']) and (data.dtype != int):

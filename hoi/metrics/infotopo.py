@@ -4,32 +4,15 @@ import itertools
 from functools import partial
 import logging
 
-from tqdm import tqdm
-
 import numpy as np
 
 import jax
 import jax.numpy as jnp
-from jax_tqdm import scan_tqdm
 
 from hoi.metrics.base_hoi import HOIEstimator
+from hoi.utils.progressbar import scan_tqdm
 
 logger = logging.getLogger("hoi")
-
-
-###############################################################################
-###############################################################################
-#                                 ENTROPY
-###############################################################################
-###############################################################################
-
-@partial(jax.jit, static_argnums=(2,))
-def compute_entropies(x, idx, entropy=None):
-    """Compute entropy for a specific multiplet.
-
-    This function has to be wrapped with the entropy function.
-    """
-    return x, entropy(x[:, idx, :])
 
 
 ###############################################################################
@@ -58,7 +41,7 @@ def compute_mi(inputs, iterators):
     # (_, is_inside), _ = jax.lax.scan(find_indices, (combs, is_inside), comb)
 
     # tensor implementation
-    is_inside = (combs == comb[jnp.newaxis, ...]).any(1).sum(1)
+    is_inside = (combs == comb[jnp.newaxis, ...]).sum((1, 2))
 
 
     return inputs, jnp.sum(h, where=(is_inside == order).reshape(-1, 1))
@@ -67,24 +50,27 @@ def compute_mi(inputs, iterators):
 
 class InfoTopo(HOIEstimator):
 
-    """Dynamic, possibly task-related Topological Information."""
+    """Dynamic, possibly task-related Topological Information.
 
-    def __init__(self):
-        HOIEstimator.__init__(self)
+    Parameters
+    ----------
+    data : array_like
+        Standard NumPy arrays of shape (n_samples, n_features) or
+        (n_samples, n_features, n_variables)
+    y : array_like
+        The feature of shape (n_trials,) for estimating task-related O-info.
+    """
 
-    def fit(self, data, y=None, maxsize=None, method='gcmi',
-            **kwargs):
+    def __init__(self, data, y=None):
+        HOIEstimator.__init__(self, data, y=y)
+
+    def fit(self, minsize=1, maxsize=None, method='gcmi', **kwargs):
         """Compute Topological Information.
 
         Parameters
         ----------
-        data : array_like
-            Standard NumPy arrays of shape (n_samples, n_features) or
-            (n_samples, n_features, n_variables)
-        y : array_like
-            The feature of shape (n_trials,) for estimating task-related O-info.
-        maxsize : int | None
-            Maximum size of the multiplets
+        minsize, maxsize : int | 2, None
+            Minimum and maximum size of the multiplets
         method : {'gcmi', 'binning', 'knn'}
             Name of the method to compute entropy. Use either :
 
@@ -102,116 +88,60 @@ class InfoTopo(HOIEstimator):
             values reflect redundant dominated interactions and negative values
             stand for synergistic dominated interactions.
         """
-        # ______________________________ INPUTS _______________________________
-
-        # data checking
-        data = self._prepare_data(data)
-
-        # check multiplets
-        self._prepare_multiplets(1, maxsize, y=y)
-
-        # check entropy function
-        data, entropy = self._prepare_for_entropy(data, method, y=y, **kwargs)
-
-        logger.info(
-            f"Compute the info topo (min={self.minsize}; max={self.maxsize})"
-        )
-
         # ____________________________ ENTROPIES ______________________________
 
-        # get the function to compute entropy and vmap it one for 3D inputs
-        get_ent = jax.jit(partial(
-            compute_entropies, entropy=jax.vmap(entropy)
-        ))
-
-        logger.info("    Compute entropies")
-
-        # compute infotopo
-        h_x, h_idx, order = [], [], []
-        for msize in self:
-            # combinations of features
-            combs = self.get_combinations(msize)
-
-            # compute all of the entropies at that order
-            _, _h_x = jax.lax.scan(get_ent, data, combs)
-
-            # appen -1 to the combinations
-            combs = jnp.concatenate(
-                (combs, jnp.full((combs.shape[0], self.maxsize - msize), -1)),
-                axis=1
-            )
-
-            # store entopies and indices associated to entropies
-            h_x.append(_h_x)
-            h_idx.append(combs)
-            order.append([msize] * _h_x.shape[0])
-
-        h_x = jnp.concatenate(h_x, axis=0)
-        h_idx = jnp.concatenate(h_idx, axis=0)
-        order = jnp.asarray(np.concatenate(order, axis=0))
+        minsize, maxsize = self._check_minmax(minsize, maxsize)
+        h_x, h_idx, order = self.compute_entropies(
+            minsize=1, maxsize=maxsize, method=method, **kwargs
+        )
         n_mult = h_x.shape[0]
 
-        # ________________________ MUTUAL-INFORMATION _________________________
+        # _______________________________ HOI _________________________________
 
         # compute order and multiply entropies
         h_x_sgn = jnp.multiply(((-1.) ** (order.reshape(-1, 1) - 1)), h_x)
         h_idx_2 = jnp.where(h_idx == -1, -2, h_idx)
 
-        logger.info("    Compute mutual information")
+        # subselection of orders (minsize, maxsize)
+        keep = order >= minsize
+        n_mult = keep.sum()
 
+        # progress-bar definition
         pbar = scan_tqdm(n_mult, message='Mutual information')
 
+        # compute mi
         _, hoi = jax.lax.scan(
             pbar(compute_mi), (h_idx[..., jnp.newaxis], h_x_sgn, order),
-            (jnp.arange(n_mult), h_idx_2)
+            (jnp.arange(n_mult), h_idx_2[keep])
         )
-
-        # self._h = np.asarray(h_x)
-        # self._h_idx = np.asarray(h_idx)
 
         return np.asarray(hoi)
 
-    # @property
-    # def entropies(self):
-    #     """Computed entropies."""
-    #     return np.concatenate([np.asarray(k) for k in self._h], axis=0)
-
-    # @property
-    # def entropies_indices(self):
-    #     """Get multiplets associated to entropies."""
-    #     mult = []
-    #     for c in self._h_idx:
-    #         mult += np.asarray(c).tolist()
-    #     return mult
-
-
 
 if __name__ == '__main__':
-    from math import comb as ccomb
     import matplotlib.pyplot as plt
-    from frites import set_mpl_style
-    import seaborn as sns
     from hoi.utils import landscape, digitize
     from matplotlib.colors import LogNorm
-
-    set_mpl_style()
-
-    ###########################################################################
-    method = 'binning'
-    ###########################################################################
+    plt.style.use('ggplot')
 
 
-    x = np.load('/home/etienne/Downloads/data_200_trials', allow_pickle=True)
+    path = '/home/etienne/Downloads/data_200_trials'
+    x = np.load(path, allow_pickle=True)[..., 100]
+    x_min, x_max = x.min(), x.max()
+    x_amp = x_max - x_min
+    x_bin = np.ceil((( x - x_min) * (3 - 1)) / (x_amp)).astype(int)
+
 
     logger.setLevel('INFO')
-    model = InfoTopo()
-    x = digitize(x, 9, axis=0)
+    # model = InfoTopo(digitize(x[..., 100], 3, axis=1))
+    # model = InfoTopo(x[..., 100])
+    model = InfoTopo(x_bin)
     hoi = model.fit(
-        x[..., 100], maxsize=None, method=method
+        maxsize=None, method="binning"
     )
+    # 0/0
 
     lscp = landscape(hoi.squeeze(), model.order, output='xarray')
     lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())
     plt.axvline(model.undersampling, linestyle='--', color='k')
-    plt.title(method, fontsize=24, fontweight='bold')
     plt.show()

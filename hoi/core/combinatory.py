@@ -3,8 +3,7 @@ import numpy as np
 import itertools
 
 
-def combinations(n, k, task_related=False, as_iterator=True, as_jax=True,
-                 order=False):
+def combinations(n, k, as_iterator=True, as_jax=True, order=False):
     """Get combinations.
 
     Parameters
@@ -13,9 +12,6 @@ def combinations(n, k, task_related=False, as_iterator=True, as_jax=True,
         Represents the total number of elements in the set
     k : int
         Represents the size of the combinations to be generated
-    task_related : bool, optional
-        If True, include an additional column in the returned array
-        representing task-related behavior, by default False.
 
     Returns
     -------
@@ -26,18 +22,12 @@ def combinations(n, k, task_related=False, as_iterator=True, as_jax=True,
 
     def _combinations(n, k):
         for c in itertools.combinations(np.arange(n), k):
-            # if task related, force adding last column
-            if task_related:
-                c = list(c) + [n]
-            else:
-                c = list(c)
+            # convert to list
+            c = list(c)
 
             # deal with order
             if order:
-                if task_related:
-                    c = len(c) - 1
-                else:
-                    c = len(c)
+                c = len(c)
 
             yield c
 
@@ -49,5 +39,5 @@ def combinations(n, k, task_related=False, as_iterator=True, as_jax=True,
         return jnp.asarray(combs) if as_jax else combs
 
 if __name__ == '__main__':
-    print(combinations(10, 5, task_related=False, as_iterator=False).shape)
+    print(combinations(10, 5, as_iterator=False, order=True).shape)
     # print(np.array(list(itertools.combinations(np.arange(10), 3))).shape)

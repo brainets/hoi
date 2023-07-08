@@ -1,29 +1,38 @@
-from tqdm.auto import tqdm
 import logging
+from functools import partial
+from tqdm.auto import tqdm
 
+from math import comb as ccomb
 import numpy as np
+import jax
+import jax.numpy as jnp
 
 from hoi.core.combinatory import combinations
 from hoi.core.entropies import get_entropy, prepare_for_entropy
+from hoi.utils.progressbar import get_pbar
 
 
 logger = logging.getLogger('hoi')
 
 
+@partial(jax.jit, static_argnums=(2,))
+def ent_at_index(x, idx, entropy=None):
+    """Compute entropy for a specific multiplet.
+
+    This function has to be wrapped with the entropy function.
+    """
+    return x, entropy(x[:, idx, :])
+
+
 class HOIEstimator(object):
 
-    def __init__(self):
-        pass
+    def __init__(self, data, y=None):
+        # data checking
+        self._data = self._prepare_data(data, y=y)
 
     def __iter__(self):
-        """Iteration over orders with progressbar."""
-        pbar = self._get_pbar(
-            iterable=range(self.minsize, self.maxsize + 1),
-            desc=f"Order {self.minsize}"
-        )
-
-        for msize in pbar:
-            pbar.set_description(desc=f"Order {msize}", refresh=False)
+        """Iteration over orders."""
+        for msize in range(self.minsize, self.maxsize + 1):
             yield msize
 
     ###########################################################################
@@ -32,7 +41,7 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def _prepare_data(self, data):
+    def _prepare_data(self, data, y=None):
         """Check input data shape."""
 
         # force data to be 3d
@@ -40,15 +49,25 @@ class HOIEstimator(object):
         if data.ndim == 2:
             data = data[..., np.newaxis]
 
+        # for task-related, add behavior along spatial dimension
+        if y is not None:
+            raise NotImplementedError("Need to be implemented and tested.")
+        # if isinstance(y, (list, np.ndarray, tuple)):
+        #     y = np.tile(y.reshape(-1, 1, 1), (1, 1, n_variables))
+        #     data = np.concatenate((data, y), axis=1)
+
+
         self.n_samples, self.n_features, self.n_variables = data.shape
 
         return data
 
 
-    def _prepare_multiplets(self, minsize, maxsize, y=None):
-        """Define min / max size of the multiplets and if it's task-related."""
+    def _check_minmax(self, minsize, maxsize):
+        """Define min / max size of the multiplets."""
 
         # check minsize / maxsize
+        if not isinstance(minsize, int):
+            minsize = 1
         if not isinstance(maxsize, int):
             maxsize = self.n_features
         assert isinstance(maxsize, int)
@@ -57,37 +76,70 @@ class HOIEstimator(object):
         maxsize = max(1, min(maxsize, self.n_features))
         minsize = max(1, minsize)
 
-        self.minsize = minsize
-        self.maxsize = maxsize
+        self.minsize, self.maxsize = minsize, maxsize
 
-        # check in case of task-related hoi
-        self.task_related = isinstance(y, (list, np.ndarray, tuple))
+        return minsize, maxsize
 
 
-    def _prepare_for_entropy(self, data, method, y=None, **kwargs):
-        """Prepare data before computing entropy."""
+    ###########################################################################
+    ###########################################################################
+    #                         INFORMATION THEORY
+    ###########################################################################
+    ###########################################################################
 
+    def compute_entropies(self, method='gcmi', minsize=1,
+                          maxsize=None, fill_value=-1,
+                          **kwargs):
+        logger.info(f"Compute entropy with {method}")
+        msg = "Entropy H(%i)"
+
+        # ________________________________ I/O ________________________________
         # prepare the data for computing entropy
         data, kwargs = prepare_for_entropy(
-            data, method, y, **kwargs
+            self._data, method, **kwargs
         )
 
         # get entropy function
-        entropy = get_entropy(method=method, **kwargs)
+        entropy = partial(
+            ent_at_index, entropy=jax.vmap(
+            get_entropy(method=method, **kwargs)
+        ))
 
-        return data, entropy
+        # prepare output
+        n_mults = sum([ccomb(self.n_features, c) for c in range(
+            minsize, maxsize + 1)])
+        h_x = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
+        h_idx = jnp.full((n_mults, maxsize), fill_value, dtype=int)
+        order = jnp.zeros((n_mults,), dtype=int)
 
-    def _get_pbar(self, **kwargs):
-        """Get progress bar"""
-        kwargs["disable"] = logger.getEffectiveLevel() > 20
-        kwargs["mininterval"] = 0.016
-        kwargs["miniters"] = 1
-        kwargs["smoothing"] = 0.05
-        kwargs["bar_format"] = (
-            "{percentage:3.0f}%|{bar}| {desc} : {n_fmt}/{total_fmt} [{elapsed}"
-            "<{remaining}, {rate_fmt:>11}{postfix}]")
-        return tqdm(**kwargs)
+        # get progress bar
+        pbar = get_pbar(
+            iterable=range(minsize, maxsize + 1), leave=False,
+        )
 
+        # ______________________________ ENTROPY ______________________________
+        offset = 0
+        for msize in pbar:
+            pbar.set_description(desc=msg % msize, refresh=False)
+
+            # combinations of features
+            _h_idx = self.get_combinations(msize)
+            n_combs, n_feat = _h_idx.shape
+            sl = slice(offset, offset + n_combs)
+
+            # fill indices and order
+            h_idx = h_idx.at[sl, 0:n_feat].set(_h_idx)
+            order = order.at[sl].set(msize)
+
+            # compute all of the entropies at that order
+            _, _h_x = jax.lax.scan(entropy, data, _h_idx)
+            h_x = h_x.at[sl, :].set(_h_x)
+
+            # updates
+            offset += n_combs
+        pbar.close()
+
+        return h_x, h_idx, order
 
     ###########################################################################
     ###########################################################################
@@ -98,8 +150,8 @@ class HOIEstimator(object):
     def get_combinations(self, msize, as_iterator=False, as_jax=True,
                          order=False):
         return combinations(
-            self.n_features, msize, task_related=self.task_related,
-            as_iterator=as_iterator, as_jax=as_jax, order=order
+            self.n_features, msize, as_iterator=as_iterator, as_jax=as_jax,
+            order=order
         )
 
     def fit(self):  # noqa

@@ -102,8 +102,8 @@ class InfoTopo(HOIEstimator):
         h_x_sgn = jnp.multiply(((-1.) ** (order.reshape(-1, 1) - 1)), h_x)
         h_idx_2 = jnp.where(h_idx == -1, -2, h_idx)
 
-        # subselection of orders (minsize, maxsize)
-        keep = order >= minsize
+        # subselection of multiplets
+        keep = self.filter_multiplets(h_idx, order)
         n_mult = keep.sum()
 
         # progress-bar definition

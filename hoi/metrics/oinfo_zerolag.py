@@ -5,7 +5,6 @@ import logging
 
 import numpy as np
 
-
 import jax
 import jax.numpy as jnp
 
@@ -82,8 +81,8 @@ class OinfoZeroLag(HOIEstimator):
 
         # _______________________________ HOI _________________________________
 
-        # subselection of orders (minsize, maxsize)
-        keep = order >= minsize
+        # subselection of multiplets
+        keep = self.filter_multiplets(h_idx, order)
         n_mult = keep.sum()
 
         # progress-bar definition
@@ -117,10 +116,15 @@ if __name__ == '__main__':
     logger.setLevel('INFO')
     # model = OinfoZeroLag(digitize(x, 3, axis=1))
     # model = OinfoZeroLag(x[..., 100])
-    model = OinfoZeroLag(x)
+    model = OinfoZeroLag(x, y=np.random.rand(x.shape[0]))
     hoi = model.fit(
-        maxsize=None, method="gcmi"
+        minsize=1, maxsize=None, method="gcmi"
     )
+
+    print(hoi.shape)
+    print(model.order.shape)
+    print(len(model.multiplets))
+    0/0
 
     lscp = landscape(hoi.squeeze(), model.order, output='xarray')
     lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())

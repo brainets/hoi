@@ -50,11 +50,17 @@ class HOIEstimator(object):
             data = data[..., np.newaxis]
 
         # for task-related, add behavior along spatial dimension
-        if y is not None:
-            raise NotImplementedError("Need to be implemented and tested.")
-        # if isinstance(y, (list, np.ndarray, tuple)):
-        #     y = np.tile(y.reshape(-1, 1, 1), (1, 1, n_variables))
-        #     data = np.concatenate((data, y), axis=1)
+        self._task_related = isinstance(y, (list, np.ndarray, tuple))
+        if self._task_related:
+            y = np.asarray(y)
+            if y.ndim == 1:
+                assert len(y) == data.shape[0]
+                y = np.tile(y.reshape(-1, 1, 1), (1, 1, data.shape[-1]))
+            elif y.ndim == 2:
+                assert y.shape[0] == data.shape[0]
+                assert y.shape[-1] == data.shape[-1]
+                y = y[:, np.newaxis, :]
+            data = np.concatenate((data, y), axis=1)
 
 
         self.n_samples, self.n_features, self.n_variables = data.shape
@@ -154,6 +160,24 @@ class HOIEstimator(object):
             order=order
         )
 
+    def filter_multiplets(self, mults, order):
+        keep = jnp.ones((len(order),), dtype=bool)
+
+        # order filtering
+        if self.minsize > 1:
+            logger.info(f"    Selecting order >= {self.minsize}")
+            keep = jnp.where(order >= self.minsize, keep, False)
+
+        # task related filtering
+        if self._task_related:
+            logger.info(f"    Selecting task-related multiplets")
+            keep_tr = (mults == self.n_features - 1).any(1)
+            keep = jnp.logical_and(keep, keep_tr)
+
+        self._keep = keep
+
+        return keep
+
     def fit(self):  # noqa
         raise NotImplementedError()
 
@@ -164,16 +188,16 @@ class HOIEstimator(object):
         for msize in self:
             multiplets += self.get_combinations(
                 msize, as_iterator=False, as_jax=False)
-        return multiplets
+        return [m for n_m, m in enumerate(multiplets) if self._keep[n_m]]
 
     @property
     def order(self):
-        """Order of each multiplet.."""
+        """Order of each multiplet."""
         order = []
         for msize in self:
             order += self.get_combinations(
                 msize, as_iterator=False, as_jax=False, order=True)
-        return order
+        return np.asarray(order)[np.asarray(self._keep)]
 
     @property
     def undersampling(self):

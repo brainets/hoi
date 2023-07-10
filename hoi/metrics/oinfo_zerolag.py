@@ -118,12 +118,12 @@ if __name__ == '__main__':
     # model = OinfoZeroLag(x[..., 100])
     model = OinfoZeroLag(x, y=np.random.rand(x.shape[0]))
     hoi = model.fit(
-        minsize=1, maxsize=None, method="gcmi"
+        minsize=2, maxsize=None, method="gcmi"
     )
 
     print(hoi.shape)
     print(model.order.shape)
-    print(len(model.multiplets))
+    print(model.multiplets.shape)
     0/0
 
     lscp = landscape(hoi.squeeze(), model.order, output='xarray')

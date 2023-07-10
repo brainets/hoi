@@ -1,6 +1,5 @@
 import logging
 from functools import partial
-from tqdm.auto import tqdm
 
 from math import comb as ccomb
 import numpy as np
@@ -93,9 +92,8 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def compute_entropies(self, method='gcmi', minsize=1,
-                          maxsize=None, fill_value=-1,
-                          **kwargs):
+    def compute_entropies(self, method='gcmi', minsize=1, maxsize=None,
+                          fill_value=-1, **kwargs):
         logger.info(f"Compute entropy with {method}")
         msg = "Entropy H(%i)"
 
@@ -145,6 +143,10 @@ class HOIEstimator(object):
             offset += n_combs
         pbar.close()
 
+        self._entropies = h_x
+        self._multiplets = h_idx
+        self._order = order
+
         return h_x, h_idx, order
 
     ###########################################################################
@@ -182,22 +184,22 @@ class HOIEstimator(object):
         raise NotImplementedError()
 
     @property
+    def entropies(self):
+        """Entropies of shape (n_mult,)"""
+        return np.asarray(self._entropies[self._keep])
+
+    @property
     def multiplets(self):
-        """List of multiplets."""
-        multiplets = []
-        for msize in self:
-            multiplets += self.get_combinations(
-                msize, as_iterator=False, as_jax=False)
-        return [m for n_m, m in enumerate(multiplets) if self._keep[n_m]]
+        """Indices of the multiplets of shape (n_mult, maxsize).
+
+        By convention, we used -1 to indicate that a feature has been ignored.
+        """
+        return np.asarray(self._multiplets[self._keep, :])
 
     @property
     def order(self):
-        """Order of each multiplet."""
-        order = []
-        for msize in self:
-            order += self.get_combinations(
-                msize, as_iterator=False, as_jax=False, order=True)
-        return np.asarray(order)[np.asarray(self._keep)]
+        """Order of each multiplet of shape (n_mult,)."""
+        return np.asarray(self._order)[np.asarray(self._keep)]
 
     @property
     def undersampling(self):

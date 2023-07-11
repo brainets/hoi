@@ -1,0 +1,5 @@
+numpy
+ghp-import
+jax
+sphinx
+pydata-sphinx-theme

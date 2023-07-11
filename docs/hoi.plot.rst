@@ -1,4 +1,4 @@
-hoi.plot package
+hoi.plot module
 ================
 
 Module contents

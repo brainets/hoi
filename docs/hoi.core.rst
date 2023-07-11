@@ -1,4 +1,4 @@
-hoi.core package
+hoi.core module
 ================
 
 Submodules

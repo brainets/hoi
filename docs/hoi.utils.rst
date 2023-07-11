@@ -1,4 +1,4 @@
-hoi.utils package
+hoi.utils module
 =================
 
 Submodules

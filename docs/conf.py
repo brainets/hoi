@@ -8,8 +8,10 @@
 
 import os
 import sys
+import hoi
 
 sys.path.insert(0, os.path.abspath(".."))
+# sys.path.append(os.path.abspath("sphinxext"))
 
 project = "HOI"
 copyright = "BraiNets"
@@ -21,6 +23,8 @@ release = hoi.__version__
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
+
+# Add "sphinx.ext.linkcode" when you specify a linkcode_resolve function that returns an URL based on the object.
 extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
@@ -31,10 +35,6 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx.ext.githubpages",
     "sphinx.ext.autosummary",
-    "sphinx.ext.linkcode",
-    "sphinx.ext.extlinks",
-    "sphinx_gallery.gen_gallery",
-    "sphinxcontrib.bibtex",
     "sphinx_panels",
     "numpydoc",
     "sphinx_copybutton",

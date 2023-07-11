@@ -1,4 +1,4 @@
-hoi.metrics package
+hoi.metrics module
 ===================
 
 Submodules

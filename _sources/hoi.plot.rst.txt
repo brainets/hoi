@@ -1,0 +1,10 @@
+hoi.plot module
+================
+
+Module contents
+---------------
+
+.. automodule:: hoi.plot
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -44,30 +44,16 @@ jobs:
           cd docs/
           make html
           touch _build/html/.nojekyll
-      # Use ghp import to push build dir contents to gh pages
-      - name: Run ghp-import
-        run: |
-          ghp-import -n -p -f docs/_build/html
-
-      # Push build directory contents to gh-pages for publishing
-      # - name: Move build dir contents to gh-pages branch
+      # # Use ghp import to push build dir contents to gh pages
+      # - name: Run ghp-import
       #   run: |
-      #     git checkout -b gh-pages main
-      #     mv ./build ./docs
-      #     touch docs/.nojekyll
-      #     git status
-      #     git add docs/
-      #     git commit -m "Update documentation"
-      #     git push origin gh-pages
+      #     ghp-import -n -p -f docs/_build/html
 
-      # index.html must be at the root of the docs/ directory
-      #- name: Link index.html
-      #  run: |
-      #    cd docs/
-      #    echo '<meta http-equiv="refresh" content="0; url=./_build/html/index.html"/>' > index.html
-
-      # Add empty .nojekyll file at the root of the docs/ directory to enable using sphinx rtd theme
-      #- name: Add .nojekyll
-      #  run: |
-      #    cd docs/
-      #    touch .nojekyll
+      - name: Deploy Github Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.4.2
+        with:
+          branch: gh-pages
+          folder: docs/_build/html/
+          clean: true
+          ssh-key: ${{ secrets.DEPLOY_KEY }}
+          # ssh-key: true

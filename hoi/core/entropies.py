@@ -46,8 +46,7 @@ def get_entropy(method='gcmi', **kwargs):
     elif method == 'knn':
         return partial(entropy_knn, **kwargs)
     elif method == 'kernel':
-        return entropy_kernel
-        # return partial(entropy_kernel, **kwargs)
+        return partial(entropy_kernel, **kwargs)
     else:
         raise ValueError(f"Method {method} doesn't exist.")
 
@@ -83,8 +82,8 @@ def prepare_for_entropy(data, method, **kwargs):
         kwargs['demean'] = False
     elif method == 'kernel':
         logger.info('    Unit circle normalization')
-        data_norm = np.sqrt(np.sum(data * data, axis=1, keepdims=True))
-        data = data / data_norm
+        from hoi.utils import normalize
+        data = np.apply_along_axis(normalize, 0, data, to_min=-1., to_max=1.)
     elif method == 'binning':
         pass
 
@@ -321,9 +320,9 @@ def entropy_knn(
 ###############################################################################
 
 
-@partial(jax.jit, static_argnums=(1,))
+@partial(jax.jit, static_argnums=(1, 2))
 def entropy_kernel(
-        x: jnp.array, base: int = 2
+        x: jnp.array, base: int = 2, bw_method: str = None
     ) -> jnp.array:
     """Entropy using gaussian kernel density.
 
@@ -337,7 +336,7 @@ def entropy_kernel(
     hx : float
         Entropy of x
     """
-    model = gaussian_kde(x)
+    model = gaussian_kde(x, bw_method=bw_method)
     return -jnp.mean(jnp.log2(model(x)))
     # p = model.pdf(x)
     # return jax.scipy.special.entr(p).sum() / np.log(base)

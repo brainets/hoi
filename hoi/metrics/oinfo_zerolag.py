@@ -29,9 +29,9 @@ def compute_oinfo(inputs, iterators):
     i_mj = jnp.logical_and(isum == msize - 1, order == msize - 1)
 
     # sum entropies only when needed
-    h_n = jnp.sum(h_x, where=i_n.reshape(-1, 1))
-    h_j = jnp.sum(h_x, where=i_j.reshape(-1, 1))
-    h_mj = jnp.sum(h_x, where=i_mj.reshape(-1, 1))
+    h_n = jnp.sum(h_x, where=i_n.reshape(-1, 1), axis=0)
+    h_j = jnp.sum(h_x, where=i_j.reshape(-1, 1), axis=0)
+    h_mj = jnp.sum(h_x, where=i_mj.reshape(-1, 1), axis=0)
 
     # compute o-info
     o = (msize - 2.) * h_n + h_j - h_mj

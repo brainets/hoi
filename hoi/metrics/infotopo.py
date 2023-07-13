@@ -43,8 +43,11 @@ def compute_mi(inputs, iterators):
     # tensor implementation
     is_inside = (combs == comb[jnp.newaxis, ...]).sum((1, 2))
 
+    # compute infotopo
+    info = jnp.sum(h, where=(is_inside == order).reshape(-1, 1), axis=0)
 
-    return inputs, jnp.sum(h, where=(is_inside == order).reshape(-1, 1))
+
+    return inputs, info
 
 
 

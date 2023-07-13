@@ -423,6 +423,118 @@ document.write(`
 <span class="sd">        Digitized array with the same shape as x</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">digitize_1d</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="normalize"><a class="viewcode-back" href="../../../hoi.utils.html#hoi.utils.stats.normalize">[docs]</a><span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">to_min</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">to_max</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Normalize the array x between to_min and to_max.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : array_like</span>
+<span class="sd">        The array to normalize</span>
+<span class="sd">    to_min : int/float | 0.</span>
+<span class="sd">        Minimum of returned array</span>
+<span class="sd">    to_max : int/float | 1.</span>
+<span class="sd">        Maximum of returned array</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    xn : array_like</span>
+<span class="sd">        The normalized array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># find minimum and maximum</span>
+    <span class="k">if</span> <span class="n">to_min</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">to_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># noqa</span>
+    <span class="k">if</span> <span class="n">to_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">to_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># noqa</span>
+
+    <span class="c1"># normalize</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+        <span class="n">xm</span><span class="p">,</span> <span class="n">xh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">xm</span> <span class="o">!=</span> <span class="n">xh</span><span class="p">:</span>
+            <span class="n">x_n</span> <span class="o">=</span> <span class="n">to_max</span> <span class="o">-</span> <span class="p">(((</span><span class="n">to_max</span> <span class="o">-</span> <span class="n">to_min</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">xh</span> <span class="o">-</span> <span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">xh</span> <span class="o">-</span> <span class="n">xm</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x_n</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">to_max</span> <span class="o">/</span> <span class="n">xh</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">x_n</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="k">return</span> <span class="n">x_n</span></div>
+
+
+<div class="viewcode-block" id="get_nbest_mult"><a class="viewcode-back" href="../../../hoi.utils.html#hoi.utils.stats.get_nbest_mult">[docs]</a><span class="k">def</span> <span class="nf">get_nbest_mult</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the n best multiplets.</span>
+
+<span class="sd">    This function requires pandas to be installed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hoi : array_like</span>
+<span class="sd">        Array of higher-order information.</span>
+<span class="sd">    model : hoi.metrics</span>
+<span class="sd">        Model used to compute the higher-order information.</span>
+<span class="sd">    n_best : int, optional</span>
+<span class="sd">        Number of best multiplets to return. The default is 5.</span>
+<span class="sd">    minsize : int, optional</span>
+<span class="sd">        Minimum size of the multiplets. The default is None.</span>
+<span class="sd">    maxsize : int, optional</span>
+<span class="sd">        Maximum size of the multiplets. The default is None.</span>
+<span class="sd">    names : list, optional</span>
+<span class="sd">        List of names of the variables. The default is None.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df_best : pandas.DataFrame</span>
+<span class="sd">        Dataframe containing the n best multiplets.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+    <span class="n">hoi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">hoi</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+    <span class="c1"># get computed orders</span>
+    <span class="n">orders</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">order</span>
+    <span class="k">if</span> <span class="n">minsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">minsize</span> <span class="o">=</span> <span class="n">orders</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">maxsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">maxsize</span> <span class="o">=</span> <span class="n">orders</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+    <span class="c1"># get the data at selected order</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">hoi</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">keep_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">orders</span> <span class="o">&gt;=</span> <span class="n">minsize</span><span class="p">,</span> <span class="n">orders</span> <span class="o">&lt;=</span> <span class="n">maxsize</span><span class="p">)</span>
+
+    <span class="c1"># merge into a dataframe</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+        <span class="s1">&#39;hoi&#39;</span><span class="p">:</span> <span class="n">hoi</span><span class="p">[</span><span class="n">keep_order</span><span class="p">],</span> <span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="n">indices</span><span class="p">[</span><span class="n">keep_order</span><span class="p">],</span>
+        <span class="s1">&#39;order&#39;</span><span class="p">:</span> <span class="n">orders</span><span class="p">[</span><span class="n">keep_order</span><span class="p">]</span>
+    <span class="p">})</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;hoi&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># df selection</span>
+    <span class="n">is_syn</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;hoi&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="n">df_syn</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">is_syn</span><span class="p">]</span>
+    <span class="n">df_syn</span> <span class="o">=</span> <span class="n">df_syn</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="nb">min</span><span class="p">(</span><span class="n">n_best</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_syn</span><span class="p">))::]</span>
+    <span class="n">df_red</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">is_syn</span><span class="p">]</span>
+    <span class="n">df_red</span> <span class="o">=</span> <span class="n">df_red</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="nb">min</span><span class="p">(</span><span class="n">n_best</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_red</span><span class="p">))]</span>
+    <span class="n">df_best</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">df_red</span><span class="p">,</span> <span class="n">df_syn</span><span class="p">))</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df_best</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;syn&#39;</span> <span class="k">if</span> <span class="n">o</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;red&#39;</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">df_best</span><span class="p">[</span><span class="s1">&#39;hoi&#39;</span><span class="p">]]</span>
+
+    <span class="c1"># reorder columns</span>
+    <span class="n">df_best</span> <span class="o">=</span> <span class="n">df_best</span><span class="p">[[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">,</span> <span class="s1">&#39;hoi&#39;</span><span class="p">,</span> <span class="s1">&#39;type&#39;</span><span class="p">]]</span>
+
+    <span class="c1"># multiplets selection</span>
+    <span class="n">mults</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">multiplets</span><span class="p">[</span><span class="n">df_best</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">:]:</span>
+        <span class="n">mults</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">m</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">df_best</span><span class="p">[</span><span class="s1">&#39;multiplet&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mults</span>
+
+    <span class="c1"># find names</span>
+    <span class="k">if</span> <span class="n">names</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df_best</span><span class="p">[</span><span class="s1">&#39;multiplet&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39; / &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cols</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+        <span class="n">df_best</span><span class="p">[</span><span class="s1">&#39;names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">names</span>
+
+    <span class="k">return</span> <span class="n">df_best</span></div>
+
 </pre></div>
 
                 </article>

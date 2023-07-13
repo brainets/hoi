@@ -338,8 +338,7 @@ document.write(`
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;knn&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">entropy_knn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;kernel&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">entropy_kernel</span>
-        <span class="c1"># return partial(entropy_kernel, **kwargs)</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">entropy_kernel</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Method </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2"> doesn&#39;t exist.&quot;</span><span class="p">)</span></div>
 
@@ -375,8 +374,8 @@ document.write(`
         <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;demean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;kernel&#39;</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;    Unit circle normalization&#39;</span><span class="p">)</span>
-        <span class="n">data_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span> <span class="o">*</span> <span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">/</span> <span class="n">data_norm</span>
+        <span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <span class="n">normalize</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">normalize</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">to_min</span><span class="o">=-</span><span class="mf">1.</span><span class="p">,</span> <span class="n">to_max</span><span class="o">=</span><span class="mf">1.</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;binning&#39;</span><span class="p">:</span>
         <span class="k">pass</span>
 
@@ -613,9 +612,9 @@ document.write(`
 <span class="c1">###############################################################################</span>
 
 
-<div class="viewcode-block" id="entropy_kernel"><a class="viewcode-back" href="../../../hoi.core.html#hoi.core.entropies.entropy_kernel">[docs]</a><span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,))</span>
+<div class="viewcode-block" id="entropy_kernel"><a class="viewcode-back" href="../../../hoi.core.html#hoi.core.entropies.entropy_kernel">[docs]</a><span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="k">def</span> <span class="nf">entropy_kernel</span><span class="p">(</span>
-        <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">bw_method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Entropy using gaussian kernel density.</span>
 
@@ -629,7 +628,7 @@ document.write(`
 <span class="sd">    hx : float</span>
 <span class="sd">        Entropy of x</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">gaussian_kde</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bw_method</span><span class="o">=</span><span class="n">bw_method</span><span class="p">)</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span></div>
     <span class="c1"># p = model.pdf(x)</span>
     <span class="c1"># return jax.scipy.special.entr(p).sum() / np.log(base)</span>

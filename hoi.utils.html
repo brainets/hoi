@@ -355,6 +355,37 @@ discretization is performed along the first axis (n_samples,)</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="hoi.utils.stats.get_nbest_mult">
+<span class="sig-prename descclassname"><span class="pre">hoi.utils.stats.</span></span><span class="sig-name descname"><span class="pre">get_nbest_mult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hoi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_best</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hoi/utils/stats.html#get_nbest_mult"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.utils.stats.get_nbest_mult" title="Permalink to this definition">#</a></dt>
+<dd><p>Get the n best multiplets.</p>
+<p>This function requires pandas to be installed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>hoi</strong><span class="classifier">array_like</span></dt><dd><p>Array of higher-order information.</p>
+</dd>
+<dt><strong>model</strong><span class="classifier">hoi.metrics</span></dt><dd><p>Model used to compute the higher-order information.</p>
+</dd>
+<dt><strong>n_best</strong><span class="classifier">int, optional</span></dt><dd><p>Number of best multiplets to return. The default is 5.</p>
+</dd>
+<dt><strong>minsize</strong><span class="classifier">int, optional</span></dt><dd><p>Minimum size of the multiplets. The default is None.</p>
+</dd>
+<dt><strong>maxsize</strong><span class="classifier">int, optional</span></dt><dd><p>Maximum size of the multiplets. The default is None.</p>
+</dd>
+<dt><strong>names</strong><span class="classifier">list, optional</span></dt><dd><p>List of names of the variables. The default is None.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>df_best</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>Dataframe containing the n best multiplets.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="hoi.utils.stats.landscape">
 <span class="sig-prename descclassname"><span class="pre">hoi.utils.stats.</span></span><span class="sig-name descname"><span class="pre">landscape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mult_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stat</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'probability'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'numpy'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hoi/utils/stats.html#landscape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.utils.stats.landscape" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute the landscape from HOI values.</p>
@@ -401,6 +432,30 @@ the unique orders (x-axis) and the central bins (y-axis)</p></li>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
 <dt><strong>landcape</strong><span class="classifier">array_like</span></dt><dd><p>Returns depend on the <cite>output</cite> parameter. Check to see what is returned</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hoi.utils.stats.normalize">
+<span class="sig-prename descclassname"><span class="pre">hoi.utils.stats.</span></span><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hoi/utils/stats.html#normalize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.utils.stats.normalize" title="Permalink to this definition">#</a></dt>
+<dd><p>Normalize the array x between to_min and to_max.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x</strong><span class="classifier">array_like</span></dt><dd><p>The array to normalize</p>
+</dd>
+<dt><strong>to_min</strong><span class="classifier">int/float | 0.</span></dt><dd><p>Minimum of returned array</p>
+</dd>
+<dt><strong>to_max</strong><span class="classifier">int/float | 1.</span></dt><dd><p>Maximum of returned array</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>xn</strong><span class="classifier">array_like</span></dt><dd><p>The normalized array</p>
 </dd>
 </dl>
 </dd>

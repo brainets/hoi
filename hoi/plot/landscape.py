@@ -63,13 +63,13 @@ def plot_landscape(hoi, model, minsize=None, maxsize=None, kind='hist',
         for o in range(minsize, maxsize + 1):
             keep = orders == o
             hoi_o = hoi[keep]
-            x = np.random.normal(loc=o, scale=0.11, size=hoi_o.size)
+            x = np.random.normal(loc=o, scale=0.13, size=hoi_o.size)
             plt.scatter(x, hoi_o, c=hoi_o, vmin=-minmax, vmax=minmax,
                         s=size[keep], **plt_kwargs)
 
     plt.xlabel('Order')
     plt.xticks(np.arange(minsize, maxsize + 1))
-    plt.ylabel('Information [Bits]')
+    plt.ylabel(f'{model.__name__} [Bits]')
     plt.grid(True)
 
     if undersampling:

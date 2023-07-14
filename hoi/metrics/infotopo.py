@@ -64,8 +64,10 @@ class InfoTopo(HOIEstimator):
         The feature of shape (n_trials,) for estimating task-related O-info.
     """
 
-    def __init__(self, data, y=None):
-        HOIEstimator.__init__(self, data, y=y)
+    __name__ = 'Topological Information'
+
+    def __init__(self, data, y=None, verbose=None):
+        HOIEstimator.__init__(self, data, y=y, verbose=verbose)
 
     def fit(self, minsize=1, maxsize=None, method='gcmi', **kwargs):
         """Compute Topological Information.

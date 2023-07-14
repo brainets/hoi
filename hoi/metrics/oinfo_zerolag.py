@@ -1,4 +1,3 @@
-from math import comb as ccomb
 import itertools
 from functools import partial
 import logging
@@ -52,8 +51,10 @@ class OinfoZeroLag(HOIEstimator):
         The feature of shape (n_trials,) for estimating task-related O-info
     """
 
-    def __init__(self, data, y=None):
-        HOIEstimator.__init__(self, data=data, y=y)
+    __name__ = 'O-Information'
+
+    def __init__(self, data, y=None, verbose=None):
+        HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
 
     def fit(self, minsize=2, maxsize=None, method='gcmi', **kwargs):
         """Compute the O-information.

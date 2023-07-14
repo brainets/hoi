@@ -25,9 +25,13 @@ def ent_at_index(x, idx, entropy=None):
 
 class HOIEstimator(object):
 
-    def __init__(self, data, y=None):
+    def __init__(self, data, y=None, verbose=None):
         # data checking
         self._data = self._prepare_data(data, y=y)
+
+        if verbose not in ['INFO', 'DEBUG', 'ERROR']:
+            verbose = 'INFO'
+        logger.setLevel(verbose)
 
     def __iter__(self):
         """Iteration over orders."""

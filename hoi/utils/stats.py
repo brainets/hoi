@@ -57,9 +57,9 @@ def landscape(x, mult_size, n_bins=100, centered=False, stat='probability',
     msize = np.arange(minsize, maxsize + 1)
 
     # define bin edges
-    omin, omax = np.min(x), np.max(x)
+    omin, omax = np.nanmin(x), np.nanmax(x)
     if centered:
-        minmax = np.max(np.abs([omin, omax]))
+        minmax = np.nanmax(np.abs([omin, omax]))
         o_range = (-minmax, minmax)
     else:
         o_range = (omin, omax)

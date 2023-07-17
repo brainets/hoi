@@ -387,7 +387,7 @@ document.write(`
         <span class="n">attrs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">stat</span><span class="o">=</span><span class="n">stat</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="n">n_bins</span><span class="p">)</span>
         <span class="n">lscp</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span>
             <span class="n">lscp</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;bins&#39;</span><span class="p">,</span> <span class="s1">&#39;order&#39;</span><span class="p">),</span> <span class="n">coords</span><span class="o">=</span><span class="p">(</span><span class="n">edge_centers</span><span class="p">,</span> <span class="n">msize</span><span class="p">),</span>
-            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Landscape&#39;</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">stat</span><span class="p">,</span> <span class="n">attrs</span><span class="o">=</span><span class="n">attrs</span>
         <span class="p">)</span>
         <span class="n">lscp</span><span class="o">.</span><span class="n">bins</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;unit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bits&#39;</span>
         <span class="k">return</span> <span class="n">lscp</span>

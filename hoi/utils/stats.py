@@ -95,7 +95,7 @@ def landscape(x, mult_size, n_bins=100, centered=False, stat='probability',
         attrs = dict(stat=stat, n_bins=n_bins)
         lscp = xr.DataArray(
             lscp, dims=('bins', 'order'), coords=(edge_centers, msize),
-            name='Landscape', attrs=attrs
+            name=stat, attrs=attrs
         )
         lscp.bins.attrs['unit'] = 'bits'
         return lscp

@@ -11,27 +11,10 @@ import jax.numpy as jnp
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.combinatory import combinations
 from hoi.core.entropies import get_entropy, prepare_for_entropy
+from hoi.core.mi import mi_entr_comb
 from hoi.utils.progressbar import get_pbar
 
 logger = logging.getLogger("hoi")
-
-
-@partial(jax.jit, static_argnums=(2,))
-def _mutual_information(inputs, comb, entropy=None):
-    x, y = inputs
-
-    # select combination
-    xc = x[:, comb, :]
-
-    # compute entropies
-    h_x = entropy(xc)
-    h_y = entropy(y)
-    h_xy = entropy(jnp.concatenate((xc, y), axis=1))
-
-    # compute mutual information
-    mi = h_x + h_y - h_xy
-
-    return inputs, mi
 
 
 class RedundancyMMI(HOIEstimator):
@@ -81,13 +64,13 @@ class RedundancyMMI(HOIEstimator):
 
         # prepare entropy functions
         entropy = jax.vmap(get_entropy(method=method, **kwargs))
-        mutual_information = partial(_mutual_information, entropy=entropy)
+        compute_mi = partial(mi_entr_comb, entropy=entropy)
 
         # _______________________________ HOI _________________________________
 
         # compute mi I(x_{1}y y), ..., I(x_{n}; y)
         _, i_xiy = jax.lax.scan(
-            mutual_information, (x, y), jnp.arange(x.shape[1]).reshape(-1, 1)
+            compute_mi, (x, y), jnp.arange(x.shape[1]).reshape(-1, 1)
         )
 
         # get progress bar

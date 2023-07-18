@@ -101,7 +101,7 @@ def prepare_for_entropy(data, method, **kwargs):
 
 @partial(jax.jit, static_argnums=(1, 2))
 def entropy_gcmi(
-        x: jnp.array, biascorrect: bool = True, demean: bool = False
+        x: jnp.array, biascorrect: bool = False, demean: bool = False
     ) -> jnp.array:
     """Entropy of a Gaussian variable in bits.
 
@@ -112,7 +112,7 @@ def entropy_gcmi(
     ----------
     x : array_like
         Array of data of shape (n_features, n_samples)
-    biascorrect : bool | True
+    biascorrect : bool | False
         Specifies whether bias correction should be applied to the estimated MI
     demean : bool | False
         Specifies whether the input data have to be demeaned

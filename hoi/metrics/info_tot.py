@@ -1,6 +1,7 @@
 from math import comb as ccomb
 import itertools
 from functools import partial
+
 import logging
 
 import numpy as np
@@ -17,26 +18,17 @@ from hoi.utils.progressbar import get_pbar
 logger = logging.getLogger("hoi")
 
 
-@partial(jax.jit, static_argnums=(2,))
-def _compute_syn(inputs, comb, mi_fcn=None):
-    x, y, ind = inputs
 
-    # compute info tot I({x_{1}, ..., x_{n}}; S)
-    _, i_tot = mi_fcn((x, y), comb)
+class InfoTot(HOIEstimator):
 
-    # select combination
-    x_c = x[:, comb, :]
+    """Total information.
 
-    # compute max(I(x_{-j}; S))
-    _, i_maxj = jax.lax.scan(mi_fcn, (x_c, y), ind)
+    The total information is the mutual information between set `S` and a
+    variable `y`:
 
-    return inputs, i_tot - i_maxj.max(0)
+    .. math::
 
-
-
-class SynergyMMI(HOIEstimator):
-
-    """Synergy estimated using the Minimum Mutual Information.
+        InfoTot(S; Y) = I(x_{1}, ..., x_{n}; y)
 
     Parameters
     ----------
@@ -47,13 +39,13 @@ class SynergyMMI(HOIEstimator):
         The feature of shape (n_trials,) for estimating task-related O-info
     """
 
-    __name__ = 'Synergy MMI'
+    __name__ = 'Total information'
 
     def __init__(self, data, y, verbose=None):
         HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
 
     def fit(self, minsize=2, maxsize=None, method='gcmi', **kwargs):
-        """Synergy Index.
+        """Compute RSI.
 
         Parameters
         ----------
@@ -82,7 +74,6 @@ class SynergyMMI(HOIEstimator):
         # prepare entropy functions
         entropy = jax.vmap(get_entropy(method=method, **kwargs))
         compute_mi = partial(mi_entr_comb, entropy=entropy)
-        compute_syn = partial(_compute_syn, mi_fcn=compute_mi)
 
         # _______________________________ HOI _________________________________
 
@@ -100,7 +91,8 @@ class SynergyMMI(HOIEstimator):
 
         offset = 0
         for msize in pbar:
-            pbar.set_description(desc='SynMMI order %s' % msize, refresh=False)
+            pbar.set_description(
+                desc='Infotot order %s' % msize, refresh=False)
 
             # get combinations
             _h_idx = combinations(
@@ -112,16 +104,14 @@ class SynergyMMI(HOIEstimator):
             h_idx = h_idx.at[sl, 0:n_feat].set(_h_idx)
             order = order.at[sl].set(msize)
 
-            # define indices for I(x_{-j}; S)
-            ind = (jnp.mgrid[0:msize, 0:msize].sum(0) % msize)[:, 1:]
-
-            # compute hoi
-            _, _hoi = jax.lax.scan(compute_syn, (x, y, ind), _h_idx)
+            # compute I({x_{1}, ..., x_{n}}; S)
+            _, _hoi = jax.lax.scan(
+                 compute_mi, (x, y), _h_idx
+            )
             hoi = hoi.at[sl, :].set(_hoi)
 
             # updates
             offset += n_combs
-
 
         self._order = order
         self._multiplets = h_idx
@@ -135,31 +125,29 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     from hoi.utils import landscape, digitize, get_nbest_mult
     from hoi.plot import plot_landscape
-    from sklearn.preprocessing import KBinsDiscretizer
     plt.style.use('ggplot')
-
-    np.random.seed(0)
 
 
     x = np.random.rand(200, 7)
     # y = x[:, 0]
     # y[100::] = x[100::, 1]
-    y = x[:, 0] + x[:, 3] + x[:, 4]
+    y = x[:, 0] + x[:, 3] + x[:, 5]
 
     # y = x[:, 4]
     # x[:, 5] += y
 
+    from sklearn.preprocessing import KBinsDiscretizer
 
     x = KBinsDiscretizer(
-        n_bins=3, encode='ordinal', strategy='quantile', subsample=None
+        n_bins=3, encode='ordinal', strategy='uniform', subsample=None
     ).fit_transform(x).astype(int)
     y = KBinsDiscretizer(
-        n_bins=3, encode='ordinal', strategy='quantile', subsample=None
+        n_bins=3, encode='ordinal', strategy='uniform', subsample=None
     ).fit_transform(y.reshape(-1, 1)).astype(int).squeeze()
 
 
-    model = SynergyMMI(x, y)
-    # hoi = model.fit(minsize=2, maxsize=6, method='gcmi')
+    model = InfoTot(x, y)
+    # hoi = model.fit(minsize=2, maxsize=6, method='kernel')
     hoi = model.fit(minsize=2, maxsize=6, method='binning')
 
     print(get_nbest_mult(hoi, model, minsize=3, maxsize=3))

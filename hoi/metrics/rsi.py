@@ -11,32 +11,36 @@ import jax.numpy as jnp
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.combinatory import combinations
 from hoi.core.entropies import get_entropy, prepare_for_entropy
+from hoi.core.mi import mi_entr_comb
 from hoi.utils.progressbar import get_pbar
 
 logger = logging.getLogger("hoi")
 
 
-@partial(jax.jit, static_argnums=(2,))
-def _mutual_information(inputs, comb, entropy=None):
-    x, y = inputs
-
-    # select combination
-    xc = x[:, comb, :]
-
-    # compute entropies
-    h_x = entropy(xc)
-    h_y = entropy(y)
-    h_xy = entropy(jnp.concatenate((xc, y), axis=1))
-
-    # compute mutual information
-    mi = h_x + h_y - h_xy
-
-    return inputs, mi
-
-
 class RSI(HOIEstimator):
 
-    """Redundancy-Synergy Index.
+    """Redundancy-Synergy Index (RSI).
+
+    The RSI is designed to be maximal and positive when the variables in S are
+    purported to provide synergistic information about Y. It should be negative
+    when the variables in S provide redundant information about Y. It is
+    defined as the total information carried by a set `S` exceeding the
+    information provided by individual elements of S:
+
+    .. math::
+
+        RSI(S; Y) \equiv I(S; Y) - \sum_{x_{i}\in S} I(x_{i}; Y)
+
+    with :
+
+    .. math::
+
+        S = x_{1}, ..., x_{n}
+
+    The RSI has been referred to as the SynSum (Globerson et al. 2009),
+    the WholeMinusSum synergy (Griffith and Koch 2012), and
+    the negative of the redundancy-synergy index has also been
+    referred to as the redundancy (Schneidman et al. 2003b).
 
     Parameters
     ----------
@@ -53,7 +57,7 @@ class RSI(HOIEstimator):
         HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
 
     def fit(self, minsize=2, maxsize=None, method='gcmi', **kwargs):
-        """Redundancy-Synergy Index.
+        """Compute RSI.
 
         Parameters
         ----------
@@ -81,13 +85,13 @@ class RSI(HOIEstimator):
 
         # prepare entropy functions
         entropy = jax.vmap(get_entropy(method=method, **kwargs))
-        mutual_information = partial(_mutual_information, entropy=entropy)
+        compute_mi = partial(mi_entr_comb, entropy=entropy)
 
         # _______________________________ HOI _________________________________
 
         # compute mi I(x_{1}y y), ..., I(x_{n}; y)
         _, i_xiy = jax.lax.scan(
-            mutual_information, (x, y), jnp.arange(x.shape[1]).reshape(-1, 1)
+            compute_mi, (x, y), jnp.arange(x.shape[1]).reshape(-1, 1)
         )
 
         # get progress bar
@@ -118,11 +122,11 @@ class RSI(HOIEstimator):
 
             # compute I({x_{1}, ..., x_{n}}; S)
             _, _i_xy = jax.lax.scan(
-                 mutual_information, (x, y), _h_idx
+                 compute_mi, (x, y), _h_idx
             )
 
             # compute hoi
-            _hoi = i_xiy[_h_idx, :].sum(1) - _i_xy
+            _hoi = _i_xy - i_xiy[_h_idx, :].sum(1)
             hoi = hoi.at[sl, :].set(_hoi)
 
             # updates

@@ -325,7 +325,7 @@ document.write(`
 <p>Statistics and summary statistics on HOI.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hoi.utils.stats.digitize">
-<span class="sig-prename descclassname"><span class="pre">hoi.utils.stats.</span></span><span class="sig-name descname"><span class="pre">digitize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hoi/utils/stats.html#digitize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.utils.stats.digitize" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">hoi.utils.stats.</span></span><span class="sig-name descname"><span class="pre">digitize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_sklearn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hoi/utils/stats.html#digitize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.utils.stats.digitize" title="Permalink to this definition">#</a></dt>
 <dd><p>Discretize a continuous variable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -336,6 +336,13 @@ document.write(`
 </dd>
 <dt><strong>axis</strong><span class="classifier">int | 0</span></dt><dd><p>Axis along which to perform the discretization. By default,
 discretization is performed along the first axis (n_samples,)</p>
+</dd>
+<dt><strong>use_sklearn</strong><span class="classifier">bool | False</span></dt><dd><p>If True, use sklearn.preprocessing.KBinsDiscretizer to discretize the
+data.</p>
+</dd>
+<dt><strong>kwargs</strong><span class="classifier">dict | {}</span></dt><dd><p>Additional arguments are passed to
+sklearn.preprocessing.KBinsDiscretizer. For example, use
+<cite>strategy=’quantile’</cite> for equal population binning.</p>
 </dd>
 </dl>
 </dd>
@@ -351,6 +358,12 @@ discretization is performed along the first axis (n_samples,)</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="hoi.utils.stats.digitize_1d">
 <span class="sig-prename descclassname"><span class="pre">hoi.utils.stats.</span></span><span class="sig-name descname"><span class="pre">digitize_1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_bins</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hoi/utils/stats.html#digitize_1d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.utils.stats.digitize_1d" title="Permalink to this definition">#</a></dt>
+<dd><p>One dimensional digitization.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="hoi.utils.stats.digitize_sklearn">
+<span class="sig-prename descclassname"><span class="pre">hoi.utils.stats.</span></span><span class="sig-name descname"><span class="pre">digitize_sklearn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hoi/utils/stats.html#digitize_sklearn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.utils.stats.digitize_sklearn" title="Permalink to this definition">#</a></dt>
 <dd><p>One dimensional digitization.</p>
 </dd></dl>
 

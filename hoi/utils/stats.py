@@ -105,6 +105,7 @@ def landscape(x, mult_size, n_bins=100, centered=False, stat='probability',
 
 def digitize_1d(x, n_bins):
     """One dimensional digitization."""
+    assert x.ndim == 1
     x_min, x_max = x.min(), x.max()
     dx = (x_max - x_min) / n_bins
     x_binned = ((x - x_min) / dx).astype(int)
@@ -112,7 +113,15 @@ def digitize_1d(x, n_bins):
     return x_binned.astype(int)
 
 
-def digitize(x, n_bins, axis=0):
+def digitize_sklearn(x, **kwargs):
+    """One dimensional digitization."""
+    assert x.ndim == 1
+    from sklearn.preprocessing import KBinsDiscretizer
+    return KBinsDiscretizer(**kwargs).fit_transform(
+        x.reshape(-1, 1)).astype(int).squeeze()
+
+
+def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
     """Discretize a continuous variable.
 
     Parameters
@@ -124,13 +133,26 @@ def digitize(x, n_bins, axis=0):
     axis : int | 0
         Axis along which to perform the discretization. By default,
         discretization is performed along the first axis (n_samples,)
+    use_sklearn : bool | False
+        If True, use sklearn.preprocessing.KBinsDiscretizer to discretize the
+        data.
+    kwargs : dict | {}
+        Additional arguments are passed to
+        sklearn.preprocessing.KBinsDiscretizer. For example, use
+        `strategy='quantile'` for equal population binning.
 
     Returns
     -------
     x_binned : array_like
         Digitized array with the same shape as x
     """
-    return np.apply_along_axis(digitize_1d, axis, x, n_bins)
+    if not use_sklearn:
+        return np.apply_along_axis(digitize_1d, axis, x, n_bins)
+    else:
+        kwargs['n_bins'] = n_bins
+        kwargs['encode'] = 'ordinal'
+        kwargs['subsample'] = None
+        return np.apply_along_axis(digitize_sklearn, axis, x, **kwargs)
 
 
 def normalize(x, to_min=0., to_max=1.):
@@ -242,4 +264,3 @@ def get_nbest_mult(hoi, model, n_best=5, minsize=None, maxsize=None,
         df_best['names'] = names
 
     return df_best
-

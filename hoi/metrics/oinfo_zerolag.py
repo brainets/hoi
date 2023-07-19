@@ -22,7 +22,7 @@ def compute_oinfo(inputs, iterators):
     # find all of the indices
     isum = (h_idx == comb[jnp.newaxis, :]).sum((1, 2))
 
-    # indices for H^(n), H^(j) and H^(-j)
+    # indices for h^{n}, h^{j} and h^{-j}
     i_n = jnp.logical_and(isum == msize, order == msize)
     i_j = jnp.logical_and(isum == 1, order == 1)
     i_mj = jnp.logical_and(isum == msize - 1, order == msize - 1)
@@ -79,6 +79,8 @@ class OinfoZeroLag(HOIEstimator):
         h_x, h_idx, order = self.compute_entropies(
             minsize=1, maxsize=maxsize, method=method, **kwargs
         )
+        assert jnp.isfinite(h_x).all()
+        assert not jnp.isnan(h_x).any()
 
         # _______________________________ HOI _________________________________
 

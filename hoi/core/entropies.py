@@ -256,22 +256,25 @@ def set_to_inf(x, _):
 
 
 @partial(jax.jit, static_argnums=(2,))
-def cdistknn(xx, idx, knn=1):
+def cdistk(xx, idx, k=1):
     """K-th minimum euclidian distance."""
     x, y = xx[:, [idx]], xx
 
     # compute euclidian distance
     eucl = jnp.sqrt(jnp.sum((x - y) ** 2, axis=0))
 
-    # set to inf to get knn eucl
-    eucl, _ = jax.lax.scan(set_to_inf, eucl, jnp.arange(knn))
+    # in case of 0-distances, replace them by infinity
+    eucl = jnp.where(eucl == 0, jnp.inf, eucl)
+
+    # set to inf to get k eucl
+    eucl, _ = jax.lax.scan(set_to_inf, eucl, jnp.arange(k))
 
     return xx, eucl[jnp.argmin(eucl)]
 
 
 @partial(jax.jit, static_argnums=(1,))
 def entropy_knn(
-        x: jnp.array, knn: int = 1
+        x: jnp.array, k: int = 1
     ) -> jnp.array:
     """Entropy using the k-nearest neighbor.
 
@@ -292,23 +295,22 @@ def entropy_knn(
     hx : float
         Entropy of x
     """
-    nfeat, nsamp = float(x.shape[0]), float(x.shape[1])
+    # x = jnp.atleast_2d(x)
+    d, n = float(x.shape[0]), float(x.shape[1])
 
     # wrap with knn
-    cdist = partial(cdistknn, knn=knn)
+    cdist = partial(cdistk, k=k)
 
     # compute euclidian distance
-    _, r_k = jax.lax.scan(cdist, x, jnp.arange(nsamp).astype(int))
+    _, r_k = jax.lax.scan(cdist, x, jnp.arange(int(n)).astype(int))
 
-    # volume of unit ball in d^n
-    v_unit_ball = (jnp.pi ** (0.5 * nfeat)) / gamma(0.5 * nfeat + 1.)
+    # log of the volume of unit ball in d^n
+    log_c_d = (d / 2.) * jnp.log(jnp.pi) - jnp.log(gamma(1 + d / 2.))# + d * jnp.log(2)
 
-    # log distances
-    lr_k = jnp.log(r_k)
+    # sum log of distances
+    sum_log_dist = jnp.sum(jnp.log(2 * r_k))
 
-    # shannon entropy estimate
-    h = psi(nsamp) - psi(float(knn)) + jnp.log(v_unit_ball) + (
-            nfeat / nsamp) * (lr_k.sum())
+    h = -psi(k) + psi(n) + log_c_d + (d / n) * sum_log_dist
 
     return h
 

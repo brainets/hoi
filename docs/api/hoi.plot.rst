@@ -1,13 +1,13 @@
-hoi.utils module
-=================
+hoi.plot package
+================
 
 Submodules
 ----------
 
-hoi.utils.stats module
-----------------------
+hoi.plot.landscape module
+-------------------------
 
-.. automodule:: hoi.utils.stats
+.. automodule:: hoi.plot.landscape
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,8 @@ hoi.utils.stats module
 Module contents
 ---------------
 
-.. automodule:: hoi.utils
+.. automodule:: hoi.plot
    :members:
    :undoc-members:
    :show-inheritance:
+

@@ -1,23 +1,25 @@
-name: Docs
+name: "Pull request"
 
 on:
-  push:
-    branches: [main]
-
-  workflow_dispatch:
+  pull_request:
+    branches: [ master ]
 
 jobs:
-  build:
+
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9]
 
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3.5.3
 
-      - name: Set up Python 3.10 🔧
-        uses: actions/setup-python@v2
+      - name: Set up Python ${{ matrix.python-version }} 🔧
+        uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies 🔧
         run: |
@@ -27,16 +29,16 @@ jobs:
           cd ..
           pip install e .
 
+      # - name: Test with pytest 🔧
+      #   run: |
+      #     pytest -v
+
       - name: Build HTML 🔧
         run: |
           cd docs/
           make html
           touch _build/html/.nojekyll
 
-      - name: Deploy Github Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.4.2
-        with:
-          branch: gh-pages
-          folder: docs/_build/html/
-          clean: true
-          ssh-key: ${{ secrets.DEPLOY_KEY }}
+      # - name: Test code quality 🔧
+      #   run: |
+      #     flake8

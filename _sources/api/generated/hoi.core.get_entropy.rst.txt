@@ -1,0 +1,6 @@
+﻿hoi.core.get\_entropy
+=====================
+
+.. currentmodule:: hoi.core
+
+.. autofunction:: get_entropy

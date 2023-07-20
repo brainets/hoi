@@ -1,0 +1,6 @@
+﻿hoi.utils.landscape
+===================
+
+.. currentmodule:: hoi.utils
+
+.. autofunction:: landscape

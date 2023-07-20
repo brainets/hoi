@@ -1,0 +1,35 @@
+﻿hoi.metrics.OinfoZeroLag
+========================
+
+.. currentmodule:: hoi.metrics
+
+.. autoclass:: OinfoZeroLag
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~OinfoZeroLag.__init__
+      ~OinfoZeroLag.compute_entropies
+      ~OinfoZeroLag.filter_multiplets
+      ~OinfoZeroLag.fit
+      ~OinfoZeroLag.get_combinations
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~OinfoZeroLag.entropies
+      ~OinfoZeroLag.multiplets
+      ~OinfoZeroLag.order
+      ~OinfoZeroLag.undersampling
+   
+   

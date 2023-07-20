@@ -129,8 +129,22 @@
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../modules.html">
-                        hoi
+                      <a class="nav-link nav-internal" href="../../../api/modules.html">
+                        API Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../install.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../overview/ovw_refs.html">
+                        Overview
                       </a>
                     </li>
                 
@@ -164,6 +178,34 @@ document.write(`
   </button>
 `);
 </script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/brainets/frites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/kNearNeighbors" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label></a>
+        </li>
+</ul></div>
       
     </div>
     
@@ -208,8 +250,22 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../../modules.html">
-                        hoi
+                      <a class="nav-link nav-internal" href="../../../api/modules.html">
+                        API Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../install.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../overview/ovw_refs.html">
+                        Overview
                       </a>
                     </li>
                 
@@ -232,6 +288,34 @@ document.write(`
   </button>
 `);
 </script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/brainets/frites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/kNearNeighbors" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-twitter-square"></i></span>
+            <label class="sr-only">Twitter</label></a>
+        </li>
+</ul></div>
         
       </div>
     
@@ -314,16 +398,16 @@ document.write(`
 <span class="c1">###############################################################################</span>
 
 
-<div class="viewcode-block" id="find_indices"><a class="viewcode-back" href="../../../hoi.metrics.html#hoi.metrics.infotopo.find_indices">[docs]</a><span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
 <span class="k">def</span> <span class="nf">find_indices</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
     <span class="n">combs</span><span class="p">,</span> <span class="n">keep</span> <span class="o">=</span> <span class="n">inputs</span>
 
     <span class="n">keep</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">keep</span><span class="p">,</span> <span class="p">(</span><span class="n">combs</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="p">(</span><span class="n">combs</span><span class="p">,</span> <span class="n">keep</span><span class="p">),</span> <span class="kc">None</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">combs</span><span class="p">,</span> <span class="n">keep</span><span class="p">),</span> <span class="kc">None</span>
 
 
-<div class="viewcode-block" id="compute_mi"><a class="viewcode-back" href="../../../hoi.metrics.html#hoi.metrics.infotopo.compute_mi">[docs]</a><span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
 <span class="k">def</span> <span class="nf">compute_mi</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">iterators</span><span class="p">):</span>
     <span class="n">combs</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="n">inputs</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">comb</span> <span class="o">=</span> <span class="n">iterators</span>
@@ -339,11 +423,11 @@ document.write(`
     <span class="n">info</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">is_inside</span> <span class="o">==</span> <span class="n">order</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 
-    <span class="k">return</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">info</span></div>
+    <span class="k">return</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">info</span>
 
 
 
-<div class="viewcode-block" id="InfoTopo"><a class="viewcode-back" href="../../../hoi.metrics.html#hoi.metrics.infotopo.InfoTopo">[docs]</a><span class="k">class</span> <span class="nc">InfoTopo</span><span class="p">(</span><span class="n">HOIEstimator</span><span class="p">):</span>
+<div class="viewcode-block" id="InfoTopo"><a class="viewcode-back" href="../../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo">[docs]</a><span class="k">class</span> <span class="nc">InfoTopo</span><span class="p">(</span><span class="n">HOIEstimator</span><span class="p">):</span>
 
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Dynamic, possibly task-related Topological Information.</span>
 
@@ -358,10 +442,10 @@ document.write(`
 
     <span class="vm">__name__</span> <span class="o">=</span> <span class="s1">&#39;Topological Information&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">HOIEstimator</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+<div class="viewcode-block" id="InfoTopo.__init__"><a class="viewcode-back" href="../../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">HOIEstimator</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="InfoTopo.fit"><a class="viewcode-back" href="../../../hoi.metrics.html#hoi.metrics.infotopo.InfoTopo.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;gcmi&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;gcmi&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute Topological Information.</span>
 
 <span class="sd">        Parameters</span>
@@ -412,7 +496,7 @@ document.write(`
             <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_mult</span><span class="p">),</span> <span class="n">h_idx_2</span><span class="p">[</span><span class="n">keep</span><span class="p">])</span>
         <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">hoi</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">hoi</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>

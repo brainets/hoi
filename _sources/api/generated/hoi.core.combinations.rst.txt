@@ -1,0 +1,6 @@
+﻿hoi.core.combinations
+=====================
+
+.. currentmodule:: hoi.core
+
+.. autofunction:: combinations

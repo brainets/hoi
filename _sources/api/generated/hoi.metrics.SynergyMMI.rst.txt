@@ -1,0 +1,35 @@
+﻿hoi.metrics.SynergyMMI
+======================
+
+.. currentmodule:: hoi.metrics
+
+.. autoclass:: SynergyMMI
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~SynergyMMI.__init__
+      ~SynergyMMI.compute_entropies
+      ~SynergyMMI.filter_multiplets
+      ~SynergyMMI.fit
+      ~SynergyMMI.get_combinations
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~SynergyMMI.entropies
+      ~SynergyMMI.multiplets
+      ~SynergyMMI.order
+      ~SynergyMMI.undersampling
+   
+   

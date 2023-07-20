@@ -1,0 +1,6 @@
+﻿hoi.utils.normalize
+===================
+
+.. currentmodule:: hoi.utils
+
+.. autofunction:: normalize

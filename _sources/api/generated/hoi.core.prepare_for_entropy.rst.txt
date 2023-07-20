@@ -1,0 +1,6 @@
+﻿hoi.core.prepare\_for\_entropy
+==============================
+
+.. currentmodule:: hoi.core
+
+.. autofunction:: prepare_for_entropy

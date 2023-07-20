@@ -1,0 +1,6 @@
+﻿hoi.core.copnorm\_nd
+====================
+
+.. currentmodule:: hoi.core
+
+.. autofunction:: copnorm_nd

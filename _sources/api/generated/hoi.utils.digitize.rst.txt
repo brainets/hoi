@@ -1,0 +1,6 @@
+﻿hoi.utils.digitize
+==================
+
+.. currentmodule:: hoi.utils
+
+.. autofunction:: digitize

@@ -1,0 +1,6 @@
+﻿hoi.core.entropy\_gcmi
+======================
+
+.. currentmodule:: hoi.core
+
+.. autofunction:: entropy_gcmi

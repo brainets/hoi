@@ -1,0 +1,35 @@
+﻿hoi.metrics.InfoTot
+===================
+
+.. currentmodule:: hoi.metrics
+
+.. autoclass:: InfoTot
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~InfoTot.__init__
+      ~InfoTot.compute_entropies
+      ~InfoTot.filter_multiplets
+      ~InfoTot.fit
+      ~InfoTot.get_combinations
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~InfoTot.entropies
+      ~InfoTot.multiplets
+      ~InfoTot.order
+      ~InfoTot.undersampling
+   
+   

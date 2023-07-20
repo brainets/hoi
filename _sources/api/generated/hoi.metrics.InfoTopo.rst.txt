@@ -1,0 +1,35 @@
+﻿hoi.metrics.InfoTopo
+====================
+
+.. currentmodule:: hoi.metrics
+
+.. autoclass:: InfoTopo
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~InfoTopo.__init__
+      ~InfoTopo.compute_entropies
+      ~InfoTopo.filter_multiplets
+      ~InfoTopo.fit
+      ~InfoTopo.get_combinations
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~InfoTopo.entropies
+      ~InfoTopo.multiplets
+      ~InfoTopo.order
+      ~InfoTopo.undersampling
+   
+   

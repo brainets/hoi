@@ -1,0 +1,6 @@
+﻿hoi.utils.get\_nbest\_mult
+==========================
+
+.. currentmodule:: hoi.utils
+
+.. autofunction:: get_nbest_mult

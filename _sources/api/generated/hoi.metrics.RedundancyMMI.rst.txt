@@ -1,0 +1,35 @@
+﻿hoi.metrics.RedundancyMMI
+=========================
+
+.. currentmodule:: hoi.metrics
+
+.. autoclass:: RedundancyMMI
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RedundancyMMI.__init__
+      ~RedundancyMMI.compute_entropies
+      ~RedundancyMMI.filter_multiplets
+      ~RedundancyMMI.fit
+      ~RedundancyMMI.get_combinations
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RedundancyMMI.entropies
+      ~RedundancyMMI.multiplets
+      ~RedundancyMMI.order
+      ~RedundancyMMI.undersampling
+   
+   

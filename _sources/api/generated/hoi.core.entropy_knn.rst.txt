@@ -1,0 +1,6 @@
+﻿hoi.core.entropy\_knn
+=====================
+
+.. currentmodule:: hoi.core
+
+.. autofunction:: entropy_knn

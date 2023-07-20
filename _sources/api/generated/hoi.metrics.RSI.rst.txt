@@ -1,0 +1,35 @@
+﻿hoi.metrics.RSI
+===============
+
+.. currentmodule:: hoi.metrics
+
+.. autoclass:: RSI
+
+   
+   .. automethod:: __init__
+
+   
+   .. rubric:: Methods
+
+   .. autosummary::
+   
+      ~RSI.__init__
+      ~RSI.compute_entropies
+      ~RSI.filter_multiplets
+      ~RSI.fit
+      ~RSI.get_combinations
+   
+   
+
+   
+   
+   .. rubric:: Attributes
+
+   .. autosummary::
+   
+      ~RSI.entropies
+      ~RSI.multiplets
+      ~RSI.order
+      ~RSI.undersampling
+   
+   

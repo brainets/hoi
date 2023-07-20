@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hoi.core.combinatory &#8212; HOI 0.0.1 documentation</title>
+    <title>hoi.plot.landscape &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -44,7 +44,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/hoi/core/combinatory';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/hoi/plot/landscape';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -356,7 +356,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">hoi.core.combinatory</li>
+    <li class="breadcrumb-item active" aria-current="page">hoi.plot.landscape</li>
   </ul>
 </nav>
 </div>
@@ -373,50 +373,85 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <h1>Source code for hoi.core.combinatory</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
+  <h1>Source code for hoi.plot.landscape</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <span class="n">normalize</span><span class="p">,</span> <span class="n">landscape</span>
 
 
-<div class="viewcode-block" id="combinations"><a class="viewcode-back" href="../../../api/generated/hoi.core.combinations.html#hoi.core.combinations">[docs]</a><span class="k">def</span> <span class="nf">combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">as_iterator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_jax</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get combinations.</span>
+<div class="viewcode-block" id="plot_landscape"><a class="viewcode-back" href="../../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape">[docs]</a><span class="k">def</span> <span class="nf">plot_landscape</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span>
+                   <span class="n">undersampling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hist_kwargs</span><span class="o">=</span><span class="p">{},</span> <span class="n">plt_kwargs</span><span class="o">=</span><span class="p">{}):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Landscape representation of higher order interactions.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    n : int</span>
-<span class="sd">        Represents the total number of elements in the set</span>
-<span class="sd">    k : int</span>
-<span class="sd">        Represents the size of the combinations to be generated</span>
+<span class="sd">    hoi : array_like</span>
+<span class="sd">        Higher order interactions.</span>
+<span class="sd">    model : hoi.metrics</span>
+<span class="sd">        Higher order interaction model.</span>
+<span class="sd">    minsize, maxsize : int | 2, None</span>
+<span class="sd">        Minimum and maximum size of the multiplets</span>
+<span class="sd">    kind : {&#39;hist&#39;, &#39;scatter&#39;}</span>
+<span class="sd">        Kind of plot. Use either:</span>
+
+<span class="sd">        * &#39;hist&#39; : 2D histogram of the higher order interactions</span>
+<span class="sd">        * &#39;scatter&#39; : scatter plot of the higher order interactions</span>
+<span class="sd">    undersampling : bool | True</span>
+<span class="sd">        If True, plot the undersampling threshold.</span>
+<span class="sd">    hist_kwargs : dict | {}</span>
+<span class="sd">        Optional arguments for the histogram.</span>
+<span class="sd">    plt_kwargs : dict | {}</span>
+<span class="sd">        Optional arguments for the plot. If kind is &#39;hist&#39;, the arguments</span>
+<span class="sd">        are passed to `plt.pcolormesh`. If kind is &#39;scatter&#39;, the arguments</span>
+<span class="sd">        are passed to `plt.scatter`.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    combs : jnp.array</span>
-<span class="sd">        An array of shape (n_combinations, k) representing all possible</span>
-<span class="sd">        combinations of k elements.</span>
+<span class="sd">    ax : axis</span>
+<span class="sd">        Current axis.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
 
-    <span class="k">def</span> <span class="nf">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">k</span><span class="p">):</span>
-            <span class="c1"># convert to list</span>
-            <span class="n">c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="c1"># get computed orders</span>
+    <span class="n">orders</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">order</span>
+    <span class="k">if</span> <span class="n">minsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">minsize</span> <span class="o">=</span> <span class="n">orders</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">maxsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">maxsize</span> <span class="o">=</span> <span class="n">orders</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
 
-            <span class="c1"># deal with order</span>
-            <span class="k">if</span> <span class="n">order</span><span class="p">:</span>
-                <span class="n">c</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="c1"># order selection</span>
+    <span class="n">keep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">orders</span> <span class="o">&gt;=</span> <span class="n">minsize</span><span class="p">,</span> <span class="n">orders</span> <span class="o">&lt;=</span> <span class="n">maxsize</span><span class="p">)</span>
+    <span class="n">hoi</span> <span class="o">=</span> <span class="n">hoi</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span>
+    <span class="n">orders</span> <span class="o">=</span> <span class="n">orders</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span>
 
-            <span class="k">yield</span> <span class="n">c</span>
+    <span class="c1"># switch between histogram and scatter plot</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;hist&#39;</span><span class="p">:</span>
+        <span class="n">hist_kwargs</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;numpy&#39;</span>
+        <span class="n">lscp</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">landscape</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">orders</span><span class="p">,</span> <span class="o">**</span><span class="n">hist_kwargs</span><span class="p">)</span>
 
+        <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span>
+            <span class="n">order</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">lscp</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="o">**</span><span class="n">plt_kwargs</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">hist_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;stat&#39;</span><span class="p">,</span> <span class="s1">&#39;probability&#39;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;scatter&#39;</span><span class="p">:</span>
+        <span class="n">size</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hoi</span><span class="p">),</span> <span class="n">to_min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">to_max</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+        <span class="n">minmax</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">]))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">keep</span> <span class="o">=</span> <span class="n">orders</span> <span class="o">==</span> <span class="n">o</span>
+            <span class="n">hoi_o</span> <span class="o">=</span> <span class="n">hoi</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">o</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.13</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">hoi_o</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hoi_o</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">hoi_o</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="n">minmax</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">minmax</span><span class="p">,</span>
+                        <span class="n">s</span><span class="o">=</span><span class="n">size</span><span class="p">[</span><span class="n">keep</span><span class="p">],</span> <span class="o">**</span><span class="n">plt_kwargs</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">as_iterator</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">combs</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">combs</span><span class="p">)</span> <span class="k">if</span> <span class="n">as_jax</span> <span class="k">else</span> <span class="n">combs</span></div>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Order&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1"> [Bits]&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">as_iterator</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="c1"># print(np.array(list(itertools.combinations(np.arange(10), 3))).shape)</span>
+    <span class="k">if</span> <span class="n">undersampling</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">undersampling</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span></div>
 </pre></div>
 
                 </article>

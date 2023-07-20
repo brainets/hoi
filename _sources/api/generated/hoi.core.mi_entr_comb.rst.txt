@@ -1,0 +1,6 @@
+﻿hoi.core.mi\_entr\_comb
+=======================
+
+.. currentmodule:: hoi.core
+
+.. autofunction:: mi_entr_comb

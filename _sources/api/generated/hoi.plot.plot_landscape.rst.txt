@@ -1,0 +1,6 @@
+﻿hoi.plot.plot\_landscape
+========================
+
+.. currentmodule:: hoi.plot
+
+.. autofunction:: plot_landscape

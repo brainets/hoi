@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>hoi.core.entropy_knn &#8212; HOI 0.0.1 documentation</title>
+    <title>hoi.core.entropy_kernel &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -45,11 +45,11 @@
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.core.entropy_knn';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.core.entropy_kernel';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="hoi.core.entropy_kernel" href="hoi.core.entropy_kernel.html" />
-    <link rel="prev" title="hoi.core.entropy_bin" href="hoi.core.entropy_bin.html" />
+    <link rel="next" title="hoi.core.copnorm_nd" href="hoi.core.copnorm_nd.html" />
+    <link rel="prev" title="hoi.core.entropy_knn" href="hoi.core.entropy_knn.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -399,7 +399,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../api_core.html" class="nav-link">Low-level core functions</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">hoi.core.entropy_knn</li>
+    <li class="breadcrumb-item active" aria-current="page">hoi.core.entropy_kernel</li>
   </ul>
 </nav>
 </div>
@@ -416,21 +416,16 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="hoi-core-entropy-knn">
-<h1>hoi.core.entropy_knn<a class="headerlink" href="#hoi-core-entropy-knn" title="Permalink to this headline">#</a></h1>
+  <section id="hoi-core-entropy-kernel">
+<h1>hoi.core.entropy_kernel<a class="headerlink" href="#hoi-core-entropy-kernel" title="Permalink to this headline">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="hoi.core.entropy_knn">
-<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">entropy_knn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">jax._src.numpy.lax_numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">jax._src.numpy.lax_numpy.array</span></span></span><a class="reference internal" href="../../_modules/hoi/core/entropies.html#entropy_knn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.entropy_knn" title="Permalink to this definition">#</a></dt>
-<dd><p>Entropy using the k-nearest neighbor.</p>
-<p>Original code: <a class="github reference external" href="https://github.com/blakeaw/Python-knn-entropy/">blakeaw/Python-knn-entropy</a>
-and references. See also Kraskov et al., Estimating mutual information,
-Phy rev, 2004</p>
+<dt class="sig sig-object py" id="hoi.core.entropy_kernel">
+<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">entropy_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">jax._src.numpy.lax_numpy.array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bw_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">jax._src.numpy.lax_numpy.array</span></span></span><a class="reference internal" href="../../_modules/hoi/core/entropies.html#entropy_kernel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.entropy_kernel" title="Permalink to this definition">#</a></dt>
+<dd><p>Entropy using gaussian kernel density.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>x</strong><span class="classifier">array_like</span></dt><dd><p>Input data of shape (n_features, n_samples)</p>
-</dd>
-<dt><strong>knn</strong><span class="classifier">int | 1</span></dt><dd><p>K-th closest point. Default is 1 (closest point)</p>
 </dd>
 </dl>
 </dd>
@@ -457,20 +452,20 @@ Phy rev, 2004</p>
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="hoi.core.entropy_bin.html"
+       href="hoi.core.entropy_knn.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">hoi.core.entropy_bin</p>
+        <p class="prev-next-title">hoi.core.entropy_knn</p>
       </div>
     </a>
     <a class="right-next"
-       href="hoi.core.entropy_kernel.html"
+       href="hoi.core.copnorm_nd.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">hoi.core.entropy_kernel</p>
+        <p class="prev-next-title">hoi.core.copnorm_nd</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -488,7 +483,7 @@ Phy rev, 2004</p>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/api/generated/hoi.core.entropy_knn.rst.txt">
+    <a href="../../_sources/api/generated/hoi.core.entropy_kernel.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

@@ -33,7 +33,7 @@ def compute_oinfo(inputs, iterators):
     h_mj = jnp.sum(h_x, where=i_mj.reshape(-1, 1), axis=0)
 
     # compute o-info
-    o = (msize - 2.) * h_n + h_j - h_mj
+    o = (msize - 2.0) * h_n + h_j - h_mj
 
     return inputs, o
 
@@ -51,12 +51,12 @@ class OinfoZeroLag(HOIEstimator):
         The feature of shape (n_trials,) for estimating task-related O-info
     """
 
-    __name__ = 'O-Information'
+    __name__ = "O-Information"
 
     def __init__(self, data, y=None, verbose=None):
         HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
 
-    def fit(self, minsize=2, maxsize=None, method='gcmi', **kwargs):
+    def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the O-information.
 
         Parameters
@@ -72,6 +72,10 @@ class OinfoZeroLag(HOIEstimator):
                 * 'knn': k-nearest neighbor estimator
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
+        
+        References
+        ----------
+        Rosas et al., 2019 :cite:`rosas2019oinfo` 
         """
         # ____________________________ ENTROPIES ______________________________
 
@@ -89,48 +93,45 @@ class OinfoZeroLag(HOIEstimator):
         n_mult = keep.sum()
 
         # progress-bar definition
-        pbar = scan_tqdm(n_mult, message='Oinfo')
+        pbar = scan_tqdm(n_mult, message="Oinfo")
 
         # compute o-info
         h_idx_2 = jnp.where(h_idx == -1, -2, h_idx)
         _, hoi = jax.lax.scan(
-            pbar(compute_oinfo), (h_x, h_idx[..., jnp.newaxis], order),
-            (jnp.arange(n_mult), h_idx_2[keep], order[keep])
+            pbar(compute_oinfo),
+            (h_x, h_idx[..., jnp.newaxis], order),
+            (jnp.arange(n_mult), h_idx_2[keep], order[keep]),
         )
 
         return np.asarray(hoi)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from hoi.utils import landscape, digitize
     from matplotlib.colors import LogNorm
-    plt.style.use('ggplot')
 
+    plt.style.use("ggplot")
 
-    path = '/home/etienne/Downloads/data_200_trials'
+    path = "/home/etienne/Downloads/data_200_trials"
     x = np.load(path, allow_pickle=True)[..., 100]
     x_min, x_max = x.min(), x.max()
     x_amp = x_max - x_min
-    x_bin = np.ceil((( x - x_min) * (3 - 1)) / (x_amp)).astype(int)
+    x_bin = np.ceil(((x - x_min) * (3 - 1)) / (x_amp)).astype(int)
 
-
-    logger.setLevel('INFO')
+    logger.setLevel("INFO")
     # model = OinfoZeroLag(digitize(x, 3, axis=1))
     # model = OinfoZeroLag(x[..., 100])
     model = OinfoZeroLag(x, y=np.random.rand(x.shape[0]))
-    hoi = model.fit(
-        minsize=2, maxsize=None, method="gcmi"
-    )
+    hoi = model.fit(minsize=2, maxsize=None, method="gcmi")
 
     print(hoi.shape)
     print(model.order.shape)
     print(model.multiplets.shape)
-    0/0
+    0 / 0
 
-    lscp = landscape(hoi.squeeze(), model.order, output='xarray')
-    lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())
-    plt.axvline(model.undersampling, linestyle='--', color='k')
+    lscp = landscape(hoi.squeeze(), model.order, output="xarray")
+    lscp.plot(x="order", y="bins", cmap="jet", norm=LogNorm())
+    plt.axvline(model.undersampling, linestyle="--", color="k")
     plt.grid(True)
     plt.show()

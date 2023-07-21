@@ -46,9 +46,7 @@ def compute_mi(inputs, iterators):
     # compute infotopo
     info = jnp.sum(h, where=(is_inside == order).reshape(-1, 1), axis=0)
 
-
     return inputs, info
-
 
 
 class InfoTopo(HOIEstimator):
@@ -64,12 +62,12 @@ class InfoTopo(HOIEstimator):
         The feature of shape (n_trials,) for estimating task-related O-info.
     """
 
-    __name__ = 'Topological Information'
+    __name__ = "Topological Information"
 
     def __init__(self, data, y=None, verbose=None):
         HOIEstimator.__init__(self, data, y=y, verbose=verbose)
 
-    def fit(self, minsize=1, maxsize=None, method='gcmi', **kwargs):
+    def fit(self, minsize=1, maxsize=None, method="gcmi", **kwargs):
         """Compute Topological Information.
 
         Parameters
@@ -92,6 +90,10 @@ class InfoTopo(HOIEstimator):
             The O-info array of shape (n_multiplets, n_variables) where positive
             values reflect redundant dominated interactions and negative values
             stand for synergistic dominated interactions.
+        
+        References
+        ----------
+        Baudot et al., 2019 :cite:`baudot2019infotopo`
         """
         # ____________________________ ENTROPIES ______________________________
 
@@ -104,7 +106,7 @@ class InfoTopo(HOIEstimator):
         # _______________________________ HOI _________________________________
 
         # compute order and multiply entropies
-        h_x_sgn = jnp.multiply(((-1.) ** (order.reshape(-1, 1) - 1)), h_x)
+        h_x_sgn = jnp.multiply(((-1.0) ** (order.reshape(-1, 1) - 1)), h_x)
         h_idx_2 = jnp.where(h_idx == -1, -2, h_idx)
 
         # subselection of multiplets
@@ -112,41 +114,39 @@ class InfoTopo(HOIEstimator):
         n_mult = keep.sum()
 
         # progress-bar definition
-        pbar = scan_tqdm(n_mult, message='Mutual information')
+        pbar = scan_tqdm(n_mult, message="Mutual information")
 
         # compute mi
         _, hoi = jax.lax.scan(
-            pbar(compute_mi), (h_idx[..., jnp.newaxis], h_x_sgn, order),
-            (jnp.arange(n_mult), h_idx_2[keep])
+            pbar(compute_mi),
+            (h_idx[..., jnp.newaxis], h_x_sgn, order),
+            (jnp.arange(n_mult), h_idx_2[keep]),
         )
 
         return np.asarray(hoi)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from hoi.utils import landscape, digitize
     from matplotlib.colors import LogNorm
-    plt.style.use('ggplot')
 
+    plt.style.use("ggplot")
 
-    path = '/home/etienne/Downloads/data_200_trials'
+    path = "/home/etienne/Downloads/data_200_trials"
     x = np.load(path, allow_pickle=True)[..., 100]
     x_min, x_max = x.min(), x.max()
     x_amp = x_max - x_min
-    x_bin = np.ceil((( x - x_min) * (3 - 1)) / (x_amp)).astype(int)
+    x_bin = np.ceil(((x - x_min) * (3 - 1)) / (x_amp)).astype(int)
 
-
-    logger.setLevel('INFO')
+    logger.setLevel("INFO")
     # model = InfoTopo(digitize(x[..., 100], 3, axis=1))
     # model = InfoTopo(x[..., 100])
     model = InfoTopo(x_bin)
-    hoi = model.fit(
-        maxsize=None, method="binning"
-    )
+    hoi = model.fit(maxsize=None, method="binning")
     # 0/0
 
-    lscp = landscape(hoi.squeeze(), model.order, output='xarray')
-    lscp.plot(x='order', y='bins', cmap='jet', norm=LogNorm())
-    plt.axvline(model.undersampling, linestyle='--', color='k')
+    lscp = landscape(hoi.squeeze(), model.order, output="xarray")
+    lscp.plot(x="order", y="bins", cmap="jet", norm=LogNorm())
+    plt.axvline(model.undersampling, linestyle="--", color="k")
     plt.show()

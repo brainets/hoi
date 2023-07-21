@@ -20,7 +20,7 @@ In summary, this package aims at calculating the O-information thereby understan
 
    API Reference <api/modules>
    Installation <install>
-   Overview <overview/ovw_refs>
+   Overview <overview/index>
 
 Indices and tables
 ==================

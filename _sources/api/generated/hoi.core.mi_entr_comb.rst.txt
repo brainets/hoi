@@ -4,3 +4,8 @@
 .. currentmodule:: hoi.core
 
 .. autofunction:: mi_entr_comb
+
+.. _sphx_glr_backreferences_hoi.core.mi_entr_comb:
+
+.. minigallery:: hoi.core.mi_entr_comb
+    :add-heading:

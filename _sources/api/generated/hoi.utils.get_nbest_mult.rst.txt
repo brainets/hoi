@@ -4,3 +4,8 @@
 .. currentmodule:: hoi.utils
 
 .. autofunction:: get_nbest_mult
+
+.. _sphx_glr_backreferences_hoi.utils.get_nbest_mult:
+
+.. minigallery:: hoi.utils.get_nbest_mult
+    :add-heading:

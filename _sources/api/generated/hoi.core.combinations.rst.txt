@@ -4,3 +4,8 @@
 .. currentmodule:: hoi.core
 
 .. autofunction:: combinations
+
+.. _sphx_glr_backreferences_hoi.core.combinations:
+
+.. minigallery:: hoi.core.combinations
+    :add-heading:

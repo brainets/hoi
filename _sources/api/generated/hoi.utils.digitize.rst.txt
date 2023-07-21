@@ -4,3 +4,8 @@
 .. currentmodule:: hoi.utils
 
 .. autofunction:: digitize
+
+.. _sphx_glr_backreferences_hoi.utils.digitize:
+
+.. minigallery:: hoi.utils.digitize
+    :add-heading:

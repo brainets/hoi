@@ -4,3 +4,8 @@
 .. currentmodule:: hoi.core
 
 .. autofunction:: copnorm_nd
+
+.. _sphx_glr_backreferences_hoi.core.copnorm_nd:
+
+.. minigallery:: hoi.core.copnorm_nd
+    :add-heading:

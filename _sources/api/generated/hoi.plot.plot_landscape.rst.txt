@@ -4,3 +4,8 @@
 .. currentmodule:: hoi.plot
 
 .. autofunction:: plot_landscape
+
+.. _sphx_glr_backreferences_hoi.plot.plot_landscape:
+
+.. minigallery:: hoi.plot.plot_landscape
+    :add-heading:

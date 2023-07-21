@@ -4,3 +4,8 @@
 .. currentmodule:: hoi.core
 
 .. autofunction:: entropy_bin
+
+.. _sphx_glr_backreferences_hoi.core.entropy_bin:
+
+.. minigallery:: hoi.core.entropy_bin
+    :add-heading:

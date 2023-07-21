@@ -11,6 +11,7 @@ sphinx-copybutton
 
 ## uncomment when we have 'sphinxcontrib.bibtex' needed. Add 'sphinxcontrib.bibtex' to extensions in confy.py
 # sphinxcontrib-packages
+sphinxcontrib-bibtex
 
 ## uncomment when the README file has one of the expected file extensions ['.txt', '.rst']. Add "sphinx_gallery.gen_gallery" to extensions in confy.py
 # sphinx-gallery

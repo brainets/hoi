@@ -98,6 +98,41 @@ class HOIEstimator(object):
 
     def compute_entropies(self, method='gcmi', minsize=1, maxsize=None,
                           fill_value=-1, **kwargs):
+        """Compute entropies for all multiplets.
+
+        Parameters
+        ----------
+        method : {'gcmi', 'binning', 'knn', 'kernel}
+            Name of the method to compute entropy. Use either :
+
+                * 'gcmi': gaussian copula entropy [default]
+                * 'binning': binning-based estimator of entropy. Note that to
+                  use this estimator, the data have be to discretized
+                * 'knn': k-nearest neighbor estimator
+                * 'kernel': kernel-based estimator of entropy
+
+        minsize : int, optional
+            Minimum size of the multiplets. Default is 1.
+        maxsize : int, optional
+            Maximum size of the multiplets. Default is None.
+        fill_value : int, optional
+            Value to fill the multiplet indices with. Default is -1.
+        kwargs : dict, optional
+            Additional arguments to pass to the entropy function.
+        
+        Returns
+        -------
+        h_x : array_like
+            Entropies of shape (n_mult, n_variables)
+        h_idx : array_like
+            Indices of the multiplets of shape (n_mult, maxsize)
+        order : array_like
+            Order of each multiplet of shape (n_mult,)
+        
+        See Also
+        --------
+        entropy_gcmi, entropy_binning, entropy_knn, entropy_kernel
+        """
         logger.info(f"Compute entropy with {method}")
         msg = "Entropy H(%i)"
 

@@ -63,19 +63,25 @@ class OinfoZeroLag(HOIEstimator):
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi', 'binning', 'knn'}
+        method : {'gcmi', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
                 * 'gcmi': gaussian copula entropy [default]
                 * 'binning': binning-based estimator of entropy. Note that to
-                   use this estimator, the data have be to discretized
+                  use this estimator, the data have be to discretized
                 * 'knn': k-nearest neighbor estimator
+                * 'kernel': kernel-based estimator of entropy
+
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
-        
+
         References
         ----------
-        Rosas et al., 2019 :cite:`rosas2019oinfo` 
+        Rosas et al., 2019 :cite:`rosas2019oinfo`
+
+        See Also
+        --------
+        entropy_gcmi, entropy_binning, entropy_knn, entropy_kernel
         """
         # ____________________________ ENTROPIES ______________________________
 

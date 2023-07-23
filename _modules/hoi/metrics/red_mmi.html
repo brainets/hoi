@@ -437,11 +437,15 @@ document.write(`
 <span class="sd">        method : {&#39;gcmi&#39;, &#39;binning&#39;, &#39;knn&#39;, &#39;kernel}</span>
 <span class="sd">            Name of the method to compute entropy. Use either :</span>
 
-<span class="sd">                * &#39;gcmi&#39;: gaussian copula entropy [default]</span>
+<span class="sd">                * &#39;gcmi&#39;: gaussian copula entropy [default]. See </span>
+<span class="sd">                  :func:`hoi.core.entropy_gcmi`</span>
 <span class="sd">                * &#39;binning&#39;: binning-based estimator of entropy. Note that to</span>
-<span class="sd">                  use this estimator, the data have be to discretized</span>
-<span class="sd">                * &#39;knn&#39;: k-nearest neighbor estimator</span>
+<span class="sd">                  use this estimator, the data have be to discretized. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_bin`</span>
+<span class="sd">                * &#39;knn&#39;: k-nearest neighbor estimator. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_knn`</span>
 <span class="sd">                * &#39;kernel&#39;: kernel-based estimator of entropy</span>
+<span class="sd">                  see :func:`hoi.core.entropy_kernel`</span>
 
 <span class="sd">        kwargs : dict | {}</span>
 <span class="sd">            Additional arguments are sent to each entropy function</span>

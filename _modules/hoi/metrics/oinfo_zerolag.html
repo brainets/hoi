@@ -432,7 +432,21 @@ document.write(`
 
 <div class="viewcode-block" id="OinfoZeroLag"><a class="viewcode-back" href="../../../api/generated/hoi.metrics.OinfoZeroLag.html#hoi.metrics.OinfoZeroLag">[docs]</a><span class="k">class</span> <span class="nc">OinfoZeroLag</span><span class="p">(</span><span class="n">HOIEstimator</span><span class="p">):</span>
 
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dynamic, possibly task-related O-info.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Dynamic, possibly task-related O-info.</span>
+
+<span class="sd">    The O-information is defined as the difference between the total</span>
+<span class="sd">    correlation (TC) minus the dual total correlation (DTC):</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \Omega(X^{n})  &amp;=  TC(X^{n}) - DTC(X^{n}) \\</span>
+<span class="sd">                       &amp;=  (n - 2)H(X^{n}) + \sum_{j=1}^{n} [H(X_{j}) - H(</span>
+<span class="sd">                        X_{-j}^{n})]</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        * :math:`\Omega(X^{n}) &gt; 0 \Rightarrow Redundancy`</span>
+<span class="sd">        * :math:`\Omega(X^{n}) &lt; 0 \Rightarrow Synergy`</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -441,6 +455,10 @@ document.write(`
 <span class="sd">        (n_samples, n_features, n_variables)</span>
 <span class="sd">    y : array_like</span>
 <span class="sd">        The feature of shape (n_trials,) for estimating task-related O-info</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Rosas et al., 2019 :cite:`rosas2019oinfo`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;O-Information&quot;</span>
@@ -458,22 +476,18 @@ document.write(`
 <span class="sd">        method : {&#39;gcmi&#39;, &#39;binning&#39;, &#39;knn&#39;, &#39;kernel}</span>
 <span class="sd">            Name of the method to compute entropy. Use either :</span>
 
-<span class="sd">                * &#39;gcmi&#39;: gaussian copula entropy [default]</span>
+<span class="sd">                * &#39;gcmi&#39;: gaussian copula entropy [default]. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_gcmi`</span>
 <span class="sd">                * &#39;binning&#39;: binning-based estimator of entropy. Note that to</span>
-<span class="sd">                  use this estimator, the data have be to discretized</span>
-<span class="sd">                * &#39;knn&#39;: k-nearest neighbor estimator</span>
+<span class="sd">                  use this estimator, the data have be to discretized. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_bin`</span>
+<span class="sd">                * &#39;knn&#39;: k-nearest neighbor estimator. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_knn`</span>
 <span class="sd">                * &#39;kernel&#39;: kernel-based estimator of entropy</span>
+<span class="sd">                  see :func:`hoi.core.entropy_kernel`</span>
 
 <span class="sd">        kwargs : dict | {}</span>
 <span class="sd">            Additional arguments are sent to each entropy function</span>
-
-<span class="sd">        References</span>
-<span class="sd">        ----------</span>
-<span class="sd">        Rosas et al., 2019 :cite:`rosas2019oinfo`</span>
-
-<span class="sd">        See Also</span>
-<span class="sd">        --------</span>
-<span class="sd">        entropy_gcmi, entropy_binning, entropy_knn, entropy_kernel</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># ____________________________ ENTROPIES ______________________________</span>
 

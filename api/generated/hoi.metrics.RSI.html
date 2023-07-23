@@ -465,13 +465,13 @@ referred to as the redundancy (Schneidman et al. 2003b).</p>
 </dd>
 <dt class="field-even">Attributes</dt>
 <dd class="field-even"><dl class="simple">
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropies</span></code></dt><dd><p>Entropies of shape (n_mult,)</p>
+<dt><a class="reference internal" href="#hoi.metrics.RSI.entropies" title="hoi.metrics.RSI.entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropies</span></code></a></dt><dd><p>Entropies of shape (n_mult,)</p>
 </dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiplets</span></code></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
+<dt><a class="reference internal" href="#hoi.metrics.RSI.multiplets" title="hoi.metrics.RSI.multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiplets</span></code></a></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
 </dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">order</span></code></dt><dd><p>Order of each multiplet of shape (n_mult,).</p>
+<dt><a class="reference internal" href="#hoi.metrics.RSI.order" title="hoi.metrics.RSI.order"><code class="xref py py-obj docutils literal notranslate"><span class="pre">order</span></code></a></dt><dd><p>Order of each multiplet of shape (n_mult,).</p>
 </dd>
-<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">undersampling</span></code></dt><dd><p>Under-sampling threshold.</p>
+<dt><a class="reference internal" href="#hoi.metrics.RSI.undersampling" title="hoi.metrics.RSI.undersampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undersampling</span></code></a></dt><dd><p>Under-sampling threshold.</p>
 </dd>
 </dl>
 </dd>
@@ -483,28 +483,100 @@ referred to as the redundancy (Schneidman et al. 2003b).</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code>([method, minsize, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.RSI.compute_entropies" title="hoi.metrics.RSI.compute_entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code></a>([method, minsize, ...])</p></td>
 <td><p>Compute entropies for all multiplets.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RSI.filter_multiplets" title="hoi.metrics.RSI.filter_multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_multiplets</span></code></a>(mults, order)</p></td>
+<td><p>Filter multiplets.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
 <td><p>Compute RSI.</p></td>
 </tr>
-</tbody>
-</table>
-<table class="table">
-<colgroup>
-<col style="width: 68%" />
-<col style="width: 32%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><strong>filter_multiplets</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><p><strong>get_combinations</strong></p></td>
-<td></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RSI.get_combinations" title="hoi.metrics.RSI.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(msize[, as_iterator, ...])</p></td>
+<td><p>Get combinations of features.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py method">
+<dt class="sig sig-object py" id="hoi.metrics.RSI.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RSI.__iter__" title="Permalink to this definition">#</a></dt>
+<dd><p>Iteration over orders.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hoi.metrics.RSI.compute_entropies">
+<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RSI.compute_entropies" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute entropies for all multiplets.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>‘gcmi’: gaussian copula entropy [default]. See 
+<a class="reference internal" href="hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi" title="hoi.core.entropy_gcmi"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gcmi()</span></code></a></p></li>
+<li><p>‘binning’: binning-based estimator of entropy. Note that to
+use this estimator, the data have be to discretized. See
+<a class="reference internal" href="hoi.core.entropy_bin.html#hoi.core.entropy_bin" title="hoi.core.entropy_bin"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_bin()</span></code></a></p></li>
+<li><p>‘knn’: k-nearest neighbor estimator. See
+<a class="reference internal" href="hoi.core.entropy_knn.html#hoi.core.entropy_knn" title="hoi.core.entropy_knn"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_knn()</span></code></a></p></li>
+<li><p>‘kernel’: kernel-based estimator of entropy
+see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.entropy_kernel" title="hoi.core.entropy_kernel"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_kernel()</span></code></a></p></li>
+</ul>
+</div></blockquote>
+</dd>
+<dt><strong>minsize</strong><span class="classifier">int, optional</span></dt><dd><p>Minimum size of the multiplets. Default is 1.</p>
+</dd>
+<dt><strong>maxsize</strong><span class="classifier">int, optional</span></dt><dd><p>Maximum size of the multiplets. Default is None.</p>
+</dd>
+<dt><strong>fill_value</strong><span class="classifier">int, optional</span></dt><dd><p>Value to fill the multiplet indices with. Default is -1.</p>
+</dd>
+<dt><strong>kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional arguments to pass to the entropy function.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>h_x</strong><span class="classifier">array_like</span></dt><dd><p>Entropies of shape (n_mult, n_variables)</p>
+</dd>
+<dt><strong>h_idx</strong><span class="classifier">array_like</span></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize)</p>
+</dd>
+<dt><strong>order</strong><span class="classifier">array_like</span></dt><dd><p>Order of each multiplet of shape (n_mult,)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hoi.metrics.RSI.entropies">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entropies</span></span><a class="headerlink" href="#hoi.metrics.RSI.entropies" title="Permalink to this definition">#</a></dt>
+<dd><p>Entropies of shape (n_mult,)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hoi.metrics.RSI.filter_multiplets">
+<span class="sig-name descname"><span class="pre">filter_multiplets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mults</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RSI.filter_multiplets" title="Permalink to this definition">#</a></dt>
+<dd><p>Filter multiplets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>mults</strong><span class="classifier">array_like</span></dt><dd><p>Multiplets of shape (n_mult, maxsize)</p>
+</dd>
+<dt><strong>order</strong><span class="classifier">array_like</span></dt><dd><p>Order of each multiplet of shape (n_mult,)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>keep</strong><span class="classifier">array_like</span></dt><dd><p>Boolean array of shape (n_mult,) indicating which multiplets to
+keep.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.RSI.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/rsi.html#RSI.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.RSI.fit" title="Permalink to this definition">#</a></dt>
@@ -517,11 +589,15 @@ referred to as the redundancy (Schneidman et al. 2003b).</p>
 <dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>‘gcmi’: gaussian copula entropy [default]</p></li>
+<li><p>‘gcmi’: gaussian copula entropy [default]. See 
+<a class="reference internal" href="hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi" title="hoi.core.entropy_gcmi"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gcmi()</span></code></a></p></li>
 <li><p>‘binning’: binning-based estimator of entropy. Note that to
-use this estimator, the data have be to discretized</p></li>
-<li><p>‘knn’: k-nearest neighbor estimator</p></li>
-<li><p>‘kernel’: kernel-based estimator of entropy</p></li>
+use this estimator, the data have be to discretized. See
+<a class="reference internal" href="hoi.core.entropy_bin.html#hoi.core.entropy_bin" title="hoi.core.entropy_bin"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_bin()</span></code></a></p></li>
+<li><p>‘knn’: k-nearest neighbor estimator. See
+<a class="reference internal" href="hoi.core.entropy_knn.html#hoi.core.entropy_knn" title="hoi.core.entropy_knn"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_knn()</span></code></a></p></li>
+<li><p>‘kernel’: kernel-based estimator of entropy
+see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.entropy_kernel" title="hoi.core.entropy_kernel"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_kernel()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 </dd>
@@ -530,6 +606,51 @@ use this estimator, the data have be to discretized</p></li>
 </dl>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="hoi.metrics.RSI.get_combinations">
+<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_iterator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_jax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RSI.get_combinations" title="Permalink to this definition">#</a></dt>
+<dd><p>Get combinations of features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>msize</strong><span class="classifier">int</span></dt><dd><p>Size of the multiplets</p>
+</dd>
+<dt><strong>as_iterator</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, return an iterator. Default is False.</p>
+</dd>
+<dt><strong>as_jax</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, return a jax array. Default is True.</p>
+</dd>
+<dt><strong>order</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, return the order of each multiplet. Default is False.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>combinations</strong><span class="classifier">array_like</span></dt><dd><p>Combinations of features.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hoi.metrics.RSI.multiplets">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">multiplets</span></span><a class="headerlink" href="#hoi.metrics.RSI.multiplets" title="Permalink to this definition">#</a></dt>
+<dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
+<p>By convention, we used -1 to indicate that a feature has been ignored.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hoi.metrics.RSI.order">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order</span></span><a class="headerlink" href="#hoi.metrics.RSI.order" title="Permalink to this definition">#</a></dt>
+<dd><p>Order of each multiplet of shape (n_mult,).</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="hoi.metrics.RSI.undersampling">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">undersampling</span></span><a class="headerlink" href="#hoi.metrics.RSI.undersampling" title="Permalink to this definition">#</a></dt>
+<dd><p>Under-sampling threshold.</p>
 </dd></dl>
 
 </dd></dl>

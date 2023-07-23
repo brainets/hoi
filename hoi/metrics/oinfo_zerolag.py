@@ -40,7 +40,21 @@ def compute_oinfo(inputs, iterators):
 
 class OinfoZeroLag(HOIEstimator):
 
-    """Dynamic, possibly task-related O-info.
+    r"""Dynamic, possibly task-related O-info.
+
+    The O-information is defined as the difference between the total
+    correlation (TC) minus the dual total correlation (DTC):
+
+    .. math::
+
+        \Omega(X^{n})  &=  TC(X^{n}) - DTC(X^{n}) \\
+                       &=  (n - 2)H(X^{n}) + \sum_{j=1}^{n} [H(X_{j}) - H(
+                        X_{-j}^{n})]
+
+    .. warning::
+
+        * :math:`\Omega(X^{n}) > 0 \Rightarrow Redundancy`
+        * :math:`\Omega(X^{n}) < 0 \Rightarrow Synergy`
 
     Parameters
     ----------
@@ -49,6 +63,10 @@ class OinfoZeroLag(HOIEstimator):
         (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info
+
+    References
+    ----------
+    Rosas et al., 2019 :cite:`rosas2019oinfo`
     """
 
     __name__ = "O-Information"
@@ -66,22 +84,18 @@ class OinfoZeroLag(HOIEstimator):
         method : {'gcmi', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]
+                * 'gcmi': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gcmi`
                 * 'binning': binning-based estimator of entropy. Note that to
-                  use this estimator, the data have be to discretized
-                * 'knn': k-nearest neighbor estimator
+                  use this estimator, the data have be to discretized. See
+                  :func:`hoi.core.entropy_bin`
+                * 'knn': k-nearest neighbor estimator. See
+                  :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
+                  see :func:`hoi.core.entropy_kernel`
 
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
-
-        References
-        ----------
-        Rosas et al., 2019 :cite:`rosas2019oinfo`
-
-        See Also
-        --------
-        entropy_gcmi, entropy_binning, entropy_knn, entropy_kernel
         """
         # ____________________________ ENTROPIES ______________________________
 

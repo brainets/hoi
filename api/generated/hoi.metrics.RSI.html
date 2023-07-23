@@ -483,7 +483,10 @@ referred to as the redundancy (Schneidman et al. 2003b).</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code>([method, minsize, ...])</p></td>
+<td><p>Compute entropies for all multiplets.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
 <td><p>Compute RSI.</p></td>
 </tr>
 </tbody>
@@ -494,13 +497,10 @@ referred to as the redundancy (Schneidman et al. 2003b).</p>
 <col style="width: 32%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><strong>compute_entropies</strong></p></td>
+<tr class="row-odd"><td><p><strong>filter_multiplets</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><strong>filter_multiplets</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><strong>get_combinations</strong></p></td>
+<tr class="row-even"><td><p><strong>get_combinations</strong></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -514,16 +514,14 @@ referred to as the redundancy (Schneidman et al. 2003b).</p>
 <dd class="field-odd"><dl>
 <dt><strong>minsize, maxsize</strong><span class="classifier">int | 2, None</span></dt><dd><p>Minimum and maximum size of the multiplets</p>
 </dd>
-<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
+<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>‘gcmi’: gaussian copula entropy [default]</p></li>
-<li><dl class="simple">
-<dt>‘binning’: binning-based estimator of entropy. Note that to</dt><dd><p>use this estimator, the data have be to discretized</p>
-</dd>
-</dl>
-</li>
+<li><p>‘binning’: binning-based estimator of entropy. Note that to
+use this estimator, the data have be to discretized</p></li>
 <li><p>‘knn’: k-nearest neighbor estimator</p></li>
+<li><p>‘kernel’: kernel-based estimator of entropy</p></li>
 </ul>
 </div></blockquote>
 </dd>

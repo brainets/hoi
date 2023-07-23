@@ -468,7 +468,10 @@ document.write(`
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.OinfoZeroLag.fit" title="hoi.metrics.OinfoZeroLag.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code>([method, minsize, ...])</p></td>
+<td><p>Compute entropies for all multiplets.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.OinfoZeroLag.fit" title="hoi.metrics.OinfoZeroLag.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
 <td><p>Compute the O-information.</p></td>
 </tr>
 </tbody>
@@ -479,13 +482,10 @@ document.write(`
 <col style="width: 32%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><strong>compute_entropies</strong></p></td>
+<tr class="row-odd"><td><p><strong>filter_multiplets</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><strong>filter_multiplets</strong></p></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><p><strong>get_combinations</strong></p></td>
+<tr class="row-even"><td><p><strong>get_combinations</strong></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -499,16 +499,14 @@ document.write(`
 <dd class="field-odd"><dl>
 <dt><strong>minsize, maxsize</strong><span class="classifier">int | 2, None</span></dt><dd><p>Minimum and maximum size of the multiplets</p>
 </dd>
-<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
+<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>‘gcmi’: gaussian copula entropy [default]</p></li>
-<li><dl class="simple">
-<dt>‘binning’: binning-based estimator of entropy. Note that to</dt><dd><p>use this estimator, the data have be to discretized</p>
-</dd>
-</dl>
-</li>
+<li><p>‘binning’: binning-based estimator of entropy. Note that to
+use this estimator, the data have be to discretized</p></li>
 <li><p>‘knn’: k-nearest neighbor estimator</p></li>
+<li><p>‘kernel’: kernel-based estimator of entropy</p></li>
 </ul>
 </div></blockquote>
 </dd>
@@ -517,6 +515,12 @@ document.write(`
 </dl>
 </dd>
 </dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropy_gcmi</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">entropy_binning</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">entropy_knn</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">entropy_kernel</span></code></dt><dd></dd>
+</dl>
+</div>
 <p class="rubric">References</p>
 <p>Rosas et al., 2019 <span id="id1">[<a class="reference internal" href="../../overview/ovw_refs.html#id2" title="Fernando E. Rosas, Pedro A. M. Mediano, Michael Gastpar, and Henrik J. Jensen. Quantifying high-order interdependencies via multivariate extensions of the mutual information. Physical Review E, 100(3):032305, September 2019. Publisher: American Physical Society. URL: https://link.aps.org/doi/10.1103/PhysRevE.100.032305 (visited on 2022-12-17), doi:10.1103/PhysRevE.100.032305.">2</a>]</span></p>
 </dd></dl>

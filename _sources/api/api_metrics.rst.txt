@@ -13,6 +13,7 @@ Metrics of HOI
    :toctree: generated/
 
    OinfoZeroLag
+   GradientOinfo
    InfoTopo
    RSI
    RedundancyMMI

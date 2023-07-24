@@ -429,10 +429,15 @@ document.write(`
 
 <span class="sd">        S = x_{1}, ..., x_{n}</span>
 
-<span class="sd">    The RSI has been referred to as the SynSum (Globerson et al. 2009),</span>
-<span class="sd">    the WholeMinusSum synergy (Griffith and Koch 2012), and</span>
+<span class="sd">    The RSI has been referred to as the SynSum :cite:`globerson2009minimum`,</span>
+<span class="sd">    the WholeMinusSum synergy :cite:`griffith2014quantifying`, and</span>
 <span class="sd">    the negative of the redundancy-synergy index has also been</span>
-<span class="sd">    referred to as the redundancy (Schneidman et al. 2003b).</span>
+<span class="sd">    referred to as the redundancy :cite:`schneidman2003network`.</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        * :math:`RSI(S; Y) &gt; 0 \Rightarrow Synergy`</span>
+<span class="sd">        * :math:`RSI(S; Y) &lt; 0 \Rightarrow Redundancy`</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -441,6 +446,11 @@ document.write(`
 <span class="sd">        (n_samples, n_features, n_variables)</span>
 <span class="sd">    y : array_like</span>
 <span class="sd">        The feature of shape (n_trials,) for estimating task-related O-info</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    Chechik et al. 2001 :cite:`chechik2001group`; Timme et al., 2014</span>
+<span class="sd">    :cite:`timme2014synergy`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="vm">__name__</span> <span class="o">=</span> <span class="s1">&#39;Redundancy-Synergy Index&#39;</span>
@@ -458,7 +468,7 @@ document.write(`
 <span class="sd">        method : {&#39;gcmi&#39;, &#39;binning&#39;, &#39;knn&#39;, &#39;kernel}</span>
 <span class="sd">            Name of the method to compute entropy. Use either :</span>
 
-<span class="sd">                * &#39;gcmi&#39;: gaussian copula entropy [default]. See </span>
+<span class="sd">                * &#39;gcmi&#39;: gaussian copula entropy [default]. See</span>
 <span class="sd">                  :func:`hoi.core.entropy_gcmi`</span>
 <span class="sd">                * &#39;binning&#39;: binning-based estimator of entropy. Note that to</span>
 <span class="sd">                  use this estimator, the data have be to discretized. See</span>

@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>hoi.metrics.OinfoZeroLag &#8212; HOI 0.0.1 documentation</title>
+    <title>hoi.metrics.GradientOinfo &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -46,11 +46,11 @@
     <script src="../../_static/clipboard.min.js"></script>
     <script src="../../_static/copybutton.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.metrics.OinfoZeroLag';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.metrics.GradientOinfo';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="hoi.metrics.GradientOinfo" href="hoi.metrics.GradientOinfo.html" />
-    <link rel="prev" title="Metrics of HOI" href="../api_metrics.html" />
+    <link rel="next" title="hoi.metrics.InfoTopo" href="hoi.metrics.InfoTopo.html" />
+    <link rel="prev" title="hoi.metrics.OinfoZeroLag" href="hoi.metrics.OinfoZeroLag.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -351,8 +351,8 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../api_metrics.html">Metrics of HOI</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">hoi.metrics.OinfoZeroLag</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.OinfoZeroLag.html">hoi.metrics.OinfoZeroLag</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">hoi.metrics.GradientOinfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
@@ -417,7 +417,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../api_metrics.html" class="nav-link">Metrics of HOI</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">hoi.metrics.OinfoZeroLag</li>
+    <li class="breadcrumb-item active" aria-current="page">hoi.metrics.GradientOinfo</li>
   </ul>
 </nav>
 </div>
@@ -434,23 +434,24 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="hoi-metrics-oinfozerolag">
-<h1>hoi.metrics.OinfoZeroLag<a class="headerlink" href="#hoi-metrics-oinfozerolag" title="Permalink to this headline">#</a></h1>
+  <section id="hoi-metrics-gradientoinfo">
+<h1>hoi.metrics.GradientOinfo<a class="headerlink" href="#hoi-metrics-gradientoinfo" title="Permalink to this headline">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="hoi.metrics.OinfoZeroLag">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">OinfoZeroLag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/oinfo_zerolag.html#OinfoZeroLag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.OinfoZeroLag" title="Permalink to this definition">#</a></dt>
-<dd><p>O-information.</p>
-<p>The O-information is defined as the difference between the total
-correlation (TC) minus the dual total correlation (DTC):</p>
+<dt class="sig sig-object py" id="hoi.metrics.GradientOinfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">GradientOinfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/gradient_oinfo.html#GradientOinfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.GradientOinfo" title="Permalink to this definition">#</a></dt>
+<dd><p>Gradient O-information.</p>
+<p>The Gradient O-information is defined as the difference between the
+O-information with the target variable minus the O-information without the
+target variable :</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\Omega(X^{n})  &amp;=  TC(X^{n}) - DTC(X^{n}) \\
-               &amp;=  (n - 2)H(X^{n}) + \sum_{j=1}^{n} [H(X_{j}) - H(
-                X_{-j}^{n})]\end{split}\]</div>
+\[\begin{split}\partial_{i}\Omega(X^{n}) &amp;= \Omega(X^{n}) - \Omega(X^{n}_{-i}) \\
+                          &amp;= (2 - n)I(X_{i}; X^{n}_{-i}) + \sum_{
+                           k=1, k\neq i}^{n} I(X_{k}; X^{n}_{-ik})\end{split}\]</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\Omega(X^{n}) &gt; 0 \Rightarrow Redundancy\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\Omega(X^{n}) &lt; 0 \Rightarrow Synergy\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\partial_{i}\Omega(X^{n}) &gt; 0 \Rightarrow Redundancy\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\partial_{i}\Omega(X^{n}) &lt; 0 \Rightarrow Synergy\)</span></p></li>
 </ul>
 </div>
 <dl class="field-list simple">
@@ -465,17 +466,17 @@ correlation (TC) minus the dual total correlation (DTC):</p>
 </dd>
 </dl>
 <p class="rubric">References</p>
-<p>Rosas et al., 2019 <span id="id1">[<a class="reference internal" href="../../overview/ovw_refs.html#id2" title="Fernando E. Rosas, Pedro A. M. Mediano, Michael Gastpar, and Henrik J. Jensen. Quantifying high-order interdependencies via multivariate extensions of the mutual information. Physical Review E, 100(3):032305, September 2019. Publisher: American Physical Society. URL: https://link.aps.org/doi/10.1103/PhysRevE.100.032305 (visited on 2022-12-17), doi:10.1103/PhysRevE.100.032305.">5</a>]</span></p>
+<p>Scagliarini et al., 2023 <span id="id1">[<a class="reference internal" href="../../overview/ovw_refs.html#id5" title="Tomas Scagliarini, Davide Nuzzi, Yuri Antonacci, Luca Faes, Fernando E Rosas, Daniele Marinazzo, and Sebastiano Stramaglia. Gradients of o-information: low-order descriptors of high-order dependencies. Physical Review Research, 5(1):013025, 2023.">6</a>]</span></p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#hoi.metrics.OinfoZeroLag.entropies" title="hoi.metrics.OinfoZeroLag.entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropies</span></code></a></dt><dd><p>Entropies of shape (n_mult,)</p>
+<dt><a class="reference internal" href="#hoi.metrics.GradientOinfo.entropies" title="hoi.metrics.GradientOinfo.entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropies</span></code></a></dt><dd><p>Entropies of shape (n_mult,)</p>
 </dd>
-<dt><a class="reference internal" href="#hoi.metrics.OinfoZeroLag.multiplets" title="hoi.metrics.OinfoZeroLag.multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiplets</span></code></a></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
+<dt><a class="reference internal" href="#hoi.metrics.GradientOinfo.multiplets" title="hoi.metrics.GradientOinfo.multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiplets</span></code></a></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
 </dd>
-<dt><a class="reference internal" href="#hoi.metrics.OinfoZeroLag.order" title="hoi.metrics.OinfoZeroLag.order"><code class="xref py py-obj docutils literal notranslate"><span class="pre">order</span></code></a></dt><dd><p>Order of each multiplet of shape (n_mult,).</p>
+<dt><a class="reference internal" href="#hoi.metrics.GradientOinfo.order" title="hoi.metrics.GradientOinfo.order"><code class="xref py py-obj docutils literal notranslate"><span class="pre">order</span></code></a></dt><dd><p>Order of each multiplet of shape (n_mult,).</p>
 </dd>
-<dt><a class="reference internal" href="#hoi.metrics.OinfoZeroLag.undersampling" title="hoi.metrics.OinfoZeroLag.undersampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undersampling</span></code></a></dt><dd><p>Under-sampling threshold.</p>
+<dt><a class="reference internal" href="#hoi.metrics.GradientOinfo.undersampling" title="hoi.metrics.GradientOinfo.undersampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undersampling</span></code></a></dt><dd><p>Under-sampling threshold.</p>
 </dd>
 </dl>
 </dd>
@@ -487,29 +488,29 @@ correlation (TC) minus the dual total correlation (DTC):</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.OinfoZeroLag.compute_entropies" title="hoi.metrics.OinfoZeroLag.compute_entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code></a>([method, minsize, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.GradientOinfo.compute_entropies" title="hoi.metrics.GradientOinfo.compute_entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code></a>([method, minsize, ...])</p></td>
 <td><p>Compute entropies for all multiplets.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.OinfoZeroLag.filter_multiplets" title="hoi.metrics.OinfoZeroLag.filter_multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_multiplets</span></code></a>(mults, order)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.GradientOinfo.filter_multiplets" title="hoi.metrics.GradientOinfo.filter_multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_multiplets</span></code></a>(mults, order)</p></td>
 <td><p>Filter multiplets.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.OinfoZeroLag.fit" title="hoi.metrics.OinfoZeroLag.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
-<td><p>Compute the O-information.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.GradientOinfo.fit" title="hoi.metrics.GradientOinfo.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
+<td><p>Compute the Gradient O-information.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.OinfoZeroLag.get_combinations" title="hoi.metrics.OinfoZeroLag.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(msize[, as_iterator, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.GradientOinfo.get_combinations" title="hoi.metrics.GradientOinfo.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(msize[, as_iterator, ...])</p></td>
 <td><p>Get combinations of features.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.OinfoZeroLag.__iter__">
-<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.OinfoZeroLag.__iter__" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.GradientOinfo.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.GradientOinfo.__iter__" title="Permalink to this definition">#</a></dt>
 <dd><p>Iteration over orders.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.OinfoZeroLag.compute_entropies">
-<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.OinfoZeroLag.compute_entropies" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.GradientOinfo.compute_entropies">
+<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.GradientOinfo.compute_entropies" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute entropies for all multiplets.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -553,14 +554,14 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.OinfoZeroLag.entropies">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entropies</span></span><a class="headerlink" href="#hoi.metrics.OinfoZeroLag.entropies" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.GradientOinfo.entropies">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entropies</span></span><a class="headerlink" href="#hoi.metrics.GradientOinfo.entropies" title="Permalink to this definition">#</a></dt>
 <dd><p>Entropies of shape (n_mult,)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.OinfoZeroLag.filter_multiplets">
-<span class="sig-name descname"><span class="pre">filter_multiplets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mults</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.OinfoZeroLag.filter_multiplets" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.GradientOinfo.filter_multiplets">
+<span class="sig-name descname"><span class="pre">filter_multiplets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mults</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.GradientOinfo.filter_multiplets" title="Permalink to this definition">#</a></dt>
 <dd><p>Filter multiplets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -582,9 +583,9 @@ keep.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.OinfoZeroLag.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/oinfo_zerolag.html#OinfoZeroLag.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.OinfoZeroLag.fit" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute the O-information.</p>
+<dt class="sig sig-object py" id="hoi.metrics.GradientOinfo.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/gradient_oinfo.html#GradientOinfo.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.GradientOinfo.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the Gradient O-information.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
@@ -613,8 +614,8 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.OinfoZeroLag.get_combinations">
-<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_iterator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_jax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.OinfoZeroLag.get_combinations" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.GradientOinfo.get_combinations">
+<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_iterator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_jax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.GradientOinfo.get_combinations" title="Permalink to this definition">#</a></dt>
 <dd><p>Get combinations of features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -639,21 +640,21 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.OinfoZeroLag.multiplets">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">multiplets</span></span><a class="headerlink" href="#hoi.metrics.OinfoZeroLag.multiplets" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.GradientOinfo.multiplets">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">multiplets</span></span><a class="headerlink" href="#hoi.metrics.GradientOinfo.multiplets" title="Permalink to this definition">#</a></dt>
 <dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
 <p>By convention, we used -1 to indicate that a feature has been ignored.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.OinfoZeroLag.order">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order</span></span><a class="headerlink" href="#hoi.metrics.OinfoZeroLag.order" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.GradientOinfo.order">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order</span></span><a class="headerlink" href="#hoi.metrics.GradientOinfo.order" title="Permalink to this definition">#</a></dt>
 <dd><p>Order of each multiplet of shape (n_mult,).</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.OinfoZeroLag.undersampling">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">undersampling</span></span><a class="headerlink" href="#hoi.metrics.OinfoZeroLag.undersampling" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.GradientOinfo.undersampling">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">undersampling</span></span><a class="headerlink" href="#hoi.metrics.GradientOinfo.undersampling" title="Permalink to this definition">#</a></dt>
 <dd><p>Under-sampling threshold.</p>
 </dd></dl>
 
@@ -673,20 +674,20 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../api_metrics.html"
+       href="hoi.metrics.OinfoZeroLag.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Metrics of HOI</p>
+        <p class="prev-next-title">hoi.metrics.OinfoZeroLag</p>
       </div>
     </a>
     <a class="right-next"
-       href="hoi.metrics.GradientOinfo.html"
+       href="hoi.metrics.InfoTopo.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">hoi.metrics.GradientOinfo</p>
+        <p class="prev-next-title">hoi.metrics.InfoTopo</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -704,7 +705,7 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/api/generated/hoi.metrics.OinfoZeroLag.rst.txt">
+    <a href="../../_sources/api/generated/hoi.metrics.GradientOinfo.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

@@ -8,7 +8,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hoi.metrics.infotopo &#8212; HOI 0.0.1 documentation</title>
+    <title>hoi.metrics.gradient_oinfo &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -44,7 +44,7 @@
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/clipboard.min.js"></script>
     <script src="../../../_static/copybutton.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/hoi/metrics/infotopo';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/hoi/metrics/gradient_oinfo';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -372,7 +372,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">hoi.metrics.infotopo</li>
+    <li class="breadcrumb-item active" aria-current="page">hoi.metrics.gradient_oinfo</li>
   </ul>
 </nav>
 </div>
@@ -389,10 +389,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <h1>Source code for hoi.metrics.infotopo</h1><div class="highlight"><pre>
+  <h1>Source code for hoi.metrics.gradient_oinfo</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">comb</span>
-<span class="kn">import</span> <span class="nn">itertools</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 
@@ -402,62 +400,44 @@ document.write(`
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">hoi.metrics.base_hoi</span> <span class="kn">import</span> <span class="n">HOIEstimator</span>
+<span class="kn">from</span> <span class="nn">hoi.metrics.oinfo_zerolag</span> <span class="kn">import</span> <span class="n">compute_oinfo</span>
 <span class="kn">from</span> <span class="nn">hoi.utils.progressbar</span> <span class="kn">import</span> <span class="n">scan_tqdm</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;hoi&quot;</span><span class="p">)</span>
 
 
-<span class="c1">###############################################################################</span>
-<span class="c1">###############################################################################</span>
-<span class="c1">#                            MUTUAL INFORMATION</span>
-<span class="c1">###############################################################################</span>
-<span class="c1">###############################################################################</span>
-
-
 <span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
-<span class="k">def</span> <span class="nf">find_indices</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-    <span class="n">combs</span><span class="p">,</span> <span class="n">keep</span> <span class="o">=</span> <span class="n">inputs</span>
+<span class="k">def</span> <span class="nf">compute_goinfo</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">iterators</span><span class="p">):</span>
 
-    <span class="n">keep</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">keep</span><span class="p">,</span> <span class="p">(</span><span class="n">combs</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+    <span class="c1"># compute \Omega({X^{n}, y})</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">o_xy</span> <span class="o">=</span> <span class="n">compute_oinfo</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">iterators</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="p">(</span><span class="n">combs</span><span class="p">,</span> <span class="n">keep</span><span class="p">),</span> <span class="kc">None</span>
+    <span class="c1"># compute \Omega(X^{n})</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">comb_xy</span><span class="p">,</span> <span class="n">msize</span> <span class="o">=</span> <span class="n">iterators</span>
+    <span class="n">comb_x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">comb_xy</span> <span class="o">==</span> <span class="n">comb_xy</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">comb_xy</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">o_x</span> <span class="o">=</span> <span class="n">compute_oinfo</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">comb_x</span><span class="p">,</span> <span class="n">msize</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
 
-
-<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
-<span class="k">def</span> <span class="nf">compute_mi</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">iterators</span><span class="p">):</span>
-    <span class="n">combs</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="n">inputs</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">comb</span> <span class="o">=</span> <span class="n">iterators</span>
-
-    <span class="c1"># scanning over indices</span>
-    <span class="c1"># is_inside = jnp.zeros((combs.shape[0],), dtype=int)</span>
-    <span class="c1"># (_, is_inside), _ = jax.lax.scan(find_indices, (combs, is_inside), comb)</span>
-
-    <span class="c1"># tensor implementation</span>
-    <span class="n">is_inside</span> <span class="o">=</span> <span class="p">(</span><span class="n">combs</span> <span class="o">==</span> <span class="n">comb</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="o">...</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-
-    <span class="c1"># compute infotopo</span>
-    <span class="n">info</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">is_inside</span> <span class="o">==</span> <span class="n">order</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">info</span>
+    <span class="k">return</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">o_xy</span> <span class="o">-</span> <span class="n">o_x</span>
 
 
-<div class="viewcode-block" id="InfoTopo"><a class="viewcode-back" href="../../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo">[docs]</a><span class="k">class</span> <span class="nc">InfoTopo</span><span class="p">(</span><span class="n">HOIEstimator</span><span class="p">):</span>
+<div class="viewcode-block" id="GradientOinfo"><a class="viewcode-back" href="../../../api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo">[docs]</a><span class="k">class</span> <span class="nc">GradientOinfo</span><span class="p">(</span><span class="n">HOIEstimator</span><span class="p">):</span>
 
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Topological Information.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Gradient O-information.</span>
 
-<span class="sd">    The multivariate mutual information :math:`I_{k}` quantify the</span>
-<span class="sd">    variability/randomness and the statistical dependences between variables</span>
-<span class="sd">    is defined by :</span>
+<span class="sd">    The Gradient O-information is defined as the difference between the</span>
+<span class="sd">    O-information with the target variable minus the O-information without the</span>
+<span class="sd">    target variable :</span>
 
 <span class="sd">    .. math::</span>
 
-<span class="sd">        I_{k}(X_{1}; ...; X_{k}) = \sum_{i=1}^{k} (-1)^{i - 1} \sum_{</span>
-<span class="sd">         I\subset[k];card(I)=i} H_{i}(X_{I})</span>
+<span class="sd">        \partial_{i}\Omega(X^{n}) &amp;= \Omega(X^{n}) - \Omega(X^{n}_{-i}) \\</span>
+<span class="sd">                                  &amp;= (2 - n)I(X_{i}; X^{n}_{-i}) + \sum_{</span>
+<span class="sd">                                   k=1, k\neq i}^{n} I(X_{k}; X^{n}_{-ik})</span>
 
 <span class="sd">    .. warning::</span>
 
-<span class="sd">        * :math:`I_{k}(X_{1}; ...; X_{k}) &gt; 0 \Rightarrow Redundancy`</span>
-<span class="sd">        * :math:`I_{k}(X_{1}; ...; X_{k}) &lt; 0 \Rightarrow Synergy`</span>
+<span class="sd">        * :math:`\partial_{i}\Omega(X^{n}) &gt; 0 \Rightarrow Redundancy`</span>
+<span class="sd">        * :math:`\partial_{i}\Omega(X^{n}) &lt; 0 \Rightarrow Synergy`</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -465,22 +445,20 @@ document.write(`
 <span class="sd">        Standard NumPy arrays of shape (n_samples, n_features) or</span>
 <span class="sd">        (n_samples, n_features, n_variables)</span>
 <span class="sd">    y : array_like</span>
-<span class="sd">        The feature of shape (n_trials,) for estimating task-related O-info.</span>
-
+<span class="sd">        The feature of shape (n_trials,) for estimating task-related O-info</span>
 
 <span class="sd">    References</span>
 <span class="sd">    ----------</span>
-<span class="sd">    Baudot et al., 2019 :cite:`baudot2019infotopo`; Tapia et al., 2018</span>
-<span class="sd">    :cite:`tapia2018neurotransmitter`</span>
+<span class="sd">    Scagliarini et al., 2023 :cite:`scagliarini2023gradients`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;Topological Information&quot;</span>
+    <span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;Gradient O-Information&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">HOIEstimator</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">HOIEstimator</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
 
-<div class="viewcode-block" id="InfoTopo.fit"><a class="viewcode-back" href="../../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute Topological Information.</span>
+<div class="viewcode-block" id="GradientOinfo.fit"><a class="viewcode-back" href="../../../api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute the Gradient O-information.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -501,13 +479,6 @@ document.write(`
 
 <span class="sd">        kwargs : dict | {}</span>
 <span class="sd">            Additional arguments are sent to each entropy function</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        oinfo : array_like</span>
-<span class="sd">            The O-info array of shape (n_multiplets, n_variables) where positive</span>
-<span class="sd">            values reflect redundant dominated interactions and negative values</span>
-<span class="sd">            stand for synergistic dominated interactions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># ____________________________ ENTROPIES ______________________________</span>
 
@@ -515,26 +486,24 @@ document.write(`
         <span class="n">h_x</span><span class="p">,</span> <span class="n">h_idx</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_entropies</span><span class="p">(</span>
             <span class="n">minsize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="n">maxsize</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">)</span>
-        <span class="n">n_mult</span> <span class="o">=</span> <span class="n">h_x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">jnp</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">h_x</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">jnp</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">h_x</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
 
         <span class="c1"># _______________________________ HOI _________________________________</span>
-
-        <span class="c1"># compute order and multiply entropies</span>
-        <span class="n">h_x_sgn</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">multiply</span><span class="p">(((</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="n">order</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">h_x</span><span class="p">)</span>
-        <span class="n">h_idx_2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">h_idx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">h_idx</span><span class="p">)</span>
 
         <span class="c1"># subselection of multiplets</span>
         <span class="n">keep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_multiplets</span><span class="p">(</span><span class="n">h_idx</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
         <span class="n">n_mult</span> <span class="o">=</span> <span class="n">keep</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
         <span class="c1"># progress-bar definition</span>
-        <span class="n">pbar</span> <span class="o">=</span> <span class="n">scan_tqdm</span><span class="p">(</span><span class="n">n_mult</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Mutual information&quot;</span><span class="p">)</span>
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">scan_tqdm</span><span class="p">(</span><span class="n">n_mult</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;GOinfo&quot;</span><span class="p">)</span>
 
-        <span class="c1"># compute mi</span>
+        <span class="c1"># compute \Omega({X^{n}, y})</span>
+        <span class="n">h_idx_2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">h_idx</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">h_idx</span><span class="p">)</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">hoi</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span>
-            <span class="n">pbar</span><span class="p">(</span><span class="n">compute_mi</span><span class="p">),</span>
-            <span class="p">(</span><span class="n">h_idx</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">h_x_sgn</span><span class="p">,</span> <span class="n">order</span><span class="p">),</span>
-            <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_mult</span><span class="p">),</span> <span class="n">h_idx_2</span><span class="p">[</span><span class="n">keep</span><span class="p">]),</span>
+            <span class="n">pbar</span><span class="p">(</span><span class="n">compute_goinfo</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">h_x</span><span class="p">,</span> <span class="n">h_idx</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">order</span><span class="p">),</span>
+            <span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_mult</span><span class="p">),</span> <span class="n">h_idx_2</span><span class="p">[</span><span class="n">keep</span><span class="p">],</span> <span class="n">order</span><span class="p">[</span><span class="n">keep</span><span class="p">])</span>
         <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">hoi</span><span class="p">)</span></div></div>
@@ -542,27 +511,28 @@ document.write(`
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-    <span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <span class="n">landscape</span><span class="p">,</span> <span class="n">digitize</span>
+    <span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <span class="n">landscape</span><span class="p">,</span> <span class="n">digitize</span><span class="p">,</span> <span class="n">get_nbest_mult</span>
     <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
 
     <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
 
-    <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;/home/etienne/Downloads/data_200_trials&quot;</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
-    <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-    <span class="n">x_amp</span> <span class="o">=</span> <span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span>
-    <span class="n">x_bin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(((</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">x_amp</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="s2">&quot;INFO&quot;</span><span class="p">)</span>
-    <span class="c1"># model = InfoTopo(digitize(x[..., 100], 3, axis=1))</span>
-    <span class="c1"># model = InfoTopo(x[..., 100])</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">InfoTopo</span><span class="p">(</span><span class="n">x_bin</span><span class="p">)</span>
-    <span class="n">hoi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;binning&quot;</span><span class="p">)</span>
-    <span class="c1"># 0/0</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">GradientOinfo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">hoi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">hoi</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">order</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">multiplets</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">get_nbest_mult</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
 
     <span class="n">lscp</span> <span class="o">=</span> <span class="n">landscape</span><span class="p">(</span><span class="n">hoi</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">model</span><span class="o">.</span><span class="n">order</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;xarray&quot;</span><span class="p">)</span>
     <span class="n">lscp</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;order&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;bins&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;jet&quot;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">())</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">undersampling</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 

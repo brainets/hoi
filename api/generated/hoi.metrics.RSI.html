@@ -352,6 +352,7 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../api_metrics.html">Metrics of HOI</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.OinfoZeroLag.html">hoi.metrics.OinfoZeroLag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">hoi.metrics.RSI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
@@ -449,10 +450,17 @@ information provided by individual elements of S:</p>
 <p>with :</p>
 <div class="math notranslate nohighlight">
 \[S = x_{1}, ..., x_{n}\]</div>
-<p>The RSI has been referred to as the SynSum (Globerson et al. 2009),
-the WholeMinusSum synergy (Griffith and Koch 2012), and
+<p>The RSI has been referred to as the SynSum <span id="id1">[<a class="reference internal" href="../../overview/ovw_refs.html#id8" title="Amir Globerson, Eran Stark, Eilon Vaadia, and Naftali Tishby. The minimum information principle and its application to neural code analysis. Proceedings of the National Academy of Sciences, 106(9):3490–3495, 2009.">3</a>]</span>,
+the WholeMinusSum synergy <span id="id2">[<a class="reference internal" href="../../overview/ovw_refs.html#id9" title="Virgil Griffith and Christof Koch. Quantifying synergistic mutual information. In Guided self-organization: inception, pages 159–190. Springer, 2014.">4</a>]</span>, and
 the negative of the redundancy-synergy index has also been
-referred to as the redundancy (Schneidman et al. 2003b).</p>
+referred to as the redundancy <span id="id3">[<a class="reference internal" href="../../overview/ovw_refs.html#id10" title="Elad Schneidman, Susanne Still, Michael J Berry, William Bialek, and others. Network information and connected correlations. Physical review letters, 91(23):238701, 2003.">7</a>]</span>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(RSI(S; Y) &gt; 0 \Rightarrow Synergy\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(RSI(S; Y) &lt; 0 \Rightarrow Redundancy\)</span></p></li>
+</ul>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -463,8 +471,13 @@ referred to as the redundancy (Schneidman et al. 2003b).</p>
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Attributes</dt>
-<dd class="field-even"><dl class="simple">
+</dl>
+<p class="rubric">References</p>
+<p>Chechik et al. 2001 <span id="id4">[<a class="reference internal" href="../../overview/ovw_refs.html#id7" title="Gal Chechik, Amir Globerson, M Anderson, E Young, Israel Nelken, and Naftali Tishby. Group redundancy measures reveal redundancy reduction in the auditory pathway. Advances in neural information processing systems, 2001.">2</a>]</span>; Timme et al., 2014
+<span id="id5">[<a class="reference internal" href="../../overview/ovw_refs.html#id6" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">9</a>]</span></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
 <dt><a class="reference internal" href="#hoi.metrics.RSI.entropies" title="hoi.metrics.RSI.entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropies</span></code></a></dt><dd><p>Entropies of shape (n_mult,)</p>
 </dd>
 <dt><a class="reference internal" href="#hoi.metrics.RSI.multiplets" title="hoi.metrics.RSI.multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiplets</span></code></a></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
@@ -589,7 +602,7 @@ keep.</p>
 <dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>‘gcmi’: gaussian copula entropy [default]. See 
+<li><p>‘gcmi’: gaussian copula entropy [default]. See
 <a class="reference internal" href="hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi" title="hoi.core.entropy_gcmi"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gcmi()</span></code></a></p></li>
 <li><p>‘binning’: binning-based estimator of entropy. Note that to
 use this estimator, the data have be to discretized. See

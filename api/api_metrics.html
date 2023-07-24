@@ -351,6 +351,7 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Metrics of HOI</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.OinfoZeroLag.html">hoi.metrics.OinfoZeroLag</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
@@ -439,21 +440,24 @@ document.write(`
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.OinfoZeroLag.html#hoi.metrics.OinfoZeroLag" title="hoi.metrics.OinfoZeroLag"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OinfoZeroLag</span></code></a>(data[, y, verbose])</p></td>
-<td><p>Dynamic, possibly task-related O-info.</p></td>
+<td><p>O-information.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InfoTopo</span></code></a>(data[, y, verbose])</p></td>
-<td><p>Dynamic, possibly task-related Topological Information.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo" title="hoi.metrics.GradientOinfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GradientOinfo</span></code></a>(data, y[, verbose])</p></td>
+<td><p>Gradient O-information.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RSI</span></code></a>(data, y[, verbose])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InfoTopo</span></code></a>(data[, y, verbose])</p></td>
+<td><p>Topological Information.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RSI</span></code></a>(data, y[, verbose])</p></td>
 <td><p>Redundancy-Synergy Index (RSI).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI" title="hoi.metrics.RedundancyMMI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RedundancyMMI</span></code></a>(data, y[, verbose])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI" title="hoi.metrics.RedundancyMMI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RedundancyMMI</span></code></a>(data, y[, verbose])</p></td>
 <td><p>Redundancy estimated using the Minimum Mutual Information.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SynergyMMI</span></code></a>(data, y[, verbose])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SynergyMMI</span></code></a>(data, y[, verbose])</p></td>
 <td><p>Synergy estimated using the Minimum Mutual Information.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.InfoTot.html#hoi.metrics.InfoTot" title="hoi.metrics.InfoTot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InfoTot</span></code></a>(data, y[, verbose])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.InfoTot.html#hoi.metrics.InfoTot" title="hoi.metrics.InfoTot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InfoTot</span></code></a>(data, y[, verbose])</p></td>
 <td><p>Total information.</p></td>
 </tr>
 </tbody>

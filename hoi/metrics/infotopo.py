@@ -51,7 +51,21 @@ def compute_mi(inputs, iterators):
 
 class InfoTopo(HOIEstimator):
 
-    """Dynamic, possibly task-related Topological Information.
+    """Topological Information.
+
+    The multivariate mutual information :math:`I_{k}` quantify the
+    variability/randomness and the statistical dependences between variables
+    is defined by :
+
+    .. math::
+
+        I_{k}(X_{1}; ...; X_{k}) = \sum_{i=1}^{k} (-1)^{i - 1} \sum_{
+         I\subset[k];card(I)=i} H_{i}(X_{I})
+
+    .. warning::
+
+        * :math:`I_{k}(X_{1}; ...; X_{k}) > 0 \Rightarrow Redundancy`
+        * :math:`I_{k}(X_{1}; ...; X_{k}) < 0 \Rightarrow Synergy`
 
     Parameters
     ----------
@@ -60,11 +74,12 @@ class InfoTopo(HOIEstimator):
         (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info.
-    
-        
+
+
     References
     ----------
-    Baudot et al., 2019 :cite:`baudot2019infotopo`
+    Baudot et al., 2019 :cite:`baudot2019infotopo`; Tapia et al., 2018
+    :cite:`tapia2018neurotransmitter`
     """
 
     __name__ = "Topological Information"
@@ -82,7 +97,7 @@ class InfoTopo(HOIEstimator):
         method : {'gcmi', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See 
+                * 'gcmi': gaussian copula entropy [default]. See
                   :func:`hoi.core.entropy_gcmi`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See

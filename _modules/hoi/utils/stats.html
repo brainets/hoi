@@ -581,8 +581,8 @@ document.write(`
     <span class="k">return</span> <span class="n">x_n</span></div>
 
 
-<div class="viewcode-block" id="get_nbest_mult"><a class="viewcode-back" href="../../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult">[docs]</a><span class="k">def</span> <span class="nf">get_nbest_mult</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                   <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="get_nbest_mult"><a class="viewcode-back" href="../../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult">[docs]</a><span class="k">def</span> <span class="nf">get_nbest_mult</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">orders</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">multiplets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                   <span class="n">minsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the n best multiplets.</span>
 
 <span class="sd">    This function requires pandas to be installed.</span>
@@ -591,8 +591,13 @@ document.write(`
 <span class="sd">    ----------</span>
 <span class="sd">    hoi : array_like</span>
 <span class="sd">        Array of higher-order information.</span>
-<span class="sd">    model : hoi.metrics</span>
-<span class="sd">        Model used to compute the higher-order information.</span>
+<span class="sd">    model : hoi.metrics, optional</span>
+<span class="sd">        Model used to compute the higher-order information. The default is</span>
+<span class="sd">        None.</span>
+<span class="sd">    orders: array_like, optional</span>
+<span class="sd">        Order associated to each multiplet. The default is None.</span>
+<span class="sd">    multiplets: array_like, optional</span>
+<span class="sd">        Combination of features. The default is None.</span>
 <span class="sd">    n_best : int, optional</span>
 <span class="sd">        Number of best multiplets to return. The default is 5.</span>
 <span class="sd">    minsize : int, optional</span>
@@ -611,8 +616,12 @@ document.write(`
 
     <span class="n">hoi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">hoi</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
 
+    <span class="c1"># get order and multiplets</span>
+    <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">orders</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">order</span>
+        <span class="n">multiplets</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">multiplets</span>
+
     <span class="c1"># get computed orders</span>
-    <span class="n">orders</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">order</span>
     <span class="k">if</span> <span class="n">minsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">minsize</span> <span class="o">=</span> <span class="n">orders</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">maxsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -642,7 +651,7 @@ document.write(`
 
     <span class="c1"># multiplets selection</span>
     <span class="n">mults</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">multiplets</span><span class="p">[</span><span class="n">df_best</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">:]:</span>
+    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">multiplets</span><span class="p">[</span><span class="n">df_best</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">:]:</span>
         <span class="n">mults</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">m</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
     <span class="n">df_best</span><span class="p">[</span><span class="s1">&#39;multiplet&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mults</span>
 

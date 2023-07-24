@@ -395,8 +395,9 @@ document.write(`
 <span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <span class="n">normalize</span><span class="p">,</span> <span class="n">landscape</span>
 
 
-<div class="viewcode-block" id="plot_landscape"><a class="viewcode-back" href="../../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape">[docs]</a><span class="k">def</span> <span class="nf">plot_landscape</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span>
-                   <span class="n">undersampling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hist_kwargs</span><span class="o">=</span><span class="p">{},</span> <span class="n">plt_kwargs</span><span class="o">=</span><span class="p">{}):</span>
+<div class="viewcode-block" id="plot_landscape"><a class="viewcode-back" href="../../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape">[docs]</a><span class="k">def</span> <span class="nf">plot_landscape</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">orders</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">undersampling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hist_kwargs</span><span class="o">=</span><span class="p">{},</span>
+                   <span class="n">plt_kwargs</span><span class="o">=</span><span class="p">{}):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Landscape representation of higher order interactions.</span>
 
 <span class="sd">    Parameters</span>
@@ -405,13 +406,16 @@ document.write(`
 <span class="sd">        Higher order interactions.</span>
 <span class="sd">    model : hoi.metrics</span>
 <span class="sd">        Higher order interaction model.</span>
+<span class="sd">    orders: array_like, optional</span>
+<span class="sd">        Order associated to each multiplet. The default is None.</span>
 <span class="sd">    minsize, maxsize : int | 2, None</span>
 <span class="sd">        Minimum and maximum size of the multiplets</span>
 <span class="sd">    kind : {&#39;hist&#39;, &#39;scatter&#39;}</span>
 <span class="sd">        Kind of plot. Use either:</span>
 
-<span class="sd">        * &#39;hist&#39; : 2D histogram of the higher order interactions</span>
-<span class="sd">        * &#39;scatter&#39; : scatter plot of the higher order interactions</span>
+<span class="sd">            * &#39;hist&#39; : 2D histogram of the higher order interactions</span>
+<span class="sd">            * &#39;scatter&#39; : scatter plot of the higher order interactions</span>
+
 <span class="sd">    undersampling : bool | True</span>
 <span class="sd">        If True, plot the undersampling threshold.</span>
 <span class="sd">    hist_kwargs : dict | {}</span>
@@ -429,8 +433,11 @@ document.write(`
     <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
     <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
 
+    <span class="c1"># get orders</span>
+    <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">orders</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">order</span>
+
     <span class="c1"># get computed orders</span>
-    <span class="n">orders</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">order</span>
     <span class="k">if</span> <span class="n">minsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">minsize</span> <span class="o">=</span> <span class="n">orders</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">maxsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -461,10 +468,13 @@ document.write(`
 
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Order&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1"> [Bits]&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1"> [Bits]&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;HOI [Bits]&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">undersampling</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">undersampling</span> <span class="ow">and</span> <span class="n">model</span><span class="p">:</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">undersampling</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span></div>

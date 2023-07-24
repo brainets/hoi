@@ -437,22 +437,26 @@ document.write(`
 <h1>hoi.plot.plot_landscape<a class="headerlink" href="#hoi-plot-plot-landscape" title="Permalink to this headline">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="hoi.plot.plot_landscape">
-<span class="sig-prename descclassname"><span class="pre">hoi.plot.</span></span><span class="sig-name descname"><span class="pre">plot_landscape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hoi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hist'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">undersampling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plt_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/plot/landscape.html#plot_landscape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.plot.plot_landscape" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">hoi.plot.</span></span><span class="sig-name descname"><span class="pre">plot_landscape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hoi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orders</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hist'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">undersampling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plt_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/plot/landscape.html#plot_landscape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.plot.plot_landscape" title="Permalink to this definition">#</a></dt>
 <dd><p>Landscape representation of higher order interactions.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
+<dd class="field-odd"><dl>
 <dt><strong>hoi</strong><span class="classifier">array_like</span></dt><dd><p>Higher order interactions.</p>
 </dd>
 <dt><strong>model</strong><span class="classifier">hoi.metrics</span></dt><dd><p>Higher order interaction model.</p>
 </dd>
+<dt><strong>orders: array_like, optional</strong></dt><dd><p>Order associated to each multiplet. The default is None.</p>
+</dd>
 <dt><strong>minsize, maxsize</strong><span class="classifier">int | 2, None</span></dt><dd><p>Minimum and maximum size of the multiplets</p>
 </dd>
 <dt><strong>kind</strong><span class="classifier">{‘hist’, ‘scatter’}</span></dt><dd><p>Kind of plot. Use either:</p>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li><p>‘hist’ : 2D histogram of the higher order interactions</p></li>
 <li><p>‘scatter’ : scatter plot of the higher order interactions</p></li>
 </ul>
+</div></blockquote>
 </dd>
 <dt><strong>undersampling</strong><span class="classifier">bool | True</span></dt><dd><p>If True, plot the undersampling threshold.</p>
 </dd>

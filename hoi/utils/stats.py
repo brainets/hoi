@@ -189,8 +189,8 @@ def normalize(x, to_min=0., to_max=1.):
     return x_n
 
 
-def get_nbest_mult(hoi, model, n_best=5, minsize=None, maxsize=None,
-                   names=None):
+def get_nbest_mult(hoi, orders=None, multiplets=None, model=None, n_best=5,
+                   minsize=None, maxsize=None, names=None):
     """Get the n best multiplets.
 
     This function requires pandas to be installed.
@@ -199,8 +199,13 @@ def get_nbest_mult(hoi, model, n_best=5, minsize=None, maxsize=None,
     ----------
     hoi : array_like
         Array of higher-order information.
-    model : hoi.metrics
-        Model used to compute the higher-order information.
+    model : hoi.metrics, optional
+        Model used to compute the higher-order information. The default is
+        None.
+    orders: array_like, optional
+        Order associated to each multiplet. The default is None.
+    multiplets: array_like, optional
+        Combination of features. The default is None.
     n_best : int, optional
         Number of best multiplets to return. The default is 5.
     minsize : int, optional
@@ -219,8 +224,12 @@ def get_nbest_mult(hoi, model, n_best=5, minsize=None, maxsize=None,
 
     hoi = np.asarray(hoi).squeeze()
 
+    # get order and multiplets
+    if model:
+        orders = model.order
+        multiplets = model.multiplets
+
     # get computed orders
-    orders = model.order
     if minsize is None:
         minsize = orders.min()
     if maxsize is None:
@@ -250,7 +259,7 @@ def get_nbest_mult(hoi, model, n_best=5, minsize=None, maxsize=None,
 
     # multiplets selection
     mults = []
-    for m in model.multiplets[df_best['index'].values, :]:
+    for m in multiplets[df_best['index'].values, :]:
         mults.append(m[m != -1])
     df_best['multiplet'] = mults
 

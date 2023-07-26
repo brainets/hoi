@@ -59,13 +59,19 @@ class SynergyMMI(HOIEstimator):
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi', 'binning', 'knn'}
+        method : {'gcmi', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]
+                * 'gcmi': gaussian copula entropy [default]. See 
+                  :func:`hoi.core.entropy_gcmi`
                 * 'binning': binning-based estimator of entropy. Note that to
-                   use this estimator, the data have be to discretized
-                * 'knn': k-nearest neighbor estimator
+                  use this estimator, the data have be to discretized. See
+                  :func:`hoi.core.entropy_bin`
+                * 'knn': k-nearest neighbor estimator. See
+                  :func:`hoi.core.entropy_knn`
+                * 'kernel': kernel-based estimator of entropy
+                  see :func:`hoi.core.entropy_kernel`
+
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
         """

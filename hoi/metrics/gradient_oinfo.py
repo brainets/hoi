@@ -8,53 +8,44 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
+from hoi.metrics.oinfo_zerolag import compute_oinfo
 from hoi.utils.progressbar import scan_tqdm
 
 logger = logging.getLogger("hoi")
 
 
 @jax.jit
-def compute_oinfo(inputs, iterators):
-    # h_x = (n_mult, n_var); h_idx = (n_mult, maxsize, 1)
-    h_x, h_idx, order = inputs
-    _, comb, msize = iterators
+def compute_goinfo(inputs, iterators):
 
-    # find all of the indices
-    isum = (h_idx == comb[jnp.newaxis, :]).sum((1, 2))
+    # compute \Omega({X^{n}, y})
+    _, o_xy = compute_oinfo(inputs, iterators)
 
-    # indices for h^{n}, h^{j} and h^{-j}
-    i_n = jnp.logical_and(isum == msize, order == msize)
-    i_j = jnp.logical_and(isum == 1, order == 1)
-    i_mj = jnp.logical_and(isum == msize - 1, order == msize - 1)
+    # compute \Omega(X^{n})
+    _, comb_xy, msize = iterators
+    comb_x = jnp.where(comb_xy == comb_xy.max(), -2, comb_xy)
+    _, o_x = compute_oinfo(inputs, (_, comb_x, msize - 1))
 
-    # sum entropies only when needed
-    h_n = jnp.sum(h_x, where=i_n.reshape(-1, 1), axis=0)
-    h_j = jnp.sum(h_x, where=i_j.reshape(-1, 1), axis=0)
-    h_mj = jnp.sum(h_x, where=i_mj.reshape(-1, 1), axis=0)
-
-    # compute o-info
-    o = (msize - 2.0) * h_n + h_j - h_mj
-
-    return inputs, o
+    return inputs, o_xy - o_x
 
 
-class OinfoZeroLag(HOIEstimator):
+class GradientOinfo(HOIEstimator):
 
-    r"""O-information.
+    r"""Gradient O-information.
 
-    The O-information is defined as the difference between the total
-    correlation (TC) minus the dual total correlation (DTC):
+    The Gradient O-information is defined as the difference between the
+    O-information with the target variable minus the O-information without the
+    target variable :
 
     .. math::
 
-        \Omega(X^{n})  &=  TC(X^{n}) - DTC(X^{n}) \\
-                       &=  (n - 2)H(X^{n}) + \sum_{j=1}^{n} [H(X_{j}) - H(
-                        X_{-j}^{n})]
+        \partial_{i}\Omega(X^{n}) &= \Omega(X^{n}) - \Omega(X^{n}_{-i}) \\
+                                  &= (2 - n)I(X_{i}; X^{n}_{-i}) + \sum_{
+                                   k=1, k\neq i}^{n} I(X_{k}; X^{n}_{-ik})
 
     .. warning::
 
-        * :math:`\Omega(X^{n}) > 0 \Rightarrow Redundancy`
-        * :math:`\Omega(X^{n}) < 0 \Rightarrow Synergy`
+        * :math:`\partial_{i}\Omega(X^{n}) > 0 \Rightarrow Redundancy`
+        * :math:`\partial_{i}\Omega(X^{n}) < 0 \Rightarrow Synergy`
 
     Parameters
     ----------
@@ -66,16 +57,16 @@ class OinfoZeroLag(HOIEstimator):
 
     References
     ----------
-    Rosas et al., 2019 :cite:`rosas2019oinfo`
+    Scagliarini et al., 2023 :cite:`scagliarini2023gradients`
     """
 
-    __name__ = "O-Information"
+    __name__ = "Gradient O-Information"
 
-    def __init__(self, data, y=None, verbose=None):
+    def __init__(self, data, y, verbose=None):
         HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
-        """Compute the O-information.
+        """Compute the Gradient O-information.
 
         Parameters
         ----------
@@ -113,14 +104,14 @@ class OinfoZeroLag(HOIEstimator):
         n_mult = keep.sum()
 
         # progress-bar definition
-        pbar = scan_tqdm(n_mult, message="Oinfo")
+        pbar = scan_tqdm(n_mult, message="GOinfo")
 
-        # compute o-info
+        # compute \Omega({X^{n}, y})
         h_idx_2 = jnp.where(h_idx == -1, -2, h_idx)
         _, hoi = jax.lax.scan(
-            pbar(compute_oinfo),
+            pbar(compute_goinfo),
             (h_x, h_idx[..., jnp.newaxis], order),
-            (jnp.arange(n_mult), h_idx_2[keep], order[keep]),
+            (jnp.arange(n_mult), h_idx_2[keep], order[keep])
         )
 
         return np.asarray(hoi)
@@ -128,27 +119,23 @@ class OinfoZeroLag(HOIEstimator):
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape, digitize
+    from hoi.utils import landscape, digitize, get_nbest_mult
     from matplotlib.colors import LogNorm
 
     plt.style.use("ggplot")
 
-    path = "/home/etienne/Downloads/data_200_trials"
-    x = np.load(path, allow_pickle=True)[..., 100]
-    x_min, x_max = x.min(), x.max()
-    x_amp = x_max - x_min
-    x_bin = np.ceil(((x - x_min) * (3 - 1)) / (x_amp)).astype(int)
+    x = np.random.rand(300, 12)
+    y = x[:, 0] + x[:, 3]
 
     logger.setLevel("INFO")
-    # model = OinfoZeroLag(digitize(x, 3, axis=1))
-    # model = OinfoZeroLag(x[..., 100])
-    model = OinfoZeroLag(x, y=np.random.rand(x.shape[0]))
+    model = GradientOinfo(x, y=y)
     hoi = model.fit(minsize=2, maxsize=None, method="gcmi")
 
     print(hoi.shape)
     print(model.order.shape)
     print(model.multiplets.shape)
-    0 / 0
+
+    print(get_nbest_mult(hoi, model, minsize=3, maxsize=3))
 
     lscp = landscape(hoi.squeeze(), model.order, output="xarray")
     lscp.plot(x="order", y="bins", cmap="jet", norm=LogNorm())

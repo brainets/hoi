@@ -37,10 +37,15 @@ class RSI(HOIEstimator):
 
         S = x_{1}, ..., x_{n}
 
-    The RSI has been referred to as the SynSum (Globerson et al. 2009),
-    the WholeMinusSum synergy (Griffith and Koch 2012), and
+    The RSI has been referred to as the SynSum :cite:`globerson2009minimum`,
+    the WholeMinusSum synergy :cite:`griffith2014quantifying`, and
     the negative of the redundancy-synergy index has also been
-    referred to as the redundancy (Schneidman et al. 2003b).
+    referred to as the redundancy :cite:`schneidman2003network`.
+
+    .. warning::
+
+        * :math:`RSI(S; Y) > 0 \Rightarrow Synergy`
+        * :math:`RSI(S; Y) < 0 \Rightarrow Redundancy`
 
     Parameters
     ----------
@@ -49,6 +54,11 @@ class RSI(HOIEstimator):
         (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info
+
+    References
+    ----------
+    Chechik et al. 2001 :cite:`chechik2001group`; Timme et al., 2014
+    :cite:`timme2014synergy`
     """
 
     __name__ = 'Redundancy-Synergy Index'
@@ -63,13 +73,19 @@ class RSI(HOIEstimator):
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi', 'binning', 'knn'}
+        method : {'gcmi', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]
+                * 'gcmi': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gcmi`
                 * 'binning': binning-based estimator of entropy. Note that to
-                   use this estimator, the data have be to discretized
-                * 'knn': k-nearest neighbor estimator
+                  use this estimator, the data have be to discretized. See
+                  :func:`hoi.core.entropy_bin`
+                * 'knn': k-nearest neighbor estimator. See
+                  :func:`hoi.core.entropy_knn`
+                * 'kernel': kernel-based estimator of entropy
+                  see :func:`hoi.core.entropy_kernel`
+
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
         """

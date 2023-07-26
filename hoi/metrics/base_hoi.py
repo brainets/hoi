@@ -98,6 +98,41 @@ class HOIEstimator(object):
 
     def compute_entropies(self, method='gcmi', minsize=1, maxsize=None,
                           fill_value=-1, **kwargs):
+        """Compute entropies for all multiplets.
+
+        Parameters
+        ----------
+        method : {'gcmi', 'binning', 'knn', 'kernel}
+            Name of the method to compute entropy. Use either :
+
+                * 'gcmi': gaussian copula entropy [default]. See 
+                  :func:`hoi.core.entropy_gcmi`
+                * 'binning': binning-based estimator of entropy. Note that to
+                  use this estimator, the data have be to discretized. See
+                  :func:`hoi.core.entropy_bin`
+                * 'knn': k-nearest neighbor estimator. See
+                  :func:`hoi.core.entropy_knn`
+                * 'kernel': kernel-based estimator of entropy
+                  see :func:`hoi.core.entropy_kernel`
+
+        minsize : int, optional
+            Minimum size of the multiplets. Default is 1.
+        maxsize : int, optional
+            Maximum size of the multiplets. Default is None.
+        fill_value : int, optional
+            Value to fill the multiplet indices with. Default is -1.
+        kwargs : dict, optional
+            Additional arguments to pass to the entropy function.
+        
+        Returns
+        -------
+        h_x : array_like
+            Entropies of shape (n_mult, n_variables)
+        h_idx : array_like
+            Indices of the multiplets of shape (n_mult, maxsize)
+        order : array_like
+            Order of each multiplet of shape (n_mult,)
+        """
         logger.info(f"Compute entropy with {method}")
         msg = "Entropy H(%i)"
 
@@ -161,12 +196,45 @@ class HOIEstimator(object):
 
     def get_combinations(self, msize, as_iterator=False, as_jax=True,
                          order=False):
+        """Get combinations of features.
+
+        Parameters
+        ----------
+        msize : int
+            Size of the multiplets
+        as_iterator : bool, optional
+            If True, return an iterator. Default is False.
+        as_jax : bool, optional
+            If True, return a jax array. Default is True.
+        order : bool, optional
+            If True, return the order of each multiplet. Default is False.
+        
+        Returns
+        -------
+        combinations : array_like
+            Combinations of features.
+        """
         return combinations(
             self.n_features, msize, as_iterator=as_iterator, as_jax=as_jax,
             order=order
         )
 
     def filter_multiplets(self, mults, order):
+        """Filter multiplets.
+
+        Parameters
+        ----------
+        mults : array_like
+            Multiplets of shape (n_mult, maxsize)
+        order : array_like
+            Order of each multiplet of shape (n_mult,)
+        
+        Returns
+        -------
+        keep : array_like
+            Boolean array of shape (n_mult,) indicating which multiplets to
+            keep.
+        """
         keep = jnp.ones((len(order),), dtype=bool)
 
         # order filtering
@@ -176,7 +244,7 @@ class HOIEstimator(object):
 
         # task related filtering
         if self._task_related:
-            logger.info(f"    Selecting task-related multiplets")
+            logger.info("    Selecting task-related multiplets")
             keep_tr = (mults == self.n_features - 1).any(1)
             keep = jnp.logical_and(keep, keep_tr)
 
@@ -186,6 +254,12 @@ class HOIEstimator(object):
 
     def fit(self):  # noqa
         raise NotImplementedError()
+
+    ###########################################################################
+    ###########################################################################
+    #                             PROPERTIES
+    ###########################################################################
+    ###########################################################################
 
     @property
     def entropies(self):

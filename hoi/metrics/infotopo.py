@@ -51,7 +51,21 @@ def compute_mi(inputs, iterators):
 
 class InfoTopo(HOIEstimator):
 
-    """Dynamic, possibly task-related Topological Information.
+    """Topological Information.
+
+    The multivariate mutual information :math:`I_{k}` quantify the
+    variability/randomness and the statistical dependences between variables
+    is defined by :
+
+    .. math::
+
+        I_{k}(X_{1}; ...; X_{k}) = \sum_{i=1}^{k} (-1)^{i - 1} \sum_{
+         I\subset[k];card(I)=i} H_{i}(X_{I})
+
+    .. warning::
+
+        * :math:`I_{k}(X_{1}; ...; X_{k}) > 0 \Rightarrow Redundancy`
+        * :math:`I_{k}(X_{1}; ...; X_{k}) < 0 \Rightarrow Synergy`
 
     Parameters
     ----------
@@ -60,6 +74,12 @@ class InfoTopo(HOIEstimator):
         (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info.
+
+
+    References
+    ----------
+    Baudot et al., 2019 :cite:`baudot2019infotopo`; Tapia et al., 2018
+    :cite:`tapia2018neurotransmitter`
     """
 
     __name__ = "Topological Information"
@@ -74,13 +94,19 @@ class InfoTopo(HOIEstimator):
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi', 'binning', 'knn'}
+        method : {'gcmi', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]
+                * 'gcmi': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gcmi`
                 * 'binning': binning-based estimator of entropy. Note that to
-                  use this estimator, the data have be to discretized
-                * 'knn': k-nearest neighbor estimator
+                  use this estimator, the data have be to discretized. See
+                  :func:`hoi.core.entropy_bin`
+                * 'knn': k-nearest neighbor estimator. See
+                  :func:`hoi.core.entropy_knn`
+                * 'kernel': kernel-based estimator of entropy
+                  see :func:`hoi.core.entropy_kernel`
+
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
 
@@ -90,10 +116,6 @@ class InfoTopo(HOIEstimator):
             The O-info array of shape (n_multiplets, n_variables) where positive
             values reflect redundant dominated interactions and negative values
             stand for synergistic dominated interactions.
-        
-        References
-        ----------
-        Baudot et al., 2019 :cite:`baudot2019infotopo`
         """
         # ____________________________ ENTROPIES ______________________________
 

@@ -53,7 +53,7 @@ templates_path = [
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 autosummary_generate = True
-autodoc_default_options = {'inherited-members': None}
+autodoc_default_options = {"inherited-members": None}
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
@@ -89,7 +89,7 @@ sphinx_gallery_conf = {
     "subsection_order": ExplicitOrder(
         [
             "../examples/tutorials",
-            "../examples/entropy",
+            "../examples/it",
             "../examples/metrics",
             "../examples/miscellaneous",
         ]

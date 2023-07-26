@@ -1,0 +1,62 @@
+
+
+.. _sphx_glr_auto_examples_miscellaneous:
+
+Miscellaneous
+-------------------------------------
+
+.. contents:: Contents
+   :local:
+   :depth: 2
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Miscellaneous example 1">
+
+.. only:: html
+
+  .. image:: /auto_examples/miscellaneous/images/thumb/sphx_glr_misc1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_miscellaneous_misc1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Miscellaneous example 1</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Miscellaneous example 2">
+
+.. only:: html
+
+  .. image:: /auto_examples/miscellaneous/images/thumb/sphx_glr_misc2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_miscellaneous_misc2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Miscellaneous example 2</div>
+    </div>
+
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/miscellaneous/misc1
+   /auto_examples/miscellaneous/misc2
+

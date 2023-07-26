@@ -8,8 +8,10 @@ Low-level core functions
 
 Information-theoretical measures
 --------------------------------
+
 Measures of Entropy
 +++++++++++++++++++
+
 .. autosummary::
    :toctree: generated/
 
@@ -20,8 +22,10 @@ Measures of Entropy
    copnorm_nd
    prepare_for_entropy
    get_entropy
+
 Measures of Mutual Information
 ++++++++++++++++++++++++++++++++
+
 .. autosummary::
    :toctree: generated/
 

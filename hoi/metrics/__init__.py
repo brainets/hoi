@@ -1,3 +1,4 @@
+from .gradient_oinfo import GradientOinfo  # noqa
 from .infotopo import InfoTopo  # noqa
 from .info_tot import InfoTot  # noqa
 from .oinfo_zerolag import OinfoZeroLag  # noqa

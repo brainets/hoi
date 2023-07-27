@@ -4,7 +4,7 @@ from hoi.utils import normalize, landscape
 
 
 def plot_landscape(hoi, model=None, orders=None, minsize=None, maxsize=None,
-                   kind='hist', undersampling=True, hist_kwargs={},
+                   kind='hist', undersampling=True, cbar=True, hist_kwargs={},
                    plt_kwargs={}):
     """Landscape representation of higher order interactions.
 
@@ -26,6 +26,8 @@ def plot_landscape(hoi, model=None, orders=None, minsize=None, maxsize=None,
 
     undersampling : bool | True
         If True, plot the undersampling threshold.
+    cbar : bool | True
+        Add colorbar.
     hist_kwargs : dict | {}
         Optional arguments for the histogram.
     plt_kwargs : dict | {}
@@ -63,7 +65,8 @@ def plot_landscape(hoi, model=None, orders=None, minsize=None, maxsize=None,
 
         plt.pcolormesh(
             order, bins, lscp, norm=LogNorm(), **plt_kwargs)
-        plt.colorbar(label=hist_kwargs.get('stat', 'probability'))
+        if cbar:
+            plt.colorbar(label=hist_kwargs.get('stat', 'probability'))
     elif kind == 'scatter':
         size = normalize(np.abs(hoi), to_min=2, to_max=200)
         minmax = abs(np.nanpercentile(hoi, [1, 99])).max()

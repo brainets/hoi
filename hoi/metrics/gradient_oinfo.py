@@ -8,7 +8,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.metrics.oinfo_zerolag import compute_oinfo
+from hoi.metrics.oinfo_zerolag import oinfo_ent
 from hoi.utils.progressbar import scan_tqdm
 
 logger = logging.getLogger("hoi")
@@ -18,12 +18,12 @@ logger = logging.getLogger("hoi")
 def compute_goinfo(inputs, iterators):
 
     # compute \Omega({X^{n}, y})
-    _, o_xy = compute_oinfo(inputs, iterators)
+    _, o_xy = oinfo_ent(inputs, iterators)
 
     # compute \Omega(X^{n})
     _, comb_xy, msize = iterators
     comb_x = jnp.where(comb_xy == comb_xy.max(), -2, comb_xy)
-    _, o_x = compute_oinfo(inputs, (_, comb_x, msize - 1))
+    _, o_x = oinfo_ent(inputs, (_, comb_x, msize - 1))
 
     return inputs, o_xy - o_x
 

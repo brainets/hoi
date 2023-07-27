@@ -52,25 +52,8 @@ def oinfo_ent(inputs, iterators):
 ###############################################################################
 
 
-@partial(jax.jit, static_argnums=(2,))
-def _entropy_acc(inputs, indices, entropy=None):
-    x, h = inputs
-    j, m_j = indices
-
-    # compute h(x_{j})
-    h_xj = entropy(x[:, [j], :])
-
-    # compute h(x_{-j})
-    h_xmj = entropy(x[:, m_j, :])
-
-    # accumulate entropy
-    h += h_xj - h_xmj
-
-    return (x, h), None
-
-
 @partial(jax.jit, static_argnums=(2, 3))
-def _oinfo_no_ent(inputs, index, entropy=None, entropy_acc=None):
+def _oinfo_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
     data, acc = inputs
     msize = len(index)
 
@@ -78,16 +61,16 @@ def _oinfo_no_ent(inputs, index, entropy=None, entropy_acc=None):
     x_c = data[:, index, :]
 
     # compute h(x^{n})
-    h_xn = entropy(x_c)
+    h_xn = entropy_3d(x_c)
 
-    # compute \sum_{j=1}^{n} (h(x_{j}) - h(x_{-j}^n))
-    h_acc = jnp.zeros_like(h_xn)
-    (_, h_acc), _ = jax.lax.scan(
-        entropy_acc, (x_c, h_acc), (acc[:, 0], acc[:, 1:])
-    )
+    # compute \sum_{j=1}^{n} h(x_{j}
+    h_xj_sum = entropy_4d(x_c[:, :, jnp.newaxis, :]).sum(0)
+
+    # compute \sum_{j=1}^{n} h(x_{-j}
+    h_xmj_sum = entropy_4d(x_c[:, acc, :]).sum(0)
 
     # compute oinfo
-    oinfo = (msize - 2) * h_xn + h_acc
+    oinfo = (msize - 2) * h_xn + h_xj_sum - h_xmj_sum
 
     return inputs, oinfo
 
@@ -177,9 +160,8 @@ class OinfoZeroLag(HOIEstimator):
 
         # get entropy function
         entropy = jax.vmap(get_entropy(method=method, **kwargs))
-        entropy_acc = partial(_entropy_acc, entropy=entropy)
-        oinfo_no_ent = partial(_oinfo_no_ent, entropy=entropy,
-                               entropy_acc=entropy_acc)
+        oinfo_no_ent = partial(_oinfo_no_ent, entropy_3d=entropy,
+                               entropy_4d=jax.vmap(entropy, in_axes=1))
 
         # prepare output
         n_mults = sum([ccomb(self.n_features, c) for c in range(
@@ -205,7 +187,7 @@ class OinfoZeroLag(HOIEstimator):
             acc = np.mgrid[0:msize, 0:msize].sum(0) % msize
 
             # compute oinfo
-            _, _hoi = jax.lax.scan(oinfo_no_ent, (data, acc), _h_idx)
+            _, _hoi = jax.lax.scan(oinfo_no_ent, (data, acc[:, 1:]), _h_idx)
 
             # fill variables
             n_combs, n_feat = _h_idx.shape
@@ -274,12 +256,12 @@ if __name__ == "__main__":
     # model = OinfoZeroLag(digitize(x, 3, axis=1))
     # model = OinfoZeroLag(x[..., 100])
     model = OinfoZeroLag(x)  # , y=np.random.rand(x.shape[0])                  # TASK RELATED
-    hoi = model.fit(minsize=2, maxsize=None, method="gcmi", low_memory=True)
+    hoi = model.fit(minsize=1, maxsize=None, method="gcmi", low_memory=False)
+    0 / 0
 
     print(hoi.shape)
     print(model.order.shape)
     print(model.multiplets.shape)
-    # 0 / 0
 
     lscp = landscape(hoi.squeeze(), model.order, output="xarray")
     lscp.plot(x="order", y="bins", cmap="jet", norm=LogNorm())

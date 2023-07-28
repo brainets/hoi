@@ -166,9 +166,9 @@ class OinfoZeroLag(HOIEstimator):
         # prepare output
         n_mults = sum([ccomb(self.n_features, c) for c in range(
             minsize, maxsize + 1)])
-        hoi = np.zeros((n_mults, self.n_variables), dtype=np.float32)
-        h_idx = np.full((n_mults, maxsize), -1, dtype=int)
-        order = np.zeros((n_mults,), dtype=int)
+        hoi = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
+        h_idx = jnp.full((n_mults, maxsize), -1, dtype=int)
+        order = jnp.zeros((n_mults,), dtype=int)
 
         # get progress bar
         pbar = get_pbar(
@@ -184,7 +184,7 @@ class OinfoZeroLag(HOIEstimator):
             _h_idx = self.get_combinations(msize)
 
             # generate indices for accumulated entropies
-            acc = np.mgrid[0:msize, 0:msize].sum(0) % msize
+            acc = jnp.mgrid[0:msize, 0:msize].sum(0) % msize
 
             # compute oinfo
             _, _hoi = jax.lax.scan(oinfo_no_ent, (data, acc[:, 1:]), _h_idx)
@@ -192,18 +192,19 @@ class OinfoZeroLag(HOIEstimator):
             # fill variables
             n_combs, n_feat = _h_idx.shape
             sl = slice(offset, offset + n_combs)
-            h_idx[sl, 0:n_feat] = np.asarray(_h_idx)
-            order[sl] = msize
-            hoi[sl, :] = np.asarray(_hoi)
+            h_idx = h_idx.at[sl, 0:n_feat].set(_h_idx)
+            order = order.at[sl].set(msize)
+            hoi = hoi.at[sl, :].set(_hoi)
 
             # updates
             offset += n_combs
 
-        self._multiplets = h_idx
-        self._order = order
+
+        self._multiplets = np.asarray(h_idx)
+        self._order = np.asarray(order)
         self._keep = np.ones_like(order, dtype=bool)
 
-        return hoi
+        return np.asarray(hoi)
 
 
     def _fit_ent(self, minsize=2, maxsize=None, method="gcmi", **kwargs):

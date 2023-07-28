@@ -52,8 +52,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/metrics/metrics1';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Metrics example 2" href="metrics2.html" />
-    <link rel="prev" title="Metrics of HOI" href="index.html" />
+    <link rel="next" title="Miscellaneous" href="../miscellaneous/index.html" />
+    <link rel="prev" title="Metrics example 2" href="metrics2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="None"/>
   </head>
@@ -378,8 +378,8 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Metrics of HOI</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Metrics example 1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metrics2.html">Metrics example 2</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Metrics example 1</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../miscellaneous/index.html">Miscellaneous</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -455,6 +455,29 @@ to download the full example code</p>
 <section class="sphx-glr-example-title" id="metrics-example-1">
 <span id="sphx-glr-auto-examples-metrics-metrics1-py"></span><h1>Metrics example 1<a class="headerlink" href="#metrics-example-1" title="Permalink to this headline">#</a></h1>
 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perferendis sed id doloribus at error in ea nulla reprehenderit optio rerum nostrum harum voluptas, sequi laudantium numquam accusantium consequuntur minus quisquam autem magnam distinctio. Itaque, fuga quisquam. Dolorum commodi molestiae soluta, dolorem tenetur magni illum distinctio minus vero tempore quibusdam totam sed, sapiente aliquam aperiam sunt accusantium quisquam eos rerum cupiditate fuga debitis inventore. Exercitationem nihil ipsa aliquid, placeat laborum ut vel odio deserunt adipisci minima blanditiis aperiam nisi veniam cum labore deleniti reiciendis earum eligendi dignissimos suscipit beatae ex a! Omnis commodi modi magnam esse molestias odit, non unde eius vel, aspernatur perferendis voluptatibus nam nihil, aut et. Molestias, quos quia soluta minus illum amet cupiditate iure a assumenda debitis sint dolor, dolorem at. Tempora, dolorum maiores! Explicabo molestias nostrum nihil non laboriosam accusantium aut maxime. Tenetur similique natus quos accusamus, dicta iure? Exercitationem id aut laborum itaque consequatur delectus molestias labore sequi. Libero distinctio laboriosam debitis possimus beatae nisi quae autem in voluptatibus labore vero error omnis neque, quisquam culpa odio! Tempore neque ipsa voluptatibus alias laudantium id voluptates reiciendis dolorem iusto cumque tenetur illum aliquid maiores totam sint rem repellat, repellendus molestias deserunt deleniti odit mollitia?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">hoi.metrics</span> <span class="kn">import</span> <a href="../../api/generated/hoi.metrics.OinfoZeroLag.html#hoi.metrics.OinfoZeroLag" title="hoi.metrics.OinfoZeroLag" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">OinfoZeroLag</span></a>
+<span class="kn">from</span> <span class="nn">hoi.plot</span> <span class="kn">import</span> <a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="c1"># x[:, 7] = x[:, 0] + x[:, 1]</span>
+<span class="c1"># x[:, 8] = x[:, 3]</span>
+<span class="c1"># x[:, 9] = x[:, 3]</span>
+
+
+<span class="n">model</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.OinfoZeroLag.html#hoi.metrics.OinfoZeroLag" title="hoi.metrics.OinfoZeroLag" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">OinfoZeroLag</span></a><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;gcmi&#39;</span><span class="p">)</span>
+
+<a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+               <span class="n">plt_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;turbo&#39;</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
 <p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.000 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-metrics1-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
@@ -479,20 +502,20 @@ to download the full example code</p>
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="index.html"
+       href="metrics2.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Metrics of HOI</p>
+        <p class="prev-next-title">Metrics example 2</p>
       </div>
     </a>
     <a class="right-next"
-       href="metrics2.html"
+       href="../miscellaneous/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Metrics example 2</p>
+        <p class="prev-next-title">Miscellaneous</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

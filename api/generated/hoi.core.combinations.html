@@ -455,7 +455,7 @@ document.write(`
 <h1>hoi.core.combinations<a class="headerlink" href="#hoi-core-combinations" title="Permalink to this headline">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="hoi.core.combinations">
-<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_iterator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_jax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/core/combinatory.html#combinations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.combinations" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">astype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'iterator'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/core/combinatory.html#combinations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.combinations" title="Permalink to this definition">#</a></dt>
 <dd><p>Get combinations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -463,6 +463,11 @@ document.write(`
 <dt><strong>n</strong><span class="classifier">int</span></dt><dd><p>Represents the total number of elements in the set</p>
 </dd>
 <dt><strong>k</strong><span class="classifier">int</span></dt><dd><p>Represents the size of the combinations to be generated</p>
+</dd>
+<dt><strong>astype</strong><span class="classifier">{‘jax’, ‘numpy’, ‘iterator’}</span></dt><dd><p>Specify the output type. Use either ‘jax’ get the data as a jax
+array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
+</dd>
+<dt><strong>order</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, return the order of each multiplet. Default is False.</p>
 </dd>
 </dl>
 </dd>

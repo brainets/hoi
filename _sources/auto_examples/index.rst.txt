@@ -136,23 +136,6 @@ Metrics of HOI
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Metrics example 1">
-
-.. only:: html
-
-  .. image:: /auto_examples/metrics/images/thumb/sphx_glr_metrics1_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_auto_examples_metrics_metrics1.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Metrics example 1</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="Metrics example 2">
 
 .. only:: html
@@ -165,6 +148,23 @@ Metrics of HOI
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Metrics example 2</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Metrics example 1">
+
+.. only:: html
+
+  .. image:: /auto_examples/metrics/images/thumb/sphx_glr_metrics1_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_metrics_metrics1.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Metrics example 1</div>
     </div>
 
 

@@ -496,7 +496,7 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.fit" title="hoi.metrics.RedundancyMMI.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
 <td><p>Redundancy Index.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.get_combinations" title="hoi.metrics.RedundancyMMI.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(msize[, as_iterator, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.get_combinations" title="hoi.metrics.RedundancyMMI.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(msize[, astype, order])</p></td>
 <td><p>Get combinations of features.</p></td>
 </tr>
 </tbody>
@@ -517,7 +517,7 @@ document.write(`
 <dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>‘gcmi’: gaussian copula entropy [default]. See 
+<li><p>‘gcmi’: gaussian copula entropy [default]. See
 <a class="reference internal" href="hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi" title="hoi.core.entropy_gcmi"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gcmi()</span></code></a></p></li>
 <li><p>‘binning’: binning-based estimator of entropy. Note that to
 use this estimator, the data have be to discretized. See
@@ -614,16 +614,15 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.RedundancyMMI.get_combinations">
-<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_iterator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">as_jax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RedundancyMMI.get_combinations" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">astype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jax'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RedundancyMMI.get_combinations" title="Permalink to this definition">#</a></dt>
 <dd><p>Get combinations of features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>msize</strong><span class="classifier">int</span></dt><dd><p>Size of the multiplets</p>
 </dd>
-<dt><strong>as_iterator</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, return an iterator. Default is False.</p>
-</dd>
-<dt><strong>as_jax</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, return a jax array. Default is True.</p>
+<dt><strong>astype</strong><span class="classifier">{‘jax’, ‘numpy’, ‘iterator’}</span></dt><dd><p>Specify the output type. Use either ‘jax’ get the data as a jax
+array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
 </dd>
 <dt><strong>order</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, return the order of each multiplet. Default is False.</p>
 </dd>

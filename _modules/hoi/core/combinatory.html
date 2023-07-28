@@ -411,9 +411,22 @@ document.write(`
 <span></span><span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">comb</span> <span class="k">as</span> <span class="n">ccomb</span>
 
 
-<div class="viewcode-block" id="combinations"><a class="viewcode-back" href="../../../api/generated/hoi.core.combinations.html#hoi.core.combinations">[docs]</a><span class="k">def</span> <span class="nf">combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">as_iterator</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">as_jax</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">k</span><span class="p">):</span>
+        <span class="c1"># convert to list</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+        <span class="c1"># deal with order</span>
+        <span class="k">if</span> <span class="n">order</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+        <span class="k">yield</span> <span class="n">c</span>
+
+
+<div class="viewcode-block" id="combinations"><a class="viewcode-back" href="../../../api/generated/hoi.core.combinations.html#hoi.core.combinations">[docs]</a><span class="k">def</span> <span class="nf">combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">astype</span><span class="o">=</span><span class="s2">&quot;iterator&quot;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get combinations.</span>
 
 <span class="sd">    Parameters</span>
@@ -422,6 +435,11 @@ document.write(`
 <span class="sd">        Represents the total number of elements in the set</span>
 <span class="sd">    k : int</span>
 <span class="sd">        Represents the size of the combinations to be generated</span>
+<span class="sd">    astype : {&#39;jax&#39;, &#39;numpy&#39;, &#39;iterator&#39;}</span>
+<span class="sd">        Specify the output type. Use either &#39;jax&#39; get the data as a jax</span>
+<span class="sd">        array [default], &#39;numpy&#39; for NumPy array or &#39;iterator&#39;.</span>
+<span class="sd">    order : bool, optional</span>
+<span class="sd">        If True, return the order of each multiplet. Default is False.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -430,26 +448,28 @@ document.write(`
 <span class="sd">        combinations of k elements.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">k</span><span class="p">):</span>
-            <span class="c1"># convert to list</span>
-            <span class="n">c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">iterator</span> <span class="o">=</span> <span class="n">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">order</span><span class="p">)</span>
 
-            <span class="c1"># deal with order</span>
-            <span class="k">if</span> <span class="n">order</span><span class="p">:</span>
-                <span class="n">c</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">astype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;iterator&#39;</span><span class="p">,</span> <span class="s1">&#39;jax&#39;</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">astype</span> <span class="o">==</span> <span class="s2">&quot;iterator&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">iterator</span>
+    <span class="k">elif</span> <span class="n">astype</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;jax&#39;</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">]:</span>
+        <span class="n">n_mults</span> <span class="o">=</span> <span class="n">ccomb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="n">n_cols</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">order</span> <span class="k">else</span> <span class="n">k</span>
 
-            <span class="k">yield</span> <span class="n">c</span>
+        <span class="n">combs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_mults</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterator</span><span class="p">):</span>
+            <span class="n">combs</span><span class="p">[</span><span class="n">n_c</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">c</span>
 
+        <span class="k">if</span> <span class="n">astype</span> <span class="o">==</span> <span class="s1">&#39;jax&#39;</span><span class="p">:</span>
+            <span class="n">combs</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">combs</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">as_iterator</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">combs</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">combs</span><span class="p">)</span> <span class="k">if</span> <span class="n">as_jax</span> <span class="k">else</span> <span class="n">combs</span></div>
+        <span class="k">return</span> <span class="n">combs</span></div>
+
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">as_iterator</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">astype</span><span class="o">=</span><span class="s1">&#39;jax&#39;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">)))</span>
+
     <span class="c1"># print(np.array(list(itertools.combinations(np.arange(10), 3))).shape)</span>
 </pre></div>
 

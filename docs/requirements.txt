@@ -1,5 +1,4 @@
 numpy
-ghp-import
 jax
 sphinx
 pydata-sphinx-theme
@@ -10,4 +9,5 @@ numpydoc
 sphinx-copybutton
 sphinxcontrib-bibtex
 sphinx-gallery
-Pillow 
+Pillow
+matplotlib

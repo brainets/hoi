@@ -112,7 +112,7 @@ class OinfoZeroLag(HOIEstimator):
     def __init__(self, data, y=None, verbose=None):
         HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
 
-    def fit(self, minsize=2, maxsize=None, method="gcmi", low_memory=True,
+    def fit(self, minsize=2, maxsize=None, method="gcmi", low_memory=False,
             **kwargs):
         """Compute the O-information.
 
@@ -256,7 +256,7 @@ if __name__ == "__main__":
     # model = OinfoZeroLag(digitize(x, 3, axis=1))
     # model = OinfoZeroLag(x[..., 100])
     model = OinfoZeroLag(x)  # , y=np.random.rand(x.shape[0])                  # TASK RELATED
-    hoi = model.fit(minsize=1, maxsize=None, method="gcmi", low_memory=True)
+    hoi = model.fit(minsize=1, maxsize=None, method="gcmi", low_memory=False)
     0 / 0
 
     print(hoi.shape)

@@ -105,7 +105,7 @@ class HOIEstimator(object):
         method : {'gcmi', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See 
+                * 'gcmi': gaussian copula entropy [default]. See
                   :func:`hoi.core.entropy_gcmi`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
@@ -123,7 +123,7 @@ class HOIEstimator(object):
             Value to fill the multiplet indices with. Default is -1.
         kwargs : dict, optional
             Additional arguments to pass to the entropy function.
-        
+
         Returns
         -------
         h_x : array_like
@@ -194,29 +194,26 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def get_combinations(self, msize, as_iterator=False, as_jax=True,
-                         order=False):
+    def get_combinations(self, msize, astype='jax', order=False):
         """Get combinations of features.
 
         Parameters
         ----------
         msize : int
             Size of the multiplets
-        as_iterator : bool, optional
-            If True, return an iterator. Default is False.
-        as_jax : bool, optional
-            If True, return a jax array. Default is True.
+        astype : {'jax', 'numpy', 'iterator'}
+            Get combinations either as a jax array [default], as a numpy array
+            or as an iterator
         order : bool, optional
             If True, return the order of each multiplet. Default is False.
-        
+
         Returns
         -------
         combinations : array_like
             Combinations of features.
         """
         return combinations(
-            self.n_features, msize, as_iterator=as_iterator, as_jax=as_jax,
-            order=order
+            self.n_features, msize, astype=astype, order=order
         )
 
     def filter_multiplets(self, mults, order):
@@ -228,7 +225,7 @@ class HOIEstimator(object):
             Multiplets of shape (n_mult, maxsize)
         order : array_like
             Order of each multiplet of shape (n_mult,)
-        
+
         Returns
         -------
         keep : array_like

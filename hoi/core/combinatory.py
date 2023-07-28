@@ -5,7 +5,7 @@ from math import comb as ccomb
 
 
 def _combinations(n, k, order):
-    for c in itertools.combinations(np.arange(n), k):
+    for c in itertools.combinations(range(n), k):
         # convert to list
         c = list(c)
 
@@ -41,14 +41,14 @@ def combinations(n, k, astype="iterator", order=False):
     elif astype in ['jax', 'numpy']:
         n_mults = ccomb(n, k)
         n_cols = 1 if order else k
+
+        combs = np.zeros((n_mults, n_cols), dtype=int)
+        for n_c, c in enumerate(iterator):
+            combs[n_c, :] = c
+
         if astype == 'jax':
-            combs = jnp.zeros((n_mults, n_cols), dtype=int)
-            for n_c, c in enumerate(iterator):
-                combs = combs.at[n_c, :].set(c)
-        elif astype == 'numpy':
-            combs = np.zeros((n_mults, n_cols), dtype=int)
-            for n_c, c in enumerate(iterator):
-                combs[n_c, :] = c
+            combs = jnp.asarray(combs)
+
         return combs
 
 

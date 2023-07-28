@@ -496,7 +496,7 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.fit" title="hoi.metrics.RedundancyMMI.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
 <td><p>Redundancy Index.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.get_combinations" title="hoi.metrics.RedundancyMMI.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(msize[, astype, order])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.get_combinations" title="hoi.metrics.RedundancyMMI.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(minsize[, maxsize, astype, ...])</p></td>
 <td><p>Get combinations of features.</p></td>
 </tr>
 </tbody>
@@ -614,12 +614,14 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.RedundancyMMI.get_combinations">
-<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">astype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jax'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RedundancyMMI.get_combinations" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">astype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jax'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RedundancyMMI.get_combinations" title="Permalink to this definition">#</a></dt>
 <dd><p>Get combinations of features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>msize</strong><span class="classifier">int</span></dt><dd><p>Size of the multiplets</p>
+<dt><strong>minsize</strong><span class="classifier">int</span></dt><dd><p>Minimum size of the multiplets</p>
+</dd>
+<dt><strong>maxsize</strong><span class="classifier">int | None</span></dt><dd><p>Maximum size of the multiplets. If None, minsize is used.</p>
 </dd>
 <dt><strong>astype</strong><span class="classifier">{‘jax’, ‘numpy’, ‘iterator’}</span></dt><dd><p>Specify the output type. Use either ‘jax’ get the data as a jax
 array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>

@@ -16,15 +16,18 @@ def _combinations(n, k, order):
         yield c
 
 
-def combinations(n, k, astype="iterator", order=False):
+def combinations(n, minsize, maxsize=None, astype="iterator", order=False,
+                 fill_value=-1):
     """Get combinations.
 
     Parameters
     ----------
     n : int
         Represents the total number of elements in the set
-    k : int
-        Represents the size of the combinations to be generated
+    minsize : int
+        Minimum size of the multiplets
+    maxsize : int | None
+        Maximum size of the multiplets. If None, minsize is used.
     astype : {'jax', 'numpy', 'iterator'}
         Specify the output type. Use either 'jax' get the data as a jax
         array [default], 'numpy' for NumPy array or 'iterator'.
@@ -37,27 +40,40 @@ def combinations(n, k, astype="iterator", order=False):
         An array of shape (n_combinations, k) representing all possible
         combinations of k elements.
     """
+    # ________________________________ ITERATOR _______________________________
+    if not isinstance(maxsize, int):
+        maxsize = minsize
+    assert maxsize >= minsize
+    iterators = []
+    for msize in range(minsize, maxsize + 1):
+        iterators.append(_combinations(n, msize, order))
+    iterators = itertools.chain(*tuple(iterators))
 
-    iterator = _combinations(n, k, order)
+    if astype == 'iterator':
+        return iterators
 
-    assert astype in ['iterator', 'jax', 'numpy']
-    if astype == "iterator":
-        return iterator
-    elif astype in ['jax', 'numpy']:
-        n_mults = ccomb(n, k)
-        n_cols = 1 if order else k
+    # _________________________________ ARRAYS ________________________________
+    if order:
+        combs = np.asarray([c for c in iterators])
+    else:
+        # get the number of combinations
+        n_mults = sum([ccomb(n, c) for c in range(minsize, maxsize + 1)])
 
-        combs = np.zeros((n_mults, n_cols), dtype=int)
-        for n_c, c in enumerate(iterator):
-            combs[n_c, :] = c
+        # prepare output
+        combs = np.full((n_mults, maxsize), fill_value, dtype=int)
 
-        if astype == 'jax':
-            combs = jnp.asarray(combs)
+        # fill the array
+        for n_c, c in enumerate(iterators):
+            combs[n_c, 0:len(c)] = c
 
-        return combs
+    # jax conversion (f required)
+    if astype == 'jax':
+        combs = jnp.asarray(combs)
+
+    return combs
 
 
 if __name__ == '__main__':
-    print(type(combinations(10, 5, astype='jax', order=False)))
+    print(combinations(10, minsize=2, maxsize=None, astype='jax', order=False))
 
     # print(np.array(list(itertools.combinations(np.arange(10), 3))).shape)

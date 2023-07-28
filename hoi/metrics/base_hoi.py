@@ -15,12 +15,17 @@ logger = logging.getLogger('hoi')
 
 
 @partial(jax.jit, static_argnums=(2,))
-def ent_at_index(x, idx, entropy=None):
+def ent_at_index(x, idxorder, entropy=None):
     """Compute entropy for a specific multiplet.
 
     This function has to be wrapped with the entropy function.
     """
-    return x, entropy(x[:, idx, :])
+    idx_all, order = idxorder
+    print(idx_all.shape)
+    idx = jax.lax.dynamic_slice(idx_all, (0,), (order,))
+    print(idx.shape, idx_all.shape)
+    0/0
+    return x, entropy(x[:, idx_all[0:order], :])
 
 
 class HOIEstimator(object):
@@ -148,6 +153,18 @@ class HOIEstimator(object):
             get_entropy(method=method, **kwargs)
         ))
 
+        # ______________________________ ENTROPY ______________________________
+        # get all of the combinations
+        kw_combs = dict(maxsize=maxsize, astype='jax')
+        h_idx = self.get_combinations(minsize, **kw_combs)
+        order = self.get_combinations(minsize, order=True, **kw_combs)
+
+        # compute entropies
+        _, _h_x = jax.lax.scan(entropy, data, (h_idx, order))
+
+
+        0/0
+
         # prepare output
         n_mults = sum([ccomb(self.n_features, c) for c in range(
             minsize, maxsize + 1)])
@@ -194,13 +211,16 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def get_combinations(self, msize, astype='jax', order=False):
+    def get_combinations(self, minsize, maxsize=None, astype='jax',
+                         order=False):
         """Get combinations of features.
 
         Parameters
         ----------
-        msize : int
-            Size of the multiplets
+        minsize : int
+            Minimum size of the multiplets
+        maxsize : int | None
+            Maximum size of the multiplets. If None, minsize is used.
         astype : {'jax', 'numpy', 'iterator'}
             Specify the output type. Use either 'jax' get the data as a jax
             array [default], 'numpy' for NumPy array or 'iterator'.
@@ -213,7 +233,8 @@ class HOIEstimator(object):
             Combinations of features.
         """
         return combinations(
-            self.n_features, msize, astype=astype, order=order
+            self.n_features, minsize, maxsize=maxsize, astype=astype,
+            order=order
         )
 
     def filter_multiplets(self, mults, order):

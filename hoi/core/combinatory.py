@@ -54,7 +54,7 @@ def combinations(n, minsize, maxsize=None, astype="iterator", order=False,
 
     # _________________________________ ARRAYS ________________________________
     if order:
-        combs = np.asarray([c for c in iterators])
+        combs = np.asarray([c for c in iterators]).astype(int)
     else:
         # get the number of combinations
         n_mults = sum([ccomb(n, c) for c in range(minsize, maxsize + 1)])

@@ -15,17 +15,12 @@ logger = logging.getLogger('hoi')
 
 
 @partial(jax.jit, static_argnums=(2,))
-def ent_at_index(x, idxorder, entropy=None):
+def ent_at_index(x, idx, entropy=None):
     """Compute entropy for a specific multiplet.
 
     This function has to be wrapped with the entropy function.
     """
-    idx_all, order = idxorder
-    print(idx_all.shape)
-    idx = jax.lax.dynamic_slice(idx_all, (0,), (order,))
-    print(idx.shape, idx_all.shape)
-    0/0
-    return x, entropy(x[:, idx_all[0:order], :])
+    return x, entropy(x[:, idx, :])
 
 
 class HOIEstimator(object):
@@ -158,45 +153,31 @@ class HOIEstimator(object):
         kw_combs = dict(maxsize=maxsize, astype='jax')
         h_idx = self.get_combinations(minsize, **kw_combs)
         order = self.get_combinations(minsize, order=True, **kw_combs)
-
-        # compute entropies
-        _, _h_x = jax.lax.scan(entropy, data, (h_idx, order))
-
-
-        0/0
-
-        # prepare output
-        n_mults = sum([ccomb(self.n_features, c) for c in range(
-            minsize, maxsize + 1)])
-        h_x = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
-        h_idx = jnp.full((n_mults, maxsize), fill_value, dtype=int)
-        order = jnp.zeros((n_mults,), dtype=int)
+        h_x = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
         # get progress bar
         pbar = get_pbar(
             iterable=range(minsize, maxsize + 1), leave=False,
         )
 
-        # ______________________________ ENTROPY ______________________________
+        # compute entropies
         offset = 0
         for msize in pbar:
             pbar.set_description(desc=msg % msize, refresh=False)
 
-            # combinations of features
-            _h_idx = self.get_combinations(msize)
-            n_combs, n_feat = _h_idx.shape
-            sl = slice(offset, offset + n_combs)
+            # get order
+            keep = order == msize
+            n_mult = keep.sum()
 
-            # fill indices and order
-            h_idx = h_idx.at[sl, 0:n_feat].set(_h_idx)
-            order = order.at[sl].set(msize)
+            # compute all entropies
+            _, _h_x = jax.lax.scan(
+                entropy, data, h_idx[keep, 0:msize])
 
-            # compute all of the entropies at that order
-            _, _h_x = jax.lax.scan(entropy, data, _h_idx)
-            h_x = h_x.at[sl, :].set(_h_x)
+            # fill entropies
+            h_x = h_x.at[offset:offset + n_mult, :].set(_h_x)
 
-            # updates
-            offset += n_combs
+            offset += n_mult
+
         pbar.close()
 
         self._entropies = h_x
@@ -204,6 +185,7 @@ class HOIEstimator(object):
         self._order = order
 
         return h_x, h_idx, order
+
 
     ###########################################################################
     ###########################################################################

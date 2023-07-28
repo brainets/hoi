@@ -143,7 +143,7 @@ if __name__ == "__main__":
     # model = OinfoZeroLag(digitize(x, 3, axis=1))
     # model = OinfoZeroLag(x[..., 100])
     model = OinfoZeroLag(x, y=np.random.rand(x.shape[0]))
-    hoi = model.fit(minsize=2, maxsize=None, method="gcmi")
+    hoi = model.fit(minsize=1, maxsize=None, method="gcmi")
 
     print(hoi.shape)
     print(model.order.shape)

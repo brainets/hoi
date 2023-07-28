@@ -23,4 +23,5 @@ hoi = model.fit(minsize=3, maxsize=None, method='gcmi')
 
 plot_landscape(hoi, model=model,
                plt_kwargs=dict(cmap='turbo'))
+plt.tight_layout()
 plt.show()

@@ -1,9 +1,22 @@
 import jax.numpy as jnp
 import numpy as np
 import itertools
+from math import comb as ccomb
 
 
-def combinations(n, k, as_iterator=True, as_jax=True, order=False):
+def _combinations(n, k, order):
+    for c in itertools.combinations(range(n), k):
+        # convert to list
+        c = list(c)
+
+        # deal with order
+        if order:
+            c = len(c)
+
+        yield c
+
+
+def combinations(n, k, astype="iterator", order=False):
     """Get combinations.
 
     Parameters
@@ -12,6 +25,11 @@ def combinations(n, k, as_iterator=True, as_jax=True, order=False):
         Represents the total number of elements in the set
     k : int
         Represents the size of the combinations to be generated
+    astype : {'jax', 'numpy', 'iterator'}
+        Specify the output type. Use either 'jax' get the data as a jax
+        array [default], 'numpy' for NumPy array or 'iterator'.
+    order : bool, optional
+        If True, return the order of each multiplet. Default is False.
 
     Returns
     -------
@@ -20,24 +38,26 @@ def combinations(n, k, as_iterator=True, as_jax=True, order=False):
         combinations of k elements.
     """
 
-    def _combinations(n, k):
-        for c in itertools.combinations(np.arange(n), k):
-            # convert to list
-            c = list(c)
+    iterator = _combinations(n, k, order)
 
-            # deal with order
-            if order:
-                c = len(c)
+    assert astype in ['iterator', 'jax', 'numpy']
+    if astype == "iterator":
+        return iterator
+    elif astype in ['jax', 'numpy']:
+        n_mults = ccomb(n, k)
+        n_cols = 1 if order else k
 
-            yield c
+        combs = np.zeros((n_mults, n_cols), dtype=int)
+        for n_c, c in enumerate(iterator):
+            combs[n_c, :] = c
 
+        if astype == 'jax':
+            combs = jnp.asarray(combs)
 
-    if as_iterator:
-        return _combinations(n, k)
-    else:
-        combs = [c for c in _combinations(n, k)]
-        return jnp.asarray(combs) if as_jax else combs
+        return combs
+
 
 if __name__ == '__main__':
-    print(combinations(10, 5, as_iterator=False, order=True).shape)
+    print(type(combinations(10, 5, astype='jax', order=False)))
+
     # print(np.array(list(itertools.combinations(np.arange(10), 3))).shape)

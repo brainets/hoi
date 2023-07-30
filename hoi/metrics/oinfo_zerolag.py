@@ -138,9 +138,9 @@ class OinfoZeroLag(HOIEstimator):
         """
         kw = dict(minsize=minsize, maxsize=maxsize, method=method)
         if cache:
-            return self._fit_no_ent(**kw, **kwargs)
-        else:
             return self._fit_ent(**kw, **kwargs)
+        else:
+            return self._fit_no_ent(**kw, **kwargs)
 
     def _fit_no_ent(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute Oinfo without precomputing entropies."""

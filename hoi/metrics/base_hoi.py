@@ -148,38 +148,37 @@ class HOIEstimator(object):
             get_entropy(method=method, **kwargs)
         ))
 
-        # prepare output
-        n_mults = sum([ccomb(self.n_features, c) for c in range(
-            minsize, maxsize + 1)])
-        h_x = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
-        h_idx = jnp.full((n_mults, maxsize), fill_value, dtype=int)
-        order = jnp.zeros((n_mults,), dtype=int)
+        # ______________________________ ENTROPY ______________________________
+        # get all of the combinations
+        kw_combs = dict(maxsize=maxsize, astype='jax')
+        h_idx = self.get_combinations(minsize, **kw_combs)
+        order = self.get_combinations(minsize, order=True, **kw_combs)
+        h_x = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
         # get progress bar
         pbar = get_pbar(
             iterable=range(minsize, maxsize + 1), leave=False,
         )
 
-        # ______________________________ ENTROPY ______________________________
+        # compute entropies
         offset = 0
         for msize in pbar:
             pbar.set_description(desc=msg % msize, refresh=False)
 
-            # combinations of features
-            _h_idx = self.get_combinations(msize)
-            n_combs, n_feat = _h_idx.shape
-            sl = slice(offset, offset + n_combs)
+            # get order
+            keep = order == msize
+            n_mult = keep.sum()
 
-            # fill indices and order
-            h_idx = h_idx.at[sl, 0:n_feat].set(_h_idx)
-            order = order.at[sl].set(msize)
+            # compute all entropies
+            _, _h_x = jax.lax.scan(
+                entropy, data, h_idx[keep, 0:msize]
+            )
 
-            # compute all of the entropies at that order
-            _, _h_x = jax.lax.scan(entropy, data, _h_idx)
-            h_x = h_x.at[sl, :].set(_h_x)
+            # fill entropies
+            h_x = h_x.at[offset:offset + n_mult, :].set(_h_x)
 
-            # updates
-            offset += n_combs
+            offset += n_mult
+
         pbar.close()
 
         self._entropies = h_x
@@ -188,22 +187,26 @@ class HOIEstimator(object):
 
         return h_x, h_idx, order
 
+
     ###########################################################################
     ###########################################################################
     #                             COMPUTATIONS
     ###########################################################################
     ###########################################################################
 
-    def get_combinations(self, msize, astype='jax', order=False):
+    def get_combinations(self, minsize, maxsize=None, astype='jax',
+                         order=False):
         """Get combinations of features.
 
         Parameters
         ----------
-        msize : int
-            Size of the multiplets
+        minsize : int
+            Minimum size of the multiplets
+        maxsize : int | None
+            Maximum size of the multiplets. If None, minsize is used.
         astype : {'jax', 'numpy', 'iterator'}
-            Get combinations either as a jax array [default], as a numpy array
-            or as an iterator
+            Specify the output type. Use either 'jax' get the data as a jax
+            array [default], 'numpy' for NumPy array or 'iterator'.
         order : bool, optional
             If True, return the order of each multiplet. Default is False.
 
@@ -213,7 +216,8 @@ class HOIEstimator(object):
             Combinations of features.
         """
         return combinations(
-            self.n_features, msize, astype=astype, order=order
+            self.n_features, minsize, maxsize=maxsize, astype=astype,
+            order=order
         )
 
     def filter_multiplets(self, mults, order):

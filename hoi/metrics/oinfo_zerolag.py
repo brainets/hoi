@@ -112,7 +112,7 @@ class OinfoZeroLag(HOIEstimator):
     def __init__(self, data, y=None, verbose=None):
         HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
 
-    def fit(self, minsize=2, maxsize=None, method="gcmi", low_memory=False,
+    def fit(self, minsize=2, maxsize=None, method="gcmi", cache=False,
             **kwargs):
         """Compute the O-information.
 
@@ -137,7 +137,7 @@ class OinfoZeroLag(HOIEstimator):
             Additional arguments are sent to each entropy function
         """
         kw = dict(minsize=minsize, maxsize=maxsize, method=method)
-        if low_memory:
+        if cache:
             return self._fit_no_ent(**kw, **kwargs)
         else:
             return self._fit_ent(**kw, **kwargs)
@@ -164,11 +164,14 @@ class OinfoZeroLag(HOIEstimator):
                                entropy_4d=jax.vmap(entropy, in_axes=1))
 
         # prepare output
-        n_mults = sum([ccomb(self.n_features, c) for c in range(
-            minsize, maxsize + 1)])
-        hoi = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
-        h_idx = jnp.full((n_mults, maxsize), -1, dtype=int)
-        order = jnp.zeros((n_mults,), dtype=int)
+        kw_combs = dict(maxsize=maxsize, astype='jax')
+        h_idx = self.get_combinations(minsize, **kw_combs)
+        order = self.get_combinations(minsize, order=True, **kw_combs)
+
+        # subselection of multiplets
+        keep = self.filter_multiplets(h_idx, order)
+        h_idx = h_idx[keep, :]
+        order = order[keep]
 
         # get progress bar
         pbar = get_pbar(
@@ -177,11 +180,13 @@ class OinfoZeroLag(HOIEstimator):
 
         # ______________________________ ENTROPY ______________________________
         offset = 0
+        hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
         for msize in pbar:
             pbar.set_description(desc='Oinfo (%i)' % msize, refresh=False)
 
             # combinations of features
-            _h_idx = self.get_combinations(msize)
+            keep = order == msize
+            _h_idx = h_idx[keep, 0:msize]
 
             # generate indices for accumulated entropies
             acc = jnp.mgrid[0:msize, 0:msize].sum(0) % msize
@@ -191,10 +196,7 @@ class OinfoZeroLag(HOIEstimator):
 
             # fill variables
             n_combs, n_feat = _h_idx.shape
-            sl = slice(offset, offset + n_combs)
-            h_idx = h_idx.at[sl, 0:n_feat].set(_h_idx)
-            order = order.at[sl].set(msize)
-            hoi = hoi.at[sl, :].set(_hoi)
+            hoi = hoi.at[offset:offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs
@@ -255,9 +257,8 @@ if __name__ == "__main__":
     logger.setLevel("INFO")
     # model = OinfoZeroLag(digitize(x, 3, axis=1))
     # model = OinfoZeroLag(x[..., 100])
-    model = OinfoZeroLag(x)  # , y=np.random.rand(x.shape[0])                  # TASK RELATED
-    hoi = model.fit(minsize=1, maxsize=None, method="gcmi", low_memory=False)
-    0 / 0
+    model = OinfoZeroLag(x, y=np.random.rand(x.shape[0]))
+    hoi = model.fit(minsize=1, maxsize=None, method="gcmi", cache=False)
 
     print(hoi.shape)
     print(model.order.shape)

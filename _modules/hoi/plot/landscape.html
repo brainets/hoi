@@ -414,7 +414,7 @@ document.write(`
 
 
 <div class="viewcode-block" id="plot_landscape"><a class="viewcode-back" href="../../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape">[docs]</a><span class="k">def</span> <span class="nf">plot_landscape</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">orders</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                   <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">undersampling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hist_kwargs</span><span class="o">=</span><span class="p">{},</span>
+                   <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;hist&#39;</span><span class="p">,</span> <span class="n">undersampling</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hist_kwargs</span><span class="o">=</span><span class="p">{},</span>
                    <span class="n">plt_kwargs</span><span class="o">=</span><span class="p">{}):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Landscape representation of higher order interactions.</span>
 
@@ -436,6 +436,8 @@ document.write(`
 
 <span class="sd">    undersampling : bool | True</span>
 <span class="sd">        If True, plot the undersampling threshold.</span>
+<span class="sd">    cbar : bool | True</span>
+<span class="sd">        Add colorbar.</span>
 <span class="sd">    hist_kwargs : dict | {}</span>
 <span class="sd">        Optional arguments for the histogram.</span>
 <span class="sd">    plt_kwargs : dict | {}</span>
@@ -473,7 +475,8 @@ document.write(`
 
         <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span>
             <span class="n">order</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">lscp</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="o">**</span><span class="n">plt_kwargs</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">hist_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;stat&#39;</span><span class="p">,</span> <span class="s1">&#39;probability&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">cbar</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">hist_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;stat&#39;</span><span class="p">,</span> <span class="s1">&#39;probability&#39;</span><span class="p">))</span>
     <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;scatter&#39;</span><span class="p">:</span>
         <span class="n">size</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hoi</span><span class="p">),</span> <span class="n">to_min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">to_max</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
         <span class="n">minmax</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">]))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>

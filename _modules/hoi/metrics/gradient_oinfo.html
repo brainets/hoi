@@ -418,7 +418,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">hoi.metrics.base_hoi</span> <span class="kn">import</span> <span class="n">HOIEstimator</span>
-<span class="kn">from</span> <span class="nn">hoi.metrics.oinfo_zerolag</span> <span class="kn">import</span> <span class="n">compute_oinfo</span>
+<span class="kn">from</span> <span class="nn">hoi.metrics.oinfo_zerolag</span> <span class="kn">import</span> <span class="n">oinfo_ent</span>
 <span class="kn">from</span> <span class="nn">hoi.utils.progressbar</span> <span class="kn">import</span> <span class="n">scan_tqdm</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;hoi&quot;</span><span class="p">)</span>
@@ -428,12 +428,12 @@ document.write(`
 <span class="k">def</span> <span class="nf">compute_goinfo</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">iterators</span><span class="p">):</span>
 
     <span class="c1"># compute \Omega({X^{n}, y})</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">o_xy</span> <span class="o">=</span> <span class="n">compute_oinfo</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">iterators</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">o_xy</span> <span class="o">=</span> <span class="n">oinfo_ent</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">iterators</span><span class="p">)</span>
 
     <span class="c1"># compute \Omega(X^{n})</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">comb_xy</span><span class="p">,</span> <span class="n">msize</span> <span class="o">=</span> <span class="n">iterators</span>
     <span class="n">comb_x</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">comb_xy</span> <span class="o">==</span> <span class="n">comb_xy</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">comb_xy</span><span class="p">)</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">o_x</span> <span class="o">=</span> <span class="n">compute_oinfo</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">comb_x</span><span class="p">,</span> <span class="n">msize</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">o_x</span> <span class="o">=</span> <span class="n">oinfo_ent</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">comb_x</span><span class="p">,</span> <span class="n">msize</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">o_xy</span> <span class="o">-</span> <span class="n">o_x</span>
 

@@ -456,7 +456,7 @@ document.write(`
 <h1>hoi.metrics.RSI<a class="headerlink" href="#hoi-metrics-rsi" title="Permalink to this headline">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="hoi.metrics.RSI">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">RSI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/rsi.html#RSI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.RSI" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">RSI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/rsi.html#RSI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.RSI" title="Permalink to this definition">#</a></dt>
 <dd><p>Redundancy-Synergy Index (RSI).</p>
 <p>The RSI is designed to be maximal and positive when the variables in S are
 purported to provide synergistic information about Y. It should be negative
@@ -486,6 +486,10 @@ referred to as the redundancy <span id="id3">[<a class="reference internal" href
 (n_samples, n_features, n_variables)</p>
 </dd>
 <dt><strong>y</strong><span class="classifier">array_like</span></dt><dd><p>The feature of shape (n_trials,) for estimating task-related O-info</p>
+</dd>
+<dt><strong>multiplets</strong><span class="classifier">list | None</span></dt><dd><p>List of multiplets to compute. Should be a list of multiplets, for
+example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
+going to be computed.</p>
 </dd>
 </dl>
 </dd>

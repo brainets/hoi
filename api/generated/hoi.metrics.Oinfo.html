@@ -456,7 +456,7 @@ document.write(`
 <h1>hoi.metrics.Oinfo<a class="headerlink" href="#hoi-metrics-oinfo" title="Permalink to this headline">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="hoi.metrics.Oinfo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">Oinfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/oinfo_zerolag.html#Oinfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.Oinfo" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">Oinfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/oinfo.html#Oinfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.Oinfo" title="Permalink to this definition">#</a></dt>
 <dd><p>O-information.</p>
 <p>The O-information is defined as the difference between the total
 correlation (TC) minus the dual total correlation (DTC):</p>
@@ -478,6 +478,10 @@ correlation (TC) minus the dual total correlation (DTC):</p>
 (n_samples, n_features, n_variables)</p>
 </dd>
 <dt><strong>y</strong><span class="classifier">array_like</span></dt><dd><p>The feature of shape (n_trials,) for estimating task-related O-info</p>
+</dd>
+<dt><strong>multiplets</strong><span class="classifier">list | None</span></dt><dd><p>List of multiplets to compute. Should be a list of multiplets, for
+example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
+going to be computed.</p>
 </dd>
 </dl>
 </dd>
@@ -601,7 +605,7 @@ keep.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.Oinfo.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/oinfo_zerolag.html#Oinfo.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.Oinfo.fit" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/oinfo.html#Oinfo.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.Oinfo.fit" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute the O-information.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>

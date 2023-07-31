@@ -455,7 +455,7 @@ document.write(`
 <h1>hoi.metrics.RedundancyMMI<a class="headerlink" href="#hoi-metrics-redundancymmi" title="Permalink to this headline">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="hoi.metrics.RedundancyMMI">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">RedundancyMMI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/red_mmi.html#RedundancyMMI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.RedundancyMMI" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">RedundancyMMI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/red_mmi.html#RedundancyMMI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.RedundancyMMI" title="Permalink to this definition">#</a></dt>
 <dd><p>Redundancy estimated using the Minimum Mutual Information.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -464,6 +464,10 @@ document.write(`
 (n_samples, n_features, n_variables)</p>
 </dd>
 <dt><strong>y</strong><span class="classifier">array_like</span></dt><dd><p>The feature of shape (n_trials,) for estimating task-related O-info</p>
+</dd>
+<dt><strong>multiplets</strong><span class="classifier">list | None</span></dt><dd><p>List of multiplets to compute. Should be a list of multiplets, for
+example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
+going to be computed.</p>
 </dd>
 </dl>
 </dd>
@@ -593,7 +597,7 @@ keep.</p>
 <dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>‘gcmi’: gaussian copula entropy [default]. See 
+<li><p>‘gcmi’: gaussian copula entropy [default]. See
 <a class="reference internal" href="hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi" title="hoi.core.entropy_gcmi"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gcmi()</span></code></a></p></li>
 <li><p>‘binning’: binning-based estimator of entropy. Note that to
 use this estimator, the data have be to discretized. See

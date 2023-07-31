@@ -40,7 +40,7 @@ class SynergyMMI(HOIEstimator):
 
     Parameters
     ----------
-    data : array_like
+    x : array_like
         Standard NumPy arrays of shape (n_samples, n_features) or
         (n_samples, n_features, n_variables)
     y : array_like
@@ -53,9 +53,9 @@ class SynergyMMI(HOIEstimator):
 
     __name__ = 'Synergy MMI'
 
-    def __init__(self, data, y, multiplets=None, verbose=None):
+    def __init__(self, x, y, multiplets=None, verbose=None):
         HOIEstimator.__init__(
-            self, data=data, y=y, multiplets=multiplets, verbose=verbose
+            self, x=x, y=y, multiplets=multiplets, verbose=verbose
         )
 
     def fit(self, minsize=2, maxsize=None, method='gcmi', **kwargs):
@@ -85,11 +85,12 @@ class SynergyMMI(HOIEstimator):
         # check minsize and maxsize
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
-        # prepare the data for computing entropy
-        data, kwargs = prepare_for_entropy(
-            self._data, method, **kwargs
+        # prepare the x for computing entropy
+        x, kwargs = prepare_for_entropy(
+            self._x, method, **kwargs
         )
-        x, y = data[:, 0:-1, :], data[:, [-1], :]
+        y = x[:, [-1], :]
+        x = x[:, 0:-1, :]
 
         # prepare entropy functions
         entropy = jax.vmap(get_entropy(method=method, **kwargs))
@@ -115,8 +116,7 @@ class SynergyMMI(HOIEstimator):
             pbar.set_description(desc='SynMMI order %s' % msize, refresh=False)
 
             # get combinations
-            _h_idx = combinations(
-                self.n_features - 1, msize, as_iterator=False, as_jax=True)
+            _h_idx = combinations(self.n_features - 1, msize, astype='jax')
             n_combs, n_feat = _h_idx.shape
             sl = slice(offset, offset + n_combs)
 

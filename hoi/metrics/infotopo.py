@@ -69,7 +69,7 @@ class InfoTopo(HOIEstimator):
 
     Parameters
     ----------
-    data : array_like
+    x : array_like
         Standard NumPy arrays of shape (n_samples, n_features) or
         (n_samples, n_features, n_variables)
     y : array_like
@@ -87,9 +87,9 @@ class InfoTopo(HOIEstimator):
 
     __name__ = "Topological Information"
 
-    def __init__(self, data, y=None, multiplets=None, verbose=None):
+    def __init__(self, x, y=None, multiplets=None, verbose=None):
         HOIEstimator.__init__(
-            self, data, y=y, multiplets=multiplets, verbose=verbose
+            self, x=x, y=y, multiplets=multiplets, verbose=verbose
         )
 
     def fit(self, minsize=1, maxsize=None, method="gcmi", **kwargs):

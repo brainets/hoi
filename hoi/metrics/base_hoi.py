@@ -25,9 +25,9 @@ def ent_at_index(x, idx, entropy=None):
 
 class HOIEstimator(object):
 
-    def __init__(self, data, y=None, multiplets=None, verbose=None):
-        # data checking
-        self._data = self._prepare_data(data, y=y, multiplets=multiplets)
+    def __init__(self, x, y=None, multiplets=None, verbose=None):
+        # x checking
+        self._x = self._prepare_data(x, y=y, multiplets=multiplets)
 
         if verbose not in ['INFO', 'DEBUG', 'ERROR']:
             verbose = 'INFO'
@@ -44,35 +44,35 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def _prepare_data(self, data, y=None, multiplets=None):
-        """Check input data shape."""
+    def _prepare_data(self, x, y=None, multiplets=None):
+        """Check input x shape."""
 
-        # force data to be 3d
-        assert data.ndim >= 2
-        if data.ndim == 2:
-            data = data[..., np.newaxis]
+        # force x to be 3d
+        assert x.ndim >= 2
+        if x.ndim == 2:
+            x = x[..., np.newaxis]
 
         # additional variable along feature dimension
         self._task_related = isinstance(y, (list, np.ndarray, tuple))
         if self._task_related:
             y = np.asarray(y)
             if y.ndim == 1:
-                assert len(y) == data.shape[0]
-                y = np.tile(y.reshape(-1, 1, 1), (1, 1, data.shape[-1]))
+                assert len(y) == x.shape[0]
+                y = np.tile(y.reshape(-1, 1, 1), (1, 1, x.shape[-1]))
             elif y.ndim == 2:
-                assert y.shape[0] == data.shape[0]
-                assert y.shape[-1] == data.shape[-1]
+                assert y.shape[0] == x.shape[0]
+                assert y.shape[-1] == x.shape[-1]
                 y = y[:, np.newaxis, :]
-            data = np.concatenate((data, y), axis=1)
+            x = np.concatenate((x, y), axis=1)
 
         # compute only selected multiplets
         self._custom_mults = None
         if isinstance(multiplets, (list, np.ndarray)):
             self._custom_mults = [np.asarray(m) for m in multiplets]
 
-        self.n_samples, self.n_features, self.n_variables = data.shape
+        self.n_samples, self.n_features, self.n_variables = x.shape
 
-        return data
+        return x
 
 
     def _check_minmax(self, minsize, maxsize):
@@ -142,8 +142,8 @@ class HOIEstimator(object):
 
         # ________________________________ I/O ________________________________
         # prepare the data for computing entropy
-        data, kwargs = prepare_for_entropy(
-            self._data, method, **kwargs
+        x, kwargs = prepare_for_entropy(
+            self._x, method, **kwargs
         )
 
         # get entropy function
@@ -175,7 +175,7 @@ class HOIEstimator(object):
 
             # compute all entropies
             _, _h_x = jax.lax.scan(
-                entropy, data, h_idx[keep, 0:msize]
+                entropy, x, h_idx[keep, 0:msize]
             )
 
             # fill entropies

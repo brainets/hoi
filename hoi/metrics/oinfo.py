@@ -65,6 +65,10 @@ class Oinfo(HOIEstimator):
         (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info
+    multiplets : list | None
+        List of multiplets to compute. Should be a list of multiplets, for
+        example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
+        going to be computed.
 
     References
     ----------
@@ -73,8 +77,10 @@ class Oinfo(HOIEstimator):
 
     __name__ = "O-Information"
 
-    def __init__(self, data, y=None, verbose=None):
-        HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
+    def __init__(self, data, y=None, multiplets=None, verbose=None):
+        HOIEstimator.__init__(
+            self, data=data, y=y, multiplets=multiplets, verbose=verbose
+        )
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the O-information.
@@ -125,7 +131,7 @@ class Oinfo(HOIEstimator):
 
         # get progress bar
         pbar = get_pbar(
-            iterable=range(minsize, maxsize + 1), leave=False,
+            iterable=range(order.min(), order.max() + 1), leave=False,
         )
 
         # ______________________________ ENTROPY ______________________________
@@ -169,14 +175,9 @@ if __name__ == "__main__":
 
     path = "/home/etienne/Downloads/data_200_trials"
     x = np.load(path, allow_pickle=True)[..., 100]
-    x_min, x_max = x.min(), x.max()
-    x_amp = x_max - x_min
-    x_bin = np.ceil(((x - x_min) * (3 - 1)) / (x_amp)).astype(int)
 
     logger.setLevel("INFO")
-    # model = Oinfo(digitize(x, 3, axis=1))
-    # model = Oinfo(x[..., 100])
-    model = Oinfo(x, y=np.random.rand(x.shape[0]))
+    model = Oinfo(x)
     hoi = model.fit(minsize=1, maxsize=None, method="gcmi")
 
     print(hoi.shape)

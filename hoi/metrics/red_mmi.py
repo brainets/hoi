@@ -28,12 +28,18 @@ class RedundancyMMI(HOIEstimator):
         (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info
+    multiplets : list | None
+        List of multiplets to compute. Should be a list of multiplets, for
+        example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
+        going to be computed.
     """
 
     __name__ = 'Redundancy MMI'
 
-    def __init__(self, data, y, verbose=None):
-        HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
+    def __init__(self, data, y, multiplets=None, verbose=None):
+        HOIEstimator.__init__(
+            self, data=data, y=y, multiplets=multiplets, verbose=verbose
+        )
 
     def fit(self, minsize=2, maxsize=None, method='gcmi', **kwargs):
         """Redundancy Index.
@@ -45,7 +51,7 @@ class RedundancyMMI(HOIEstimator):
         method : {'gcmi', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See 
+                * 'gcmi': gaussian copula entropy [default]. See
                   :func:`hoi.core.entropy_gcmi`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See

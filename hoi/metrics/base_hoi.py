@@ -25,9 +25,9 @@ def ent_at_index(x, idx, entropy=None):
 
 class HOIEstimator(object):
 
-    def __init__(self, data, y=None, verbose=None):
+    def __init__(self, data, y=None, multiplets=None, verbose=None):
         # data checking
-        self._data = self._prepare_data(data, y=y)
+        self._data = self._prepare_data(data, y=y, multiplets=multiplets)
 
         if verbose not in ['INFO', 'DEBUG', 'ERROR']:
             verbose = 'INFO'
@@ -44,7 +44,7 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def _prepare_data(self, data, y=None):
+    def _prepare_data(self, data, y=None, multiplets=None):
         """Check input data shape."""
 
         # force data to be 3d
@@ -52,7 +52,7 @@ class HOIEstimator(object):
         if data.ndim == 2:
             data = data[..., np.newaxis]
 
-        # for task-related, add behavior along spatial dimension
+        # additional variable along feature dimension
         self._task_related = isinstance(y, (list, np.ndarray, tuple))
         if self._task_related:
             y = np.asarray(y)
@@ -65,6 +65,10 @@ class HOIEstimator(object):
                 y = y[:, np.newaxis, :]
             data = np.concatenate((data, y), axis=1)
 
+        # compute only selected multiplets
+        self._custom_mults = None
+        if isinstance(multiplets, (list, np.ndarray)):
+            self._custom_mults = [np.asarray(m) for m in multiplets]
 
         self.n_samples, self.n_features, self.n_variables = data.shape
 
@@ -236,18 +240,28 @@ class HOIEstimator(object):
             Boolean array of shape (n_mult,) indicating which multiplets to
             keep.
         """
-        keep = jnp.ones((len(order),), dtype=bool)
-
         # order filtering
-        if self.minsize > 1:
-            logger.info(f"    Selecting order >= {self.minsize}")
-            keep = jnp.where(order >= self.minsize, keep, False)
+        if self._custom_mults is None:
+            keep = jnp.ones((len(order),), dtype=bool)
 
-        # task related filtering
-        if self._task_related:
-            logger.info("    Selecting task-related multiplets")
-            keep_tr = (mults == self.n_features - 1).any(1)
-            keep = jnp.logical_and(keep, keep_tr)
+            if self.minsize > 1:
+                logger.info(f"    Selecting order >= {self.minsize}")
+                keep = jnp.where(order >= self.minsize, keep, False)
+
+            # task related filtering
+            if self._task_related:
+                logger.info("    Selecting task-related multiplets")
+                keep_tr = (mults == self.n_features - 1).any(1)
+                keep = jnp.logical_and(keep, keep_tr)
+        else:
+            keep = jnp.zeros((len(order),), dtype=bool)
+
+            for n_m, m in enumerate(self._custom_mults):
+                is_order = order == len(m)
+                is_mult = (mults[:, 0:len(m)] == m).all(1)
+                idx = np.where(np.logical_and(is_mult, is_order))[0]
+                assert len(idx) == 1
+                keep = keep.at[idx].set(True)
 
         self._keep = keep
 

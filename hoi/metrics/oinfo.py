@@ -157,7 +157,6 @@ class Oinfo(HOIEstimator):
             # updates
             offset += n_combs
 
-
         self._multiplets = np.asarray(h_idx)
         self._order = np.asarray(order)
         self._keep = np.ones_like(order, dtype=bool)

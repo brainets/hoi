@@ -92,7 +92,6 @@ class GradientOinfo(HOIEstimator):
             maxsize=self._oinf_tf.maxsize + 1,
             method=method, **kwargs
         )
-        n_feat = self._oinf_tr._multiplets.shape[1]
 
         return hoi_tr - hoi_tf
 

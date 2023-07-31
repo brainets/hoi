@@ -189,7 +189,7 @@ def normalize(x, to_min=0., to_max=1.):
     return x_n
 
 
-def get_nbest_mult(hoi, orders=None, multiplets=None, model=None, n_best=5,
+def get_nbest_mult(hoi, model=None, orders=None, multiplets=None, n_best=5,
                    minsize=None, maxsize=None, names=None):
     """Get the n best multiplets.
 

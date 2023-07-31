@@ -155,7 +155,7 @@ if __name__ == '__main__':
     # hoi = model.fit(minsize=2, maxsize=6, method='kernel')
     hoi = model.fit(minsize=2, maxsize=6, method='binning')
 
-    print(get_nbest_mult(hoi, model, minsize=3, maxsize=3))
+    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=3))
 
     plot_landscape(hoi, model, kind='scatter', undersampling=False,
                    plt_kwargs=dict(cmap='turbo'))

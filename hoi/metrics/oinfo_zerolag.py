@@ -9,47 +9,11 @@ import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.utils.progressbar import scan_tqdm
+from hoi.core.entropies import get_entropy, prepare_for_entropy
+from math import comb as ccomb
+from hoi.utils.progressbar import get_pbar
 
 logger = logging.getLogger("hoi")
-
-
-###############################################################################
-###############################################################################
-#                     OINFO - PRECOMPUTED ENTROPIES
-###############################################################################
-###############################################################################
-
-
-@jax.jit
-def oinfo_ent(inputs, iterators):
-    # h_x = (n_mult, n_var); h_idx = (n_mult, maxsize, 1)
-    h_x, h_idx, order = inputs
-    _, comb, msize = iterators
-
-    # find all of the indices
-    isum = (h_idx == comb[jnp.newaxis, :]).sum((1, 2))
-
-    # indices for h^{n}, h^{j} and h^{-j}
-    i_n = jnp.logical_and(isum == msize, order == msize)
-    i_j = jnp.logical_and(isum == 1, order == 1)
-    i_mj = jnp.logical_and(isum == msize - 1, order == msize - 1)
-
-    # sum entropies only when needed
-    h_n = jnp.sum(h_x, where=i_n.reshape(-1, 1), axis=0)
-    h_j = jnp.sum(h_x, where=i_j.reshape(-1, 1), axis=0)
-    h_mj = jnp.sum(h_x, where=i_mj.reshape(-1, 1), axis=0)
-
-    # compute o-info
-    o = (msize - 2.0) * h_n + h_j - h_mj
-
-    return inputs, o
-
-
-###############################################################################
-###############################################################################
-#                     OINFO - NO PRECOMPUTED ENTROPIES
-###############################################################################
-###############################################################################
 
 
 @partial(jax.jit, static_argnums=(2, 3))
@@ -76,7 +40,7 @@ def _oinfo_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
 
 
 
-class OinfoZeroLag(HOIEstimator):
+class Oinfo(HOIEstimator):
 
     r"""O-information.
 
@@ -112,8 +76,7 @@ class OinfoZeroLag(HOIEstimator):
     def __init__(self, data, y=None, verbose=None):
         HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
 
-    def fit(self, minsize=2, maxsize=None, method="gcmi", cache=False,
-            **kwargs):
+    def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the O-information.
 
         Parameters
@@ -136,19 +99,6 @@ class OinfoZeroLag(HOIEstimator):
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
         """
-        kw = dict(minsize=minsize, maxsize=maxsize, method=method)
-        if cache:
-            return self._fit_ent(**kw, **kwargs)
-        else:
-            return self._fit_no_ent(**kw, **kwargs)
-
-    def _fit_no_ent(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
-        """Compute Oinfo without precomputing entropies."""
-        from hoi.core.entropies import get_entropy, prepare_for_entropy
-        from hoi.metrics.base_hoi import ent_at_index
-        from math import comb as ccomb
-        from hoi.utils.progressbar import get_pbar
-
         # ________________________________ I/O ________________________________
         # check min and max sizes
         minsize, maxsize = self._check_minmax(minsize, maxsize)
@@ -209,37 +159,6 @@ class OinfoZeroLag(HOIEstimator):
         return np.asarray(hoi)
 
 
-    def _fit_ent(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
-        """Compute Oinfo using precomputed entropies."""
-
-        # ____________________________ ENTROPIES ______________________________
-
-        minsize, maxsize = self._check_minmax(minsize, maxsize)
-        h_x, h_idx, order = self.compute_entropies(
-            minsize=1, maxsize=maxsize, method=method, **kwargs
-        )
-        assert jnp.isfinite(h_x).all()
-        assert not jnp.isnan(h_x).any()
-
-        # _______________________________ HOI _________________________________
-
-        # subselection of multiplets
-        keep = self.filter_multiplets(h_idx, order)
-        n_mult = keep.sum()
-
-        # progress-bar definition
-        pbar = scan_tqdm(n_mult, message="Oinfo")
-
-        # compute o-info
-        h_idx_2 = jnp.where(h_idx == -1, -2, h_idx)
-        _, hoi = jax.lax.scan(
-            pbar(oinfo_ent),
-            (h_x, h_idx[..., jnp.newaxis], order),
-            (jnp.arange(n_mult), h_idx_2[keep], order[keep]),
-        )
-
-        return np.asarray(hoi)
-
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
@@ -255,10 +174,10 @@ if __name__ == "__main__":
     x_bin = np.ceil(((x - x_min) * (3 - 1)) / (x_amp)).astype(int)
 
     logger.setLevel("INFO")
-    # model = OinfoZeroLag(digitize(x, 3, axis=1))
-    # model = OinfoZeroLag(x[..., 100])
-    model = OinfoZeroLag(x, y=np.random.rand(x.shape[0]))
-    hoi = model.fit(minsize=1, maxsize=None, method="gcmi", cache=False)
+    # model = Oinfo(digitize(x, 3, axis=1))
+    # model = Oinfo(x[..., 100])
+    model = Oinfo(x, y=np.random.rand(x.shape[0]))
+    hoi = model.fit(minsize=1, maxsize=None, method="gcmi")
 
     print(hoi.shape)
     print(model.order.shape)

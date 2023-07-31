@@ -8,7 +8,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.metrics.oinfo_zerolag import oinfo_ent
+# from hoi.metrics.oinfo_zerolag import oinfo_ent
 from hoi.utils.progressbar import scan_tqdm
 
 logger = logging.getLogger("hoi")
@@ -30,7 +30,7 @@ def compute_goinfo(inputs, iterators):
 
 class GradientOinfo(HOIEstimator):
 
-    r"""Gradient O-information.
+    r"""First order Gradient O-information.
 
     The Gradient O-information is defined as the difference between the
     O-information with the target variable minus the O-information without the

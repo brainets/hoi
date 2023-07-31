@@ -418,7 +418,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">hoi.metrics.base_hoi</span> <span class="kn">import</span> <span class="n">HOIEstimator</span>
-<span class="kn">from</span> <span class="nn">hoi.metrics.oinfo_zerolag</span> <span class="kn">import</span> <span class="n">oinfo_ent</span>
+<span class="c1"># from hoi.metrics.oinfo_zerolag import oinfo_ent</span>
 <span class="kn">from</span> <span class="nn">hoi.utils.progressbar</span> <span class="kn">import</span> <span class="n">scan_tqdm</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;hoi&quot;</span><span class="p">)</span>
@@ -440,7 +440,7 @@ document.write(`
 
 <div class="viewcode-block" id="GradientOinfo"><a class="viewcode-back" href="../../../api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo">[docs]</a><span class="k">class</span> <span class="nc">GradientOinfo</span><span class="p">(</span><span class="n">HOIEstimator</span><span class="p">):</span>
 
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Gradient O-information.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;First order Gradient O-information.</span>
 
 <span class="sd">    The Gradient O-information is defined as the difference between the</span>
 <span class="sd">    O-information with the target variable minus the O-information without the</span>

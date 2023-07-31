@@ -37,7 +37,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
  .. code-block:: none
 
     No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
-      0%|          |  0/8 [00:00<?,       ?it/s]     12%|#2        | Oinfo (3):  1/8 [00:00<00:05,    1.18it/s]     25%|##5       | Oinfo (4):  2/8 [00:01<00:04,    1.32it/s]     38%|###7      | Oinfo (5):  3/8 [00:02<00:03,    1.36it/s]     50%|#####     | Oinfo (6):  4/8 [00:02<00:02,    1.45it/s]     62%|######2   | Oinfo (7):  5/8 [00:03<00:01,    1.52it/s]     75%|#######5  | Oinfo (8):  6/8 [00:04<00:01,    1.51it/s]     88%|########7 | Oinfo (9):  7/8 [00:04<00:00,    1.50it/s]    100%|##########| Oinfo (10):  8/8 [00:05<00:00,    1.54it/s]                                                            
+      0%|          |  0/8 [00:00<?,       ?it/s]     12%|#2        | Oinfo (3):  1/8 [00:00<00:04,    1.45it/s]     25%|##5       | Oinfo (4):  2/8 [00:01<00:03,    1.54it/s]     38%|###7      | Oinfo (5):  3/8 [00:01<00:03,    1.63it/s]     50%|#####     | Oinfo (6):  4/8 [00:02<00:02,    1.76it/s]     62%|######2   | Oinfo (7):  5/8 [00:02<00:01,    1.85it/s]     75%|#######5  | Oinfo (8):  6/8 [00:03<00:01,    1.85it/s]     88%|########7 | Oinfo (9):  7/8 [00:03<00:00,    1.85it/s]    100%|##########| Oinfo (10):  8/8 [00:04<00:00,    1.90it/s]                                                            
 
 
 
@@ -49,7 +49,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
 
     import numpy as np
 
-    from hoi.metrics import OinfoZeroLag
+    from hoi.metrics import Oinfo
     from hoi.plot import plot_landscape
 
     import matplotlib.pyplot as plt
@@ -62,7 +62,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
     # x[:, 9] = x[:, 3]
 
 
-    model = OinfoZeroLag(x)
+    model = Oinfo(x)
     hoi = model.fit(minsize=3, maxsize=None, method='gcmi')
 
     plot_landscape(hoi, model=model,
@@ -73,7 +73,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.988 seconds)
+   **Total running time of the script:** ( 0 minutes  4.846 seconds)
 
 
 .. _sphx_glr_download_auto_examples_metrics_plot_metrics1.py:

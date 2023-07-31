@@ -5,7 +5,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
 """
 import numpy as np
 
-from hoi.metrics import OinfoZeroLag
+from hoi.metrics import Oinfo
 from hoi.plot import plot_landscape
 
 import matplotlib.pyplot as plt
@@ -18,7 +18,7 @@ x = np.random.rand(500, 10)
 # x[:, 9] = x[:, 3]
 
 
-model = OinfoZeroLag(x)
+model = Oinfo(x)
 hoi = model.fit(minsize=3, maxsize=None, method='gcmi')
 
 plot_landscape(hoi, model=model,

@@ -1,5 +1,3 @@
-import itertools
-from functools import partial
 import logging
 
 import numpy as np
@@ -128,7 +126,7 @@ class OinfoZeroLag(HOIEstimator):
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape, digitize
+    from hoi.utils import landscape
     from matplotlib.colors import LogNorm
 
     plt.style.use("ggplot")

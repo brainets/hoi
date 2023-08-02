@@ -11,7 +11,7 @@ from hoi.core.entropies import get_entropy, prepare_for_entropy
 from hoi.utils.progressbar import get_pbar
 
 
-logger = logging.getLogger('hoi')
+logger = logging.getLogger("hoi")
 
 
 @partial(jax.jit, static_argnums=(2,))
@@ -24,13 +24,12 @@ def ent_at_index(x, idx, entropy=None):
 
 
 class HOIEstimator(object):
-
     def __init__(self, data, y=None, verbose=None):
         # data checking
         self._data = self._prepare_data(data, y=y)
 
-        if verbose not in ['INFO', 'DEBUG', 'ERROR']:
-            verbose = 'INFO'
+        if verbose not in ["INFO", "DEBUG", "ERROR"]:
+            verbose = "INFO"
         logger.setLevel(verbose)
 
     def __iter__(self):
@@ -65,11 +64,9 @@ class HOIEstimator(object):
                 y = y[:, np.newaxis, :]
             data = np.concatenate((data, y), axis=1)
 
-
         self.n_samples, self.n_features, self.n_variables = data.shape
 
         return data
-
 
     def _check_minmax(self, minsize, maxsize):
         """Define min / max size of the multiplets."""
@@ -89,15 +86,15 @@ class HOIEstimator(object):
 
         return minsize, maxsize
 
-
     ###########################################################################
     ###########################################################################
     #                         INFORMATION THEORY
     ###########################################################################
     ###########################################################################
 
-    def compute_entropies(self, method='gcmi', minsize=1, maxsize=None,
-                          fill_value=-1, **kwargs):
+    def compute_entropies(
+        self, method="gcmi", minsize=1, maxsize=None, fill_value=-1, **kwargs
+    ):
         """Compute entropies for all multiplets.
 
         Parameters
@@ -105,7 +102,7 @@ class HOIEstimator(object):
         method : {'gcmi', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See 
+                * 'gcmi': gaussian copula entropy [default]. See
                   :func:`hoi.core.entropy_gcmi`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
@@ -123,7 +120,7 @@ class HOIEstimator(object):
             Value to fill the multiplet indices with. Default is -1.
         kwargs : dict, optional
             Additional arguments to pass to the entropy function.
-        
+
         Returns
         -------
         h_x : array_like
@@ -138,27 +135,26 @@ class HOIEstimator(object):
 
         # ________________________________ I/O ________________________________
         # prepare the data for computing entropy
-        data, kwargs = prepare_for_entropy(
-            self._data, method, **kwargs
-        )
+        data, kwargs = prepare_for_entropy(self._data, method, **kwargs)
 
         # get entropy function
-        entropy = partial(
-            ent_at_index, entropy=jax.vmap(
-            get_entropy(method=method, **kwargs)
-        ))
+        # entropy = partial(ent_at_index,
+        # entropy=jax.vmap(get_entropy(method, **kwargs)))
+        entropy_func = jax.vmap(get_entropy(method, **kwargs))
+        entropy = partial(ent_at_index, entropy=entropy_func)
 
         # prepare output
-        n_mults = sum([ccomb(self.n_features, c) for c in range(
-            minsize, maxsize + 1)])
+        # E501
+        # n_mults = sum([ccomb(self.n_features, c) for c in
+        # range(minsize, maxsize + 1)])
+        t = [ccomb(self.n_features, c) for c in range(minsize, maxsize + 1)]
+        n_mults = sum(t)
         h_x = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
         h_idx = jnp.full((n_mults, maxsize), fill_value, dtype=int)
         order = jnp.zeros((n_mults,), dtype=int)
 
         # get progress bar
-        pbar = get_pbar(
-            iterable=range(minsize, maxsize + 1), leave=False,
-        )
+        pbar = get_pbar(iterable=range(minsize, maxsize + 1), leave=False)
 
         # ______________________________ ENTROPY ______________________________
         offset = 0
@@ -194,30 +190,26 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def get_combinations(self, msize, as_iterator=False, as_jax=True,
-                         order=False):
+    def get_combinations(self, msize, as_iter=False, as_jax=True, order=False):
         """Get combinations of features.
 
         Parameters
         ----------
         msize : int
             Size of the multiplets
-        as_iterator : bool, optional
+        as_iter : bool, optional
             If True, return an iterator. Default is False.
         as_jax : bool, optional
             If True, return a jax array. Default is True.
         order : bool, optional
             If True, return the order of each multiplet. Default is False.
-        
+
         Returns
         -------
         combinations : array_like
             Combinations of features.
         """
-        return combinations(
-            self.n_features, msize, as_iterator=as_iterator, as_jax=as_jax,
-            order=order
-        )
+        return combinations(self.n_features, msize, as_iter, as_jax, order)
 
     def filter_multiplets(self, mults, order):
         """Filter multiplets.
@@ -228,7 +220,7 @@ class HOIEstimator(object):
             Multiplets of shape (n_mult, maxsize)
         order : array_like
             Order of each multiplet of shape (n_mult,)
-        
+
         Returns
         -------
         keep : array_like

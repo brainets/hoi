@@ -1,5 +1,3 @@
-import itertools
-from functools import partial
 import logging
 
 import numpy as np
@@ -111,7 +109,7 @@ class GradientOinfo(HOIEstimator):
         _, hoi = jax.lax.scan(
             pbar(compute_goinfo),
             (h_x, h_idx[..., jnp.newaxis], order),
-            (jnp.arange(n_mult), h_idx_2[keep], order[keep])
+            (jnp.arange(n_mult), h_idx_2[keep], order[keep]),
         )
 
         return np.asarray(hoi)
@@ -119,7 +117,7 @@ class GradientOinfo(HOIEstimator):
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape, digitize, get_nbest_mult
+    from hoi.utils import landscape, get_nbest_mult
     from matplotlib.colors import LogNorm
 
     plt.style.use("ggplot")

@@ -1,5 +1,5 @@
 from math import comb as ccomb
-import itertools
+
 from functools import partial
 
 import logging
@@ -16,7 +16,6 @@ from hoi.core.mi import mi_entr_comb
 from hoi.utils.progressbar import get_pbar
 
 logger = logging.getLogger("hoi")
-
 
 
 class InfoTot(HOIEstimator):
@@ -39,12 +38,12 @@ class InfoTot(HOIEstimator):
         The feature of shape (n_trials,) for estimating task-related O-info
     """
 
-    __name__ = 'Total information'
+    __name__ = "Total information"
 
     def __init__(self, data, y, verbose=None):
         HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
 
-    def fit(self, minsize=2, maxsize=None, method='gcmi', **kwargs):
+    def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute RSI.
 
         Parameters
@@ -54,7 +53,7 @@ class InfoTot(HOIEstimator):
         method : {'gcmi', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See 
+                * 'gcmi': gaussian copula entropy [default]. See
                   :func:`hoi.core.entropy_gcmi`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
@@ -72,9 +71,7 @@ class InfoTot(HOIEstimator):
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the data for computing entropy
-        data, kwargs = prepare_for_entropy(
-            self._data, method, **kwargs
-        )
+        data, kwargs = prepare_for_entropy(self._data, method, **kwargs)
         x, y = data[:, 0:-1, :], data[:, [-1], :]
 
         # prepare entropy functions
@@ -84,25 +81,26 @@ class InfoTot(HOIEstimator):
         # _______________________________ HOI _________________________________
 
         # get progress bar
-        pbar = get_pbar(
-            iterable=range(minsize, maxsize + 1), leave=False,
-        )
+        pbar = get_pbar(iterable=range(minsize, maxsize + 1), leave=False)
 
         # prepare the shapes of outputs
-        n_mults = sum([ccomb(self.n_features - 1, c) for c in range(
-            minsize, maxsize + 1)])
+        # E501
+        x = self.n_features
+        t = [ccomb(x - 1, c) for c in range(minsize, maxsize + 1)]
+        n_mults = sum(t)
         hoi = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
         h_idx = jnp.full((n_mults, maxsize), -1, dtype=int)
         order = jnp.zeros((n_mults,), dtype=int)
 
         offset = 0
         for msize in pbar:
-            pbar.set_description(
-                desc='Infotot order %s' % msize, refresh=False)
+            x = msize
+            pbar.set_description(desc="Infotot order %s" % x, refresh=False)
 
             # get combinations
             _h_idx = combinations(
-                self.n_features - 1, msize, as_iterator=False, as_jax=True)
+                self.n_features - 1, msize, as_iterator=False, as_jax=True
+            )
             n_combs, n_feat = _h_idx.shape
             sl = slice(offset, offset + n_combs)
 
@@ -111,9 +109,7 @@ class InfoTot(HOIEstimator):
             order = order.at[sl].set(msize)
 
             # compute I({x_{1}, ..., x_{n}}; S)
-            _, _hoi = jax.lax.scan(
-                 compute_mi, (x, y), _h_idx
-            )
+            _, _hoi = jax.lax.scan(compute_mi, (x, y), _h_idx)
             hoi = hoi.at[sl, :].set(_hoi)
 
             # updates
@@ -126,13 +122,12 @@ class InfoTot(HOIEstimator):
         return np.asarray(hoi)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape, digitize, get_nbest_mult
+    from hoi.utils import get_nbest_mult
     from hoi.plot import plot_landscape
-    plt.style.use('ggplot')
 
+    plt.style.use("ggplot")
 
     x = np.random.rand(200, 7)
     # y = x[:, 0]
@@ -144,20 +139,25 @@ if __name__ == '__main__':
 
     from sklearn.preprocessing import KBinsDiscretizer
 
-    x = KBinsDiscretizer(
-        n_bins=3, encode='ordinal', strategy='uniform', subsample=None
-    ).fit_transform(x).astype(int)
-    y = KBinsDiscretizer(
-        n_bins=3, encode='ordinal', strategy='uniform', subsample=None
-    ).fit_transform(y.reshape(-1, 1)).astype(int).squeeze()
-
+    x = (
+        KBinsDiscretizer(3, "ordinal", strategy="uniform", subsample=None)
+        .fit_transform(x)
+        .astype(int)
+    )
+    y = (
+        KBinsDiscretizer(3, "ordinal", strategy="uniform", subsample=None)
+        .fit_transform(y.reshape(-1, 1))
+        .astype(int)
+        .squeeze()
+    )
 
     model = InfoTot(x, y)
     # hoi = model.fit(minsize=2, maxsize=6, method='kernel')
-    hoi = model.fit(minsize=2, maxsize=6, method='binning')
+    hoi = model.fit(minsize=2, maxsize=6, method="binning")
 
     print(get_nbest_mult(hoi, model, minsize=3, maxsize=3))
 
-    plot_landscape(hoi, model, kind='scatter', undersampling=False,
-                   plt_kwargs=dict(cmap='turbo'))
+    t = dict(cmap="turbo")
+    s = "scatter"
+    plot_landscape(hoi, model, kind=s, undersampling=False, plt_kwargs=t)
     plt.show()

@@ -31,13 +31,13 @@ def combinations(n, k, as_iterator=True, as_jax=True, order=False):
 
             yield c
 
-
     if as_iterator:
         return _combinations(n, k)
     else:
         combs = [c for c in _combinations(n, k)]
         return jnp.asarray(combs) if as_jax else combs
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     print(combinations(10, 5, as_iterator=False, order=True).shape)
     # print(np.array(list(itertools.combinations(np.arange(10), 3))).shape)

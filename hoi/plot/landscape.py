@@ -3,9 +3,17 @@ import numpy as np
 from hoi.utils import normalize, landscape
 
 
-def plot_landscape(hoi, model=None, orders=None, minsize=None, maxsize=None,
-                   kind='hist', undersampling=True, hist_kwargs={},
-                   plt_kwargs={}):
+def plot_landscape(
+    hoi,
+    model=None,
+    orders=None,
+    minsize=None,
+    maxsize=None,
+    kind="hist",
+    undersampling=True,
+    hist_kwargs={},
+    plt_kwargs={},
+):
     """Landscape representation of higher order interactions.
 
     Parameters
@@ -57,32 +65,32 @@ def plot_landscape(hoi, model=None, orders=None, minsize=None, maxsize=None,
     orders = orders[keep]
 
     # switch between histogram and scatter plot
-    if kind == 'hist':
-        hist_kwargs['output'] = 'numpy'
+    if kind == "hist":
+        hist_kwargs["output"] = "numpy"
         lscp, order, bins = landscape(hoi, orders, **hist_kwargs)
 
-        plt.pcolormesh(
-            order, bins, lscp, norm=LogNorm(), **plt_kwargs)
-        plt.colorbar(label=hist_kwargs.get('stat', 'probability'))
-    elif kind == 'scatter':
+        plt.pcolormesh(order, bins, lscp, norm=LogNorm(), **plt_kwargs)
+        plt.colorbar(label=hist_kwargs.get("stat", "probability"))
+    elif kind == "scatter":
         size = normalize(np.abs(hoi), to_min=2, to_max=200)
         minmax = abs(np.nanpercentile(hoi, [1, 99])).max()
         for o in range(minsize, maxsize + 1):
             keep = orders == o
             hoi_o = hoi[keep]
             x = np.random.normal(loc=o, scale=0.13, size=hoi_o.size)
-            plt.scatter(x, hoi_o, c=hoi_o, vmin=-minmax, vmax=minmax,
-                        s=size[keep], **plt_kwargs)
+            n = minmax
+            t = plt_kwargs
+            plt.scatter(x, hoi_o, c=hoi_o, vmin=-n, vmax=n, s=size[keep], **t)
 
-    plt.xlabel('Order')
+    plt.xlabel("Order")
     plt.xticks(np.arange(minsize, maxsize + 1))
     if model:
-        plt.ylabel(f'{model.__name__} [Bits]')
+        plt.ylabel(f"{model.__name__} [Bits]")
     else:
-        plt.ylabel(f'HOI [Bits]')
+        plt.ylabel("HOI [Bits]")
     plt.grid(True)
 
     if undersampling and model:
-        plt.axvline(model.undersampling, color='k', linestyle='--')
+        plt.axvline(model.undersampling, color="k", linestyle="--")
 
     return plt.gca()

@@ -6,7 +6,7 @@ from jax.experimental import host_callback
 from tqdm.auto import tqdm
 
 
-logger = logging.getLogger('hoi')
+logger = logging.getLogger("hoi")
 
 
 def get_pbar(**kwargs):
@@ -17,7 +17,8 @@ def get_pbar(**kwargs):
     kwargs["smoothing"] = 0.05
     kwargs["bar_format"] = (
         "{percentage:3.0f}%|{bar}| {desc} {n_fmt}/{total_fmt} [{elapsed}"
-        "<{remaining}, {rate_fmt:>11}{postfix}]")
+        "<{remaining}, {rate_fmt:>11}{postfix}]"
+    )
     return tqdm(**kwargs)
 
 
@@ -48,7 +49,8 @@ def scan_tqdm(
     _update_progress_bar, close_tqdm = build_tqdm(n, print_rate, message)
 
     def _scan_tqdm(func):
-        """Decorator that adds a tqdm progress bar to `body_fun` used in `jax.lax.scan`.
+        """Decorator that adds a tqdm progress bar to
+        `body_fun` used in `jax.lax.scan`.
         Note that `body_fun` must either be looping over `jnp.arange(n)`,
         or be looping over a tuple who's first element is `jnp.arange(n)`
         This means that `iter_num` is the current iteration number
@@ -111,7 +113,7 @@ def loop_tqdm(
 
 
 def build_tqdm(
-    n: int, print_rate: typing.Optional[int], message: typing.Optional[str] = None
+    n: int, print_rate: typing.Optional[int], message: typing.Optional[str]
 ) -> typing.Tuple[typing.Callable, typing.Callable]:
     """
     Build the tqdm progress bar on the host
@@ -148,15 +150,16 @@ def build_tqdm(
         "Updates tqdm from a JAX scan or loop"
         _ = jax.jax.lax.cond(
             iter_num == 0,
-            lambda _: host_callback.id_tap(_define_tqdm, None, result=iter_num),
+            lambda _: host_callback.id_tap(_define_tqdm, None, iter_num),
             lambda _: iter_num,
             operand=None,
         )
 
         _ = jax.lax.cond(
-            # update tqdm every multiple of `print_rate` except at the end
+            # update tqdm every multiple of `print_rate`
+            # except at the end
             (iter_num % print_rate == 0) & (iter_num != n - remainder),
-            lambda _: host_callback.id_tap(_update_tqdm, print_rate, result=iter_num),
+            lambda _: host_callback.id_tap(_update_tqdm, print_rate, iter_num),
             lambda _: iter_num,
             operand=None,
         )
@@ -164,7 +167,7 @@ def build_tqdm(
         _ = jax.lax.cond(
             # update tqdm by `remainder`
             iter_num == n - remainder,
-            lambda _: host_callback.id_tap(_update_tqdm, remainder, result=iter_num),
+            lambda _: host_callback.id_tap(_update_tqdm, remainder, iter_num),
             lambda _: iter_num,
             operand=None,
         )

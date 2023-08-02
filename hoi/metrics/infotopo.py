@@ -1,7 +1,3 @@
-import itertools
-from math import comb
-import itertools
-from functools import partial
 import logging
 
 import numpy as np
@@ -113,8 +109,10 @@ class InfoTopo(HOIEstimator):
         Returns
         -------
         oinfo : array_like
-            The O-info array of shape (n_multiplets, n_variables) where positive
-            values reflect redundant dominated interactions and negative values
+            The O-info array of shape
+            (n_multiplets, n_variables)
+            where positive values reflect redundant dominated
+            interactions and negative values
             stand for synergistic dominated interactions.
         """
         # ____________________________ ENTROPIES ______________________________
@@ -150,7 +148,7 @@ class InfoTopo(HOIEstimator):
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape, digitize
+    from hoi.utils import landscape
     from matplotlib.colors import LogNorm
 
     plt.style.use("ggplot")

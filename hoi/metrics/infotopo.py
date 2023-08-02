@@ -65,12 +65,15 @@ class InfoTopo(HOIEstimator):
 
     Parameters
     ----------
-    data : array_like
+    x : array_like
         Standard NumPy arrays of shape (n_samples, n_features) or
         (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info.
-
+    multiplets : list | None
+        List of multiplets to compute. Should be a list of multiplets, for
+        example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
+        going to be computed.
 
     References
     ----------
@@ -80,8 +83,10 @@ class InfoTopo(HOIEstimator):
 
     __name__ = "Topological Information"
 
-    def __init__(self, data, y=None, verbose=None):
-        HOIEstimator.__init__(self, data, y=y, verbose=verbose)
+    def __init__(self, x, y=None, multiplets=None, verbose=None):
+        HOIEstimator.__init__(
+            self, x=x, y=y, multiplets=multiplets, verbose=verbose
+        )
 
     def fit(self, minsize=1, maxsize=None, method="gcmi", **kwargs):
         """Compute Topological Information.

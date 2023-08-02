@@ -2,33 +2,15 @@ import logging
 
 import numpy as np
 
-import jax
-import jax.numpy as jnp
-
+from hoi.metrics.oinfo import Oinfo
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.metrics.oinfo_zerolag import compute_oinfo
-from hoi.utils.progressbar import scan_tqdm
 
 logger = logging.getLogger("hoi")
 
 
-@jax.jit
-def compute_goinfo(inputs, iterators):
-
-    # compute \Omega({X^{n}, y})
-    _, o_xy = compute_oinfo(inputs, iterators)
-
-    # compute \Omega(X^{n})
-    _, comb_xy, msize = iterators
-    comb_x = jnp.where(comb_xy == comb_xy.max(), -2, comb_xy)
-    _, o_x = compute_oinfo(inputs, (_, comb_x, msize - 1))
-
-    return inputs, o_xy - o_x
-
-
 class GradientOinfo(HOIEstimator):
 
-    r"""Gradient O-information.
+    r"""First order Gradient O-information.
 
     The Gradient O-information is defined as the difference between the
     O-information with the target variable minus the O-information without the
@@ -47,11 +29,15 @@ class GradientOinfo(HOIEstimator):
 
     Parameters
     ----------
-    data : array_like
+    x : array_like
         Standard NumPy arrays of shape (n_samples, n_features) or
         (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info
+    multiplets : list | None
+        List of multiplets to compute. Should be a list of multiplets, for
+        example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
+        going to be computed.
 
     References
     ----------
@@ -60,8 +46,10 @@ class GradientOinfo(HOIEstimator):
 
     __name__ = "Gradient O-Information"
 
-    def __init__(self, data, y, verbose=None):
-        HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
+    def __init__(self, x, y, multiplets=None, verbose=None):
+        HOIEstimator.__init__(self, x, None, multiplets, verbose)
+        self._oinf_tr = Oinfo(x, y=y, multiplets=multiplets, verbose=verbose)
+        self._oinf_tf = Oinfo(x, multiplets=multiplets, verbose=verbose)
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the Gradient O-information.
@@ -86,33 +74,24 @@ class GradientOinfo(HOIEstimator):
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
         """
-        # ____________________________ ENTROPIES ______________________________
-
-        minsize, maxsize = self._check_minmax(minsize, maxsize)
-        h_x, h_idx, order = self.compute_entropies(
-            minsize=1, maxsize=maxsize, method=method, **kwargs
-        )
-        assert jnp.isfinite(h_x).all()
-        assert not jnp.isnan(h_x).any()
-
-        # _______________________________ HOI _________________________________
-
-        # subselection of multiplets
-        keep = self.filter_multiplets(h_idx, order)
-        n_mult = keep.sum()
-
-        # progress-bar definition
-        pbar = scan_tqdm(n_mult, message="GOinfo")
-
-        # compute \Omega({X^{n}, y})
-        h_idx_2 = jnp.where(h_idx == -1, -2, h_idx)
-        _, hoi = jax.lax.scan(
-            pbar(compute_goinfo),
-            (h_x, h_idx[..., jnp.newaxis], order),
-            (jnp.arange(n_mult), h_idx_2[keep], order[keep]),
+        # ____________________________ TASK-FREE ______________________________
+        hoi_tf = self._oinf_tf.fit(
+            minsize=minsize, maxsize=maxsize, method=method, **kwargs
         )
 
-        return np.asarray(hoi)
+        self._multiplets = self._oinf_tf._multiplets
+        self._order = self._oinf_tf._order
+        self._keep = self._oinf_tf._keep
+
+        # __________________________ TASK-RELATED _____________________________
+        hoi_tr = self._oinf_tr.fit(
+            minsize=self._oinf_tf.minsize + 1,
+            maxsize=self._oinf_tf.maxsize + 1,
+            method=method,
+            **kwargs
+        )
+
+        return hoi_tr - hoi_tf
 
 
 if __name__ == "__main__":
@@ -122,7 +101,7 @@ if __name__ == "__main__":
 
     plt.style.use("ggplot")
 
-    x = np.random.rand(300, 12)
+    x = np.random.rand(300, 6)
     y = x[:, 0] + x[:, 3]
 
     logger.setLevel("INFO")
@@ -133,7 +112,7 @@ if __name__ == "__main__":
     print(model.order.shape)
     print(model.multiplets.shape)
 
-    print(get_nbest_mult(hoi, model, minsize=3, maxsize=3))
+    print(get_nbest_mult(hoi, model=model, minsize=2, maxsize=3))
 
     lscp = landscape(hoi.squeeze(), model.order, output="xarray")
     lscp.plot(x="order", y="bins", cmap="jet", norm=LogNorm())

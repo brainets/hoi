@@ -189,7 +189,7 @@ def normalize(x, to_min=0., to_max=1.):
     return x_n
 
 
-def get_nbest_mult(hoi, orders=None, multiplets=None, model=None, n_best=5,
+def get_nbest_mult(hoi, model=None, orders=None, multiplets=None, n_best=5,
                    minsize=None, maxsize=None, names=None):
     """Get the n best multiplets.
 
@@ -252,10 +252,9 @@ def get_nbest_mult(hoi, orders=None, multiplets=None, model=None, n_best=5,
     df_red = df.loc[~is_syn]
     df_red = df_red.iloc[:min(n_best, len(df_red))]
     df_best = pd.concat((df_red, df_syn)).reset_index(drop=True)
-    df_best['type'] = ['syn' if o < 0 else 'red' for o in df_best['hoi']]
 
     # reorder columns
-    df_best = df_best[['index', 'order', 'hoi', 'type']]
+    df_best = df_best[['index', 'order', 'hoi']]
 
     # multiplets selection
     mults = []

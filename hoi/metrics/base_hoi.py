@@ -1,7 +1,6 @@
 import logging
 from functools import partial
 
-from math import comb as ccomb
 import numpy as np
 import jax
 import jax.numpy as jnp
@@ -24,9 +23,9 @@ def ent_at_index(x, idx, entropy=None):
 
 
 class HOIEstimator(object):
-    def __init__(self, data, y=None, verbose=None):
-        # data checking
-        self._data = self._prepare_data(data, y=y)
+    def __init__(self, x, y=None, multiplets=None, verbose=None):
+        # x checking
+        self._x = self._prepare_data(x, y=y, multiplets=multiplets)
 
         if verbose not in ["INFO", "DEBUG", "ERROR"]:
             verbose = "INFO"
@@ -43,30 +42,35 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def _prepare_data(self, data, y=None):
-        """Check input data shape."""
+    def _prepare_data(self, x, y=None, multiplets=None):
+        """Check input x shape."""
 
-        # force data to be 3d
-        assert data.ndim >= 2
-        if data.ndim == 2:
-            data = data[..., np.newaxis]
+        # force x to be 3d
+        assert x.ndim >= 2
+        if x.ndim == 2:
+            x = x[..., np.newaxis]
 
-        # for task-related, add behavior along spatial dimension
+        # additional variable along feature dimension
         self._task_related = isinstance(y, (list, np.ndarray, tuple))
         if self._task_related:
             y = np.asarray(y)
             if y.ndim == 1:
-                assert len(y) == data.shape[0]
-                y = np.tile(y.reshape(-1, 1, 1), (1, 1, data.shape[-1]))
+                assert len(y) == x.shape[0]
+                y = np.tile(y.reshape(-1, 1, 1), (1, 1, x.shape[-1]))
             elif y.ndim == 2:
-                assert y.shape[0] == data.shape[0]
-                assert y.shape[-1] == data.shape[-1]
+                assert y.shape[0] == x.shape[0]
+                assert y.shape[-1] == x.shape[-1]
                 y = y[:, np.newaxis, :]
-            data = np.concatenate((data, y), axis=1)
+            x = np.concatenate((x, y), axis=1)
 
-        self.n_samples, self.n_features, self.n_variables = data.shape
+        # compute only selected multiplets
+        self._custom_mults = None
+        if isinstance(multiplets, (list, np.ndarray)):
+            self._custom_mults = [np.asarray(m) for m in multiplets]
 
-        return data
+        self.n_samples, self.n_features, self.n_variables = x.shape
+
+        return x
 
     def _check_minmax(self, minsize, maxsize):
         """Define min / max size of the multiplets."""
@@ -135,7 +139,7 @@ class HOIEstimator(object):
 
         # ________________________________ I/O ________________________________
         # prepare the data for computing entropy
-        data, kwargs = prepare_for_entropy(self._data, method, **kwargs)
+        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
 
         # get entropy function
         # entropy = partial(ent_at_index,
@@ -143,39 +147,33 @@ class HOIEstimator(object):
         entropy_func = jax.vmap(get_entropy(method, **kwargs))
         entropy = partial(ent_at_index, entropy=entropy_func)
 
-        # prepare output
-        # E501
-        # n_mults = sum([ccomb(self.n_features, c) for c in
-        # range(minsize, maxsize + 1)])
-        t = [ccomb(self.n_features, c) for c in range(minsize, maxsize + 1)]
-        n_mults = sum(t)
-        h_x = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
-        h_idx = jnp.full((n_mults, maxsize), fill_value, dtype=int)
-        order = jnp.zeros((n_mults,), dtype=int)
+        # ______________________________ ENTROPY ______________________________
+        # get all of the combinations
+        kw_combs = dict(maxsize=maxsize, astype="jax")
+        h_idx = self.get_combinations(minsize, **kw_combs)
+        order = self.get_combinations(minsize, order=True, **kw_combs)
+        h_x = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
         # get progress bar
         pbar = get_pbar(iterable=range(minsize, maxsize + 1), leave=False)
 
-        # ______________________________ ENTROPY ______________________________
+        # compute entropies
         offset = 0
         for msize in pbar:
             pbar.set_description(desc=msg % msize, refresh=False)
 
-            # combinations of features
-            _h_idx = self.get_combinations(msize)
-            n_combs, n_feat = _h_idx.shape
-            sl = slice(offset, offset + n_combs)
+            # get order
+            keep = order == msize
+            n_mult = keep.sum()
 
-            # fill indices and order
-            h_idx = h_idx.at[sl, 0:n_feat].set(_h_idx)
-            order = order.at[sl].set(msize)
+            # compute all entropies
+            _, _h_x = jax.lax.scan(entropy, x, h_idx[keep, 0:msize])
 
-            # compute all of the entropies at that order
-            _, _h_x = jax.lax.scan(entropy, data, _h_idx)
-            h_x = h_x.at[sl, :].set(_h_x)
+            # fill entropies
+            h_x = h_x.at[offset: offset + n_mult, :].set(_h_x)
 
-            # updates
-            offset += n_combs
+            offset += n_mult
+
         pbar.close()
 
         self._entropies = h_x
@@ -190,17 +188,18 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def get_combinations(self, msize, as_iter=False, as_jax=True, order=False):
+    def get_combinations(self, min, max=None, astype="jax", order=False):
         """Get combinations of features.
 
         Parameters
         ----------
-        msize : int
-            Size of the multiplets
-        as_iter : bool, optional
-            If True, return an iterator. Default is False.
-        as_jax : bool, optional
-            If True, return a jax array. Default is True.
+        min : int
+            Minimum size of the multiplets
+        max : int | None
+            Maximum size of the multiplets. If None, minsize is used.
+        astype : {'jax', 'numpy', 'iterator'}
+            Specify the output type. Use either 'jax' get the data as a jax
+            array [default], 'numpy' for NumPy array or 'iterator'.
         order : bool, optional
             If True, return the order of each multiplet. Default is False.
 
@@ -209,7 +208,7 @@ class HOIEstimator(object):
         combinations : array_like
             Combinations of features.
         """
-        return combinations(self.n_features, msize, as_iter, as_jax, order)
+        return combinations(self.n_features, min, max, astype, order)
 
     def filter_multiplets(self, mults, order):
         """Filter multiplets.
@@ -227,18 +226,28 @@ class HOIEstimator(object):
             Boolean array of shape (n_mult,) indicating which multiplets to
             keep.
         """
-        keep = jnp.ones((len(order),), dtype=bool)
-
         # order filtering
-        if self.minsize > 1:
-            logger.info(f"    Selecting order >= {self.minsize}")
-            keep = jnp.where(order >= self.minsize, keep, False)
+        if self._custom_mults is None:
+            keep = jnp.ones((len(order),), dtype=bool)
 
-        # task related filtering
-        if self._task_related:
-            logger.info("    Selecting task-related multiplets")
-            keep_tr = (mults == self.n_features - 1).any(1)
-            keep = jnp.logical_and(keep, keep_tr)
+            if self.minsize > 1:
+                logger.info(f"    Selecting order >= {self.minsize}")
+                keep = jnp.where(order >= self.minsize, keep, False)
+
+            # task related filtering
+            if self._task_related:
+                logger.info("    Selecting task-related multiplets")
+                keep_tr = (mults == self.n_features - 1).any(1)
+                keep = jnp.logical_and(keep, keep_tr)
+        else:
+            keep = jnp.zeros((len(order),), dtype=bool)
+
+            for n_m, m in enumerate(self._custom_mults):
+                is_order = order == len(m)
+                is_mult = (mults[:, 0: len(m)] == m).all(1)
+                idx = np.where(np.logical_and(is_mult, is_order))[0]
+                assert len(idx) == 1
+                keep = keep.at[idx].set(True)
 
         self._keep = keep
 

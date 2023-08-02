@@ -141,12 +141,16 @@ docs/api/generated
 *.prof
 
 /art
-docs/source/generated/
-docs/source/api/generated/
-docs/source/auto_examples/
+*/generated/*
+docs/auto_examples/
 *.nc
 *.fuse*
 
 node_modules/
 package.json
 yarn.lock
+
+*.dir
+*.png
+*.zip
+*ipynb

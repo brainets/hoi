@@ -23,17 +23,21 @@ class RedundancyMMI(HOIEstimator):
 
     Parameters
     ----------
-    data : array_like
+    x : array_like
         Standard NumPy arrays of shape (n_samples, n_features) or
         (n_samples, n_features, n_variables)
     y : array_like
         The feature of shape (n_trials,) for estimating task-related O-info
+    multiplets : list | None
+        List of multiplets to compute. Should be a list of multiplets, for
+        example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
+        going to be computed.
     """
 
     __name__ = "Redundancy MMI"
 
-    def __init__(self, data, y, verbose=None):
-        HOIEstimator.__init__(self, data=data, y=y, verbose=verbose)
+    def __init__(self, x, y, multiplets=None, verbose=None):
+        HOIEstimator.__init__(self, x, y, multiplets, verbose)
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Redundancy Index.
@@ -63,8 +67,9 @@ class RedundancyMMI(HOIEstimator):
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the data for computing entropy
-        data, kwargs = prepare_for_entropy(self._data, method, **kwargs)
-        x, y = data[:, 0:-1, :], data[:, [-1], :]
+        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
+        y = x[:, [-1], :]
+        x = x[:, 0:-1, :]
 
         # prepare entropy functions
         entropy = jax.vmap(get_entropy(method=method, **kwargs))
@@ -92,9 +97,7 @@ class RedundancyMMI(HOIEstimator):
             pbar.set_description(desc="RedMMI order %s" % msize, refresh=False)
 
             # get combinations
-            _h_idx = combinations(
-                self.n_features - 1, msize, as_iterator=False, as_jax=True
-            )
+            _h_idx = combinations(self.n_features - 1, msize, astype="jax")
             n_combs, n_feat = _h_idx.shape
             sl = slice(offset, offset + n_combs)
 
@@ -149,7 +152,7 @@ if __name__ == "__main__":
     # hoi = model.fit(minsize=2, maxsize=6, method='kernel')
     hoi = model.fit(minsize=2, maxsize=6, method="binning")
 
-    print(get_nbest_mult(hoi, model, minsize=3, maxsize=3))
+    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=3))
 
     t = dict(cmap="turbo")
     s = "scatter"

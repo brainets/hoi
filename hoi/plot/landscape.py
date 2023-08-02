@@ -11,6 +11,7 @@ def plot_landscape(
     maxsize=None,
     kind="hist",
     undersampling=True,
+    cbar=True,
     hist_kwargs={},
     plt_kwargs={},
 ):
@@ -28,12 +29,13 @@ def plot_landscape(
         Minimum and maximum size of the multiplets
     kind : {'hist', 'scatter'}
         Kind of plot. Use either:
-
             * 'hist' : 2D histogram of the higher order interactions
             * 'scatter' : scatter plot of the higher order interactions
 
     undersampling : bool | True
         If True, plot the undersampling threshold.
+    cbar : bool | True
+        Add colorbar.
     hist_kwargs : dict | {}
         Optional arguments for the histogram.
     plt_kwargs : dict | {}
@@ -70,7 +72,8 @@ def plot_landscape(
         lscp, order, bins = landscape(hoi, orders, **hist_kwargs)
 
         plt.pcolormesh(order, bins, lscp, norm=LogNorm(), **plt_kwargs)
-        plt.colorbar(label=hist_kwargs.get("stat", "probability"))
+        if cbar:
+            plt.colorbar(label=hist_kwargs.get("stat", "probability"))
     elif kind == "scatter":
         size = normalize(np.abs(hoi), to_min=2, to_max=200)
         minmax = abs(np.nanpercentile(hoi, [1, 99])).max()

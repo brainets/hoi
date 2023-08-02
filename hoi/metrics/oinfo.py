@@ -143,7 +143,7 @@ class Oinfo(HOIEstimator):
 
             # fill variables
             n_combs, n_feat = _h_idx.shape
-            hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
+            hoi = hoi.at[offset: offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs

@@ -74,7 +74,9 @@ class Oinfo(HOIEstimator):
     __name__ = "O-Information"
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
-        HOIEstimator.__init__(self, x, y, multiplets, verbose)
+        HOIEstimator.__init__(
+            self, x=x, y=y, multiplets=multiplets, verbose=verbose
+        )
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the O-information.

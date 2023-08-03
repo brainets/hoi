@@ -47,7 +47,9 @@ class GradientOinfo(HOIEstimator):
     __name__ = "Gradient O-Information"
 
     def __init__(self, x, y, multiplets=None, verbose=None):
-        HOIEstimator.__init__(self, x, None, multiplets, verbose)
+        HOIEstimator.__init__(
+            self, x=x, y=None, multiplets=multiplets, verbose=verbose
+        )
         self._oinf_tr = Oinfo(x, y=y, multiplets=multiplets, verbose=verbose)
         self._oinf_tf = Oinfo(x, multiplets=multiplets, verbose=verbose)
 

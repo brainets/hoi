@@ -34,8 +34,8 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -430,7 +430,6 @@ document.write(`
 <span class="sd">        Minimum and maximum size of the multiplets</span>
 <span class="sd">    kind : {&#39;hist&#39;, &#39;scatter&#39;}</span>
 <span class="sd">        Kind of plot. Use either:</span>
-
 <span class="sd">            * &#39;hist&#39; : 2D histogram of the higher order interactions</span>
 <span class="sd">            * &#39;scatter&#39; : scatter plot of the higher order interactions</span>
 
@@ -469,15 +468,14 @@ document.write(`
     <span class="n">orders</span> <span class="o">=</span> <span class="n">orders</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span>
 
     <span class="c1"># switch between histogram and scatter plot</span>
-    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;hist&#39;</span><span class="p">:</span>
-        <span class="n">hist_kwargs</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;numpy&#39;</span>
+    <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;hist&quot;</span><span class="p">:</span>
+        <span class="n">hist_kwargs</span><span class="p">[</span><span class="s2">&quot;output&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;numpy&quot;</span>
         <span class="n">lscp</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">landscape</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">orders</span><span class="p">,</span> <span class="o">**</span><span class="n">hist_kwargs</span><span class="p">)</span>
 
-        <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span>
-            <span class="n">order</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">lscp</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="o">**</span><span class="n">plt_kwargs</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">lscp</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">(),</span> <span class="o">**</span><span class="n">plt_kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">cbar</span><span class="p">:</span>
-            <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">hist_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;stat&#39;</span><span class="p">,</span> <span class="s1">&#39;probability&#39;</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s1">&#39;scatter&#39;</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">hist_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stat&quot;</span><span class="p">,</span> <span class="s2">&quot;probability&quot;</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">kind</span> <span class="o">==</span> <span class="s2">&quot;scatter&quot;</span><span class="p">:</span>
         <span class="n">size</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">hoi</span><span class="p">),</span> <span class="n">to_min</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">to_max</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
         <span class="n">minmax</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanpercentile</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">]))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
@@ -487,16 +485,16 @@ document.write(`
             <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hoi_o</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">hoi_o</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="n">minmax</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">minmax</span><span class="p">,</span>
                         <span class="n">s</span><span class="o">=</span><span class="n">size</span><span class="p">[</span><span class="n">keep</span><span class="p">],</span> <span class="o">**</span><span class="n">plt_kwargs</span><span class="p">)</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Order&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Order&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1"> [Bits]&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> [Bits]&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;HOI [Bits]&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;HOI [Bits]&quot;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">undersampling</span> <span class="ow">and</span> <span class="n">model</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">undersampling</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">undersampling</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span></div>
 </pre></div>

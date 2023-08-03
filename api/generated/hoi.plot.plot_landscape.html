@@ -35,8 +35,8 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -457,9 +457,9 @@ document.write(`
 <dt class="sig sig-object py" id="hoi.plot.plot_landscape">
 <span class="sig-prename descclassname"><span class="pre">hoi.plot.</span></span><span class="sig-name descname"><span class="pre">plot_landscape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hoi</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orders</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kind</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hist'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">undersampling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hist_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'output':</span> <span class="pre">'numpy'}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plt_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/plot/landscape.html#plot_landscape"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.plot.plot_landscape" title="Permalink to this definition">#</a></dt>
 <dd><p>Landscape representation of higher order interactions.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
+<dd class="field-odd"><dl class="simple">
 <dt><strong>hoi</strong><span class="classifier">array_like</span></dt><dd><p>Higher order interactions.</p>
 </dd>
 <dt><strong>model</strong><span class="classifier">hoi.metrics</span></dt><dd><p>Higher order interaction model.</p>
@@ -468,13 +468,13 @@ document.write(`
 </dd>
 <dt><strong>minsize, maxsize</strong><span class="classifier">int | 2, None</span></dt><dd><p>Minimum and maximum size of the multiplets</p>
 </dd>
-<dt><strong>kind</strong><span class="classifier">{‘hist’, ‘scatter’}</span></dt><dd><p>Kind of plot. Use either:</p>
-<blockquote>
-<div><ul class="simple">
+<dt><strong>kind</strong><span class="classifier">{‘hist’, ‘scatter’}</span></dt><dd><dl class="simple">
+<dt>Kind of plot. Use either:</dt><dd><ul class="simple">
 <li><p>‘hist’ : 2D histogram of the higher order interactions</p></li>
 <li><p>‘scatter’ : scatter plot of the higher order interactions</p></li>
 </ul>
-</div></blockquote>
+</dd>
+</dl>
 </dd>
 <dt><strong>undersampling</strong><span class="classifier">bool | True</span></dt><dd><p>If True, plot the undersampling threshold.</p>
 </dd>

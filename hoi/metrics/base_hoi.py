@@ -188,14 +188,15 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def get_combinations(self, min, max=None, astype="jax", order=False):
+    def get_combinations(self, minsize, maxsize=None, astype='jax',
+                         order=False):
         """Get combinations of features.
 
         Parameters
         ----------
-        min : int
+        minsize : int
             Minimum size of the multiplets
-        max : int | None
+        maxsize : int | None
             Maximum size of the multiplets. If None, minsize is used.
         astype : {'jax', 'numpy', 'iterator'}
             Specify the output type. Use either 'jax' get the data as a jax
@@ -208,7 +209,10 @@ class HOIEstimator(object):
         combinations : array_like
             Combinations of features.
         """
-        return combinations(self.n_features, min, max, astype, order)
+        return combinations(
+            self.n_features, minsize, maxsize=maxsize, astype=astype,
+            order=order
+        )
 
     def filter_multiplets(self, mults, order):
         """Filter multiplets.

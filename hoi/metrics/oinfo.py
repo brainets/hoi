@@ -114,7 +114,7 @@ class Oinfo(HOIEstimator):
         oinfo_no_ent = partial(_oinfo_no_ent, entropy_3d=e3d, entropy_4d=e4d)
 
         # prepare output
-        kw_combs = dict(max=maxsize, astype="jax")
+        kw_combs = dict(maxsize=maxsize, astype="jax")
         h_idx = self.get_combinations(minsize, **kw_combs)
         order = self.get_combinations(minsize, order=True, **kw_combs)
 

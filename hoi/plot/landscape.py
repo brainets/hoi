@@ -3,18 +3,9 @@ import numpy as np
 from hoi.utils import normalize, landscape
 
 
-def plot_landscape(
-    hoi,
-    model=None,
-    orders=None,
-    minsize=None,
-    maxsize=None,
-    kind="hist",
-    undersampling=True,
-    cbar=True,
-    hist_kwargs={},
-    plt_kwargs={},
-):
+def plot_landscape(hoi, model=None, orders=None, minsize=None, maxsize=None,
+                   kind='hist', undersampling=True, cbar=True, hist_kwargs={},
+                   plt_kwargs={}):
     """Landscape representation of higher order interactions.
 
     Parameters
@@ -81,9 +72,8 @@ def plot_landscape(
             keep = orders == o
             hoi_o = hoi[keep]
             x = np.random.normal(loc=o, scale=0.13, size=hoi_o.size)
-            n = minmax
-            t = plt_kwargs
-            plt.scatter(x, hoi_o, c=hoi_o, vmin=-n, vmax=n, s=size[keep], **t)
+            plt.scatter(x, hoi_o, c=hoi_o, vmin=-minmax, vmax=minmax,
+                        s=size[keep], **plt_kwargs)
 
     plt.xlabel("Order")
     plt.xticks(np.arange(minsize, maxsize + 1))

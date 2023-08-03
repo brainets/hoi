@@ -53,7 +53,9 @@ class SynergyMMI(HOIEstimator):
     __name__ = "Synergy MMI"
 
     def __init__(self, x, y, multiplets=None, verbose=None):
-        HOIEstimator.__init__(self, x, y, multiplets, verbose)
+        HOIEstimator.__init__(
+            self, x=x, y=y, multiplets=multiplets, verbose=verbose
+        )
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Synergy Index.
@@ -98,8 +100,8 @@ class SynergyMMI(HOIEstimator):
         pbar = get_pbar(iterable=range(minsize, maxsize + 1), leave=False)
 
         # prepare the shapes of outputs
-        x = self.n_features
-        n_mults = sum([ccomb(x - 1, c) for c in range(minsize, maxsize + 1)])
+        n_mults = sum([ccomb(self.n_features - 1, c) for c in range(
+            minsize, maxsize + 1)])
         hoi = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
         h_idx = jnp.full((n_mults, maxsize), -1, dtype=int)
         order = jnp.zeros((n_mults,), dtype=int)

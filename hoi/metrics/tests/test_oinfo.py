@@ -37,7 +37,7 @@ class TestOinfo(_TestMetric):
             assert hoi.shape[0] == len(multiplets)
             assert all(
                 [
-                    (k[0 : len(i)] == i).all()
+                    (k[0: len(i)] == i).all()
                     for (k, i) in zip(model.multiplets, multiplets)
                 ]
             )

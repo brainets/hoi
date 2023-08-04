@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Black codestyle 🔧
-      - uses: psf/black@stable
+        uses: psf/black@stable

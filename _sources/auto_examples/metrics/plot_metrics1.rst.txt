@@ -37,7 +37,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
  .. code-block:: none
 
     No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
-      0%|          |  0/8 [00:00<?,       ?it/s]     12%|#2        | Oinfo (3):  1/8 [00:00<00:05,    1.22it/s]     25%|##5       | Oinfo (4):  2/8 [00:01<00:04,    1.31it/s]     38%|###7      | Oinfo (5):  3/8 [00:02<00:03,    1.38it/s]     50%|#####     | Oinfo (6):  4/8 [00:02<00:02,    1.48it/s]     62%|######2   | Oinfo (7):  5/8 [00:03<00:01,    1.55it/s]     75%|#######5  | Oinfo (8):  6/8 [00:03<00:01,    1.55it/s]     88%|########7 | Oinfo (9):  7/8 [00:04<00:00,    1.55it/s]    100%|##########| Oinfo (10):  8/8 [00:05<00:00,    1.60it/s]                                                            
+      0%|          |  0/8 [00:00<?,       ?it/s]     12%|#2        | Oinfo (3):  1/8 [00:00<00:04,    1.52it/s]     25%|##5       | Oinfo (4):  2/8 [00:01<00:03,    1.63it/s]     38%|###7      | Oinfo (5):  3/8 [00:01<00:02,    1.71it/s]     50%|#####     | Oinfo (6):  4/8 [00:02<00:02,    1.83it/s]     62%|######2   | Oinfo (7):  5/8 [00:02<00:01,    1.91it/s]     75%|#######5  | Oinfo (8):  6/8 [00:03<00:01,    1.91it/s]     88%|########7 | Oinfo (9):  7/8 [00:03<00:00,    1.92it/s]    100%|##########| Oinfo (10):  8/8 [00:04<00:00,    1.97it/s]                                                            
 
 
 
@@ -73,7 +73,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.822 seconds)
+   **Total running time of the script:** ( 0 minutes  4.724 seconds)
 
 
 .. _sphx_glr_download_auto_examples_metrics_plot_metrics1.py:

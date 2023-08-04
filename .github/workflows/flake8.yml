@@ -23,8 +23,7 @@ jobs:
       - name: Test code quality 🔧
         run: |
           flake8
-
-lint:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️

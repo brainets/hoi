@@ -454,18 +454,18 @@ to download the full example code</p>
 </div>
 <section class="sphx-glr-example-title" id="metrics-example-1">
 <span id="sphx-glr-auto-examples-metrics-plot-metrics1-py"></span><h1>Metrics example 1<a class="headerlink" href="#metrics-example-1" title="Permalink to this headline">#</a></h1>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
+<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perferendis sed id doloribus at error in ea nulla reprehenderit optio rerum nostrum harum voluptas, sequi laudantium numquam accusantium consequuntur minus quisquam autem magnam distinctio. Itaque, fuga quisquam. Dolorum commodi molestiae soluta, dolorem tenetur magni illum distinctio minus vero tempore quibusdam totam sed, sapiente aliquam aperiam sunt accusantium quisquam eos rerum cupiditate fuga debitis inventore. Exercitationem nihil ipsa aliquid, placeat laborum ut vel odio deserunt adipisci minima blanditiis aperiam nisi veniam cum labore deleniti reiciendis earum eligendi dignissimos suscipit beatae ex a! Omnis commodi modi magnam esse molestias odit, non unde eius vel, aspernatur perferendis voluptatibus nam nihil, aut et. Molestias, quos quia soluta minus illum amet cupiditate iure a assumenda debitis sint dolor, dolorem at. Tempora, dolorum maiores! Explicabo molestias nostrum nihil non laboriosam accusantium aut maxime. Tenetur similique natus quos accusamus, dicta iure? Exercitationem id aut laborum itaque consequatur delectus molestias labore sequi. Libero distinctio laboriosam debitis possimus beatae nisi quae autem in voluptatibus labore vero error omnis neque, quisquam culpa odio! Tempore neque ipsa voluptatibus alias laudantium id voluptates reiciendis dolorem iusto cumque tenetur illum aliquid maiores totam sint rem repellat, repellendus molestias deserunt deleniti odit mollitia?</p>
 <img src="../../_images/sphx_glr_plot_metrics1_001.png" srcset="../../_images/sphx_glr_plot_metrics1_001.png" alt="plot metrics1" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
 
   0%|          |  0/8 [00:00&lt;?,       ?it/s]
- 12%|#2        | Oinfo (3):  1/8 [00:00&lt;00:04,    1.50it/s]
- 25%|##5       | Oinfo (4):  2/8 [00:01&lt;00:03,    1.60it/s]
- 38%|###7      | Oinfo (5):  3/8 [00:01&lt;00:02,    1.68it/s]
- 50%|#####     | Oinfo (6):  4/8 [00:02&lt;00:02,    1.80it/s]
- 62%|######2   | Oinfo (7):  5/8 [00:02&lt;00:01,    1.90it/s]
- 75%|#######5  | Oinfo (8):  6/8 [00:03&lt;00:01,    1.90it/s]
- 88%|########7 | Oinfo (9):  7/8 [00:03&lt;00:00,    1.90it/s]
-100%|##########| Oinfo (10):  8/8 [00:04&lt;00:00,    1.96it/s]
+ 12%|#2        | Oinfo (3):  1/8 [00:00&lt;00:05,    1.22it/s]
+ 25%|##5       | Oinfo (4):  2/8 [00:01&lt;00:04,    1.31it/s]
+ 38%|###7      | Oinfo (5):  3/8 [00:02&lt;00:03,    1.38it/s]
+ 50%|#####     | Oinfo (6):  4/8 [00:02&lt;00:02,    1.48it/s]
+ 62%|######2   | Oinfo (7):  5/8 [00:03&lt;00:01,    1.55it/s]
+ 75%|#######5  | Oinfo (8):  6/8 [00:03&lt;00:01,    1.55it/s]
+ 88%|########7 | Oinfo (9):  7/8 [00:04&lt;00:00,    1.55it/s]
+100%|##########| Oinfo (10):  8/8 [00:05&lt;00:00,    1.60it/s]
 </pre></div>
 </div>
 <div class="line-block">
@@ -478,7 +478,7 @@ to download the full example code</p>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="c1"># x[:, 7] = x[:, 0] + x[:, 1]</span>
@@ -487,14 +487,15 @@ to download the full example code</p>
 
 
 <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">Oinfo</span></a><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo.fit" title="hoi.metrics.Oinfo.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo.fit" title="hoi.metrics.Oinfo.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;gcmi&#39;</span><span class="p">)</span>
 
-<a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">plt_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;turbo&quot;</span><span class="p">))</span>
+<a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span>
+               <span class="n">plt_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;turbo&#39;</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  4.705 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  5.822 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-metrics1-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/59f9d1f03e89d360601110ede1ddf13c/plot_metrics1.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_metrics1.py</span></code></a></p>

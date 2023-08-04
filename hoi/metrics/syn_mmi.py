@@ -1,5 +1,4 @@
 from math import comb as ccomb
-import itertools
 from functools import partial
 import logging
 
@@ -33,7 +32,6 @@ def _compute_syn(inputs, comb, mi_fcn=None):
     return inputs, i_tot - i_maxj.max(0)
 
 
-
 class SynergyMMI(HOIEstimator):
 
     """Synergy estimated using the Minimum Mutual Information.
@@ -51,14 +49,14 @@ class SynergyMMI(HOIEstimator):
         going to be computed.
     """
 
-    __name__ = 'Synergy MMI'
+    __name__ = "Synergy MMI"
 
     def __init__(self, x, y, multiplets=None, verbose=None):
         HOIEstimator.__init__(
             self, x=x, y=y, multiplets=multiplets, verbose=verbose
         )
 
-    def fit(self, minsize=2, maxsize=None, method='gcmi', **kwargs):
+    def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Synergy Index.
 
         Parameters
@@ -86,9 +84,7 @@ class SynergyMMI(HOIEstimator):
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the x for computing entropy
-        x, kwargs = prepare_for_entropy(
-            self._x, method, **kwargs
-        )
+        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
         y = x[:, [-1], :]
         x = x[:, 0:-1, :]
 
@@ -100,23 +96,25 @@ class SynergyMMI(HOIEstimator):
         # _______________________________ HOI _________________________________
 
         # get progress bar
-        pbar = get_pbar(
-            iterable=range(minsize, maxsize + 1), leave=False,
-        )
+        pbar = get_pbar(iterable=range(minsize, maxsize + 1), leave=False)
 
         # prepare the shapes of outputs
-        n_mults = sum([ccomb(self.n_features - 1, c) for c in range(
-            minsize, maxsize + 1)])
+        n_mults = sum(
+            [
+                ccomb(self.n_features - 1, c)
+                for c in range(minsize, maxsize + 1)
+            ]
+        )
         hoi = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
         h_idx = jnp.full((n_mults, maxsize), -1, dtype=int)
         order = jnp.zeros((n_mults,), dtype=int)
 
         offset = 0
         for msize in pbar:
-            pbar.set_description(desc='SynMMI order %s' % msize, refresh=False)
+            pbar.set_description(desc="SynMMI order %s" % msize, refresh=False)
 
             # get combinations
-            _h_idx = combinations(self.n_features - 1, msize, astype='jax')
+            _h_idx = combinations(self.n_features - 1, msize, astype="jax")
             n_combs, n_feat = _h_idx.shape
             sl = slice(offset, offset + n_combs)
 
@@ -134,7 +132,6 @@ class SynergyMMI(HOIEstimator):
             # updates
             offset += n_combs
 
-
         self._order = order
         self._multiplets = h_idx
         self._keep = np.ones_like(self._order, dtype=bool)
@@ -142,16 +139,15 @@ class SynergyMMI(HOIEstimator):
         return np.asarray(hoi)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape, digitize, get_nbest_mult
+    from hoi.utils import get_nbest_mult
     from hoi.plot import plot_landscape
     from sklearn.preprocessing import KBinsDiscretizer
-    plt.style.use('ggplot')
+
+    plt.style.use("ggplot")
 
     np.random.seed(0)
-
 
     x = np.random.rand(200, 7)
     # y = x[:, 0]
@@ -161,21 +157,33 @@ if __name__ == '__main__':
     # y = x[:, 4]
     # x[:, 5] += y
 
-
-    x = KBinsDiscretizer(
-        n_bins=3, encode='ordinal', strategy='quantile', subsample=None
-    ).fit_transform(x).astype(int)
-    y = KBinsDiscretizer(
-        n_bins=3, encode='ordinal', strategy='quantile', subsample=None
-    ).fit_transform(y.reshape(-1, 1)).astype(int).squeeze()
-
+    x = (
+        KBinsDiscretizer(
+            n_bins=3, encode="ordinal", strategy="quantile", subsample=None
+        )
+        .fit_transform(x)
+        .astype(int)
+    )
+    y = (
+        KBinsDiscretizer(
+            n_bins=3, encode="ordinal", strategy="quantile", subsample=None
+        )
+        .fit_transform(y.reshape(-1, 1))
+        .astype(int)
+        .squeeze()
+    )
 
     model = SynergyMMI(x, y)
     # hoi = model.fit(minsize=2, maxsize=6, method='gcmi')
-    hoi = model.fit(minsize=2, maxsize=6, method='binning')
+    hoi = model.fit(minsize=2, maxsize=6, method="binning")
 
     print(get_nbest_mult(hoi, model, minsize=3, maxsize=3))
 
-    plot_landscape(hoi, model, kind='scatter', undersampling=False,
-                   plt_kwargs=dict(cmap='turbo'))
+    plot_landscape(
+        hoi,
+        model,
+        kind="scatter",
+        undersampling=False,
+        plt_kwargs=dict(cmap="turbo"),
+    )
     plt.show()

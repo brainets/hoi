@@ -1,7 +1,6 @@
 import logging
 from functools import partial
 
-from math import comb as ccomb
 import numpy as np
 import jax
 import jax.numpy as jnp
@@ -11,7 +10,7 @@ from hoi.core.entropies import get_entropy, prepare_for_entropy
 from hoi.utils.progressbar import get_pbar
 
 
-logger = logging.getLogger('hoi')
+logger = logging.getLogger("hoi")
 
 
 @partial(jax.jit, static_argnums=(2,))
@@ -24,13 +23,12 @@ def ent_at_index(x, idx, entropy=None):
 
 
 class HOIEstimator(object):
-
     def __init__(self, x, y=None, multiplets=None, verbose=None):
         # x checking
         self._x = self._prepare_data(x, y=y, multiplets=multiplets)
 
-        if verbose not in ['INFO', 'DEBUG', 'ERROR']:
-            verbose = 'INFO'
+        if verbose not in ["INFO", "DEBUG", "ERROR"]:
+            verbose = "INFO"
         logger.setLevel(verbose)
 
     def __iter__(self):
@@ -74,7 +72,6 @@ class HOIEstimator(object):
 
         return x
 
-
     def _check_minmax(self, minsize, maxsize):
         """Define min / max size of the multiplets."""
 
@@ -93,15 +90,14 @@ class HOIEstimator(object):
 
         return minsize, maxsize
 
-
     ###########################################################################
     ###########################################################################
     #                         INFORMATION THEORY
     ###########################################################################
     ###########################################################################
-
-    def compute_entropies(self, method='gcmi', minsize=1, maxsize=None,
-                          fill_value=-1, **kwargs):
+    def compute_entropies(
+        self, method="gcmi", minsize=1, maxsize=None, fill_value=-1, **kwargs
+    ):
         """Compute entropies for all multiplets.
 
         Parameters
@@ -142,27 +138,23 @@ class HOIEstimator(object):
 
         # ________________________________ I/O ________________________________
         # prepare the data for computing entropy
-        x, kwargs = prepare_for_entropy(
-            self._x, method, **kwargs
-        )
+        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
 
         # get entropy function
         entropy = partial(
-            ent_at_index, entropy=jax.vmap(
-            get_entropy(method=method, **kwargs)
-        ))
+            ent_at_index,
+            entropy=jax.vmap(get_entropy(method=method, **kwargs)),
+        )
 
         # ______________________________ ENTROPY ______________________________
         # get all of the combinations
-        kw_combs = dict(maxsize=maxsize, astype='jax')
+        kw_combs = dict(maxsize=maxsize, astype="jax")
         h_idx = self.get_combinations(minsize, **kw_combs)
         order = self.get_combinations(minsize, order=True, **kw_combs)
         h_x = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
         # get progress bar
-        pbar = get_pbar(
-            iterable=range(minsize, maxsize + 1), leave=False,
-        )
+        pbar = get_pbar(iterable=range(minsize, maxsize + 1), leave=False)
 
         # compute entropies
         offset = 0
@@ -174,12 +166,10 @@ class HOIEstimator(object):
             n_mult = keep.sum()
 
             # compute all entropies
-            _, _h_x = jax.lax.scan(
-                entropy, x, h_idx[keep, 0:msize]
-            )
+            _, _h_x = jax.lax.scan(entropy, x, h_idx[keep, 0:msize])
 
             # fill entropies
-            h_x = h_x.at[offset:offset + n_mult, :].set(_h_x)
+            h_x = h_x.at[offset: offset + n_mult, :].set(_h_x)
 
             offset += n_mult
 
@@ -191,15 +181,15 @@ class HOIEstimator(object):
 
         return h_x, h_idx, order
 
-
     ###########################################################################
     ###########################################################################
     #                             COMPUTATIONS
     ###########################################################################
     ###########################################################################
 
-    def get_combinations(self, minsize, maxsize=None, astype='jax',
-                         order=False):
+    def get_combinations(
+        self, minsize, maxsize=None, astype="jax", order=False
+    ):
         """Get combinations of features.
 
         Parameters
@@ -220,8 +210,11 @@ class HOIEstimator(object):
             Combinations of features.
         """
         return combinations(
-            self.n_features, minsize, maxsize=maxsize, astype=astype,
-            order=order
+            self.n_features,
+            minsize,
+            maxsize=maxsize,
+            astype=astype,
+            order=order,
         )
 
     def filter_multiplets(self, mults, order):
@@ -258,7 +251,7 @@ class HOIEstimator(object):
 
             for n_m, m in enumerate(self._custom_mults):
                 is_order = order == len(m)
-                is_mult = (mults[:, 0:len(m)] == m).all(1)
+                is_mult = (mults[:, 0: len(m)] == m).all(1)
                 idx = np.where(np.logical_and(is_mult, is_order))[0]
                 assert len(idx) == 1
                 keep = keep.at[idx].set(True)

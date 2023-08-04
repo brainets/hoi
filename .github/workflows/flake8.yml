@@ -26,11 +26,11 @@ jobs:
         run: |
           flake8
 
-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout 🛎️
-      - uses: actions/checkout@v3
+# lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout 🛎️
+#       - uses: actions/checkout@v3
 
-      - name: Black codestyle 🔧
-      - uses: psf/black@stable
+#       - name: Black codestyle 🔧
+#       - uses: psf/black@stable

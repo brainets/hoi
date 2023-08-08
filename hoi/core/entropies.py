@@ -59,8 +59,7 @@ def get_entropy(method="gcmi", **kwargs):
 
 
 def prepare_for_entropy(data, method, **kwargs):
-    """Prepare the data before computing entropy.
-    """
+    """Prepare the data before computing entropy."""
     n_samples, n_features, n_variables = data.shape
 
     # type checking

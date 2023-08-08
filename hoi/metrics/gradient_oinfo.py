@@ -9,7 +9,6 @@ logger = logging.getLogger("hoi")
 
 
 class GradientOinfo(HOIEstimator):
-
     r"""First order Gradient O-information.
 
     The Gradient O-information is defined as the difference between the

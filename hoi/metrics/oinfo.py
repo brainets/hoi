@@ -37,7 +37,6 @@ def _oinfo_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
 
 
 class Oinfo(HOIEstimator):
-
     r"""O-information.
 
     The O-information is defined as the difference between the total

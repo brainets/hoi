@@ -1,6 +1,8 @@
-name: "Test and deploy"
+name: "Unit tests and docs"
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
 
 jobs:
 

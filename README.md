@@ -1,3 +1,5 @@
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 # GSoC 2023 Project Idea 5.1 Optimization of the computations of higher-order interactions and integration in the Frites python package
 
 ## Project description

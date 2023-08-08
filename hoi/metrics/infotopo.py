@@ -84,9 +84,7 @@ class InfoTopo(HOIEstimator):
     __name__ = "Topological Information"
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
-        HOIEstimator.__init__(
-            self, x=x, y=y, multiplets=multiplets, verbose=verbose
-        )
+        HOIEstimator.__init__(self, x=x, y=y, multiplets=multiplets, verbose=verbose)
 
     def fit(self, minsize=1, maxsize=None, method="gcmi", **kwargs):
         """Compute Topological Information.

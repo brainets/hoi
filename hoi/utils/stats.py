@@ -4,12 +4,7 @@ import numpy as np
 
 
 def landscape(
-    x,
-    mult_size,
-    n_bins=100,
-    centered=False,
-    stat="probability",
-    output="numpy",
+    x, mult_size, n_bins=100, centered=False, stat="probability", output="numpy"
 ):
     """Compute the landscape from HOI values.
 
@@ -99,9 +94,7 @@ def landscape(
     elif output == "pandas":
         import pandas as pd
 
-        return pd.DataFrame(
-            np.flipud(lscp), columns=msize, index=edge_centers[::-1]
-        )
+        return pd.DataFrame(np.flipud(lscp), columns=msize, index=edge_centers[::-1])
     elif output == "xarray":
         import xarray as xr
 
@@ -135,10 +128,7 @@ def digitize_sklearn(x, **kwargs):
     from sklearn.preprocessing import KBinsDiscretizer
 
     return (
-        KBinsDiscretizer(**kwargs)
-        .fit_transform(x.reshape(-1, 1))
-        .astype(int)
-        .squeeze()
+        KBinsDiscretizer(**kwargs).fit_transform(x.reshape(-1, 1)).astype(int).squeeze()
     )
 
 
@@ -282,7 +272,7 @@ def get_nbest_mult(
     # df selection
     is_syn = df["hoi"] < 0
     df_syn = df.loc[is_syn]
-    df_syn = df_syn.iloc[-min(n_best, len(df_syn))::]
+    df_syn = df_syn.iloc[-min(n_best, len(df_syn)) : :]
     df_red = df.loc[~is_syn]
     df_red = df_red.iloc[: min(n_best, len(df_red))]
     df_best = pd.concat((df_red, df_syn)).reset_index(drop=True)

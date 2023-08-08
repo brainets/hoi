@@ -65,7 +65,7 @@ def combinations(
 
         # fill the array
         for n_c, c in enumerate(iterators):
-            combs[n_c, 0: len(c)] = c
+            combs[n_c, 0 : len(c)] = c
 
     # jax conversion (f required)
     if astype == "jax":

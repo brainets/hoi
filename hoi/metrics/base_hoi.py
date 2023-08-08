@@ -142,8 +142,7 @@ class HOIEstimator(object):
 
         # get entropy function
         entropy = partial(
-            ent_at_index,
-            entropy=jax.vmap(get_entropy(method=method, **kwargs)),
+            ent_at_index, entropy=jax.vmap(get_entropy(method=method, **kwargs))
         )
 
         # ______________________________ ENTROPY ______________________________
@@ -169,7 +168,7 @@ class HOIEstimator(object):
             _, _h_x = jax.lax.scan(entropy, x, h_idx[keep, 0:msize])
 
             # fill entropies
-            h_x = h_x.at[offset: offset + n_mult, :].set(_h_x)
+            h_x = h_x.at[offset : offset + n_mult, :].set(_h_x)
 
             offset += n_mult
 
@@ -187,9 +186,7 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def get_combinations(
-        self, minsize, maxsize=None, astype="jax", order=False
-    ):
+    def get_combinations(self, minsize, maxsize=None, astype="jax", order=False):
         """Get combinations of features.
 
         Parameters
@@ -210,11 +207,7 @@ class HOIEstimator(object):
             Combinations of features.
         """
         return combinations(
-            self.n_features,
-            minsize,
-            maxsize=maxsize,
-            astype=astype,
-            order=order,
+            self.n_features, minsize, maxsize=maxsize, astype=astype, order=order
         )
 
     def filter_multiplets(self, mults, order):
@@ -251,7 +244,7 @@ class HOIEstimator(object):
 
             for n_m, m in enumerate(self._custom_mults):
                 is_order = order == len(m)
-                is_mult = (mults[:, 0: len(m)] == m).all(1)
+                is_mult = (mults[:, 0 : len(m)] == m).all(1)
                 idx = np.where(np.logical_and(is_mult, is_order))[0]
                 assert len(idx) == 1
                 keep = keep.at[idx].set(True)

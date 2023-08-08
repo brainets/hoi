@@ -74,9 +74,7 @@ class Oinfo(HOIEstimator):
     __name__ = "O-Information"
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
-        HOIEstimator.__init__(
-            self, x=x, y=y, multiplets=multiplets, verbose=verbose
-        )
+        HOIEstimator.__init__(self, x=x, y=y, multiplets=multiplets, verbose=verbose)
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the O-information.
@@ -111,9 +109,7 @@ class Oinfo(HOIEstimator):
         # get entropy function
         entropy = jax.vmap(get_entropy(method=method, **kwargs))
         oinfo_no_ent = partial(
-            _oinfo_no_ent,
-            entropy_3d=entropy,
-            entropy_4d=jax.vmap(entropy, in_axes=1),
+            _oinfo_no_ent, entropy_3d=entropy, entropy_4d=jax.vmap(entropy, in_axes=1)
         )
 
         # prepare output
@@ -127,9 +123,7 @@ class Oinfo(HOIEstimator):
         order = order[keep]
 
         # get progress bar
-        pbar = get_pbar(
-            iterable=range(order.min(), order.max() + 1), leave=False
-        )
+        pbar = get_pbar(iterable=range(order.min(), order.max() + 1), leave=False)
 
         # ______________________________ ENTROPY ____________________________
         offset = 0
@@ -149,7 +143,7 @@ class Oinfo(HOIEstimator):
 
             # fill variables
             n_combs, n_feat = _h_idx.shape
-            hoi = hoi.at[offset: offset + n_combs, :].set(_hoi)
+            hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs

@@ -52,9 +52,7 @@ class SynergyMMI(HOIEstimator):
     __name__ = "Synergy MMI"
 
     def __init__(self, x, y, multiplets=None, verbose=None):
-        HOIEstimator.__init__(
-            self, x=x, y=y, multiplets=multiplets, verbose=verbose
-        )
+        HOIEstimator.__init__(self, x=x, y=y, multiplets=multiplets, verbose=verbose)
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Synergy Index.
@@ -100,10 +98,7 @@ class SynergyMMI(HOIEstimator):
 
         # prepare the shapes of outputs
         n_mults = sum(
-            [
-                ccomb(self.n_features - 1, c)
-                for c in range(minsize, maxsize + 1)
-            ]
+            [ccomb(self.n_features - 1, c) for c in range(minsize, maxsize + 1)]
         )
         hoi = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
         h_idx = jnp.full((n_mults, maxsize), -1, dtype=int)
@@ -180,10 +175,6 @@ if __name__ == "__main__":
     print(get_nbest_mult(hoi, model, minsize=3, maxsize=3))
 
     plot_landscape(
-        hoi,
-        model,
-        kind="scatter",
-        undersampling=False,
-        plt_kwargs=dict(cmap="turbo"),
+        hoi, model, kind="scatter", undersampling=False, plt_kwargs=dict(cmap="turbo")
     )
     plt.show()

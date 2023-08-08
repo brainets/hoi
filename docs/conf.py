@@ -99,4 +99,3 @@ sphinx_gallery_conf = {
 }
 
 autodoc_mock_imports = ["jax", "tqdm", "jax_tqdm"]
-

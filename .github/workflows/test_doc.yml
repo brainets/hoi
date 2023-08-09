@@ -58,6 +58,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           branch: gh-pages
-          folder: docs/build/html/
+          folder: docs/_build/html/
           clean: true
           ssh-key: ${{ secrets.DEPLOY_KEY }}

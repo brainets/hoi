@@ -22,7 +22,7 @@ Metrics example 1
 ============================================
 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perferendis sed id doloribus at error in ea nulla reprehenderit optio rerum nostrum harum voluptas, sequi laudantium numquam accusantium consequuntur minus quisquam autem magnam distinctio. Itaque, fuga quisquam. Dolorum commodi molestiae soluta, dolorem tenetur magni illum distinctio minus vero tempore quibusdam totam sed, sapiente aliquam aperiam sunt accusantium quisquam eos rerum cupiditate fuga debitis inventore. Exercitationem nihil ipsa aliquid, placeat laborum ut vel odio deserunt adipisci minima blanditiis aperiam nisi veniam cum labore deleniti reiciendis earum eligendi dignissimos suscipit beatae ex a! Omnis commodi modi magnam esse molestias odit, non unde eius vel, aspernatur perferendis voluptatibus nam nihil, aut et. Molestias, quos quia soluta minus illum amet cupiditate iure a assumenda debitis sint dolor, dolorem at. Tempora, dolorum maiores! Explicabo molestias nostrum nihil non laboriosam accusantium aut maxime. Tenetur similique natus quos accusamus, dicta iure? Exercitationem id aut laborum itaque consequatur delectus molestias labore sequi. Libero distinctio laboriosam debitis possimus beatae nisi quae autem in voluptatibus labore vero error omnis neque, quisquam culpa odio! Tempore neque ipsa voluptatibus alias laudantium id voluptates reiciendis dolorem iusto cumque tenetur illum aliquid maiores totam sint rem repellat, repellendus molestias deserunt deleniti odit mollitia?
 
-.. GENERATED FROM PYTHON SOURCE LINES 6-28
+.. GENERATED FROM PYTHON SOURCE LINES 6-27
 
 
 
@@ -37,7 +37,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
  .. code-block:: none
 
     No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
-      0%|          |  0/8 [00:00<?,       ?it/s]     12%|#2        | Oinfo (3):  1/8 [00:00<00:05,    1.21it/s]     25%|##5       | Oinfo (4):  2/8 [00:01<00:04,    1.33it/s]     38%|###7      | Oinfo (5):  3/8 [00:02<00:03,    1.40it/s]     50%|#####     | Oinfo (6):  4/8 [00:02<00:02,    1.51it/s]     62%|######2   | Oinfo (7):  5/8 [00:03<00:01,    1.58it/s]     75%|#######5  | Oinfo (8):  6/8 [00:03<00:01,    1.58it/s]     88%|########7 | Oinfo (9):  7/8 [00:04<00:00,    1.57it/s]    100%|##########| Oinfo (10):  8/8 [00:05<00:00,    1.61it/s]                                                            
+      0%|          |  0/8 [00:00<?,       ?it/s]     12%|#2        | Oinfo (3):  1/8 [00:00<00:05,    1.17it/s]     25%|##5       | Oinfo (4):  2/8 [00:01<00:04,    1.26it/s]     38%|###7      | Oinfo (5):  3/8 [00:02<00:03,    1.31it/s]     50%|#####     | Oinfo (6):  4/8 [00:02<00:02,    1.39it/s]     62%|######2   | Oinfo (7):  5/8 [00:03<00:02,    1.45it/s]     75%|#######5  | Oinfo (8):  6/8 [00:04<00:01,    1.45it/s]     88%|########7 | Oinfo (9):  7/8 [00:04<00:00,    1.44it/s]    100%|##########| Oinfo (10):  8/8 [00:05<00:00,    1.48it/s]                                                            
 
 
 
@@ -54,7 +54,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
 
     import matplotlib.pyplot as plt
 
-    plt.style.use('ggplot')
+    plt.style.use("ggplot")
 
     x = np.random.rand(500, 10)
     # x[:, 7] = x[:, 0] + x[:, 1]
@@ -63,17 +63,16 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
 
 
     model = Oinfo(x)
-    hoi = model.fit(minsize=3, maxsize=None, method='gcmi')
+    hoi = model.fit(minsize=3, maxsize=None, method="gcmi")
 
-    plot_landscape(hoi, model=model,
-                   plt_kwargs=dict(cmap='turbo'))
+    plot_landscape(hoi, model=model, plt_kwargs=dict(cmap="turbo"))
     plt.tight_layout()
     plt.show()
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  5.780 seconds)
+   **Total running time of the script:** ( 0 minutes  6.269 seconds)
 
 
 .. _sphx_glr_download_auto_examples_metrics_plot_metrics1.py:

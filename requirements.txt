@@ -3,4 +3,5 @@ jaxlib
 numpy
 scipy
 pandas
+scikit-learn
 tqdm

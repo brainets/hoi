@@ -52,7 +52,7 @@ jobs:
           cd docs
           make clean
           make html
-          touch build/html/.nojekyll
+          touch _build/html/.nojekyll
 
       - name: Deploy Github Pages 🚀
         uses: JamesIves/github-pages-deploy-action@v4.4.3

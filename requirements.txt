@@ -1,3 +1,5 @@
-tqdm
-numpy
 jax
+jaxlib
+numpy
+scipy
+tqdm

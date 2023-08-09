@@ -25,7 +25,6 @@ def read(fname):
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
-core_deps = ["jax", "numpy", "scipy", "tqdm"]
 test_deps = ["pytest", "pytest-sugar", "pytest-cov", "codecov"]
 doc_deps = [
     "sphinx!=4.1.0",
@@ -33,14 +32,13 @@ doc_deps = [
     "pydata-sphinx-theme>=0.6.3",
     "sphinxcontrib-bibtex==1.0.0",
     "numpydoc",
-    "xlrd",
-    "openpyxl",
     "seaborn",
+    "matplotlib",
     "memory-profiler",
     "sphinx-panels",
     "sphinx-copybutton",
 ]
-flake_deps = ["flake8", "pep8-naming"]
+lint_deps = ["flake8", "pep8-naming", "black"]
 
 setup(
     name=NAME,
@@ -55,11 +53,10 @@ setup(
     setup_requires=["numpy"],
     install_requires=requirements,
     extras_require={
-        "all": core_deps,
-        "test": core_deps + test_deps,
-        "doc": core_deps + test_deps + doc_deps,
-        "flake": core_deps + test_deps + flake_deps,
-        "full": core_deps + test_deps + doc_deps + flake_deps,
+        "test": requirements + test_deps,
+        "doc": requirements + doc_deps,
+        "lint": requirements + lint_deps,
+        "full": requirements + test_deps + doc_deps + lint_deps,
     },
     dependency_links=[],
     author=AUTHOR,
@@ -75,8 +72,11 @@ setup(
         "Intended Audience :: Education",
         "Intended Audience :: Developers",
         "Topic :: Scientific/Engineering :: Visualization",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11"
     ],
 )

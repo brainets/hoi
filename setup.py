@@ -29,8 +29,8 @@ test_deps = ["pytest", "pytest-sugar", "pytest-cov", "codecov"]
 doc_deps = [
     "sphinx!=4.1.0",
     "sphinx-gallery",
-    "pydata-sphinx-theme>=0.6.3",
-    "sphinxcontrib-bibtex==1.0.0",
+    "pydata-sphinx-theme",
+    "sphinxcontrib-bibtex",
     "numpydoc",
     "seaborn",
     "matplotlib",

@@ -8,9 +8,7 @@ from hoi.metrics.base_hoi import HOIEstimator
 logger = logging.getLogger("hoi")
 
 
-
 class GradientOinfo(HOIEstimator):
-
     r"""First order Gradient O-information.
 
     The Gradient O-information is defined as the difference between the
@@ -48,9 +46,7 @@ class GradientOinfo(HOIEstimator):
     __name__ = "Gradient O-Information"
 
     def __init__(self, x, y, multiplets=None, verbose=None):
-        HOIEstimator.__init__(
-            self, x=x, y=None, multiplets=multiplets, verbose=verbose
-        )
+        HOIEstimator.__init__(self, x=x, y=None, multiplets=multiplets, verbose=verbose)
         self._oinf_tr = Oinfo(x, y=y, multiplets=multiplets, verbose=verbose)
         self._oinf_tf = Oinfo(x, multiplets=multiplets, verbose=verbose)
 
@@ -90,7 +86,8 @@ class GradientOinfo(HOIEstimator):
         hoi_tr = self._oinf_tr.fit(
             minsize=self._oinf_tf.minsize + 1,
             maxsize=self._oinf_tf.maxsize + 1,
-            method=method, **kwargs
+            method=method,
+            **kwargs
         )
 
         return hoi_tr - hoi_tf
@@ -98,7 +95,7 @@ class GradientOinfo(HOIEstimator):
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape, digitize, get_nbest_mult
+    from hoi.utils import landscape, get_nbest_mult
     from matplotlib.colors import LogNorm
 
     plt.style.use("ggplot")

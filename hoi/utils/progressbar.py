@@ -6,7 +6,7 @@ from jax.experimental import host_callback
 from tqdm.auto import tqdm
 
 
-logger = logging.getLogger('hoi')
+logger = logging.getLogger("hoi")
 
 
 def get_pbar(**kwargs):
@@ -17,7 +17,8 @@ def get_pbar(**kwargs):
     kwargs["smoothing"] = 0.05
     kwargs["bar_format"] = (
         "{percentage:3.0f}%|{bar}| {desc} {n_fmt}/{total_fmt} [{elapsed}"
-        "<{remaining}, {rate_fmt:>11}{postfix}]")
+        "<{remaining}, {rate_fmt:>11}{postfix}]"
+    )
     return tqdm(**kwargs)
 
 
@@ -48,8 +49,9 @@ def scan_tqdm(
     _update_progress_bar, close_tqdm = build_tqdm(n, print_rate, message)
 
     def _scan_tqdm(func):
-        """Decorator that adds a tqdm progress bar to `body_fun` used in `jax.lax.scan`.
-        Note that `body_fun` must either be looping over `jnp.arange(n)`,
+        """Decorator that adds a tqdm progress bar to
+        `body_fun` used in `jax.lax.scan`. Note that
+        `body_fun` must either be looping over `jnp.arange(n)`,
         or be looping over a tuple who's first element is `jnp.arange(n)`
         This means that `iter_num` is the current iteration number
         """

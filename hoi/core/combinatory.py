@@ -16,8 +16,9 @@ def _combinations(n, k, order):
         yield c
 
 
-def combinations(n, minsize, maxsize=None, astype="iterator", order=False,
-                 fill_value=-1):
+def combinations(
+    n, minsize, maxsize=None, astype="iterator", order=False, fill_value=-1
+):
     """Get combinations.
 
     Parameters
@@ -49,7 +50,7 @@ def combinations(n, minsize, maxsize=None, astype="iterator", order=False,
         iterators.append(_combinations(n, msize, order))
     iterators = itertools.chain(*tuple(iterators))
 
-    if astype == 'iterator':
+    if astype == "iterator":
         return iterators
 
     # _________________________________ ARRAYS ________________________________
@@ -64,16 +65,16 @@ def combinations(n, minsize, maxsize=None, astype="iterator", order=False,
 
         # fill the array
         for n_c, c in enumerate(iterators):
-            combs[n_c, 0:len(c)] = c
+            combs[n_c, 0 : len(c)] = c
 
     # jax conversion (f required)
-    if astype == 'jax':
+    if astype == "jax":
         combs = jnp.asarray(combs)
 
     return combs
 
 
-if __name__ == '__main__':
-    print(combinations(10, minsize=2, maxsize=None, astype='jax', order=False))
+if __name__ == "__main__":
+    print(combinations(10, minsize=2, maxsize=None, astype="jax", order=False))
 
     # print(np.array(list(itertools.combinations(np.arange(10), 3))).shape)

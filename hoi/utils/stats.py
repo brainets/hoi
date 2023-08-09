@@ -3,8 +3,9 @@
 import numpy as np
 
 
-def landscape(x, mult_size, n_bins=100, centered=False, stat='probability',
-              output='numpy'):
+def landscape(
+    x, mult_size, n_bins=100, centered=False, stat="probability", output="numpy"
+):
     """Compute the landscape from HOI values.
 
     The landscape represents the how estimates of HOI are distributed per
@@ -47,8 +48,13 @@ def landscape(x, mult_size, n_bins=100, centered=False, stat='probability',
     """
     assert len(x) == len(mult_size)
     assert stat in [
-        'probability', 'proportion', 'frequency', 'count', 'density',
-        'percent']
+        "probability",
+        "proportion",
+        "frequency",
+        "count",
+        "density",
+        "percent",
+    ]
 
     # get multiplet size
     mult_size = np.asarray(mult_size)
@@ -64,40 +70,43 @@ def landscape(x, mult_size, n_bins=100, centered=False, stat='probability',
     else:
         o_range = (omin, omax)
     edges = np.histogram_bin_edges(x, bins=n_bins, range=o_range)
-    edge_centers = (edges[0:-1] + edges[1::]) / 2.
+    edge_centers = (edges[0:-1] + edges[1::]) / 2.0
 
     # compute histogram
     lscp = np.zeros((n_bins, n_orders))
     for n_m, mult in enumerate(msize):
         idx = np.where(mult_size == mult)[0]
-        _hist = np.histogram(
-            x[idx], bins=edges, density=stat == 'density')[0]
+        _hist = np.histogram(x[idx], bins=edges, density=stat == "density")[0]
 
-        if stat in ['probability', 'proportion']:
+        if stat in ["probability", "proportion"]:
             _hist = _hist.astype(float) / np.sum(_hist)
-        elif stat == 'percent':
-            _hist = 100. * _hist.astype(float) / np.sum(_hist)
-        elif stat == 'frequency':
+        elif stat == "percent":
+            _hist = 100.0 * _hist.astype(float) / np.sum(_hist)
+        elif stat == "frequency":
             _hist = _hist.astype(float) / np.diff(edges)
 
         lscp[:, n_m] = _hist
-    lscp[lscp == 0.] = np.nan
+    lscp[lscp == 0.0] = np.nan
 
     # output type
-    if output == 'numpy':
+    if output == "numpy":
         return lscp, msize, edge_centers
-    elif output == 'pandas':
+    elif output == "pandas":
         import pandas as pd
-        return pd.DataFrame(np.flipud(lscp), columns=msize,
-                            index=edge_centers[::-1])
-    elif output == 'xarray':
+
+        return pd.DataFrame(np.flipud(lscp), columns=msize, index=edge_centers[::-1])
+    elif output == "xarray":
         import xarray as xr
+
         attrs = dict(stat=stat, n_bins=n_bins)
         lscp = xr.DataArray(
-            lscp, dims=('bins', 'order'), coords=(edge_centers, msize),
-            name=stat, attrs=attrs
+            lscp,
+            dims=("bins", "order"),
+            coords=(edge_centers, msize),
+            name=stat,
+            attrs=attrs,
         )
-        lscp.bins.attrs['unit'] = 'bits'
+        lscp.bins.attrs["unit"] = "bits"
         return lscp
 
     return lscp
@@ -117,8 +126,10 @@ def digitize_sklearn(x, **kwargs):
     """One dimensional digitization."""
     assert x.ndim == 1
     from sklearn.preprocessing import KBinsDiscretizer
-    return KBinsDiscretizer(**kwargs).fit_transform(
-        x.reshape(-1, 1)).astype(int).squeeze()
+
+    return (
+        KBinsDiscretizer(**kwargs).fit_transform(x.reshape(-1, 1)).astype(int).squeeze()
+    )
 
 
 def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
@@ -149,13 +160,13 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
     if not use_sklearn:
         return np.apply_along_axis(digitize_1d, axis, x, n_bins)
     else:
-        kwargs['n_bins'] = n_bins
-        kwargs['encode'] = 'ordinal'
-        kwargs['subsample'] = None
+        kwargs["n_bins"] = n_bins
+        kwargs["encode"] = "ordinal"
+        kwargs["subsample"] = None
         return np.apply_along_axis(digitize_sklearn, axis, x, **kwargs)
 
 
-def normalize(x, to_min=0., to_max=1.):
+def normalize(x, to_min=0.0, to_max=1.0):
     """Normalize the array x between to_min and to_max.
 
     Parameters
@@ -173,8 +184,10 @@ def normalize(x, to_min=0., to_max=1.):
         The normalized array
     """
     # find minimum and maximum
-    if to_min is None: to_min = np.nanmin(x)  # noqa
-    if to_max is None: to_max = np.nanmax(x)  # noqa
+    if to_min is None:
+        to_min = np.nanmin(x)  # noqa
+    if to_max is None:
+        to_max = np.nanmax(x)  # noqa
 
     # normalize
     if x.size:
@@ -189,8 +202,16 @@ def normalize(x, to_min=0., to_max=1.):
     return x_n
 
 
-def get_nbest_mult(hoi, model=None, orders=None, multiplets=None, n_best=5,
-                   minsize=None, maxsize=None, names=None):
+def get_nbest_mult(
+    hoi,
+    model=None,
+    orders=None,
+    multiplets=None,
+    n_best=5,
+    minsize=None,
+    maxsize=None,
+    names=None,
+):
     """Get the n best multiplets.
 
     This function requires pandas to be installed.
@@ -240,35 +261,38 @@ def get_nbest_mult(hoi, model=None, orders=None, multiplets=None, n_best=5,
     keep_order = np.logical_and(orders >= minsize, orders <= maxsize)
 
     # merge into a dataframe
-    df = pd.DataFrame({
-        'hoi': hoi[keep_order], 'index': indices[keep_order],
-        'order': orders[keep_order]
-    }).sort_values(by='hoi', ascending=False)
+    df = pd.DataFrame(
+        {
+            "hoi": hoi[keep_order],
+            "index": indices[keep_order],
+            "order": orders[keep_order],
+        }
+    ).sort_values(by="hoi", ascending=False)
 
     # df selection
-    is_syn = df['hoi'] < 0
+    is_syn = df["hoi"] < 0
     df_syn = df.loc[is_syn]
-    df_syn = df_syn.iloc[-min(n_best, len(df_syn))::]
+    df_syn = df_syn.iloc[-min(n_best, len(df_syn)) : :]
     df_red = df.loc[~is_syn]
-    df_red = df_red.iloc[:min(n_best, len(df_red))]
+    df_red = df_red.iloc[: min(n_best, len(df_red))]
     df_best = pd.concat((df_red, df_syn)).reset_index(drop=True)
 
     # reorder columns
-    df_best = df_best[['index', 'order', 'hoi']]
+    df_best = df_best[["index", "order", "hoi"]]
 
     # multiplets selection
     mults = []
-    for m in multiplets[df_best['index'].values, :]:
+    for m in multiplets[df_best["index"].values, :]:
         mults.append(m[m != -1])
-    df_best['multiplet'] = mults
+    df_best["multiplet"] = mults
 
     # find names
     if names is not None:
         cols = np.asarray(names)
         names = []
-        for c in df_best['multiplet'].values:
+        for c in df_best["multiplet"].values:
             c = np.asarray(c)
-            names.append(' / '.join(cols[c].tolist()))
-        df_best['names'] = names
+            names.append(" / ".join(cols[c].tolist()))
+        df_best["names"] = names
 
     return df_best

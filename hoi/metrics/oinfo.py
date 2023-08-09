@@ -1,4 +1,3 @@
-import itertools
 from functools import partial
 import logging
 
@@ -8,9 +7,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.utils.progressbar import scan_tqdm
 from hoi.core.entropies import get_entropy, prepare_for_entropy
-from math import comb as ccomb
 from hoi.utils.progressbar import get_pbar
 
 logger = logging.getLogger("hoi")
@@ -39,9 +36,7 @@ def _oinfo_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
     return inputs, oinfo
 
 
-
 class Oinfo(HOIEstimator):
-
     r"""O-information.
 
     The O-information is defined as the difference between the total
@@ -78,9 +73,7 @@ class Oinfo(HOIEstimator):
     __name__ = "O-Information"
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
-        HOIEstimator.__init__(
-            self, x=x, y=y, multiplets=multiplets, verbose=verbose
-        )
+        HOIEstimator.__init__(self, x=x, y=y, multiplets=multiplets, verbose=verbose)
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the O-information.
@@ -110,17 +103,16 @@ class Oinfo(HOIEstimator):
         minsize, maxsize = self._check_minmax(minsize, maxsize)
 
         # prepare the x for computing entropy
-        x, kwargs = prepare_for_entropy(
-            self._x, method, **kwargs
-        )
+        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
 
         # get entropy function
         entropy = jax.vmap(get_entropy(method=method, **kwargs))
-        oinfo_no_ent = partial(_oinfo_no_ent, entropy_3d=entropy,
-                               entropy_4d=jax.vmap(entropy, in_axes=1))
+        oinfo_no_ent = partial(
+            _oinfo_no_ent, entropy_3d=entropy, entropy_4d=jax.vmap(entropy, in_axes=1)
+        )
 
         # prepare output
-        kw_combs = dict(maxsize=maxsize, astype='jax')
+        kw_combs = dict(maxsize=maxsize, astype="jax")
         h_idx = self.get_combinations(minsize, **kw_combs)
         order = self.get_combinations(minsize, order=True, **kw_combs)
 
@@ -130,15 +122,13 @@ class Oinfo(HOIEstimator):
         order = order[keep]
 
         # get progress bar
-        pbar = get_pbar(
-            iterable=range(order.min(), order.max() + 1), leave=False,
-        )
+        pbar = get_pbar(iterable=range(order.min(), order.max() + 1), leave=False)
 
-        # ______________________________ ENTROPY ______________________________
+        # ______________________________ ENTROPY ____________________________
         offset = 0
         hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
         for msize in pbar:
-            pbar.set_description(desc='Oinfo (%i)' % msize, refresh=False)
+            pbar.set_description(desc="Oinfo (%i)" % msize, refresh=False)
 
             # combinations of features
             keep = order == msize
@@ -152,7 +142,7 @@ class Oinfo(HOIEstimator):
 
             # fill variables
             n_combs, n_feat = _h_idx.shape
-            hoi = hoi.at[offset:offset + n_combs, :].set(_hoi)
+            hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs
@@ -164,10 +154,9 @@ class Oinfo(HOIEstimator):
         return np.asarray(hoi)
 
 
-
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape, digitize
+    from hoi.utils import landscape
     from matplotlib.colors import LogNorm
 
     plt.style.use("ggplot")

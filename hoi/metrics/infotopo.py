@@ -1,7 +1,3 @@
-import itertools
-from math import comb
-import itertools
-from functools import partial
 import logging
 
 import numpy as np
@@ -88,9 +84,7 @@ class InfoTopo(HOIEstimator):
     __name__ = "Topological Information"
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
-        HOIEstimator.__init__(
-            self, x=x, y=y, multiplets=multiplets, verbose=verbose
-        )
+        HOIEstimator.__init__(self, x=x, y=y, multiplets=multiplets, verbose=verbose)
 
     def fit(self, minsize=1, maxsize=None, method="gcmi", **kwargs):
         """Compute Topological Information.
@@ -118,9 +112,10 @@ class InfoTopo(HOIEstimator):
         Returns
         -------
         oinfo : array_like
-            The O-info array of shape (n_multiplets, n_variables) where positive
-            values reflect redundant dominated interactions and negative values
-            stand for synergistic dominated interactions.
+            The O-info array of shape (n_multiplets, n_variables)
+            where positive values reflect redundant dominated
+            interactions and negative values stand for
+            synergistic dominated interactions.
         """
         # ____________________________ ENTROPIES ______________________________
 
@@ -155,7 +150,7 @@ class InfoTopo(HOIEstimator):
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape, digitize
+    from hoi.utils import landscape
     from matplotlib.colors import LogNorm
 
     plt.style.use("ggplot")

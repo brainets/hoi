@@ -72,7 +72,6 @@ setup(
         "Intended Audience :: Education",
         "Intended Audience :: Developers",
         "Topic :: Scientific/Engineering :: Visualization",
-        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",

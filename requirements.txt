@@ -1,6 +1,5 @@
 jax
 jaxlib
-math>=3.8
 numpy
 scipy
 tqdm

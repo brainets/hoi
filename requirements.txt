@@ -2,4 +2,5 @@ jax
 jaxlib
 numpy
 scipy
+pandas
 tqdm

@@ -8,9 +8,7 @@ import jax.numpy as jnp
 from hoi.core.combinatory import combinations
 from hoi.core.entropies import get_entropy, prepare_for_entropy
 from hoi.utils.progressbar import get_pbar
-
-
-logger = logging.getLogger("hoi")
+from hoi.utils.logging import logger, set_log_level
 
 
 @partial(jax.jit, static_argnums=(2,))
@@ -24,12 +22,8 @@ def ent_at_index(x, idx, entropy=None):
 
 class HOIEstimator(object):
     def __init__(self, x, y=None, multiplets=None, verbose=None):
-        # x checking
+        set_log_level(verbose)
         self._x = self._prepare_data(x, y=y, multiplets=multiplets)
-
-        if verbose not in ["INFO", "DEBUG", "ERROR"]:
-            verbose = "INFO"
-        logger.setLevel(verbose)
 
     def __iter__(self):
         """Iteration over orders."""
@@ -44,6 +38,8 @@ class HOIEstimator(object):
 
     def _prepare_data(self, x, y=None, multiplets=None):
         """Check input x shape."""
+
+        logger.debug("    Prepare the data")
 
         # force x to be 3d
         assert x.ndim >= 2
@@ -240,6 +236,7 @@ class HOIEstimator(object):
                 keep_tr = (mults == self.n_features - 1).any(1)
                 keep = jnp.logical_and(keep, keep_tr)
         else:
+            logger.info("    Selecting custom multiplets")
             keep = jnp.zeros((len(order),), dtype=bool)
 
             for n_m, m in enumerate(self._custom_mults):

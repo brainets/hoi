@@ -13,7 +13,7 @@ from jax.scipy.special import digamma as psi
 from jax.scipy.special import gamma
 from jax.scipy.stats import gaussian_kde
 
-logger = logging.getLogger("hoi")
+from hoi.utils.logging import logger
 
 
 ###############################################################################

@@ -4,8 +4,8 @@ import numpy as np
 
 from hoi.metrics.oinfo import Oinfo
 from hoi.metrics.base_hoi import HOIEstimator
+from hoi.utils.logging import logger
 
-logger = logging.getLogger("hoi")
 
 
 class GradientOinfo(HOIEstimator):
@@ -103,7 +103,6 @@ if __name__ == "__main__":
     x = np.random.rand(300, 6)
     y = x[:, 0] + x[:, 3]
 
-    logger.setLevel("INFO")
     model = GradientOinfo(x, y=y)
     hoi = model.fit(minsize=2, maxsize=None, method="gcmi")
 

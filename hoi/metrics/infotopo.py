@@ -7,8 +7,7 @@ import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.utils.progressbar import scan_tqdm
-
-logger = logging.getLogger("hoi")
+from hoi.utils.logging import logger
 
 
 ###############################################################################
@@ -161,7 +160,6 @@ if __name__ == "__main__":
     x_amp = x_max - x_min
     x_bin = np.ceil(((x - x_min) * (3 - 1)) / (x_amp)).astype(int)
 
-    logger.setLevel("INFO")
     # model = InfoTopo(digitize(x[..., 100], 3, axis=1))
     # model = InfoTopo(x[..., 100])
     model = InfoTopo(x_bin)

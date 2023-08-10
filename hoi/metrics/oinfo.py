@@ -9,8 +9,7 @@ import jax.numpy as jnp
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.entropies import get_entropy, prepare_for_entropy
 from hoi.utils.progressbar import get_pbar
-
-logger = logging.getLogger("hoi")
+from hoi.utils.logging import logger
 
 
 @partial(jax.jit, static_argnums=(2, 3))
@@ -164,8 +163,7 @@ if __name__ == "__main__":
     path = "/home/etienne/Downloads/data_200_trials"
     x = np.load(path, allow_pickle=True)[..., 100]
 
-    logger.setLevel("INFO")
-    model = Oinfo(x)
+    model = Oinfo(x, verbose='debug')
     hoi = model.fit(minsize=1, maxsize=None, method="gcmi")
 
     print(hoi.shape)

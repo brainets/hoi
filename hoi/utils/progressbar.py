@@ -5,8 +5,7 @@ import jax
 from jax.experimental import host_callback
 from tqdm.auto import tqdm
 
-
-logger = logging.getLogger("hoi")
+from hoi.utils.logging import logger
 
 
 def get_pbar(**kwargs):

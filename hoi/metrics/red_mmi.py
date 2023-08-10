@@ -12,8 +12,7 @@ from hoi.core.combinatory import combinations
 from hoi.core.entropies import get_entropy, prepare_for_entropy
 from hoi.core.mi import mi_entr_comb
 from hoi.utils.progressbar import get_pbar
-
-logger = logging.getLogger("hoi")
+from hoi.utils.logging import logger
 
 
 class RedundancyMMI(HOIEstimator):

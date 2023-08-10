@@ -62,7 +62,7 @@ class HOIEstimator(object):
         # compute only selected multiplets
         self._custom_mults = None
         if isinstance(multiplets, (list, np.ndarray)):
-            self._custom_mults = [np.asarray(m) for m in multiplets]
+            self._custom_mults = multiplets
 
         self.n_samples, self.n_features, self.n_variables = x.shape
 
@@ -238,13 +238,18 @@ class HOIEstimator(object):
         else:
             logger.info("    Selecting custom multiplets")
             keep = jnp.zeros((len(order),), dtype=bool)
+            indices = jnp.arange(len(order))
 
             for n_m, m in enumerate(self._custom_mults):
+                # select multiplets and indices at this order
                 is_order = order == len(m)
-                is_mult = (mults[:, 0 : len(m)] == m).all(1)
-                idx = np.where(np.logical_and(is_mult, is_order))[0]
+                _mult = mults[is_order, 0 : len(m)]
+                _indices = indices[is_order]
+                # find the multiplet
+                idx = jnp.where((_mult == jnp.array(m)).all(1))[0]
                 assert len(idx) == 1
-                keep = keep.at[idx].set(True)
+                # store index
+                keep = keep.at[_indices[idx]].set(True)
 
         self._keep = keep
 

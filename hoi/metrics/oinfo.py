@@ -1,5 +1,4 @@
 from functools import partial
-import logging
 
 import numpy as np
 
@@ -9,7 +8,6 @@ import jax.numpy as jnp
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.entropies import get_entropy, prepare_for_entropy
 from hoi.utils.progressbar import get_pbar
-from hoi.utils.logging import logger
 
 
 @partial(jax.jit, static_argnums=(2, 3))
@@ -72,7 +70,9 @@ class Oinfo(HOIEstimator):
     __name__ = "O-Information"
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
-        HOIEstimator.__init__(self, x=x, y=y, multiplets=multiplets, verbose=verbose)
+        HOIEstimator.__init__(
+            self, x=x, y=y, multiplets=multiplets, verbose=verbose
+        )
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the O-information.
@@ -107,7 +107,9 @@ class Oinfo(HOIEstimator):
         # get entropy function
         entropy = jax.vmap(get_entropy(method=method, **kwargs))
         oinfo_no_ent = partial(
-            _oinfo_no_ent, entropy_3d=entropy, entropy_4d=jax.vmap(entropy, in_axes=1)
+            _oinfo_no_ent,
+            entropy_3d=entropy,
+            entropy_4d=jax.vmap(entropy, in_axes=1),
         )
 
         # prepare output
@@ -116,12 +118,13 @@ class Oinfo(HOIEstimator):
         order = self.get_combinations(minsize, order=True, **kw_combs)
 
         # subselection of multiplets
-        keep = self.filter_multiplets(h_idx, order)
-        h_idx = h_idx[keep, :]
-        order = order[keep]
+        self._multiplets = self.filter_multiplets(h_idx, order)
+        order = (self._multiplets >= 0).sum(1)
 
         # get progress bar
-        pbar = get_pbar(iterable=range(order.min(), order.max() + 1), leave=False)
+        pbar = get_pbar(
+            iterable=range(order.min(), order.max() + 1), leave=False
+        )
 
         # ______________________________ ENTROPY ____________________________
         offset = 0
@@ -131,7 +134,7 @@ class Oinfo(HOIEstimator):
 
             # combinations of features
             keep = order == msize
-            _h_idx = h_idx[keep, 0:msize]
+            _h_idx = self._multiplets[keep, 0:msize]
 
             # generate indices for accumulated entropies
             acc = jnp.mgrid[0:msize, 0:msize].sum(0) % msize
@@ -146,10 +149,6 @@ class Oinfo(HOIEstimator):
             # updates
             offset += n_combs
 
-        self._multiplets = np.asarray(h_idx)
-        self._order = np.asarray(order)
-        self._keep = np.ones_like(order, dtype=bool)
-
         return np.asarray(hoi)
 
 
@@ -163,7 +162,7 @@ if __name__ == "__main__":
     path = "/home/etienne/Downloads/data_200_trials"
     x = np.load(path, allow_pickle=True)[..., 100]
 
-    model = Oinfo(x, verbose='debug')
+    model = Oinfo(x, verbose="debug", multiplets=[(0, 1, 2), (4, 5, 7, 8)])
     hoi = model.fit(minsize=1, maxsize=None, method="gcmi")
 
     print(hoi.shape)

@@ -1,5 +1,3 @@
-import logging
-
 import numpy as np
 
 import jax
@@ -7,7 +5,6 @@ import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.utils.progressbar import scan_tqdm
-from hoi.utils.logging import logger
 
 
 ###############################################################################
@@ -83,7 +80,9 @@ class InfoTopo(HOIEstimator):
     __name__ = "Topological Information"
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
-        HOIEstimator.__init__(self, x=x, y=y, multiplets=multiplets, verbose=verbose)
+        HOIEstimator.__init__(
+            self, x=x, y=y, multiplets=multiplets, verbose=verbose
+        )
 
     def fit(self, minsize=1, maxsize=None, method="gcmi", **kwargs):
         """Compute Topological Information.
@@ -128,11 +127,11 @@ class InfoTopo(HOIEstimator):
 
         # compute order and multiply entropies
         h_x_sgn = jnp.multiply(((-1.0) ** (order.reshape(-1, 1) - 1)), h_x)
-        h_idx_2 = jnp.where(h_idx == -1, -2, h_idx)
 
         # subselection of multiplets
-        keep = self.filter_multiplets(h_idx, order)
-        n_mult = keep.sum()
+        self._multiplets = self.filter_multiplets(h_idx, order)
+        h_idx_2 = jnp.where(self._multiplets == -1, -2, self._multiplets)
+        n_mult = h_idx_2.shape[0]
 
         # progress-bar definition
         pbar = scan_tqdm(n_mult, message="Mutual information")
@@ -141,7 +140,7 @@ class InfoTopo(HOIEstimator):
         _, hoi = jax.lax.scan(
             pbar(compute_mi),
             (h_idx[..., jnp.newaxis], h_x_sgn, order),
-            (jnp.arange(n_mult), h_idx_2[keep]),
+            (jnp.arange(n_mult), h_idx_2),
         )
 
         return np.asarray(hoi)
@@ -156,14 +155,11 @@ if __name__ == "__main__":
 
     path = "/home/etienne/Downloads/data_200_trials"
     x = np.load(path, allow_pickle=True)[..., 100]
-    x_min, x_max = x.min(), x.max()
-    x_amp = x_max - x_min
-    x_bin = np.ceil(((x - x_min) * (3 - 1)) / (x_amp)).astype(int)
 
     # model = InfoTopo(digitize(x[..., 100], 3, axis=1))
     # model = InfoTopo(x[..., 100])
-    model = InfoTopo(x_bin)
-    hoi = model.fit(maxsize=None, method="binning")
+    model = InfoTopo(x)
+    hoi = model.fit(maxsize=None, method="gcmi")
     # 0/0
 
     lscp = landscape(hoi.squeeze(), model.order, output="xarray")

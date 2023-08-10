@@ -1,11 +1,7 @@
-import logging
-
 import numpy as np
 
 from hoi.metrics.oinfo import Oinfo
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.utils.logging import logger
-
 
 
 class GradientOinfo(HOIEstimator):
@@ -46,7 +42,9 @@ class GradientOinfo(HOIEstimator):
     __name__ = "Gradient O-Information"
 
     def __init__(self, x, y, multiplets=None, verbose=None):
-        HOIEstimator.__init__(self, x=x, y=None, multiplets=multiplets, verbose=verbose)
+        HOIEstimator.__init__(
+            self, x=x, y=None, multiplets=multiplets, verbose=verbose
+        )
         self._oinf_tr = Oinfo(x, y=y, multiplets=multiplets, verbose=verbose)
         self._oinf_tf = Oinfo(x, multiplets=multiplets, verbose=verbose)
 
@@ -80,7 +78,6 @@ class GradientOinfo(HOIEstimator):
 
         self._multiplets = self._oinf_tf._multiplets
         self._order = self._oinf_tf._order
-        self._keep = self._oinf_tf._keep
 
         # __________________________ TASK-RELATED _____________________________
         hoi_tr = self._oinf_tr.fit(

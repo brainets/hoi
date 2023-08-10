@@ -74,7 +74,9 @@ class TestMetrics(object):
         for n_m, m in enumerate(mult):
             idx = self._get_mult_idx(model, m)
             np.testing.assert_almost_equal(hoi[idx, :], hoi_f[[n_m], :])
-            np.testing.assert_array_equal(model_f.multiplets[n_m, 0 : len(m)], m)
+            np.testing.assert_array_equal(
+                model_f.multiplets[n_m, 0 : len(m)], m
+            )
 
     @pytest.mark.parametrize("y", [y_1d])
     @pytest.mark.parametrize("x", [x_2d, x_3d])
@@ -88,7 +90,12 @@ class TestMetrics(object):
         assert hoi_tr.shape == hoi_tf.shape
         assert model_tr.order.shape == model_tf.order.shape
         assert all([6 in m for m in model_tr.multiplets])
-        assert all([m[o] == 6 for m, o in zip(model_tr.multiplets, model_tr.order - 1)])
+        assert all(
+            [
+                m[o] == 6
+                for m, o in zip(model_tr.multiplets, model_tr.order - 1)
+            ]
+        )
         np.testing.assert_array_equal(model_tf.order + 1, model_tr.order)
 
     @pytest.mark.parametrize("y", [y_1d])
@@ -114,4 +121,4 @@ class TestMetrics(object):
 
 
 if __name__ == "__main__":
-    TestMetrics().test_functional(Oinfo, x_3d, y_1d)
+    TestMetrics().test_functional(Oinfo, x_2d, y_1d)

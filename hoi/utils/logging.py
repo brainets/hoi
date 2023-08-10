@@ -4,9 +4,6 @@ import logging
 import sys
 import re
 
-from inspect import signature
-from decorator import FunctionMaker
-
 BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(8)
 RESET_SEQ = "\033[0m"
 COLOR_SEQ = "\033[1;%dm"
@@ -32,7 +29,6 @@ _LOGGING_TYPES = dict(
     ERROR=logging.ERROR,
     CRITICAL=logging.CRITICAL,
 )
-
 
 
 def formatter_message(message, use_color=True):
@@ -121,7 +117,7 @@ logging.Logger.profiler = profiler_fcn
 logger.setLevel(logging.INFO)
 
 
-def set_log_level(verbose=None, return_old_level=False, add_frames=None):
+def set_log_level(verbose=None, return_old_level=False):
     """Set the logging level.
 
     Parameters
@@ -135,7 +131,6 @@ def set_log_level(verbose=None, return_old_level=False, add_frames=None):
         it doesn't exist, defaults to INFO.
     return_old_level : bool
         If True, return the old verbosity level.
-    %(add_frames)s
 
     Returns
     -------
@@ -143,21 +138,7 @@ def set_log_level(verbose=None, return_old_level=False, add_frames=None):
         The old level. Only returned if ``return_old_level`` is True.
     """
     old_verbose = logger.level
-    verbose = _parse_verbose(verbose)
 
-    if verbose != old_verbose:
-        logger.setLevel(verbose)
-    if add_frames is not None:
-        _filter.add_frames = int(add_frames)
-        fmt = "%(frame_info)s " if add_frames else ""
-        fmt += "%(message)s"
-        fmt = logging.Formatter(fmt)
-        for handler in logger.handlers:
-            handler.setFormatter(fmt)
-    return old_verbose if return_old_level else None
-
-
-def _parse_verbose(verbose):
     if verbose is None:
         verbose = "INFO"
     elif isinstance(verbose, bool):
@@ -169,4 +150,6 @@ def _parse_verbose(verbose):
         verbose = verbose.upper()
         verbose = _LOGGING_TYPES[verbose]
 
-    return verbose
+    if verbose != old_verbose:
+        logger.setLevel(verbose)
+    return old_verbose if return_old_level else None

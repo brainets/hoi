@@ -1,4 +1,3 @@
-import logging
 from functools import partial
 
 import numpy as np
@@ -138,7 +137,8 @@ class HOIEstimator(object):
 
         # get entropy function
         entropy = partial(
-            ent_at_index, entropy=jax.vmap(get_entropy(method=method, **kwargs))
+            ent_at_index,
+            entropy=jax.vmap(get_entropy(method=method, **kwargs)),
         )
 
         # ______________________________ ENTROPY ______________________________
@@ -182,7 +182,9 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def get_combinations(self, minsize, maxsize=None, astype="jax", order=False):
+    def get_combinations(
+        self, minsize, maxsize=None, astype="jax", order=False
+    ):
         """Get combinations of features.
 
         Parameters
@@ -203,7 +205,11 @@ class HOIEstimator(object):
             Combinations of features.
         """
         return combinations(
-            self.n_features, minsize, maxsize=maxsize, astype=astype, order=order
+            self.n_features,
+            minsize,
+            maxsize=maxsize,
+            astype=astype,
+            order=order,
         )
 
     def filter_multiplets(self, mults, order):
@@ -235,25 +241,16 @@ class HOIEstimator(object):
                 logger.info("    Selecting task-related multiplets")
                 keep_tr = (mults == self.n_features - 1).any(1)
                 keep = jnp.logical_and(keep, keep_tr)
+
+            return mults[keep, :]
         else:
             logger.info("    Selecting custom multiplets")
-            keep = jnp.zeros((len(order),), dtype=bool)
-            indices = jnp.arange(len(order))
-
+            _orders = [len(m) for m in self._custom_mults]
+            mults = jnp.full((len(self._custom_mults), max(_orders)), -1)
             for n_m, m in enumerate(self._custom_mults):
-                # select multiplets and indices at this order
-                is_order = order == len(m)
-                _mult = mults[is_order, 0 : len(m)]
-                _indices = indices[is_order]
-                # find the multiplet
-                idx = jnp.where((_mult == jnp.array(m)).all(1))[0]
-                assert len(idx) == 1
-                # store index
-                keep = keep.at[_indices[idx]].set(True)
+                mults = mults.at[n_m, 0 : len(m)].set(m)
 
-        self._keep = keep
-
-        return keep
+            return mults
 
     def fit(self):  # noqa
         raise NotImplementedError()
@@ -267,7 +264,7 @@ class HOIEstimator(object):
     @property
     def entropies(self):
         """Entropies of shape (n_mult,)"""
-        return np.asarray(self._entropies[self._keep])
+        return np.asarray(self._entropies)
 
     @property
     def multiplets(self):
@@ -275,12 +272,12 @@ class HOIEstimator(object):
 
         By convention, we used -1 to indicate that a feature has been ignored.
         """
-        return np.asarray(self._multiplets[self._keep, :])
+        return np.asarray(self._multiplets)
 
     @property
     def order(self):
         """Order of each multiplet of shape (n_mult,)."""
-        return np.asarray(self._order)[np.asarray(self._keep)]
+        return np.asarray((self._multiplets >= 0).sum(1))
 
     @property
     def undersampling(self):

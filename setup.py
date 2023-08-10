@@ -12,7 +12,9 @@ EMAIL = "e.combrisson@gmail.com"
 KEYWORDS = "information-theory statistics higher-order-interactions"
 DESCRIPTION = "Higher Order Interactions"
 URL = "https://github.com/brainets/hoi"
-DOWNLOAD_URL = "https://github.com/brainets/hoi/archive/v" + __version__ + ".tar.gz"
+DOWNLOAD_URL = (
+    "https://github.com/brainets/hoi/archive/v" + __version__ + ".tar.gz"
+)
 # Data path :
 PACKAGE_DATA = {}
 

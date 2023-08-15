@@ -22,7 +22,7 @@ def test_digitize(arr, bins, sklearn):
 
 
 def truncate_decimal(number, decimal_points):
-    factor = 10 ** decimal_points
+    factor = 10**decimal_points
     truncated_number = math.floor(number * factor) / factor
     return truncated_number
 

@@ -17,23 +17,6 @@ Entropy and mutual information
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Entropy example 2">
-
-.. only:: html
-
-  .. image:: /auto_examples/it/images/thumb/sphx_glr_it2_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_auto_examples_it_it2.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Entropy example 2</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="Entropy example 1">
 
 .. only:: html
@@ -51,12 +34,29 @@ Entropy and mutual information
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Entropy example 2">
+
+.. only:: html
+
+  .. image:: /auto_examples/it/images/thumb/sphx_glr_it2_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_it_it2.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Entropy example 2</div>
+    </div>
+
+
+.. raw:: html
+
     </div>
 
 
 .. toctree::
    :hidden:
 
-   /auto_examples/it/it2
    /auto_examples/it/it1
+   /auto_examples/it/it2
 

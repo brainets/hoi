@@ -25,7 +25,7 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.000 seconds)
+   **Total running time of the script:** (0 minutes 0.000 seconds)
 
 **Estimated memory usage:**  0 MB
 

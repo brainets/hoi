@@ -13,7 +13,7 @@ j2 = jax.random.uniform(jax.random.PRNGKey(0), shape=(10, 50))
 
 
 def truncate_decimal(number, decimal_points):
-    factor = 10 ** decimal_points
+    factor = 10**decimal_points
     truncated_number = math.floor(number * factor) / factor
     return truncated_number
 

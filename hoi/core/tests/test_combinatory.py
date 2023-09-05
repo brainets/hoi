@@ -5,7 +5,7 @@ from hoi.core.combinatory import combinations, _combinations
 from collections.abc import Iterable
 
 
-class testCombinatory(object):
+class TestCombinatory(object):
     @pytest.mark.parametrize(
         "n", [np.random.randint(5, 10) for _ in range(10)]
     )

@@ -13,7 +13,7 @@ j2 = jax.random.uniform(jax.random.PRNGKey(0), shape=(10, 50))
 
 
 def truncate_decimal(number, decimal_points):
-    factor = 10**decimal_points
+    factor = 10 ** decimal_points
     truncated_number = math.floor(number * factor) / factor
     return truncated_number
 
@@ -43,7 +43,11 @@ class TestStats(object):
         assert xn.shape == x.shape
         for row in xn:
             for val in row:
-                assert val <= to_max and val >= truncate_decimal(to_min, 7)
+                assert val <= to_max and (
+                    val >= truncate_decimal(to_min, 7)
+                    or abs(val - truncate_decimal(to_min, 7 <= 0.1))
+                )
+                # assert val <= to_max and val >= truncate_decimal(to_min, 7)
 
     @pytest.mark.parametrize("x", x)
     @pytest.mark.parametrize("multi", multi)

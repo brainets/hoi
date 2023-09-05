@@ -20,23 +20,23 @@ j2 = jax.random.uniform(jax.random.PRNGKey(0), shape=(10, 50))
 
 
 # Smoke tests
-@pytest.mark.parametrize("x", [x1, x2, j1, j2])
-@pytest.mark.parametrize("biascorrect", [True, False])
-@pytest.mark.parametrize("demean", [True, False])
-def test_entropy_gcmi(x, biascorrect, demean):
-    hx = entropy_gcmi(x, biascorrect, demean)
-    hx = np.asarray(hx)
-    assert hx.dtype == np.float32
-    pass
+class TestEntropy(object):
+    @pytest.mark.parametrize("x", [x1, x2, j1, j2])
+    @pytest.mark.parametrize("biascorrect", [True, False])
+    @pytest.mark.parametrize("demean", [True, False])
+    def test_entropy_gcmi(self, x, biascorrect, demean):
+        hx = entropy_gcmi(x, biascorrect, demean)
+        hx = np.asarray(hx)
+        assert hx.dtype == np.float32
+        pass
 
-
-@pytest.mark.parametrize("x", [x1, x2, j1, j2])
-def test_entropy_bin(x):
-    x_bin = digitize(x, n_bins=3)
-    hx = entropy_bin(x_bin)
-    hx = np.asarray(hx)
-    assert hx.dtype == np.float32
-    pass
+    @pytest.mark.parametrize("x", [x1, x2, j1, j2])
+    def test_entropy_bin(self, x):
+        x_bin = digitize(x, n_bins=3)
+        hx = entropy_bin(x_bin)
+        hx = np.asarray(hx)
+        assert hx.dtype == np.float32
+        pass
 
 
 @pytest.mark.parametrize("x", [x1, x2, j1, j2])

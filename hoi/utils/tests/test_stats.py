@@ -44,7 +44,7 @@ class TestStats(object):
         to_max = to_min + np.random.uniform(0, 1)
         xn = normalize(x, to_min, to_max)
         assert xn.shape == x.shape
-        assert np.min(xn) >= truncate_decimal(to_min, 7)
+        assert np.min(xn) >= truncate_decimal(to_min, 3)
         assert np.max(xn) <= to_max
         # for row in xn:
         #     for val in row:

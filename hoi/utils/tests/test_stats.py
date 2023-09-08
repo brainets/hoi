@@ -31,12 +31,13 @@ class TestStats(object):
     def test_digitize(self, arr, bins, sklearn):
         x_binned = digitize(x=arr, n_bins=bins, axis=0, use_sklearn=sklearn)
         assert arr.shape == x_binned.shape
+        assert all(isinstance(element, int) for element in x_binned)
 
     @pytest.mark.parametrize("x", [x1, x2, j2])
     @pytest.mark.parametrize(
         "to_min", [np.random.uniform(0, 1) for n in range(5)]
     )
-    def test_normlaize(self, x, to_min):
+    def test_normalize(self, x, to_min):
         to_max = to_min + np.random.uniform(0, 1)
         to_max = to_min + np.random.uniform(0, 1)
         xn = normalize(x, to_min, to_max)
@@ -72,4 +73,5 @@ class TestStats(object):
         hoi = model.fit()
         df = get_nbest_mult(hoi, model=model, n_best=n_best)
         assert isinstance(df, pd.DataFrame)
+        assert len(df.axes[0]) == 2 * n_best
         pass

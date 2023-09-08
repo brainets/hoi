@@ -38,36 +38,32 @@ class TestEntropy(object):
         assert hx.dtype == np.float32
         pass
 
+    @pytest.mark.parametrize("x", [x1, x2, j1, j2])
+    @pytest.mark.parametrize(
+        "base", [np.random.randint(1, 100) for _ in range(10)]
+    )
+    def test_entropy_kernel(self, x, base):
+        hx = entropy_kernel(x, base)
+        hx = np.asarray(hx)
+        assert hx.dtype == np.float32
 
-@pytest.mark.parametrize("x", [x1, x2, j1, j2])
-@pytest.mark.parametrize(
-    "base", [np.random.randint(1, 100) for _ in range(10)]
-)
-def test_entropy_kernel(x, base):
-    hx = entropy_kernel(x, base)
-    hx = np.asarray(hx)
-    assert hx.dtype == np.float32
+    @pytest.mark.parametrize("x", [x1, x2, j1, j2])
+    def test_entropy_knn(self, x):
+        hn = entropy_knn(x)
+        assert hn.dtype == np.float32
 
+    # tests core/entropies/copnorm_nd.py
+    @pytest.mark.parametrize("x", [x1, x2])
+    def test_copnorm_nd(self, x):
+        cx = copnorm_nd(x)
+        assert isinstance(cx, np.ndarray)
+        assert cx.shape == x.shape
 
-@pytest.mark.parametrize("x", [x1, x2, j1, j2])
-def test_entropy_knn(x):
-    hn = entropy_knn(x)
-    assert hn.dtype == np.float32
-
-
-# tests core/entropies/copnorm_nd.py
-@pytest.mark.parametrize("x", [x1, x2])
-def test_copnorm_nd(x):
-    cx = copnorm_nd(x)
-    assert isinstance(cx, np.ndarray)
-    assert cx.shape == x.shape
-
-
-@pytest.mark.parametrize("x", [x1, x2])
-def test_ctransform(x):
-    xr = ctransform(x)
-    assert isinstance(xr, np.ndarray)
-    assert xr.shape == x.shape
-    for row in xr:
-        for cdf in row:
-            assert cdf >= 0 and cdf <= 1
+    @pytest.mark.parametrize("x", [x1, x2])
+    def test_ctransform(self, x):
+        xr = ctransform(x)
+        assert isinstance(xr, np.ndarray)
+        assert xr.shape == x.shape
+        for row in xr:
+            for cdf in row:
+                assert cdf >= 0 and cdf <= 1

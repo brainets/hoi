@@ -4,6 +4,7 @@ import jax
 from hoi.utils.stats import digitize, landscape, normalize, get_nbest_mult
 import pandas as pd
 import math
+import xarray as xr
 from hoi.metrics import Oinfo
 
 x1 = np.random.rand(1, 50)
@@ -62,10 +63,13 @@ class TestStats(object):
     def test_landscape(self, x, multi, n_bins):
         op = landscape(x, multi, n_bins, output="numpy")
         assert op[0].shape == (n_bins, 5)
+        assert isinstance(op[0], np.ndarray)
         op = landscape(x, multi, n_bins, output="pandas")
         assert op.shape == (n_bins, 5)
+        assert isinstance(op, pd.DataFrame)
         op = landscape(x, multi, n_bins, output="xarray")
         assert op.shape == (n_bins, 5)
+        assert isinstance(op, xr.DataArray)
 
     # test get_nbest_mult
     @pytest.mark.parametrize("x", [np.random.rand(100, 5) for _ in range(3)])

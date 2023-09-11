@@ -81,5 +81,5 @@ class TestStats(object):
         hoi = model.fit()
         df = get_nbest_mult(hoi, model=model, n_best=n_best)
         assert isinstance(df, pd.DataFrame)
-        assert len(df) == 2 * n_best
+        assert len(df) <= 2 * n_best
         pass

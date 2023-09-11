@@ -28,6 +28,7 @@ class TestEntropy(object):
         hx = entropy_gcmi(x, biascorrect, demean)
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
+        assert hx.shape == ()
         pass
 
     @pytest.mark.parametrize("x", [x1, x2, j1, j2])
@@ -36,6 +37,7 @@ class TestEntropy(object):
         hx = entropy_bin(x_bin)
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
+        assert hx.shape == ()
         pass
 
     @pytest.mark.parametrize("x", [x1, x2, j1, j2])
@@ -46,11 +48,13 @@ class TestEntropy(object):
         hx = entropy_kernel(x, base)
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
+        assert hx.shape == ()
 
     @pytest.mark.parametrize("x", [x1, x2, j1, j2])
     def test_entropy_knn(self, x):
         hn = entropy_knn(x)
         assert hn.dtype == np.float32
+        assert hn.shape == ()
 
     # tests core/entropies/copnorm_nd.py
     @pytest.mark.parametrize("x", [x1, x2])

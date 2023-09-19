@@ -1,4 +1,5 @@
 import numpy as np
+
 # import matplotlib.pyplot as plt
 
 ###############################################################################
@@ -654,40 +655,40 @@ def cov_order_3(character):
     lambz = np.sqrt(0.3)
 
     # Full factor matrix L
-    L = np.array([lambx, lamby, lambz])[np.newaxis]
+    m = np.array([lambx, lamby, lambz])[np.newaxis]
 
     if character == "null":
         # We fix theta_yz in such a way that O(R1,R2,R3)=0
         theta_yz = -0.148
 
         # Noise covariances theta
-        theta = np.diagflat(1 - L**2)
+        theta = np.diagflat(1 - m**2)
         theta += np.diagflat([0, theta_yz], 1) + np.diagflat([0, theta_yz], -1)
 
         # The covariance matrix for the three brain regions
-        cov = L * L.T + theta
+        cov = m * m.T + theta
 
     elif character == "redundancy":
         # We fix theta_yz in such a way that O(R1,R2,R3)>0
         theta_yz = -0.39
 
         # Noise covariances theta
-        theta = np.diagflat(1 - L**2)
+        theta = np.diagflat(1 - m**2)
         theta += np.diagflat([0, theta_yz], 1) + np.diagflat([0, theta_yz], -1)
 
         # The covariance matrix for the three brain regions
-        cov = L * L.T + theta
+        cov = m * m.T + theta
 
     elif character == "synergy":
         # We fix theta_yz in such a way that O(R1,R2,R3)<0
         theta_yz = 0.22
 
         # Noise covariances theta
-        theta = np.diagflat(1 - L**2)
+        theta = np.diagflat(1 - l**2)
         theta += np.diagflat([0, theta_yz], 1) + np.diagflat([0, theta_yz], -1)
 
         # The covariance matrix for the three brain regions
-        cov = L * L.T + theta
+        cov = l * l.T + theta
 
     return cov
 
@@ -709,23 +710,23 @@ def cov_order_4(character):
     lambs = np.sqrt(0.2)
 
     # Imposing the relationships with the behavior
-    L = np.array([lambx, lamby, lambz, lambs])[np.newaxis]
+    m = np.array([lambx, lamby, lambz, lambs])[np.newaxis]
 
-    theta = np.diagflat(1 - L**2)
+    theta = np.diagflat(1 - m**2)
 
     if character == "redundancy":
         theta_zs = 0.25
         theta += np.diagflat([0, 0, theta_zs], 1) + np.diagflat(
             [0, 0, theta_zs], -1
         )
-        cov_ = L * L.T + theta
+        cov_ = m * m.T + theta
 
     if character == "synergy":
         theta_zs = -0.52
         theta += np.diagflat([0, 0, theta_zs], 1) + np.diagflat(
             [0, 0, theta_zs], -1
         )
-        cov_ = L * L.T + theta
+        cov_ = m * m.T + theta
 
     return cov_
 

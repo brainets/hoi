@@ -654,7 +654,7 @@ def cov_order_3(character):
     lamby = np.sqrt(0.7)
     lambz = np.sqrt(0.3)
 
-    # Full factor matrix L
+    # Full factor matrix m
     m = np.array([lambx, lamby, lambz])[np.newaxis]
 
     if character == "null":
@@ -684,11 +684,11 @@ def cov_order_3(character):
         theta_yz = 0.22
 
         # Noise covariances theta
-        theta = np.diagflat(1 - l**2)
+        theta = np.diagflat(1 - m**2)
         theta += np.diagflat([0, theta_yz], 1) + np.diagflat([0, theta_yz], -1)
 
         # The covariance matrix for the three brain regions
-        cov = l * l.T + theta
+        cov = m * m.T + theta
 
     return cov
 

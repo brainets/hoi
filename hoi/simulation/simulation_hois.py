@@ -1,4 +1,5 @@
 import numpy as np
+
 # import matplotlib.pyplot as plt
 
 ###############################################################################
@@ -71,53 +72,53 @@ def simul_hois(
 
     """
 
-    if not instance(n_times, int) and not target:
+    if not isinstance(n_times, int) and not target:
         # static without target
         return sim_hoi_static(
-                amplitude=amplitude,
-                n_trials=n_trials,
-                n_nodes=n_nodes,
-                data_type=data_type,
-                triplet_character=triplet_character,
-            )
+            amplitude=amplitude,
+            n_trials=n_trials,
+            n_nodes=n_nodes,
+            data_type=data_type,
+            triplet_character=triplet_character,
+        )
 
-    elif not instance(n_times, int) and target:
+    elif not isinstance(n_times, int) and target:
         # static with target
         return sim_hoi_static_target(
-                amplitude=amplitude,
-                n_trials=n_trials,
-                n_nodes=n_nodes,
-                data_type=data_type,
-                triplet_character=triplet_character,
-                triplet_character_with_beh=triplet_character_with_beh,
-            )
+            amplitude=amplitude,
+            n_trials=n_trials,
+            n_nodes=n_nodes,
+            data_type=data_type,
+            triplet_character=triplet_character,
+            triplet_character_with_beh=triplet_character_with_beh,
+        )
 
-    elif instance(n_times, int) and not target:
+    elif isinstance(n_times, int) and not target:
         # dynamic without target
         return sim_hoi_dyn(
-                amplitude=amplitude,
-                n_trials=n_trials,
-                n_nodes=n_nodes,
-                n_times=n_times,
-                data_type=data_type,
-                time_bump=time_bump,
-                time_length_bump=time_length_bump,
-                triplet_character=triplet_character,
-            )
+            amplitude=amplitude,
+            n_trials=n_trials,
+            n_nodes=n_nodes,
+            n_times=n_times,
+            data_type=data_type,
+            time_bump=time_bump,
+            time_length_bump=time_length_bump,
+            triplet_character=triplet_character,
+        )
 
-    elif instance(n_times, int) and target:
+    elif isinstance(n_times, int) and target:
         # dynamic with target
         return sim_hoi_dyn_target(
-                amplitude=amplitude,
-                n_trials=n_trials,
-                n_nodes=n_nodes,
-                n_times=n_times,
-                data_type=data_type,
-                time_bump=time_bump,
-                time_length_bump=time_length_bump,
-                triplet_character=triplet_character,
-                triplet_character_with_beh=triplet_character_with_beh,
-            )
+            amplitude=amplitude,
+            n_trials=n_trials,
+            n_nodes=n_nodes,
+            n_times=n_times,
+            data_type=data_type,
+            time_bump=time_bump,
+            time_length_bump=time_length_bump,
+            triplet_character=triplet_character,
+            triplet_character_with_beh=triplet_character_with_beh,
+        )
 
 
 ###############################################################################

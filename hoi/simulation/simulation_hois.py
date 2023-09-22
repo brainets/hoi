@@ -1,5 +1,4 @@
 import numpy as np
-
 # import matplotlib.pyplot as plt
 
 ###############################################################################
@@ -72,18 +71,9 @@ def simul_hois(
 
     """
 
-    if n_times is None:
-        if target:
-            data_simulated = sim_hois_beh(
-                amplitude=amplitude,
-                n_trials=n_trials,
-                n_nodes=n_nodes,
-                data_type=data_type,
-                triplet_character=triplet_character,
-                triplet_character_with_beh=triplet_character_with_beh,
-            )
-        else:
-            data_simulated = sim_hois(
+    if not instance(n_times, int) and not target:
+        # static without target
+        return sim_hoi_static(
                 amplitude=amplitude,
                 n_trials=n_trials,
                 n_nodes=n_nodes,
@@ -91,35 +81,20 @@ def simul_hois(
                 triplet_character=triplet_character,
             )
 
-    else:
-        if target:
-            data_simulated = simulation_hois_beh(
+    elif not instance(n_times, int) and target:
+        # static with target
+        return sim_hoi_static_target(
                 amplitude=amplitude,
                 n_trials=n_trials,
                 n_nodes=n_nodes,
-                n_times=n_times,
                 data_type=data_type,
-                time_bump=time_bump,
-                time_length_bump=time_length_bump,
                 triplet_character=triplet_character,
                 triplet_character_with_beh=triplet_character_with_beh,
             )
 
-        elif target_frites:
-            data_simulated = simulation_hois_beh_frites(
-                amplitude=amplitude,
-                n_trials=n_trials,
-                n_nodes=n_nodes,
-                n_times=n_times,
-                data_type=data_type,
-                time_bump=time_bump,
-                time_length_bump=time_length_bump,
-                triplet_character=triplet_character,
-                triplet_character_with_beh=triplet_character_with_beh,
-            )
-
-        else:
-            data_simulated = simulation_hois(
+    elif instance(n_times, int) and not target:
+        # dynamic without target
+        return sim_hoi_dyn(
                 amplitude=amplitude,
                 n_trials=n_trials,
                 n_nodes=n_nodes,
@@ -130,7 +105,19 @@ def simul_hois(
                 triplet_character=triplet_character,
             )
 
-    return data_simulated
+    elif instance(n_times, int) and target:
+        # dynamic with target
+        return sim_hoi_dyn_target(
+                amplitude=amplitude,
+                n_trials=n_trials,
+                n_nodes=n_nodes,
+                n_times=n_times,
+                data_type=data_type,
+                time_bump=time_bump,
+                time_length_bump=time_length_bump,
+                triplet_character=triplet_character,
+                triplet_character_with_beh=triplet_character_with_beh,
+            )
 
 
 ###############################################################################
@@ -234,7 +221,7 @@ def simulation_hois_beh(
     ]
 
 
-def simulation_hois_beh_frites(
+def sim_hoi_dyn_target(
     amplitude=1,
     n_trials=1000,
     n_nodes=12,
@@ -346,7 +333,7 @@ def simulation_hois_beh_frites(
     return [simulated_data[:, :12, :], sim_hois[:, 12, 0]]
 
 
-def simulation_hois(
+def sim_hoi_dyn(
     amplitude=1,
     n_trials=1000,
     n_nodes=12,
@@ -435,7 +422,7 @@ def simulation_hois(
 ###############################################################################
 
 
-def sim_hois_beh(
+def sim_hoi_static_target(
     amplitude=1,
     n_trials=1000,
     n_nodes=12,
@@ -479,7 +466,7 @@ def sim_hois_beh(
     return [simulated_data, simulated_data[:, :12], simulated_data[:, 12]]
 
 
-def sim_hois(
+def sim_hoi_static(
     amplitude=1,
     n_trials=1000,
     n_nodes=12,

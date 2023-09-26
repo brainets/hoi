@@ -47,13 +47,6 @@ class TestStats(object):
         assert xn.shape == x.shape
         assert np.min(xn) >= truncate_decimal(to_min, 3)
         assert np.max(xn) <= to_max
-        # for row in xn:
-        #     for val in row:
-        #         assert val <= to_max and (
-        #             val >= truncate_decimal(to_min, 7)
-        #             or abs(val - truncate_decimal(to_min, 7 <= 0.1))
-        #         )
-        # assert val <= to_max and val >= truncate_decimal(to_min, 7)
 
     @pytest.mark.parametrize("x", x)
     @pytest.mark.parametrize("multi", multi)

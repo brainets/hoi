@@ -13,8 +13,7 @@ from hoi.utils import digitize
 
 x1 = np.random.rand(1, 50)
 x2 = np.random.rand(10, 50)
-# l1 = [[np.random.random() for _ in range(1)] for _ in range(50)]
-# l2 = [[np.random.random() for _ in range(10)] for _ in range(50)]
+
 j1 = jax.random.uniform(jax.random.PRNGKey(0), shape=(1, 50))
 j2 = jax.random.uniform(jax.random.PRNGKey(0), shape=(10, 50))
 

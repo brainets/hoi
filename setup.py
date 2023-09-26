@@ -27,7 +27,7 @@ def read(fname):
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
-test_deps = ["pytest", "pytest-sugar", "pytest-cov", "codecov"]
+test_deps = ["pytest", "pytest-sugar", "pytest-cov", "codecov", "xarray"]
 doc_deps = [
     "sphinx!=4.1.0",
     "sphinx-gallery",

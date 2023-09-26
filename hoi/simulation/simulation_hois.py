@@ -9,60 +9,55 @@ import numpy as np
 ###############################################################################
 
 
-def simul_hois(
-    amplitude=1,
+def simulate_hois_gauss(
     target=False,
-    target_frites=False,
     n_trials=1000,
     n_nodes=12,
     n_times=None,
-    data_type="array",
     time_bump=None,
     time_length_bump=None,
     triplet_character=None,
     triplet_character_with_beh=None,
 ):
-    """
-    Simulates High Order Interactions (HOIs) with or without behavioral
-     information, depending on the 'target' parameter. The simulation
-     can be conducted for a specified number of trials and nodes,
-     with an optional time component.
+    """Simulates High Order Interactions (HOIs) with or without behavioral
+    information, depending on the 'target' parameter.
 
-    Parameters:
-        amplitude (int): Amplitude parameter. Default is 1.
-        target (bool): Indicates whether to include behavioral
-        information (True) or not (False). Default is False.
-        target_frites (bool): Indicates whether to include
-        behavioral information (True) or not (False). In such
-        a way that is compatible witht the computation of
-        behavioural variables as done in the FRITES toolbox
-        Default is False.
-        n_trials (int): Number of trials to simulate.
-        Default is 1000.
-        n_nodes (int): Number of nodes in the simulated data.
-        n_times (int or None): Number of time points in the
-        simulated data. Default is None.
-        If None, static HOIs are generated.
-        data_type (str): Type of data. Default is 'array'.
-        time_bump (None or list): Time bump parameter. List
-        of instant of time in which to have a bump.
-        If None the bumps are equidistant, distributed
-        in the time interval.
-        time_length_bump (None or list): Time length bump
-        parameter. A list containing in order the length of the
-        time bumps. If None one is computed in such a way to have
-        None overlapping bumps.
-        triplet_character (list): List of triplet of desired HOIs.
+    The simulation can be conducted for a specified number of trials and nodes,
+    with an optional time component.
+
+    Parameters
+    ----------
+    target : bool | False
+        Indicates whether to include behavioral
+        information (True) or not (False).
+    n_trials : int | 1000
+        Number of trials to simulate.
+    n_nodes : int | 1000
+        Number of nodes in the simulated data.
+    n_times : int | None
+        Number of time points in the
+        simulated data. If None, static HOIs are generated.
+    time_bump : list | None
+        Time bump parameter. List of instant of time in
+        which to have a bump. If None the bumps are equidistant,
+        distributed in the time interval.
+    time_length_bump : list | None
+        Time length bump parameter. A list containing in order the
+        length of the time bumps. If None one is computed in such
+        a way to have None overlapping bumps.
+    triplet_character : list | None
+        List of triplet of desired HOIs.
         If None, half of the triplet is syn and
         the other half are red.
-        triplet_character_with_beh (list): List of triplet
-        characteristics with behavioral information.
-        As triplet_character, but in relationship whit
-        the target variables.
+    triplet_character_with_beh : list | None
+        List of triplet characteristics with behavioral information.
+        As triplet_character, but in relationship whit the target
+        variables.
 
-    Returns:
-        numpy.ndarray or list: Simulated data. If n_times is provided,
-        a list containing the simulated data,
+    Returns
+    -------
+    Simulated data : numpy.ndarray
+        If n_times is provided, a list containing the simulated data,
         simulated data without behavioral information over time, and
         simulated data with behavioral
         information over time. Otherwise, a numpy array representing
@@ -75,20 +70,16 @@ def simul_hois(
     if not isinstance(n_times, int) and not target:
         # static without target
         return sim_hoi_static(
-            amplitude=amplitude,
             n_trials=n_trials,
             n_nodes=n_nodes,
-            data_type=data_type,
             triplet_character=triplet_character,
         )
 
     elif not isinstance(n_times, int) and target:
         # static with target
         return sim_hoi_static_target(
-            amplitude=amplitude,
             n_trials=n_trials,
             n_nodes=n_nodes,
-            data_type=data_type,
             triplet_character=triplet_character,
             triplet_character_with_beh=triplet_character_with_beh,
         )
@@ -96,11 +87,9 @@ def simul_hois(
     elif isinstance(n_times, int) and not target:
         # dynamic without target
         return sim_hoi_dyn(
-            amplitude=amplitude,
             n_trials=n_trials,
             n_nodes=n_nodes,
             n_times=n_times,
-            data_type=data_type,
             time_bump=time_bump,
             time_length_bump=time_length_bump,
             triplet_character=triplet_character,
@@ -109,11 +98,9 @@ def simul_hois(
     elif isinstance(n_times, int) and target:
         # dynamic with target
         return sim_hoi_dyn_target(
-            amplitude=amplitude,
             n_trials=n_trials,
             n_nodes=n_nodes,
             n_times=n_times,
-            data_type=data_type,
             time_bump=time_bump,
             time_length_bump=time_length_bump,
             triplet_character=triplet_character,
@@ -128,132 +115,41 @@ def simul_hois(
 ###############################################################################
 
 
-def simulation_hois_beh(
-    amplitude=1,
-    n_trials=1000,
-    n_nodes=12,
-    n_times=100,
-    data_type="array",
-    time_bump=None,
-    time_length_bump=None,
-    triplet_character=None,
-    triplet_character_with_beh=None,
-):
-    """
-    Simulates High Order Interactions (HOIs) with behavioral
-    information over time.
-
-    Parameters:
-        amplitude (int): Amplitude parameter. Default is 1.
-        n_trials (int): Number of trials to simulate. Default is 1000.
-        n_nodes (int): Number of nodes in the simulated data.
-        n_times (int): Number of time points in the simulated data.
-        data_type (str): Type of data. Default is 'array'.
-        time_bump (None): Time bump parameter. Default is None.
-        time_length_bump (None): Time length bump parameter.
-        Default is None.
-        triplet_character (list): List of triplet characteristics.
-        Default is None.
-        triplet_character_with_beh (list): List of triplet characteristics
-        with behavioral information. Default is None.
-
-    Returns:
-        list: A list containing the simulated data, simulated data without
-        behavioral information over time,
-        and simulated data with behavioral information over time.
-    """
-
-    n_triplets = int(n_nodes / 3)
-
-    if time_length_bump is None:
-        time_length_bump = [
-            int(n_times / n_triplets) for i in range(n_triplets)
-        ]
-
-    if time_bump is None:
-        time_bump = []
-        cc = int(time_length_bump[0] / 2)
-        time_bump.append(cc)
-        for tt in time_length_bump:
-            cc = cc + tt
-            time_bump.append(cc)
-
-    mean_mvgauss, cov = cov_all_beh(
-        n_nodes=n_nodes,
-        triplet_character=triplet_character,
-        triplet_character_with_beh=triplet_character_with_beh,
-    )
-
-    han_list = []
-    for i, t_length in enumerate(time_length_bump):
-        aa = np.zeros(n_times)
-        aa[
-            time_bump[i]
-            - int(t_length / 2) : time_bump[i]
-            - int(t_length / 2)
-            + t_length
-        ] = np.hanning(t_length)
-        han_list.append(aa)
-
-    simulated_data = np.zeros((n_trials, n_nodes + 1, n_times))
-
-    cov_var = np.identity(n_nodes + 1)
-
-    for t in range(n_times):
-        for i, han in enumerate(han_list):
-            cov_var[3 * i : 3 * (i + 1), 3 * i : 3 * (i + 1)] = (
-                np.ones((3, 3)) - np.identity(3)
-            ) * han[t] + np.identity(3)
-            cov_var[3 * i : 3 * (i + 1), 12] = (np.ones(3)) * han[t]
-            cov_var[12, 3 * i : 3 * (i + 1)] = (np.ones(3)) * han[t]
-
-        simulated_data[:, :, t] = np.random.multivariate_normal(
-            mean_mvgauss,
-            cov * cov_var,
-            size=n_trials,
-            check_valid="warn",
-            tol=1e-8,
-        )
-
-    return [
-        simulated_data,
-        simulated_data[:, :12, :],
-        simulated_data[:, 12, :],
-    ]
-
-
 def sim_hoi_dyn_target(
-    amplitude=1,
     n_trials=1000,
     n_nodes=12,
     n_times=100,
-    data_type="array",
     time_bump=None,
     time_length_bump=None,
     triplet_character=None,
     triplet_character_with_beh=None,
 ):
-    """
-    Simulates High Order Interactions (HOIs) with behavioral
+    """Simulates High Order Interactions (HOIs) with behavioral
     information over time.
 
-    Parameters:
-        amplitude (int): Amplitude parameter. Default is 1.
-        n_trials (int): Number of trials to simulate. Default is 1000.
-        n_nodes (int): Number of nodes in the simulated data.
-        n_times (int): Number of time points in the simulated data.
-        data_type (str): Type of data. Default is 'array'.
-        time_bump (None): Time bump parameter. Default is None.
-        time_length_bump (None): Time length bump parameter. Default is None.
-        triplet_character (list): List of triplet characteristics.
-        Default is None.
-        triplet_character_with_beh (list): List of triplet characteristics with
-        behavioral information. Default is None.
+    Parameters
+    ----------
+    n_trials : int | 1000
+        Number of trials to simulate.
+    n_nodes :int | 12
+        Number of nodes in the simulated data.
+    n_times : int | 100
+        Number of time points in the simulated data.
+    time_bump : None
+        Time bump parameter.
+    time_length_bump : None
+        Time length bump parameter.
+    triplet_character : list | None
+        List of triplet characteristics.
+    triplet_character_with_beh : list | None
+        List of triplet characteristics with
+        behavioral information.
 
-    Returns:
-        list: A list containing the simulated data, simulated data
-        without behavioral information over time, and simulated
-        data with behavioral information over time.
+    Returns
+    -------
+        Simulated data : numpy.ndarray
+        simulated data without behavioral information over time,
+        and simulated data with behavioral information over time.
 
     """
 
@@ -331,36 +227,38 @@ def sim_hoi_dyn_target(
 
     simulated_data = sim_rand
 
-    return [simulated_data[:, :12, :], sim_hois[:, 12, 0]]
+    return simulated_data[:, :12, :], sim_hois[:, 12, 0]
 
 
 def sim_hoi_dyn(
-    amplitude=1,
     n_trials=1000,
     n_nodes=12,
     n_times=100,
-    data_type="array",
     time_bump=None,
     time_length_bump=None,
     triplet_character=None,
 ):
-    """
-    Simulates High Order Interactions (HOIs) without behavioral
+    """Simulates High Order Interactions (HOIs) without behavioral
     information over time.
 
-    Parameters:
-        amplitude (int): Amplitude parameter. Default is 1.
-        n_trials (int): Number of trials to simulate. Default is 1000.
-        n_nodes (int): Number of nodes in the simulated data.
-        n_times (int): Number of time points in the simulated data.
-        data_type (str): Type of data. Default is 'array'.
-        time_bump (None): Time bump parameter. Default is None.
-        time_length_bump (None): Time length bump parameter. Default is None.
-        triplet_character (list): List of triplet characteristics.
-        Default is None.
+    Parameters
+    ----------
+    n_trials : int | 1000
+        Number of trials to simulate.
+    n_nodes : int | 12
+        Number of nodes in the simulated data.
+    n_times : int | 100
+        Number of time points in the simulated data.
+    time_bump : None
+        Time bump parameter.
+    time_length_bump : None
+        Time length bump parameter.
+    triplet_character : list | None
+        List of triplet characteristics.
 
-    Returns:
-        numpy.ndarray: Simulated data.
+    Returns
+    ------
+        Simulated data : numpy.ndarray
 
     """
 
@@ -424,29 +322,29 @@ def sim_hoi_dyn(
 
 
 def sim_hoi_static_target(
-    amplitude=1,
     n_trials=1000,
     n_nodes=12,
-    data_type="array",
     triplet_character=None,
     triplet_character_with_beh=None,
 ):
-    """
-    Simulates High Order Interactions (HOIs) with behavioral information.
+    """Simulates High Order Interactions (HOIs) with behavioral information.
 
-    Parameters:
-        amplitude (int): Amplitude parameter. Default is 1.
-        n_trials (int): Number of trials to simulate. Default is 1000.
-        n_nodes (int): Number of nodes in the simulated data.
-        data_type (str): Type of data. Default is 'array'.
-        triplet_character (list): List of triplet characteristics.
-        Default is None.
-        triplet_character_with_beh (list): List of triplet characteristics with
-        behavioral information. Default is None.
+    Parameters
+    ----------
+    n_trials : int | 1000
+        Number of trials to simulate.
+    n_nodes : int | 12
+        Number of nodes in the simulated data.
+    triplet_character : list | None
+        List of triplet characteristics.
+    triplet_character_with_beh : list | None
+        List of triplet characteristics with
+        behavioral information.
 
-    Returns:
-        list: A list containing the simulated data, simulated data without
-        behavioral information, and simulated data with behavioral information.
+    Returns
+    -------
+        simulated data, simulated data without behavioral information,
+        simulated data with behavioral information : numpy.ndarray
 
     """
 
@@ -464,29 +362,28 @@ def sim_hoi_static_target(
         mean_mvgauss, cov, size=n_trials, check_valid="warn", tol=1e-8
     )
 
-    return [simulated_data, simulated_data[:, :12], simulated_data[:, 12]]
+    return simulated_data, simulated_data[:, :12], simulated_data[:, 12]
 
 
 def sim_hoi_static(
-    amplitude=1,
     n_trials=1000,
     n_nodes=12,
-    data_type="array",
     triplet_character=None,
 ):
-    """
-    Simulates High Order Interactions (HOIs) without behavioral information.
+    """Simulates High Order Interactions (HOIs) without behavioral information.
 
-    Parameters:
-        amplitude (int): Amplitude parameter. Default is 1.
-        n_trials (int): Number of trials to simulate. Default is 1000.
-        n_nodes (int): Number of nodes in the simulated data.
-        data_type (str): Type of data. Default is 'array'.
-        triplet_character (list): List of triplet characteristics.
-        Default is None.
+    Parameters
+    ----------
+    n_trials : int | 1000
+        Number of trials to simulate.
+    n_nodes : int | 12
+        Number of nodes in the simulated data.
+    triplet_character : list | None
+        List of triplet characteristics.
 
-    Returns:
-        numpy.ndarray: Simulated data.
+    Returns
+    -------
+    Simulated data : numpy.ndarray
 
     """
 
@@ -515,28 +412,28 @@ def sim_hoi_static(
 
 def cov_all_beh(
     n_nodes=12,
-    data_type="array",
     time_bump=None,
     triplet_character=None,
     triplet_character_with_beh=None,
 ):
-    """
-    Computes the mean and covariance matrix for a multivariate Gaussian
+    """Computes the mean and covariance matrix for a multivariate Gaussian
     distribution with behavioral information.
 
-    Parameters:
-        n_nodes (int): Number of nodes in the multivariate Gaussian
-        distribution.
-        data_type (str): Type of data. Default is 'array'.
-        time_bump (None): Time bump parameter. Default is None.
-        triplet_character (list): List of triplet characteristics.
-        Default is None.
-        triplet_character_with_beh (list): List of triplet
-        characteristics with behavioral information. Default is None.
+    Parameters
+    ----------
+    n_nodes : int | 12
+        Number of nodes in the multivariate Gaussian distribution.
+    time_bump | None
+        Time bump parameter.
+    triplet_character : list | None
+        List of triplet characteristics.
+    triplet_character_with_beh : list | None
+        List of triplet characteristics with behavioral information.
 
-    Returns:
-        tuple: A tuple containing the mean and covariance matrix
-        of the multivariate Gaussian distribution.
+    Returns
+    -------
+    mean and covariance matrix of the multivariate Gaussian
+    distribution : numpy.ndarray
 
     """
 
@@ -575,25 +472,26 @@ def cov_all_beh(
 
 def cov_all(
     n_nodes=12,
-    data_type="array",
     time_bump=None,
     triplet_character=None,
 ):
-    """
-    Computes the mean and covariance matrix for a multivariate
+    """Computes the mean and covariance matrix for a multivariate
     Gaussian distribution without behavioral information.
 
-    Parameters:
-        n_nodes (int): Number of nodes in the multivariate
+    Parameters
+    ----------
+    n_nodes : int | 12
+        Number of nodes in the multivariate
         Gaussian distribution.
-        data_type (str): Type of data. Default is 'array'.
-        time_bump (None): Time bump parameter. Default is None.
-        triplet_character (list): List of triplet characteristics.
-        Default is None.
+    time_bump : None
+        Time bump parameter.
+    triplet_character : list | None
+        List of triplet characteristics.
 
-    Returns:
-        tuple: A tuple containing the mean and covariance matrix of
-        the multivariate Gaussian distribution.
+    Returns
+    -------
+    mean and covariance matrix of the multivariate Gaussian
+    distribution : numpy.ndarray
 
     """
 
@@ -626,16 +524,19 @@ def cov_all(
 
 
 def cov_order_3(character):
-    """
-    Compute the covariance matrix for three brain regions based
+    """Compute the covariance matrix for three brain regions based
     on the given character.
 
-    INPUTS:
-    - character: 'null', 'redundancy', or 'synergy' indicating
-    the relationship between brain regions
+    Parameters
+    ----------
+    character : str
+        'null', redundancy', or 'synergy' indicating the relationship
+        between brain regions
 
-    OUTPUTS:
-    - cov: covariance matrix for the three brain regions
+    Returns
+    -------
+    cov : numpy.ndarray
+        covariance matrix for the three brain regions
     """
 
     lambx = np.sqrt(0.99)
@@ -682,15 +583,18 @@ def cov_order_3(character):
 
 
 def cov_order_4(character):
-    """
-    Calculate the covariance matrix for a given character.
+    """Calculate the covariance matrix for a given character.
 
-    Parameters:
-        character (str): The character specifying the type of covariance
+    Parameters
+    ----------
+    character : str
+        The character specifying the type of covariance
         matrix. It can be either 'redundancy' or 'synergy'.
 
-    Returns:
-        cov_ (ndarray): The covariance matrix for the specified character.
+    Returns
+    -------
+    cov_ : numpy.ndarray
+    The covariance matrix for the specified character.
     """
     lambx = np.sqrt(0.99)
     lamby = np.sqrt(0.7)
@@ -717,29 +621,6 @@ def cov_order_4(character):
         cov_ = m * m.T + theta
 
     return cov_
-
-
-def simulate_hois_gauss(
-    n_samples=200,
-    n_features=4,
-    n_variables=1,
-    triplets=[(0, 1, 2), (1, 2, 3)],
-    tiplet_types=["redundancy", "synergy"],
-):
-    """Simulate higher-order interactions.
-
-    n_samples: number of samples
-    n_features: number of nodes
-    n_variables: number of repetitions. This parameter can be used
-    to simulate dynamic hoi
-    triplets: list of triplets of nodes linked by hoi.
-    tiplet_types: specify whether each triplet interaction type
-    should be redundant or synergistic. By default
-    the function generates redundant interactions between
-    nodes (0, 1, 2) and synergistic interactions between
-    nodes (1, 2, 3).
-    """
-    pass
 
 
 if __name__ == "__main__":

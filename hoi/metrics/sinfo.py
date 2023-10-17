@@ -28,7 +28,7 @@ def _sinfo_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
     h_xmj_sum = entropy_4d(x_c[:, acc, :]).sum(0)
 
     # compute oinfo
-    sinfo = -msize * h_xn + h_xj_sum + h_xmj_sum
+    sinfo = -msize*h_xn + h_xj_sum + h_xmj_sum
 
     return inputs, sinfo
 

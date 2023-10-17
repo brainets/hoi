@@ -27,7 +27,7 @@ def _sinfo_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
     # compute \sum_{j=1}^{n} h(x_{-j}
     h_xmj_sum = entropy_4d(x_c[:, acc, :]).sum(0)
 
-    # compute oinfo
+    # compute sinfo
     sinfo = -msize*h_xn + h_xj_sum + h_xmj_sum
 
     return inputs, sinfo
@@ -52,7 +52,7 @@ class Sinfo(HOIEstimator):
         Standard NumPy arrays of shape (n_samples, n_features) or
         (n_samples, n_features, n_variables)
     y : array_like
-        The feature of shape (n_trials,) for estimating task-related O-info
+        The feature of shape (n_trials,) for estimating task-related S-info
     multiplets : list | None
         List of multiplets to compute. Should be a list of multiplets, for
         example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
@@ -63,7 +63,7 @@ class Sinfo(HOIEstimator):
     James et al., 2011 :cite:`james2011anatomy`
     """
 
-    __name__ = "O-Information"
+    __name__ = "S-Information"
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
         HOIEstimator.__init__(
@@ -135,7 +135,7 @@ class Sinfo(HOIEstimator):
             # generate indices for accumulated entropies
             acc = jnp.mgrid[0:msize, 0:msize].sum(0) % msize
 
-            # compute oinfo
+            # compute sinfo
             _, _hoi = jax.lax.scan(sinfo_no_ent, (x, acc[:, 1:]), _h_idx)
 
             # fill variables
@@ -151,7 +151,7 @@ class Sinfo(HOIEstimator):
 if __name__ == "__main__":
     import numpy as np
 
-    from hoi.metrics import Oinfo
+    from hoi.metrics import Sinfo
     from hoi.plot import plot_landscape
 
     import matplotlib.pyplot as plt

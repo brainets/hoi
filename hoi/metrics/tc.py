@@ -46,7 +46,7 @@ class TC(HOIEstimator):
         Standard NumPy arrays of shape (n_samples, n_features) or
         (n_samples, n_features, n_variables)
     y : array_like
-        The feature of shape (n_trials,) for estimating task-related O-info
+        The feature of shape (n_trials,) for estimating task-related TC
     multiplets : list | None
         List of multiplets to compute. Should be a list of multiplets, for
         example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
@@ -129,7 +129,7 @@ class TC(HOIEstimator):
             # generate indices for accumulated entropies
             acc = jnp.mgrid[0:msize, 0:msize].sum(0) % msize
 
-            # compute oinfo
+            # compute tc
             _, _hoi = jax.lax.scan(tc_no_ent, (x, acc[:, 1:]), _h_idx)
 
             # fill variables
@@ -145,7 +145,7 @@ class TC(HOIEstimator):
 if __name__ == "__main__":
     import numpy as np
 
-    from hoi.metrics import Oinfo
+    from hoi.metrics import TC
     from hoi.plot import plot_landscape
 
     import matplotlib.pyplot as plt

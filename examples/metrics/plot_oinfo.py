@@ -5,21 +5,21 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
 """
 import numpy as np
 
-from hoi.metrics import Oinfo
+from hoi.metrics import Oinfo, InfoTopo
 from hoi.plot import plot_landscape
+from hoi.utils import get_nbest_mult
+from hoi.simulation import simulate_hois_gauss
 
 import matplotlib.pyplot as plt
 
 plt.style.use("ggplot")
 
-x = np.random.rand(500, 10)
-# x[:, 7] = x[:, 0] + x[:, 1]
-# x[:, 8] = x[:, 3]
-# x[:, 9] = x[:, 3]
+x = simulate_hois_gauss()
 
-
-model = Oinfo(x)
+model = InfoTopo(x)
 hoi = model.fit(minsize=3, maxsize=None, method="gcmi")
+
+print(get_nbest_mult(hoi, model))
 
 plot_landscape(hoi, model=model, plt_kwargs=dict(cmap="turbo"))
 plt.tight_layout()

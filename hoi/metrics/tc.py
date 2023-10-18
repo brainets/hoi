@@ -37,7 +37,7 @@ class TC(HOIEstimator):
 
     .. math::
 
-        \TC(X^{n})  &=  \sum_{j=1}^{n} H(X_{j}) - H(X^{n}) \\
+        TC(X^{n})  &=  \sum_{j=1}^{n} H(X_{j}) - H(X^{n}) \\
 
     The total correlation is equivalent to the Kullback-Liebler
     vergence between the joint distribution :math: `P(X)` and the product
@@ -59,7 +59,7 @@ class TC(HOIEstimator):
 
     References
     ----------
-    Watabe, 1960 :cite:`watabe1960information`
+    Watabe, 1960 :cite:`watanabe1960information`
     """
 
     __name__ = "Total correlation"

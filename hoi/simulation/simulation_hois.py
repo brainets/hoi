@@ -11,7 +11,7 @@ import numpy as np
 
 def simulate_hois_gauss(
     target=False,
-    n_trials=1000,
+    n_trials=200,
     n_nodes=12,
     n_times=None,
     time_bump=None,
@@ -32,7 +32,7 @@ def simulate_hois_gauss(
         information (True) or not (False).
     n_trials : int | 1000
         Number of trials to simulate.
-    n_nodes : int | 1000
+    n_nodes : int | 12
         Number of nodes in the simulated data.
     n_times : int | None
         Number of time points in the

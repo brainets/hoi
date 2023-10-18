@@ -40,6 +40,12 @@ class TC(HOIEstimator):
 
         \TC(X^{n})  &=  \sum_{j=1}^{n} H(X_{j}) - H(X^{n}) \\
 
+    The total correlation is equivalent to the Kullback-Liebler
+    vergence between the joint distribution :math: `P(X)` and the product
+    of the marginals. The total correlation is largely a measure
+    of redundancy, sensitive to information shared between single
+    elements.
+
     Parameters
     ----------
     x : array_like

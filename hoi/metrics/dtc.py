@@ -36,7 +36,8 @@ class DTC(HOIEstimator):
     Dual total correlation is another extension of mutual information to
     an arbitrary number of variables. It can be understood as the difference between 
     the total entropy in a set of variables :math:`X^{n}` and the entropy of each element
-    :math:`X_{j}` that is intrinsic to it and not shared with any other part. It is defined as:
+    :math:`X_{j}` that is intrinsic to it and not shared with any other part. 
+    It is sensitive to both shared redundancies and synergies. It is defined as:
 
     .. math::
 

@@ -148,9 +148,6 @@ class TC(HOIEstimator):
 
 
 if __name__ == "__main__":
-    import numpy as np
-
-    from hoi.metrics import TC
     from hoi.plot import plot_landscape
 
     import matplotlib.pyplot as plt

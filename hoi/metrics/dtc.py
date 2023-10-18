@@ -34,10 +34,11 @@ class DTC(HOIEstimator):
     r"""Dual total correlation.
 
     Dual total correlation is another extension of mutual information to
-    an arbitrary number of variables. It can be understood as the difference between 
-    the total entropy in a set of variables :math:`X^{n}` and the entropy of each element
-    :math:`X_{j}` that is intrinsic to it and not shared with any other part. 
-    It is sensitive to both shared redundancies and synergies. It is defined as:
+    an arbitrary number of variables. It can be understood as the difference
+    between the total entropy in a set of variables :math:`X^{n}` and the
+    entropy of each element :math:`X_{j}` that is intrinsic to it and not
+    shared with any other part. It is sensitive to both shared redundancies and
+    synergies. It is defined as:
 
     .. math::
 
@@ -147,9 +148,6 @@ class DTC(HOIEstimator):
 
 
 if __name__ == "__main__":
-    import numpy as np
-
-    from hoi.metrics import DTC
     from hoi.plot import plot_landscape
 
     import matplotlib.pyplot as plt

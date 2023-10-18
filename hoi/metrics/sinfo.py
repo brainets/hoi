@@ -36,8 +36,8 @@ def _sinfo_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
 class Sinfo(HOIEstimator):
     r"""S-information.
 
-    The S-information (also called exogenous information) is defined 
-    as the sum between the total correlation (TC) minus the dual total 
+    The S-information (also called exogenous information) is defined
+    as the sum between the total correlation (TC) minus the dual total
     correlation (DTC):
 
     .. math::
@@ -149,9 +149,6 @@ class Sinfo(HOIEstimator):
 
 
 if __name__ == "__main__":
-    import numpy as np
-
-    from hoi.metrics import Sinfo
     from hoi.plot import plot_landscape
 
     import matplotlib.pyplot as plt

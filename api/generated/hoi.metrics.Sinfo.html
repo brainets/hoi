@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>hoi.metrics.InfoTopo &#8212; HOI 0.0.1 documentation</title>
+    <title>hoi.metrics.Sinfo &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -48,11 +48,11 @@
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.metrics.InfoTopo';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.metrics.Sinfo';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="hoi.metrics.RSI" href="hoi.metrics.RSI.html" />
-    <link rel="prev" title="hoi.metrics.GradientOinfo" href="hoi.metrics.GradientOinfo.html" />
+    <link rel="next" title="Utility functions" href="../api_utils.html" />
+    <link rel="prev" title="hoi.metrics.DTC" href="hoi.metrics.DTC.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -382,14 +382,14 @@ document.write(`
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../api_metrics.html">Metrics of HOI</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.Oinfo.html">hoi.metrics.Oinfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">hoi.metrics.InfoTopo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.TC.html">hoi.metrics.TC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">hoi.metrics.Sinfo</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api_utils.html">Utility functions</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -449,7 +449,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../api_metrics.html" class="nav-link">Metrics of HOI</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">hoi.metrics.InfoTopo</li>
+    <li class="breadcrumb-item active" aria-current="page">hoi.metrics.Sinfo</li>
   </ul>
 </nav>
 </div>
@@ -466,32 +466,26 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="hoi-metrics-infotopo">
-<h1>hoi.metrics.InfoTopo<a class="headerlink" href="#hoi-metrics-infotopo" title="Permalink to this heading">#</a></h1>
+  <section id="hoi-metrics-sinfo">
+<h1>hoi.metrics.Sinfo<a class="headerlink" href="#hoi-metrics-sinfo" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="hoi.metrics.InfoTopo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">InfoTopo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/infotopo.html#InfoTopo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.InfoTopo" title="Permalink to this definition">#</a></dt>
-<dd><p>Topological Information.</p>
-<p>The multivariate mutual information <span class="math notranslate nohighlight">\(I_{k}\)</span> quantify the
-variability/randomness and the statistical dependences between variables
-is defined by :</p>
+<dt class="sig sig-object py" id="hoi.metrics.Sinfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">Sinfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/sinfo.html#Sinfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.Sinfo" title="Permalink to this definition">#</a></dt>
+<dd><p>S-information.</p>
+<p>The S-information (also called exogenous information) is defined
+as the sum between the total correlation (TC) minus the dual total
+correlation (DTC):</p>
 <div class="math notranslate nohighlight">
-\[I_{k}(X_{1}; ...; X_{k}) = \sum_{i=1}^{k} (-1)^{i - 1} \sum_{
- I\subset[k];card(I)=i} H_{i}(X_{I})\]</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(I_{k}(X_{1}; ...; X_{k}) &gt; 0 \Rightarrow Redundancy\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(I_{k}(X_{1}; ...; X_{k}) &lt; 0 \Rightarrow Synergy\)</span></p></li>
-</ul>
-</div>
+\[\begin{split}\Omega(X^{n})  &amp;=  TC(X^{n}) + DTC(X^{n}) \\
+               &amp;=  nH(X^{n}) + \sum_{j=1}^{n} [H(X_{j}) + H(
+                X_{-j}^{n})]\end{split}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>x</strong><span class="classifier">array_like</span></dt><dd><p>Standard NumPy arrays of shape (n_samples, n_features) or
 (n_samples, n_features, n_variables)</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">array_like</span></dt><dd><p>The feature of shape (n_trials,) for estimating task-related O-info.</p>
+<dt><strong>y</strong><span class="classifier">array_like</span></dt><dd><p>The feature of shape (n_trials,) for estimating task-related S-info</p>
 </dd>
 <dt><strong>multiplets</strong><span class="classifier">list | None</span></dt><dd><p>List of multiplets to compute. Should be a list of multiplets, for
 example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
@@ -501,18 +495,17 @@ going to be computed.</p>
 </dd>
 </dl>
 <p class="rubric">References</p>
-<p>Baudot et al., 2019 <span id="id1">[<a class="reference internal" href="../../overview/ovw_refs.html#id3" title="Pierre Baudot, Monica Tapia, Daniel Bennequin, and Jean-Marc Goaillard. Topological information data analysis. Entropy. An International and Interdisciplinary Journal of Entropy and Information Studies, 2019. Number: 869. URL: https://www.mdpi.com/1099-4300/21/9/869, doi:10.3390/e21090869.">1</a>]</span>; Tapia et al., 2018
-<span id="id2">[<a class="reference internal" href="../../overview/ovw_refs.html#id4" title="Mónica Tapia, Pierre Baudot, Christine Formisano-Tréziny, Martial A Dufour, Simone Temporal, Manon Lasserre, Béatrice Marquèze-Pouey, Jean Gabert, Kazuto Kobayashi, and Jean-Marc Goaillard. Neurotransmitter identity and electrophysiological phenotype are genetically coupled in midbrain dopaminergic neurons. Scientific reports, 8(1):13637, 2018.">9</a>]</span></p>
+<p>James et al., 2011 <span id="id1">[<a class="reference internal" href="../../overview/ovw_refs.html#id13" title="Ryan G James, Christopher J Ellison, and James P Crutchfield. Anatomy of a bit: information in a time series observation. Chaos: An Interdisciplinary Journal of Nonlinear Science, 2011.">5</a>]</span></p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><a class="reference internal" href="#hoi.metrics.InfoTopo.entropies" title="hoi.metrics.InfoTopo.entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropies</span></code></a></dt><dd><p>Entropies of shape (n_mult,)</p>
+<dt><a class="reference internal" href="#hoi.metrics.Sinfo.entropies" title="hoi.metrics.Sinfo.entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropies</span></code></a></dt><dd><p>Entropies of shape (n_mult,)</p>
 </dd>
-<dt><a class="reference internal" href="#hoi.metrics.InfoTopo.multiplets" title="hoi.metrics.InfoTopo.multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiplets</span></code></a></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
+<dt><a class="reference internal" href="#hoi.metrics.Sinfo.multiplets" title="hoi.metrics.Sinfo.multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiplets</span></code></a></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
 </dd>
-<dt><a class="reference internal" href="#hoi.metrics.InfoTopo.order" title="hoi.metrics.InfoTopo.order"><code class="xref py py-obj docutils literal notranslate"><span class="pre">order</span></code></a></dt><dd><p>Order of each multiplet of shape (n_mult,).</p>
+<dt><a class="reference internal" href="#hoi.metrics.Sinfo.order" title="hoi.metrics.Sinfo.order"><code class="xref py py-obj docutils literal notranslate"><span class="pre">order</span></code></a></dt><dd><p>Order of each multiplet of shape (n_mult,).</p>
 </dd>
-<dt><a class="reference internal" href="#hoi.metrics.InfoTopo.undersampling" title="hoi.metrics.InfoTopo.undersampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undersampling</span></code></a></dt><dd><p>Under-sampling threshold.</p>
+<dt><a class="reference internal" href="#hoi.metrics.Sinfo.undersampling" title="hoi.metrics.Sinfo.undersampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undersampling</span></code></a></dt><dd><p>Under-sampling threshold.</p>
 </dd>
 </dl>
 </dd>
@@ -520,29 +513,29 @@ going to be computed.</p>
 <p class="rubric">Methods</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.InfoTopo.compute_entropies" title="hoi.metrics.InfoTopo.compute_entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code></a>([method, minsize, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.Sinfo.compute_entropies" title="hoi.metrics.Sinfo.compute_entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code></a>([method, minsize, ...])</p></td>
 <td><p>Compute entropies for all multiplets.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.InfoTopo.filter_multiplets" title="hoi.metrics.InfoTopo.filter_multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_multiplets</span></code></a>(mults, order)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.Sinfo.filter_multiplets" title="hoi.metrics.Sinfo.filter_multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_multiplets</span></code></a>(mults, order)</p></td>
 <td><p>Filter multiplets.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.InfoTopo.fit" title="hoi.metrics.InfoTopo.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
-<td><p>Compute Topological Information.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.Sinfo.fit" title="hoi.metrics.Sinfo.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
+<td><p>Compute the S-information.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.InfoTopo.get_combinations" title="hoi.metrics.InfoTopo.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(minsize[, maxsize, astype, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.Sinfo.get_combinations" title="hoi.metrics.Sinfo.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(minsize[, maxsize, astype, ...])</p></td>
 <td><p>Get combinations of features.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.InfoTopo.__iter__">
-<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.InfoTopo.__iter__" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.Sinfo.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.Sinfo.__iter__" title="Permalink to this definition">#</a></dt>
 <dd><p>Iteration over orders.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.InfoTopo.compute_entropies">
-<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.InfoTopo.compute_entropies" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.Sinfo.compute_entropies">
+<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.Sinfo.compute_entropies" title="Permalink to this definition">#</a></dt>
 <dd><p>Compute entropies for all multiplets.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -586,14 +579,14 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.InfoTopo.entropies">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entropies</span></span><a class="headerlink" href="#hoi.metrics.InfoTopo.entropies" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.Sinfo.entropies">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entropies</span></span><a class="headerlink" href="#hoi.metrics.Sinfo.entropies" title="Permalink to this definition">#</a></dt>
 <dd><p>Entropies of shape (n_mult,)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.InfoTopo.filter_multiplets">
-<span class="sig-name descname"><span class="pre">filter_multiplets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mults</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.InfoTopo.filter_multiplets" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.Sinfo.filter_multiplets">
+<span class="sig-name descname"><span class="pre">filter_multiplets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mults</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.Sinfo.filter_multiplets" title="Permalink to this definition">#</a></dt>
 <dd><p>Filter multiplets.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -615,9 +608,9 @@ keep.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.InfoTopo.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/infotopo.html#InfoTopo.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.InfoTopo.fit" title="Permalink to this definition">#</a></dt>
-<dd><p>Compute Topological Information.</p>
+<dt class="sig sig-object py" id="hoi.metrics.Sinfo.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/sinfo.html#Sinfo.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.Sinfo.fit" title="Permalink to this definition">#</a></dt>
+<dd><p>Compute the S-information.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
@@ -642,21 +635,12 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 </dd>
 </dl>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>oinfo</strong><span class="classifier">array_like</span></dt><dd><p>The O-info array of shape (n_multiplets, n_variables)
-where positive values reflect redundant dominated
-interactions and negative values stand for
-synergistic dominated interactions.</p>
-</dd>
-</dl>
-</dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.InfoTopo.get_combinations">
-<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">astype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jax'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.InfoTopo.get_combinations" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.Sinfo.get_combinations">
+<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">astype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jax'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.Sinfo.get_combinations" title="Permalink to this definition">#</a></dt>
 <dd><p>Get combinations of features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -682,27 +666,27 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.InfoTopo.multiplets">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">multiplets</span></span><a class="headerlink" href="#hoi.metrics.InfoTopo.multiplets" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.Sinfo.multiplets">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">multiplets</span></span><a class="headerlink" href="#hoi.metrics.Sinfo.multiplets" title="Permalink to this definition">#</a></dt>
 <dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
 <p>By convention, we used -1 to indicate that a feature has been ignored.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.InfoTopo.order">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order</span></span><a class="headerlink" href="#hoi.metrics.InfoTopo.order" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.Sinfo.order">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order</span></span><a class="headerlink" href="#hoi.metrics.Sinfo.order" title="Permalink to this definition">#</a></dt>
 <dd><p>Order of each multiplet of shape (n_mult,).</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.InfoTopo.undersampling">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">undersampling</span></span><a class="headerlink" href="#hoi.metrics.InfoTopo.undersampling" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.Sinfo.undersampling">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">undersampling</span></span><a class="headerlink" href="#hoi.metrics.Sinfo.undersampling" title="Permalink to this definition">#</a></dt>
 <dd><p>Under-sampling threshold.</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="sphx-glr-backreferences-hoi-metrics-infotopo"></span></section>
+<span class="target" id="sphx-glr-backreferences-hoi-metrics-sinfo"></span></section>
 
 
                 </article>
@@ -715,20 +699,20 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="hoi.metrics.GradientOinfo.html"
+       href="hoi.metrics.DTC.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">hoi.metrics.GradientOinfo</p>
+        <p class="prev-next-title">hoi.metrics.DTC</p>
       </div>
     </a>
     <a class="right-next"
-       href="hoi.metrics.RSI.html"
+       href="../api_utils.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">hoi.metrics.RSI</p>
+        <p class="prev-next-title">Utility functions</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -747,16 +731,16 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.InfoTopo"><code class="docutils literal notranslate"><span class="pre">InfoTopo</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.InfoTopo.__iter__"><code class="docutils literal notranslate"><span class="pre">InfoTopo.__iter__()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.InfoTopo.compute_entropies"><code class="docutils literal notranslate"><span class="pre">InfoTopo.compute_entropies()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.InfoTopo.entropies"><code class="docutils literal notranslate"><span class="pre">InfoTopo.entropies</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.InfoTopo.filter_multiplets"><code class="docutils literal notranslate"><span class="pre">InfoTopo.filter_multiplets()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.InfoTopo.fit"><code class="docutils literal notranslate"><span class="pre">InfoTopo.fit()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.InfoTopo.get_combinations"><code class="docutils literal notranslate"><span class="pre">InfoTopo.get_combinations()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.InfoTopo.multiplets"><code class="docutils literal notranslate"><span class="pre">InfoTopo.multiplets</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.InfoTopo.order"><code class="docutils literal notranslate"><span class="pre">InfoTopo.order</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.InfoTopo.undersampling"><code class="docutils literal notranslate"><span class="pre">InfoTopo.undersampling</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.Sinfo"><code class="docutils literal notranslate"><span class="pre">Sinfo</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.Sinfo.__iter__"><code class="docutils literal notranslate"><span class="pre">Sinfo.__iter__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.Sinfo.compute_entropies"><code class="docutils literal notranslate"><span class="pre">Sinfo.compute_entropies()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.Sinfo.entropies"><code class="docutils literal notranslate"><span class="pre">Sinfo.entropies</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.Sinfo.filter_multiplets"><code class="docutils literal notranslate"><span class="pre">Sinfo.filter_multiplets()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.Sinfo.fit"><code class="docutils literal notranslate"><span class="pre">Sinfo.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.Sinfo.get_combinations"><code class="docutils literal notranslate"><span class="pre">Sinfo.get_combinations()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.Sinfo.multiplets"><code class="docutils literal notranslate"><span class="pre">Sinfo.multiplets</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.Sinfo.order"><code class="docutils literal notranslate"><span class="pre">Sinfo.order</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.Sinfo.undersampling"><code class="docutils literal notranslate"><span class="pre">Sinfo.undersampling</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -764,7 +748,7 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/api/generated/hoi.metrics.InfoTopo.rst.txt">
+    <a href="../../_sources/api/generated/hoi.metrics.Sinfo.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

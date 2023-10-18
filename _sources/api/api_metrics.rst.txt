@@ -19,4 +19,6 @@ Metrics of HOI
    RedundancyMMI
    SynergyMMI
    InfoTot
-
+   TC
+   DTC
+   Sinfo

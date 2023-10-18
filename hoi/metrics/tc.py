@@ -13,7 +13,6 @@ from hoi.utils.progressbar import get_pbar
 @partial(jax.jit, static_argnums=(2, 3))
 def _tc_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
     data, acc = inputs
-    msize = len(index)
 
     # tuple selection
     x_c = data[:, index, :]

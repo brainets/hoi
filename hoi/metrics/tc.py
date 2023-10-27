@@ -51,7 +51,7 @@ class TC(HOIEstimator):
         Standard NumPy arrays of shape (n_samples, n_features) or
         (n_samples, n_features, n_variables)
     y : array_like
-        The feature of shape (n_trials,) for estimating task-related TC
+        The feature of shape (n_samples,) for estimating task-related TC
     multiplets : list | None
         List of multiplets to compute. Should be a list of multiplets, for
         example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
@@ -91,6 +91,12 @@ class TC(HOIEstimator):
 
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
+
+        Returns
+        -------
+        hoi : array_like
+            The NumPy array containing values of higher-rder interactions of
+            shape (n_multiplets, n_variables)
         """
         # ________________________________ I/O ________________________________
         # check min and max sizes

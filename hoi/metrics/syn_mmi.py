@@ -8,7 +8,8 @@ import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.combinatory import combinations
-from hoi.core.entropies import get_entropy, prepare_for_entropy
+from hoi.core.entropies import prepare_for_entropy
+from hoi.core.mi import get_mi, compute_mi_comb
 from hoi.utils.progressbar import get_pbar
 
 
@@ -38,7 +39,7 @@ class SynergyMMI(HOIEstimator):
         Standard NumPy arrays of shape (n_samples, n_features) or
         (n_samples, n_features, n_variables)
     y : array_like
-        The feature of shape (n_trials,) for estimating task-related O-info
+        The feature of shape (n_samples,)
     multiplets : list | None
         List of multiplets to compute. Should be a list of multiplets, for
         example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
@@ -48,7 +49,6 @@ class SynergyMMI(HOIEstimator):
     __name__ = "Synergy MMI"
 
     def __init__(self, x, y, multiplets=None, verbose=None):
-        raise NotImplementedError()
         HOIEstimator.__init__(
             self, x=x, y=y, multiplets=multiplets, verbose=verbose
         )
@@ -60,34 +60,34 @@ class SynergyMMI(HOIEstimator):
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi', 'binning', 'knn', 'kernel}
-            Name of the method to compute entropy. Use either :
+        method : {'gcmi'}
+            Name of the method to compute mutual-information. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See
-                  :func:`hoi.core.entropy_gcmi`
-                * 'binning': binning-based estimator of entropy. Note that to
-                  use this estimator, the data have be to discretized. See
-                  :func:`hoi.core.entropy_bin`
-                * 'knn': k-nearest neighbor estimator. See
-                  :func:`hoi.core.entropy_knn`
-                * 'kernel': kernel-based estimator of entropy
-                  see :func:`hoi.core.entropy_kernel`
+                * 'gcmi': gaussian copula MI [default]. See
+                  :func:`hoi.core.mi_gcmi_gg`
 
         kwargs : dict | {}
-            Additional arguments are sent to each entropy function
+            Additional arguments are sent to each MI function
+
+        Returns
+        -------
+        hoi : array_like
+            The NumPy array containing values of higher-rder interactions of
+            shape (n_multiplets, n_variables)
         """
         # ________________________________ I/O ________________________________
         # check minsize and maxsize
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
-        # prepare the x for computing entropy
+        # prepare the x for computing mi
         x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
         y = x[:, [-1], :]
         x = x[:, 0:-1, :]
 
-        # prepare entropy functions
-        entropy = jax.vmap(get_entropy(method=method, **kwargs))
-        compute_mi = partial(mi_entr_comb, entropy=entropy)
+        # prepare mi functions
+        mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
+        compute_mi = partial(compute_mi_comb, mi=mi_fcn)
+
         compute_syn = partial(_compute_syn, mi_fcn=compute_mi)
 
         # _______________________________ HOI _________________________________
@@ -140,39 +140,19 @@ if __name__ == "__main__":
     import matplotlib.pyplot as plt
     from hoi.utils import get_nbest_mult
     from hoi.plot import plot_landscape
-    from sklearn.preprocessing import KBinsDiscretizer
 
     plt.style.use("ggplot")
 
     np.random.seed(0)
 
     x = np.random.rand(200, 7)
-    # y = x[:, 0]
-    # y[100::] = x[100::, 1]
-    y = x[:, 0] + x[:, 3] + x[:, 4]
 
-    # y = x[:, 4]
-    # x[:, 5] += y
-
-    x = (
-        KBinsDiscretizer(
-            n_bins=3, encode="ordinal", strategy="quantile", subsample=None
-        )
-        .fit_transform(x)
-        .astype(int)
-    )
-    y = (
-        KBinsDiscretizer(
-            n_bins=3, encode="ordinal", strategy="quantile", subsample=None
-        )
-        .fit_transform(y.reshape(-1, 1))
-        .astype(int)
-        .squeeze()
-    )
+    # synergy (all-to-one)
+    y = x[:, 0] + x[:, 3] + x[:, 5]
 
     model = SynergyMMI(x, y)
     # hoi = model.fit(minsize=2, maxsize=6, method='gcmi')
-    hoi = model.fit(minsize=2, maxsize=6, method="binning")
+    hoi = model.fit(minsize=2, maxsize=6, method="gcmi")
 
     print(get_nbest_mult(hoi, model, minsize=3, maxsize=3))
 

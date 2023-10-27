@@ -27,7 +27,7 @@ def get_entropy(method="gcmi", **kwargs):
 
     Parameters
     ----------
-    method : {'gcmi', 'binning', 'knn'}
+    method : {'gcmi', 'binning', 'knn', 'kernel'}
         Name of the method to compute entropy.
     kwargs : dict | {}
         Additional arguments sent to the entropy function.
@@ -84,7 +84,7 @@ def prepare_for_entropy(data, method, **kwargs):
     elif method == "binning":
         pass
 
-    # make the data (n_variables, n_features, n_trials)
+    # make the data (n_variables, n_features, n_samples)
     data = jnp.asarray(data.transpose(2, 1, 0))
 
     return data, kwargs

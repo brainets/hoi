@@ -2,8 +2,68 @@ from functools import partial
 
 import jax
 import jax.numpy as jnp
-from jax.scipy.special import ndtri
 from jax.scipy.special import digamma as psi
+
+from .entropies import prepare_for_entropy
+
+###############################################################################
+###############################################################################
+#                                 SWITCHER
+###############################################################################
+###############################################################################
+
+
+def get_mi(method="gcmi", mi_type='cc', **kwargs):
+    """Get Mutual-Information function.
+
+    Parameters
+    ----------
+    method : {'gcmi'}
+        Name of the method to compute mutual-information.
+    mi_type : {'cc', 'cd'}
+        Mutual-information type might depends on the type of inputs.
+
+            * 'cc': MI between two continuous variables
+            * 'cd': MI between a continuous and a discret variable
+
+    kwargs : dict | {}
+        Additional arguments sent to the mutual-information function.
+
+    Returns
+    -------
+    fcn : callable
+        Function to compute mutual information on variables of shapes
+        (n_features, n_samples)
+    """
+    if method == "gcmi":
+        if mi_type == 'cc':
+            return partial(mi_gcmi_gg, **kwargs)
+        elif mi_type == 'cd':
+            return partial(mi_gcmi_gd, **kwargs)
+    else:
+        raise ValueError(f"Method {method} doesn't exist.")
+
+
+###############################################################################
+###############################################################################
+#                             PREPROCESSING
+###############################################################################
+###############################################################################
+
+
+def prepare_for_mi(x, y, method, **kwargs):
+    """Prepare the data before computing mutual-information."""
+    x, _ = prepare_for_entropy(x, method, **kwargs.copy())
+    x, kwargs = prepare_for_entropy(_, method, **kwargs.copy())
+
+    return x, y, kwargs
+
+
+@partial(jax.jit, static_argnums=(2))
+def compute_mi_comb(inputs, comb, mi=None):
+    x, y = inputs
+    x_c = x[:, comb, :]
+    return inputs, mi(x_c, y)
 
 
 ###############################################################################
@@ -18,7 +78,7 @@ def mi_gcmi_gg(
     x: jnp.array,
     y: jnp.array,
     biascorrect: bool = True,
-    demeaned: bool = False,
+    demean: bool = False,
 ) -> jnp.array:
     """Multi-dimentional MI between two Gaussian variables in bits.
 
@@ -31,11 +91,10 @@ def mi_gcmi_gg(
         Arrays to consider for computing the Mutual Information. The two input
         variables x and y should have the same shape except on the mvaxis
         (if needed).
-    biascorrect : bool | True
+    biascorrect : bool | False
         Specifies whether bias correction should be applied to the estimated MI
-    demeaned : bool | False
-        Specifies whether the input data already has zero mean (true if it has
-        been copula-normalized)
+    demean : bool | False
+        Specifies whether the input data have to be demeaned
     shape_checking : bool | True
         Perform a reshape and check that x and y shapes are consistents. For
         high performances and to avoid extensive memory usage, it's better to
@@ -56,7 +115,7 @@ def mi_gcmi_gg(
 
     # joint variable along the mvaxis
     xy = jnp.concatenate((x, y), axis=-2)
-    if not demeaned:
+    if demean:
         xy -= xy.mean(axis=-1, keepdims=True)
     cxy = jnp.einsum("...ij, ...kj->...ik", xy, xy)
     cxy /= float(ntrl - 1.0)
@@ -95,7 +154,7 @@ def mi_gcmi_gd(
     x: jnp.array,
     y: jnp.array,
     biascorrect: bool = True,
-    demeaned: bool = False,
+    demean: bool = False,
     size: int = None,
 ) -> jnp.array:
     """Multi-dimentional MI between a Gaussian and a discret variables in bits.
@@ -114,11 +173,10 @@ def mi_gcmi_gd(
     traxis : int | -1
         Spatial location of the trial axis. By default the last axis is
         considered
-    biascorrect : bool | True
+    biascorrect : bool | False
         Specifies whether bias correction should be applied to the estimated MI
-    demeaned : bool | False
-        Specifies whether the input data already has zero mean (true if it has
-        been copula-normalized)
+    demean : bool | False
+        Specifies whether the input data have to be demeaned
     shape_checking : bool | True
         Perform a reshape and check that x and y shapes are consistents. For
         high performances and to avoid extensive memory usage, it's better to
@@ -145,7 +203,7 @@ def mi_gcmi_gd(
     zm_shape = list(sh) + [len(yi_unique)]
 
     # joint variable along the mvaxis
-    if not demeaned:
+    if not demean:
         x = x - x.mean(axis=-1, keepdims=True)
 
     # class-conditional entropies

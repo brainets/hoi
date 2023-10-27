@@ -37,18 +37,18 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
  .. code-block:: none
 
     No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
-      0%|          |  0/12 [00:00<?,       ?it/s]      8%|▊         | Entropy H(1):  1/12 [00:00<00:03,    3.62it/s]     17%|█▋        | Entropy H(2):  2/12 [00:00<00:02,    3.83it/s]     25%|██▌       | Entropy H(3):  3/12 [00:00<00:02,    3.90it/s]     33%|███▎      | Entropy H(4):  4/12 [00:01<00:02,    3.77it/s]     42%|████▏     | Entropy H(5):  5/12 [00:01<00:01,    3.85it/s]     50%|█████     | Entropy H(6):  6/12 [00:01<00:01,    3.90it/s]     58%|█████▊    | Entropy H(7):  7/12 [00:01<00:01,    4.20it/s]     67%|██████▋   | Entropy H(8):  8/12 [00:01<00:00,    4.45it/s]     75%|███████▌  | Entropy H(9):  9/12 [00:01<00:00,    4.67it/s]     83%|████████▎ | Entropy H(10):  10/12 [00:02<00:00,    4.87it/s]     92%|█████████▏| Entropy H(11):  11/12 [00:02<00:00,    5.04it/s]    100%|██████████| Entropy H(12):  12/12 [00:02<00:00,    5.11it/s]                                                                       0%|          |  0/4017 [00:00<?,       ?it/s]     10%|▉         | Mutual information:  400/4017 [00:00<00:00, 11318.75it/s]     15%|█▍        | Mutual information:  600/4017 [00:00<00:00, 8435.56it/s]      20%|█▉        | Mutual information:  800/4017 [00:00<00:00, 7492.53it/s]     25%|██▍       | Mutual information:  1000/4017 [00:00<00:00, 7008.66it/s]     30%|██▉       | Mutual information:  1200/4017 [00:00<00:00, 6714.47it/s]     35%|███▍      | Mutual information:  1400/4017 [00:00<00:00, 5868.02it/s]     40%|███▉      | Mutual information:  1600/4017 [00:00<00:00, 5840.90it/s]     45%|████▍     | Mutual information:  1800/4017 [00:00<00:00, 5820.31it/s]     50%|████▉     | Mutual information:  2000/4017 [00:00<00:00, 5801.06it/s]     55%|█████▍    | Mutual information:  2200/4017 [00:00<00:00, 5794.33it/s]     60%|█████▉    | Mutual information:  2400/4017 [00:00<00:00, 5788.62it/s]     65%|██████▍   | Mutual information:  2600/4017 [00:00<00:00, 5782.41it/s]     70%|██████▉   | Mutual information:  2800/4017 [00:00<00:00, 5775.40it/s]     75%|███████▍  | Mutual information:  3000/4017 [00:00<00:00, 5769.92it/s]     80%|███████▉  | Mutual information:  3200/4017 [00:00<00:00, 5765.82it/s]     85%|████████▍ | Mutual information:  3400/4017 [00:00<00:00, 5760.61it/s]     90%|████████▉ | Mutual information:  3600/4017 [00:00<00:00, 5756.62it/s]     95%|█████████▍| Mutual information:  3800/4017 [00:00<00:00, 5751.30it/s]    100%|█████████▉| Mutual information:  4000/4017 [00:00<00:00, 5750.77it/s]    100%|██████████| Mutual information:  4017/4017 [00:00<00:00, 5351.87it/s]    100%|██████████| Mutual information:  4017/4017 [00:00<00:00, 5541.48it/s]
-       index  order       hoi     multiplet
-    0    200      3  0.256190     [6, 7, 8]
-    1      0      3  0.252047     [0, 1, 2]
-    2    185      3  0.027721     [5, 6, 7]
-    3    100      3  0.027346     [2, 3, 4]
-    4     55      3  0.027339     [1, 2, 3]
-    5    137      3 -0.011704     [3, 4, 6]
-    6    595      4 -0.012127  [3, 4, 6, 7]
-    7    138      3 -0.016279     [3, 4, 7]
-    8    219      3 -0.712286   [9, 10, 11]
-    9    136      3 -0.835471     [3, 4, 5]
+      0%|          |  0/12 [00:00<?,       ?it/s]      8%|▊         | Entropy H(1):  1/12 [00:00<00:04,    2.58it/s]     17%|█▋        | Entropy H(2):  2/12 [00:00<00:03,    2.90it/s]     25%|██▌       | Entropy H(3):  3/12 [00:01<00:03,    2.97it/s]     33%|███▎      | Entropy H(4):  4/12 [00:01<00:02,    2.86it/s]     42%|████▏     | Entropy H(5):  5/12 [00:01<00:02,    2.93it/s]     50%|█████     | Entropy H(6):  6/12 [00:02<00:02,    2.98it/s]     58%|█████▊    | Entropy H(7):  7/12 [00:02<00:01,    3.21it/s]     67%|██████▋   | Entropy H(8):  8/12 [00:02<00:01,    3.39it/s]     75%|███████▌  | Entropy H(9):  9/12 [00:02<00:00,    3.56it/s]     83%|████████▎ | Entropy H(10):  10/12 [00:02<00:00,    3.71it/s]     92%|█████████▏| Entropy H(11):  11/12 [00:02<00:00,    3.87it/s]    100%|██████████| Entropy H(12):  12/12 [00:03<00:00,    3.93it/s]                                                                       0%|          |  0/4017 [00:00<?,       ?it/s]     10%|▉         | Mutual information:  400/4017 [00:00<00:00, 6938.35it/s]     15%|█▍        | Mutual information:  600/4017 [00:00<00:00, 5517.22it/s]     20%|█▉        | Mutual information:  800/4017 [00:00<00:00, 4922.54it/s]     25%|██▍       | Mutual information:  1000/4017 [00:00<00:00, 4723.99it/s]     30%|██▉       | Mutual information:  1200/4017 [00:00<00:00, 4689.27it/s]     35%|███▍      | Mutual information:  1400/4017 [00:00<00:00, 4694.75it/s]     40%|███▉      | Mutual information:  1600/4017 [00:00<00:00, 4557.96it/s]     45%|████▍     | Mutual information:  1800/4017 [00:00<00:00, 4570.28it/s]     50%|████▉     | Mutual information:  2000/4017 [00:00<00:00, 4492.50it/s]     55%|█████▍    | Mutual information:  2200/4017 [00:00<00:00, 4471.54it/s]     60%|█████▉    | Mutual information:  2400/4017 [00:00<00:00, 4489.08it/s]     65%|██████▍   | Mutual information:  2600/4017 [00:00<00:00, 4491.11it/s]     70%|██████▉   | Mutual information:  2800/4017 [00:00<00:00, 4486.25it/s]     75%|███████▍  | Mutual information:  3000/4017 [00:00<00:00, 4506.61it/s]     80%|███████▉  | Mutual information:  3200/4017 [00:00<00:00, 4427.10it/s]     85%|████████▍ | Mutual information:  3400/4017 [00:00<00:00, 4420.62it/s]     90%|████████▉ | Mutual information:  3600/4017 [00:00<00:00, 4462.60it/s]     95%|█████████▍| Mutual information:  3800/4017 [00:00<00:00, 4472.02it/s]    100%|█████████▉| Mutual information:  4000/4017 [00:00<00:00, 4486.54it/s]    100%|██████████| Mutual information:  4017/4017 [00:00<00:00, 4223.08it/s]    100%|██████████| Mutual information:  4017/4017 [00:00<00:00, 4324.59it/s]
+       index  order       hoi          multiplet
+    0      0      3  0.302748          [0, 1, 2]
+    1    200      3  0.206405          [6, 7, 8]
+    2    714      4  0.024395     [8, 9, 10, 11]
+    3   1506      5  0.013438  [7, 8, 9, 10, 11]
+    4    713      4  0.012882     [7, 9, 10, 11]
+    5    162      3 -0.012964         [3, 9, 11]
+    6    608      4 -0.013542      [3, 4, 9, 11]
+    7    183      3 -0.014325         [4, 9, 11]
+    8    136      3 -0.766415          [3, 4, 5]
+    9    219      3 -0.827950        [9, 10, 11]
 
 
 
@@ -84,9 +84,9 @@ Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nesciunt neque, perfer
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.361 seconds)
+   **Total running time of the script:** (0 minutes 5.625 seconds)
 
-**Estimated memory usage:**  142 MB
+**Estimated memory usage:**  137 MB
 
 
 .. _sphx_glr_download_auto_examples_metrics_plot_oinfo.py:

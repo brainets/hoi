@@ -424,8 +424,68 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
-<span class="kn">from</span> <span class="nn">jax.scipy.special</span> <span class="kn">import</span> <span class="n">ndtri</span>
 <span class="kn">from</span> <span class="nn">jax.scipy.special</span> <span class="kn">import</span> <span class="n">digamma</span> <span class="k">as</span> <span class="n">psi</span>
+
+<span class="kn">from</span> <span class="nn">.entropies</span> <span class="kn">import</span> <span class="n">prepare_for_entropy</span>
+
+<span class="c1">###############################################################################</span>
+<span class="c1">###############################################################################</span>
+<span class="c1">#                                 SWITCHER</span>
+<span class="c1">###############################################################################</span>
+<span class="c1">###############################################################################</span>
+
+
+<span class="k">def</span> <span class="nf">get_mi</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">,</span> <span class="n">mi_type</span><span class="o">=</span><span class="s1">&#39;cc&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get Mutual-Information function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    method : {&#39;gcmi&#39;}</span>
+<span class="sd">        Name of the method to compute mutual-information.</span>
+<span class="sd">    mi_type : {&#39;cc&#39;, &#39;cd&#39;}</span>
+<span class="sd">        Mutual-information type might depends on the type of inputs.</span>
+
+<span class="sd">            * &#39;cc&#39;: MI between two continuous variables</span>
+<span class="sd">            * &#39;cd&#39;: MI between a continuous and a discret variable</span>
+
+<span class="sd">    kwargs : dict | {}</span>
+<span class="sd">        Additional arguments sent to the mutual-information function.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fcn : callable</span>
+<span class="sd">        Function to compute mutual information on variables of shapes</span>
+<span class="sd">        (n_features, n_samples)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gcmi&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">mi_type</span> <span class="o">==</span> <span class="s1">&#39;cc&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_gcmi_gg</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mi_type</span> <span class="o">==</span> <span class="s1">&#39;cd&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_gcmi_gd</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Method </span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2"> doesn&#39;t exist.&quot;</span><span class="p">)</span>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1">###############################################################################</span>
+<span class="c1">#                             PREPROCESSING</span>
+<span class="c1">###############################################################################</span>
+<span class="c1">###############################################################################</span>
+
+
+<span class="k">def</span> <span class="nf">prepare_for_mi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare the data before computing mutual-information.&quot;&quot;&quot;</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">prepare_for_entropy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">prepare_for_entropy</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
+
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">kwargs</span>
+
+
+<span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">compute_mi_comb</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">comb</span><span class="p">,</span> <span class="n">mi</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">inputs</span>
+    <span class="n">x_c</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">comb</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="k">return</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">mi</span><span class="p">(</span><span class="n">x_c</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 
 
 <span class="c1">###############################################################################</span>
@@ -440,7 +500,7 @@ document.write(`
     <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
     <span class="n">y</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
     <span class="n">biascorrect</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">demeaned</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">demean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Multi-dimentional MI between two Gaussian variables in bits.</span>
 
@@ -453,11 +513,10 @@ document.write(`
 <span class="sd">        Arrays to consider for computing the Mutual Information. The two input</span>
 <span class="sd">        variables x and y should have the same shape except on the mvaxis</span>
 <span class="sd">        (if needed).</span>
-<span class="sd">    biascorrect : bool | True</span>
+<span class="sd">    biascorrect : bool | False</span>
 <span class="sd">        Specifies whether bias correction should be applied to the estimated MI</span>
-<span class="sd">    demeaned : bool | False</span>
-<span class="sd">        Specifies whether the input data already has zero mean (true if it has</span>
-<span class="sd">        been copula-normalized)</span>
+<span class="sd">    demean : bool | False</span>
+<span class="sd">        Specifies whether the input data have to be demeaned</span>
 <span class="sd">    shape_checking : bool | True</span>
 <span class="sd">        Perform a reshape and check that x and y shapes are consistents. For</span>
 <span class="sd">        high performances and to avoid extensive memory usage, it&#39;s better to</span>
@@ -478,7 +537,7 @@ document.write(`
 
     <span class="c1"># joint variable along the mvaxis</span>
     <span class="n">xy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">2</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">demeaned</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">demean</span><span class="p">:</span>
         <span class="n">xy</span> <span class="o">-=</span> <span class="n">xy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">cxy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;...ij, ...kj-&gt;...ik&quot;</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">xy</span><span class="p">)</span>
     <span class="n">cxy</span> <span class="o">/=</span> <span class="nb">float</span><span class="p">(</span><span class="n">ntrl</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span>
@@ -517,7 +576,7 @@ document.write(`
     <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
     <span class="n">y</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
     <span class="n">biascorrect</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">demeaned</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">demean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Multi-dimentional MI between a Gaussian and a discret variables in bits.</span>
@@ -536,11 +595,10 @@ document.write(`
 <span class="sd">    traxis : int | -1</span>
 <span class="sd">        Spatial location of the trial axis. By default the last axis is</span>
 <span class="sd">        considered</span>
-<span class="sd">    biascorrect : bool | True</span>
+<span class="sd">    biascorrect : bool | False</span>
 <span class="sd">        Specifies whether bias correction should be applied to the estimated MI</span>
-<span class="sd">    demeaned : bool | False</span>
-<span class="sd">        Specifies whether the input data already has zero mean (true if it has</span>
-<span class="sd">        been copula-normalized)</span>
+<span class="sd">    demean : bool | False</span>
+<span class="sd">        Specifies whether the input data have to be demeaned</span>
 <span class="sd">    shape_checking : bool | True</span>
 <span class="sd">        Perform a reshape and check that x and y shapes are consistents. For</span>
 <span class="sd">        high performances and to avoid extensive memory usage, it&#39;s better to</span>
@@ -567,7 +625,7 @@ document.write(`
     <span class="n">zm_shape</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sh</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">yi_unique</span><span class="p">)]</span>
 
     <span class="c1"># joint variable along the mvaxis</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">demeaned</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">demean</span><span class="p">:</span>
         <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># class-conditional entropies</span>

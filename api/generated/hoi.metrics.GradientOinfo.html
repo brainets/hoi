@@ -507,7 +507,7 @@ target variable :</p>
 <dt><strong>x</strong><span class="classifier">array_like</span></dt><dd><p>Standard NumPy arrays of shape (n_samples, n_features) or
 (n_samples, n_features, n_variables)</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">array_like</span></dt><dd><p>The feature of shape (n_trials,) for estimating task-related O-info</p>
+<dt><strong>y</strong><span class="classifier">array_like</span></dt><dd><p>The feature of shape (n_samples,) for estimating task-related O-info</p>
 </dd>
 <dt><strong>multiplets</strong><span class="classifier">list | None</span></dt><dd><p>List of multiplets to compute. Should be a list of multiplets, for
 example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
@@ -654,6 +654,13 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 </div></blockquote>
 </dd>
 <dt><strong>kwargs</strong><span class="classifier">dict | {}</span></dt><dd><p>Additional arguments are sent to each entropy function</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>hoi</strong><span class="classifier">array_like</span></dt><dd><p>The NumPy array containing values of higher-rder interactions of
+shape (n_multiplets, n_variables)</p>
 </dd>
 </dl>
 </dd>

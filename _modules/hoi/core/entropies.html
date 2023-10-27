@@ -449,7 +449,7 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    method : {&#39;gcmi&#39;, &#39;binning&#39;, &#39;knn&#39;}</span>
+<span class="sd">    method : {&#39;gcmi&#39;, &#39;binning&#39;, &#39;knn&#39;, &#39;kernel&#39;}</span>
 <span class="sd">        Name of the method to compute entropy.</span>
 <span class="sd">    kwargs : dict | {}</span>
 <span class="sd">        Additional arguments sent to the entropy function.</span>
@@ -506,7 +506,7 @@ document.write(`
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;binning&quot;</span><span class="p">:</span>
         <span class="k">pass</span>
 
-    <span class="c1"># make the data (n_variables, n_features, n_trials)</span>
+    <span class="c1"># make the data (n_variables, n_features, n_samples)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">kwargs</span></div>

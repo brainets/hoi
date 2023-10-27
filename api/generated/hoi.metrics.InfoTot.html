@@ -497,7 +497,7 @@ variable <cite>y</cite>:</p>
 <dt><strong>x</strong><span class="classifier">array_like</span></dt><dd><p>Standard NumPy arrays of shape (n_samples, n_features) or
 (n_samples, n_features, n_variables)</p>
 </dd>
-<dt><strong>y</strong><span class="classifier">array_like</span></dt><dd><p>The feature of shape (n_trials,) for estimating task-related O-info</p>
+<dt><strong>y</strong><span class="classifier">array_like</span></dt><dd><p>The feature of shape (n_samples,)</p>
 </dd>
 <dt><strong>multiplets</strong><span class="classifier">list | None</span></dt><dd><p>List of multiplets to compute. Should be a list of multiplets, for
 example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
@@ -624,22 +624,22 @@ keep.</p>
 <dd class="field-odd"><dl>
 <dt><strong>minsize, maxsize</strong><span class="classifier">int | 2, None</span></dt><dd><p>Minimum and maximum size of the multiplets</p>
 </dd>
-<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
+<dt><strong>method</strong><span class="classifier">{‘gcmi’}</span></dt><dd><p>Name of the method to compute mutual-information. Use either :</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>‘gcmi’: gaussian copula entropy [default]. See
-<a class="reference internal" href="hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi" title="hoi.core.entropy_gcmi"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gcmi()</span></code></a></p></li>
-<li><p>‘binning’: binning-based estimator of entropy. Note that to
-use this estimator, the data have be to discretized. See
-<a class="reference internal" href="hoi.core.entropy_bin.html#hoi.core.entropy_bin" title="hoi.core.entropy_bin"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_bin()</span></code></a></p></li>
-<li><p>‘knn’: k-nearest neighbor estimator. See
-<a class="reference internal" href="hoi.core.entropy_knn.html#hoi.core.entropy_knn" title="hoi.core.entropy_knn"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_knn()</span></code></a></p></li>
-<li><p>‘kernel’: kernel-based estimator of entropy
-see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.entropy_kernel" title="hoi.core.entropy_kernel"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_kernel()</span></code></a></p></li>
+<li><p>‘gcmi’: gaussian copula MI [default]. See
+<a class="reference internal" href="hoi.core.mi_gcmi_gg.html#hoi.core.mi_gcmi_gg" title="hoi.core.mi_gcmi_gg"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.mi_gcmi_gg()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 </dd>
-<dt><strong>kwargs</strong><span class="classifier">dict | {}</span></dt><dd><p>Additional arguments are sent to each entropy function</p>
+<dt><strong>kwargs</strong><span class="classifier">dict | {}</span></dt><dd><p>Additional arguments are sent to each MI function</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>hoi</strong><span class="classifier">array_like</span></dt><dd><p>The NumPy array containing values of higher-rder interactions of
+shape (n_multiplets, n_variables)</p>
 </dd>
 </dl>
 </dd>

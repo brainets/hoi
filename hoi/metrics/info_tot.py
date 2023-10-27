@@ -72,8 +72,7 @@ class InfoTot(HOIEstimator):
 
         # prepare the x for computing mi
         x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
-        y = x[:, [-1], :]
-        x = x[:, 0:-1, :]
+        x, y = self._split_xy(x)
 
         # prepare mi functions
         mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
@@ -87,7 +86,7 @@ class InfoTot(HOIEstimator):
         # prepare the shapes of outputs
         n_mults = sum(
             [
-                ccomb(self.n_features - 1, c)
+                ccomb(self._n_features_x, c)
                 for c in range(minsize, maxsize + 1)
             ]
         )
@@ -102,7 +101,7 @@ class InfoTot(HOIEstimator):
             )
 
             # get combinations
-            _h_idx = combinations(self.n_features - 1, msize, astype="jax")
+            _h_idx = combinations(self._n_features_x, msize, astype="jax")
             n_combs, n_feat = _h_idx.shape
             sl = slice(offset, offset + n_combs)
 

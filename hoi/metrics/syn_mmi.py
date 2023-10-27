@@ -81,8 +81,7 @@ class SynergyMMI(HOIEstimator):
 
         # prepare the x for computing mi
         x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
-        y = x[:, [-1], :]
-        x = x[:, 0:-1, :]
+        x, y = self._split_xy(x)
 
         # prepare mi functions
         mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
@@ -98,7 +97,7 @@ class SynergyMMI(HOIEstimator):
         # prepare the shapes of outputs
         n_mults = sum(
             [
-                ccomb(self.n_features - 1, c)
+                ccomb(self._n_features_x, c)
                 for c in range(minsize, maxsize + 1)
             ]
         )
@@ -111,7 +110,7 @@ class SynergyMMI(HOIEstimator):
             pbar.set_description(desc="SynMMI order %s" % msize, refresh=False)
 
             # get combinations
-            _h_idx = combinations(self.n_features - 1, msize, astype="jax")
+            _h_idx = combinations(self._n_features_x, msize, astype="jax")
             n_combs, n_feat = _h_idx.shape
             sl = slice(offset, offset + n_combs)
 
@@ -148,7 +147,8 @@ if __name__ == "__main__":
     x = np.random.rand(200, 7)
 
     # synergy (all-to-one)
-    y = x[:, 0] + x[:, 3] + x[:, 5]
+    # y = x[:, 0] + x[:, 3] + x[:, 5]
+    y = np.c_[x[:, 0] + x[:, 3] + x[:, 5], x[:, 1] + x[:, 2] + x[:, 6]]
 
     model = SynergyMMI(x, y)
     # hoi = model.fit(minsize=2, maxsize=6, method='gcmi')

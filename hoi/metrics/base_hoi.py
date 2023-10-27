@@ -48,15 +48,7 @@ class HOIEstimator(object):
         # additional variable along feature dimension
         self._task_related = isinstance(y, (list, np.ndarray, tuple))
         if self._task_related:
-            y = np.asarray(y)
-            if y.ndim == 1:
-                assert len(y) == x.shape[0]
-                y = np.tile(y.reshape(-1, 1, 1), (1, 1, x.shape[-1]))
-            elif y.ndim == 2:
-                assert y.shape[0] == x.shape[0]
-                assert y.shape[-1] == x.shape[-1]
-                y = y[:, np.newaxis, :]
-            x = np.concatenate((x, y), axis=1)
+            x = self._merge_xy(x, y=y)
 
         # compute only selected multiplets
         self._custom_mults = None
@@ -66,6 +58,47 @@ class HOIEstimator(object):
         self.n_samples, self.n_features, self.n_variables = x.shape
 
         return x
+
+    def _merge_xy(self, x, y=None):
+        """Merge x and y variables."""
+        assert x.ndim == 3
+        n_samples, n_features, n_variables = x.shape
+
+        if y is None:
+            return y
+
+        y = np.asarray(y)
+
+        # trial checking
+        if y.shape[0] != n_samples:
+            raise IOError(
+                f"The numer of sample of the variable y ({y.shape[0]}) should "
+                f"match the number of sample of the variable x ({n_samples})"
+            )
+
+        # 1d / 2d / 3d merging
+        if y.ndim == 1:
+            y = y[:, np.newaxis, np.newaxis]
+        elif y.ndim == 2:
+            y = np.tile(y[:, :, np.newaxis], n_variables)
+        elif y.ndim == 3:
+            if y.shape[2] != n_variables:
+                raise IOError(
+                    f"The numer of variables of the variable y ({y.shape[2]}) "
+                    f"should match the number of variables of the variable x"
+                    f" ({n_variables})"
+                )
+        self._n_features_x = x.shape[1]
+        self._n_features_y = y.shape[1]
+
+        return np.concatenate((x, y), axis=1)
+
+    def _split_xy(self, xy):
+        """Split back the xy variables into x and y."""
+        return (
+            xy[:, 0 : self._n_features_x, :],
+            xy[:, -self._n_features_y : :, :],
+        )
 
     def _check_minmax(self, minsize, maxsize):
         """Define min / max size of the multiplets."""

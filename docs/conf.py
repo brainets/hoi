@@ -65,7 +65,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/brainets/frites",
+            "url": "https://github.com/brainets/hoi",
             "icon": "fab fa-github-square",
         },
         {

@@ -2,52 +2,220 @@ from functools import partial
 
 import jax
 import jax.numpy as jnp
+from jax.scipy.special import ndtri
+from jax.scipy.special import digamma as psi
 
 
 ###############################################################################
 ###############################################################################
-#                            ENTROPY BASED MI
+#                            GAUSSIAN COPULA
 ###############################################################################
 ###############################################################################
 
 
-@partial(jax.jit, static_argnums=(2,))
-def mi_entr_comb(inputs, comb, entropy=None):
-    """Entropy-based mutual information of a combination.
+@partial(jax.jit, static_argnums=(2, 3))
+def mi_gcmi_gg(
+    x: jnp.array,
+    y: jnp.array,
+    biascorrect: bool = True,
+    demeaned: bool = False,
+) -> jnp.array:
+    """Multi-dimentional MI between two Gaussian variables in bits.
 
-    This function can be used to scan mutual-information computations over
-    set of multiplets.
-
-    .. math::
-
-        I_{x_{c}y} = H(x_{comb}) + H(y) - H(x_{comb}, y)
+    This function compute the MI between two tensors of shapes
+    (..., mvaxis, traxis)
 
     Parameters
     ----------
-    inputs : tuple
-        Tuple that contains the x and y variable
-    comb : jnp.array
-        Jax array that contains the multiplet to select.
+    x, y : array_like
+        Arrays to consider for computing the Mutual Information. The two input
+        variables x and y should have the same shape except on the mvaxis
+        (if needed).
+    biascorrect : bool | True
+        Specifies whether bias correction should be applied to the estimated MI
+    demeaned : bool | False
+        Specifies whether the input data already has zero mean (true if it has
+        been copula-normalized)
+    shape_checking : bool | True
+        Perform a reshape and check that x and y shapes are consistents. For
+        high performances and to avoid extensive memory usage, it's better to
+        already have x and y with a shape of (..., mvaxis, traxis) and to set
+        this parameter to False
 
     Returns
     -------
-    inputs : tuple
-        Original inputs
-    mi : jnp.array
-        The mutual information
+    mi : array_like
+        The mutual information with the same shape as x and y, without the
+        mvaxis and traxis
     """
-    # unwrap arguments
-    x, y = inputs
+    # x.shape (..., x_mvaxis, traxis)
+    # y.shape (..., y_mvaxis, traxis)
+    ntrl = x.shape[-1]
+    nvarx, nvary = x.shape[-2], y.shape[-2]
+    nvarxy = nvarx + nvary
 
-    # select combination
-    xc = x[:, comb, :]
+    # joint variable along the mvaxis
+    xy = jnp.concatenate((x, y), axis=-2)
+    if not demeaned:
+        xy -= xy.mean(axis=-1, keepdims=True)
+    cxy = jnp.einsum("...ij, ...kj->...ik", xy, xy)
+    cxy /= float(ntrl - 1.0)
 
-    # compute entropies
-    h_x = entropy(xc)
-    h_y = entropy(y)
-    h_xy = entropy(jnp.concatenate((xc, y), axis=1))
+    # submatrices of joint covariance
+    cx = cxy[..., :nvarx, :nvarx]
+    cy = cxy[..., nvarx:, nvarx:]
 
-    # compute mutual information
-    mi = h_x + h_y - h_xy
+    # Cholesky decomposition
+    chcxy = jnp.linalg.cholesky(cxy)
+    chcx = jnp.linalg.cholesky(cx)
+    chcy = jnp.linalg.cholesky(cy)
 
-    return inputs, mi
+    # entropies in nats
+    # normalizations cancel for mutual information
+    hx = jnp.log(jnp.einsum("...ii->...i", chcx)).sum(-1)
+    hy = jnp.log(jnp.einsum("...ii->...i", chcy)).sum(-1)
+    hxy = jnp.log(jnp.einsum("...ii->...i", chcxy)).sum(-1)
+
+    ln2 = jnp.log(2)
+    if biascorrect:
+        vec = jnp.arange(1, nvarxy + 1)
+        psiterms = psi((ntrl - vec).astype(float) / 2.0) / 2.0
+        dterm = (ln2 - jnp.log(ntrl - 1.0)) / 2.0
+        hx = hx - nvarx * dterm - psiterms[:nvarx].sum()
+        hy = hy - nvary * dterm - psiterms[:nvary].sum()
+        hxy = hxy - nvarxy * dterm - psiterms[:nvarxy].sum()
+
+    # MI in bits
+    i = (hx + hy - hxy) / ln2
+    return i
+
+
+@partial(jax.jit, static_argnums=(2, 3, 4))
+def mi_gcmi_gd(
+    x: jnp.array,
+    y: jnp.array,
+    biascorrect: bool = True,
+    demeaned: bool = False,
+    size: int = None,
+) -> jnp.array:
+    """Multi-dimentional MI between a Gaussian and a discret variables in bits.
+
+    This function is based on ANOVA style model comparison.
+
+    Parameters
+    ----------
+    x, y : array_like
+        Arrays to consider for computing the Mutual Information. The two input
+        variables x and y should have the same shape except on the mvaxis
+        (if needed).
+    mvaxis : int | None
+        Spatial location of the axis to consider if multi-variate analysis
+        is needed
+    traxis : int | -1
+        Spatial location of the trial axis. By default the last axis is
+        considered
+    biascorrect : bool | True
+        Specifies whether bias correction should be applied to the estimated MI
+    demeaned : bool | False
+        Specifies whether the input data already has zero mean (true if it has
+        been copula-normalized)
+    shape_checking : bool | True
+        Perform a reshape and check that x and y shapes are consistents. For
+        high performances and to avoid extensive memory usage, it's better to
+        already have x and y with a shape of (..., mvaxis, traxis) and to set
+        this parameter to False
+
+    Returns
+    -------
+    mi : array_like
+        The mutual information with the same shape as x and y, without the
+        mvaxis and traxis
+    """
+    # Multi-dimentional shape checking
+    assert isinstance(y, jnp.ndarray) and (y.ndim == 1)
+    assert x.shape[-1] == len(y)
+
+    # x.shape (..., x_mvaxis, traxis)
+    nvarx, ntrl = x.shape[-2], x.shape[-1]
+    # if size is None:
+    #     y_transition = jnp.r_[1, jnp.diff(jnp.sort(y))]
+    #     size = jnp.where(y_transition == 1, x=1, y=0).sum()
+    yi_unique = jnp.unique(y, size=size)
+    sh = x.shape[:-2]
+    zm_shape = list(sh) + [len(yi_unique)]
+
+    # joint variable along the mvaxis
+    if not demeaned:
+        x = x - x.mean(axis=-1, keepdims=True)
+
+    # class-conditional entropies
+    ntrl_y = jnp.zeros((size,), dtype=int)
+    hcond = jnp.zeros(zm_shape, dtype=float)
+
+    outs, _ = jax.lax.scan(
+        _categorical_entropy,
+        (x, y, ntrl_y, hcond),
+        (jnp.arange(size), yi_unique),
+    )
+
+    ntrl_y, hcond = outs[-2], outs[-1]
+
+    # class weights
+    w = ntrl_y / float(ntrl)
+
+    # unconditional entropy from unconditional Gaussian fit
+    cx = jnp.einsum("...ij, ...kj->...ik", x, x) / float(ntrl - 1.0)
+    chc = jnp.linalg.cholesky(cx)
+    hunc = jnp.log(jnp.einsum("...ii->...i", chc)).sum(-1)
+
+    ln2 = jnp.log(2)
+    if biascorrect:
+        vars = jnp.arange(1, nvarx + 1)
+
+        psiterms = psi((ntrl - vars).astype(float) / 2.0) / 2.0
+        dterm = (ln2 - jnp.log(float(ntrl - 1))) / 2.0
+        hunc = hunc - nvarx * dterm - psiterms.sum()
+
+        dterm = (ln2 - jnp.log((ntrl_y - 1).astype(float))) / 2.0
+        psiterms = jnp.zeros_like(ntrl_y, dtype=float)
+        outs, _ = jax.lax.scan(_accumulate_psiterms, (psiterms, ntrl_y), vars)
+        psiterms = outs[0]
+        hcond = hcond - nvarx * dterm - (psiterms / 2.0)
+
+    # MI in bits
+    i = (hunc - jnp.einsum("i, ...i", w, hcond)) / ln2
+    return i
+
+
+@jax.jit
+def _categorical_entropy(inputs, num_yi):
+    """Compute the entropy for each category of y."""
+    # unwrap inputs
+    x, y, ntrl_y, hcond = inputs
+    num, yi = num_yi
+    idx = y == yi
+
+    # categorical demean
+    n_yi = jnp.where(idx, x=1, y=0).sum()
+    xm = jnp.where(idx, x=x, y=0.0)
+    xmsum = jnp.where(idx, x=xm.sum(axis=-1, keepdims=True), y=0)
+    xmean = xmsum / n_yi
+    xm -= xmean
+
+    # compute entropy
+    cm = jnp.einsum("...ij, ...kj->...ik", xm, xm) / (n_yi - 1)
+    chcm = jnp.linalg.cholesky(cm)
+    _hcond = jnp.log(jnp.einsum("...ii->...i", chcm)).sum(-1)
+    hcond = hcond.at[..., num].set(_hcond)
+    ntrl_y = ntrl_y.at[num].set(n_yi)
+
+    return (x, y, ntrl_y, hcond), _hcond
+
+
+@jax.jit
+def _accumulate_psiterms(inputs, vi):
+    """Accumulated psiterms."""
+    psiterms, ntrl_y = inputs
+    idx = ntrl_y - vi
+    psiterms += psi(idx.astype(float) / 2.0)
+    return (psiterms, ntrl_y), psiterms

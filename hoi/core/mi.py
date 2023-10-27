@@ -13,7 +13,7 @@ from .entropies import prepare_for_entropy
 ###############################################################################
 
 
-def get_mi(method="gcmi", mi_type='cc', **kwargs):
+def get_mi(method="gcmi", mi_type="cc", **kwargs):
     """Get Mutual-Information function.
 
     Parameters
@@ -36,9 +36,9 @@ def get_mi(method="gcmi", mi_type='cc', **kwargs):
         (n_features, n_samples)
     """
     if method == "gcmi":
-        if mi_type == 'cc':
+        if mi_type == "cc":
             return partial(mi_gcmi_gg, **kwargs)
-        elif mi_type == 'cd':
+        elif mi_type == "cd":
             return partial(mi_gcmi_gd, **kwargs)
     else:
         raise ValueError(f"Method {method} doesn't exist.")

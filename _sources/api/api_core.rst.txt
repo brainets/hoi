@@ -11,13 +11,13 @@ Measures of Entropy
 .. autosummary::
    :toctree: generated/
 
+   get_entropy
    entropy_gcmi
    entropy_bin
    entropy_knn
    entropy_kernel
    copnorm_nd
    prepare_for_entropy
-   get_entropy
 
 Measures of Mutual Information
 ++++++++++++++++++++++++++++++++
@@ -25,7 +25,8 @@ Measures of Mutual Information
 .. autosummary::
    :toctree: generated/
 
-   mi_entr_comb
+   mi_gcmi_gg
+   mi_gcmi_gd
 
 
 Combinatory

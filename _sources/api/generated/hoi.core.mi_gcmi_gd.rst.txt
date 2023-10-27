@@ -1,0 +1,11 @@
+﻿hoi.core.mi\_gcmi\_gd
+=====================
+
+.. currentmodule:: hoi.core
+
+.. autofunction:: mi_gcmi_gd
+
+.. _sphx_glr_backreferences_hoi.core.mi_gcmi_gd:
+
+.. minigallery:: hoi.core.mi_gcmi_gd
+    :add-heading:

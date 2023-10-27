@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>hoi.core.mi_entr_comb &#8212; HOI 0.0.1 documentation</title>
+    <title>hoi.core.mi_gcmi_gd &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -47,12 +47,11 @@
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.core.mi_entr_comb';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.core.mi_gcmi_gd';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="hoi.core.combinations" href="hoi.core.combinations.html" />
-    <link rel="prev" title="hoi.core.get_entropy" href="hoi.core.get_entropy.html" />
+    <link rel="prev" title="hoi.core.mi_gcmi_gg" href="hoi.core.mi_gcmi_gg.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -409,14 +408,15 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../api_core.html">Core information-theoretical measures and combinatory</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.core.prepare_for_entropy.html">hoi.core.prepare_for_entropy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">hoi.core.mi_entr_comb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.core.mi_gcmi_gg.html">hoi.core.mi_gcmi_gg</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">hoi.core.mi_gcmi_gd</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.core.combinations.html">hoi.core.combinations</a></li>
 </ul>
 </li>
@@ -463,7 +463,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../api_core.html" class="nav-link">Core information-theoretical measures and combinatory</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">hoi.core.mi_...</li>
+    <li class="breadcrumb-item active" aria-current="page">hoi.core.mi_gcmi_gd</li>
   </ul>
 </nav>
 </div>
@@ -480,37 +480,49 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="hoi-core-mi-entr-comb">
-<h1>hoi.core.mi_entr_comb<a class="headerlink" href="#hoi-core-mi-entr-comb" title="Permalink to this heading">#</a></h1>
+  <section id="hoi-core-mi-gcmi-gd">
+<h1>hoi.core.mi_gcmi_gd<a class="headerlink" href="#hoi-core-mi-gcmi-gd" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="hoi.core.mi_entr_comb">
-<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">mi_entr_comb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entropy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/core/mi.html#mi_entr_comb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.mi_entr_comb" title="Permalink to this definition">#</a></dt>
-<dd><p>Entropy-based mutual information of a combination.</p>
-<p>This function can be used to scan mutual-information computations over
-set of multiplets.</p>
-<div class="math notranslate nohighlight">
-\[I_{x_{c}y} = H(x_{comb}) + H(y) - H(x_{comb}, y)\]</div>
+<dt class="sig sig-object py" id="hoi.core.mi_gcmi_gd">
+<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">mi_gcmi_gd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biascorrect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demeaned</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="reference internal" href="../../_modules/hoi/core/mi.html#mi_gcmi_gd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.mi_gcmi_gd" title="Permalink to this definition">#</a></dt>
+<dd><p>Multi-dimentional MI between a Gaussian and a discret variables in bits.</p>
+<p>This function is based on ANOVA style model comparison.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>inputs</strong><span class="classifier">tuple</span></dt><dd><p>Tuple that contains the x and y variable</p>
+<dt><strong>x, y</strong><span class="classifier">array_like</span></dt><dd><p>Arrays to consider for computing the Mutual Information. The two input
+variables x and y should have the same shape except on the mvaxis
+(if needed).</p>
 </dd>
-<dt><strong>comb</strong><span class="classifier">jnp.array</span></dt><dd><p>Jax array that contains the multiplet to select.</p>
+<dt><strong>mvaxis</strong><span class="classifier">int | None</span></dt><dd><p>Spatial location of the axis to consider if multi-variate analysis
+is needed</p>
+</dd>
+<dt><strong>traxis</strong><span class="classifier">int | -1</span></dt><dd><p>Spatial location of the trial axis. By default the last axis is
+considered</p>
+</dd>
+<dt><strong>biascorrect</strong><span class="classifier">bool | True</span></dt><dd><p>Specifies whether bias correction should be applied to the estimated MI</p>
+</dd>
+<dt><strong>demeaned</strong><span class="classifier">bool | False</span></dt><dd><p>Specifies whether the input data already has zero mean (true if it has
+been copula-normalized)</p>
+</dd>
+<dt><strong>shape_checking</strong><span class="classifier">bool | True</span></dt><dd><p>Perform a reshape and check that x and y shapes are consistents. For
+high performances and to avoid extensive memory usage, it’s better to
+already have x and y with a shape of (…, mvaxis, traxis) and to set
+this parameter to False</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>inputs</strong><span class="classifier">tuple</span></dt><dd><p>Original inputs</p>
-</dd>
-<dt><strong>mi</strong><span class="classifier">jnp.array</span></dt><dd><p>The mutual information</p>
+<dt><strong>mi</strong><span class="classifier">array_like</span></dt><dd><p>The mutual information with the same shape as x and y, without the
+mvaxis and traxis</p>
 </dd>
 </dl>
 </dd>
 </dl>
 </dd></dl>
 
-<span class="target" id="sphx-glr-backreferences-hoi-core-mi-entr-comb"></span></section>
+<span class="target" id="sphx-glr-backreferences-hoi-core-mi-gcmi-gd"></span></section>
 
 
                 </article>
@@ -523,12 +535,12 @@ set of multiplets.</p>
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="hoi.core.get_entropy.html"
+       href="hoi.core.mi_gcmi_gg.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">hoi.core.get_entropy</p>
+        <p class="prev-next-title">hoi.core.mi_gcmi_gg</p>
       </div>
     </a>
     <a class="right-next"
@@ -555,13 +567,13 @@ set of multiplets.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.core.mi_entr_comb"><code class="docutils literal notranslate"><span class="pre">mi_entr_comb()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.core.mi_gcmi_gd"><code class="docutils literal notranslate"><span class="pre">mi_gcmi_gd()</span></code></a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/api/generated/hoi.core.mi_entr_comb.rst.txt">
+    <a href="../../_sources/api/generated/hoi.core.mi_gcmi_gd.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

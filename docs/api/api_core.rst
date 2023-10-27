@@ -1,13 +1,9 @@
-Low-level core functions
-------------------------
+Core information-theoretical measures and combinatory
+-----------------------------------------------------
 
 :py:mod:`hoi.core`:
 
 .. currentmodule:: hoi.core
-
-
-Information-theoretical measures
---------------------------------
 
 Measures of Entropy
 +++++++++++++++++++
@@ -33,7 +29,7 @@ Measures of Mutual Information
 
 
 Combinatory
------------
++++++++++++
 .. autosummary::
    :toctree: generated/
 

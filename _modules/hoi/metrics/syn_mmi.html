@@ -227,7 +227,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/brainets/frites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
+          <a href="https://github.com/brainets/hoi" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -346,7 +346,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/brainets/frites" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
+          <a href="https://github.com/brainets/hoi" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
             <span class="sr-only">GitHub</span></a>
         </li>
         <li class="nav-item">
@@ -503,8 +503,7 @@ document.write(`
 
         <span class="c1"># prepare the x for computing mi</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">prepare_for_entropy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">:]</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_xy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="c1"># prepare mi functions</span>
         <span class="n">mi_fcn</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">get_mi</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
@@ -519,10 +518,7 @@ document.write(`
 
         <span class="c1"># prepare the shapes of outputs</span>
         <span class="n">n_mults</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-            <span class="p">[</span>
-                <span class="n">ccomb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="p">]</span>
+            <span class="p">[</span><span class="n">ccomb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_features_x</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
         <span class="p">)</span>
         <span class="n">hoi</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_mults</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="n">h_idx</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">n_mults</span><span class="p">,</span> <span class="n">maxsize</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
@@ -533,7 +529,7 @@ document.write(`
             <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;SynMMI order </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msize</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
             <span class="c1"># get combinations</span>
-            <span class="n">_h_idx</span> <span class="o">=</span> <span class="n">combinations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">msize</span><span class="p">,</span> <span class="n">astype</span><span class="o">=</span><span class="s2">&quot;jax&quot;</span><span class="p">)</span>
+            <span class="n">_h_idx</span> <span class="o">=</span> <span class="n">combinations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_features_x</span><span class="p">,</span> <span class="n">msize</span><span class="p">,</span> <span class="n">astype</span><span class="o">=</span><span class="s2">&quot;jax&quot;</span><span class="p">)</span>
             <span class="n">n_combs</span><span class="p">,</span> <span class="n">n_feat</span> <span class="o">=</span> <span class="n">_h_idx</span><span class="o">.</span><span class="n">shape</span>
             <span class="n">sl</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">n_combs</span><span class="p">)</span>
 
@@ -570,7 +566,8 @@ document.write(`
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 
     <span class="c1"># synergy (all-to-one)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="c1"># y = x[:, 0] + x[:, 3] + x[:, 5]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]]</span>
 
     <span class="n">model</span> <span class="o">=</span> <span class="n">SynergyMMI</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
     <span class="c1"># hoi = model.fit(minsize=2, maxsize=6, method=&#39;gcmi&#39;)</span>

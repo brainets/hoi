@@ -1,0 +1,796 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Redundancy-Synergy Index &#8212; HOI 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css?v=995e94df" />
+    <link rel="stylesheet" type="text/css" href="../../_static/panels-bootstrap.min.css?v=21c0b90a" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=f6245a2f"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/metrics/plot_rsi';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Miscellaneous" href="../miscellaneous/index.html" />
+    <link rel="prev" title="Metrics example 1" href="plot_oinfo.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+<head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&family=Roboto+Mono:wght@332&display=swap');
+
+.foot {
+    width: 100%;
+    text-align: center;
+}
+
+/* Optionally, you can add styling to the images as well */
+.foot img {
+    margin: 0 10px; /* Add some space between the images if desired */
+}
+</style>
+</head>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">HOI 0.0.1 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../install.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../overview/index.html">
+                        Overview
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api/modules.html">
+                        API Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/brainets/hoi" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/kNearNeighbors" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-twitter-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../install.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../overview/index.html">
+                        Overview
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../api/modules.html">
+                        API Reference
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/brainets/hoi" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-github-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/kNearNeighbors" title="Twitter" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fab fa-twitter-square fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/tut2.html">Tutorial example 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/tut1.html">Tutorial example 1</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../it/index.html">Entropy and mutual information</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../it/it1.html">Entropy example 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../it/it2.html">Entropy example 2</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Metrics of HOI</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="metrics2.html">Metrics example 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_oinfo.html">Metrics example 1</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Redundancy-Synergy Index</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../miscellaneous/index.html">Miscellaneous</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../miscellaneous/misc2.html">Miscellaneous example 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../miscellaneous/misc1.html">Miscellaneous example 1</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Metrics of HOI</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Redundancy-S...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-metrics-plot-rsi-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="redundancy-synergy-index">
+<span id="sphx-glr-auto-examples-metrics-plot-rsi-py"></span><h1>Redundancy-Synergy Index<a class="headerlink" href="#redundancy-synergy-index" title="Permalink to this heading">#</a></h1>
+<p>This example illustrates how to use and interpret the Redundancy-Synergy
+Index (RSI).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">hoi.metrics</span> <span class="kn">import</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a>
+<span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a>
+<span class="kn">from</span> <span class="nn">hoi.plot</span> <span class="kn">import</span> <a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<section id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h2>
+<p>The RSI is a multivariate measure of information capable of disentangling
+whether a subset of a variable X carry either redundant or synergistic
+information about a variable Y. The RSI is defined as :</p>
+<div class="math notranslate nohighlight">
+\[RSI(S; Y) \equiv I(S; Y) - \sum_{x_{i}\in S} I(x_{i}; Y)\]</div>
+<p>with :</p>
+<div class="math notranslate nohighlight">
+\[S = x_{1}, ..., x_{n}\]</div>
+<p>Positive values of RSI stand for synergy while negative values of RSI reflect
+redundancy between the X and Y variables.</p>
+</section>
+<section id="simulate-univariate-redundancy">
+<h2>Simulate univariate redundancy<a class="headerlink" href="#simulate-univariate-redundancy" title="Permalink to this heading">#</a></h2>
+<p>A very simple way to simulate redundancy is to observe that if a triplet of
+variables <span class="math notranslate nohighlight">\(X_{1}, X_{2}, X_{3}\)</span> receive a copy of a variable <span class="math notranslate nohighlight">\(Y\)</span>,
+we will observe redundancy between <span class="math notranslate nohighlight">\(X_{1}, X_{2}, X_{3}\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets start by simulating a variable x with 200 samples and 7 features</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+
+<span class="c1"># now we can also generate a univariate random variable y</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># we now send the variable y in the column (1, 3, 5) of x</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span>
+
+<span class="c1"># define the RSI model and launch it</span>
+<a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># now we can take a look at the multiplets with the highest and lowest values</span>
+<span class="c1"># of RSI. We will only select the multiplets of size 3 here</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:01,    1.80it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.08it/s]
+100%|██████████| RSI order 5:  3/3 [00:01&lt;00:00,    2.07it/s]
+
+   index  order       hoi  multiplet
+0     27      3  0.005224  [2, 3, 6]
+1      4      3  0.004825  [0, 1, 6]
+2     18      3  0.004206  [1, 2, 6]
+3     17      3 -0.252503  [1, 2, 5]
+4     22      3 -0.253642  [1, 4, 5]
+5     20      3 -0.564784  [1, 3, 5]
+</pre></div>
+</div>
+<p>as you see from the printed table, the multiplet with the lowest (i.e. the
+most redundant multiplets) is (1, 3, 5).</p>
+</section>
+<section id="simulate-multivariate-redundancy">
+<h2>Simulate multivariate redundancy<a class="headerlink" href="#simulate-multivariate-redundancy" title="Permalink to this heading">#</a></h2>
+<p>In the example above, we simulated a univariate <span class="math notranslate nohighlight">\(Y\)</span> variable (i.e.
+single column). However, it’s possible to simulate a multivariate variable.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate x again</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+
+<span class="c1"># simulate a bivariate y variable</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+
+<span class="c1"># we introduce redundancy between the triplet (1, 3, 5) and the first column of</span>
+<span class="c1"># Y and between (0, 2, 6) and Y</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># define the RSI, launch it and inspect the best multiplets</span>
+<a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.28it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    3.20it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    3.20it/s]
+
+   index  order       hoi  multiplet
+0     32      3  0.005618  [3, 4, 6]
+1     25      3  0.005211  [2, 3, 4]
+2      9      3  0.003639  [0, 3, 4]
+3      4      3 -0.222053  [0, 1, 6]
+4     20      3 -0.465329  [1, 3, 5]
+5      8      3 -0.495865  [0, 2, 6]
+</pre></div>
+</div>
+<p>This time, as expected, the two most redundant triplets are (1, 3, 5) and
+(0, 2, 6)</p>
+</section>
+<section id="simulate-univariate-and-multivariate-synergy">
+<h2>Simulate univariate and multivariate synergy<a class="headerlink" href="#simulate-univariate-and-multivariate-synergy" title="Permalink to this heading">#</a></h2>
+<p>Lets move on to the simulation of synergy that is a bit more subtle. One way
+of simulating synergy is to go the other way of redundancy, meaning we are
+going to add features of x inside y. That way, we can only retrieve the Y
+variable by knowing the subset of X.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+
+<span class="c1"># synergy between (0, 3, 5) and 5</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span>
+
+<span class="c1"># define the RSI, launch it and inspect the best multiplets</span>
+<a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    4.09it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.06it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.09it/s]
+
+   index  order       hoi  multiplet
+0     10      3  1.588863  [0, 3, 5]
+1      1      3  0.305547  [0, 1, 3]
+2      9      3  0.302004  [0, 3, 4]
+3      6      3 -0.004108  [0, 2, 4]
+4      8      3 -0.004680  [0, 2, 6]
+5      0      3 -0.005330  [0, 1, 2]
+</pre></div>
+</div>
+<p>as we can see here, the highest values of higher-order interactions
+(i.e. synergy) is achieved for the multiplet (0, 3, 5). Now we can do the
+same for multivariate synergy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+
+<span class="c1"># simulate y and introduce synergy between the subset (0, 3, 5) of x and the</span>
+<span class="c1"># subset (1, 2, 6)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span>
+    <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">],</span>
+    <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="p">]</span>
+
+<span class="c1"># define the RSI, launch it and inspect the best multiplets</span>
+<a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.78it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    3.78it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    3.75it/s]
+
+   index  order       hoi  multiplet
+0     18      3  1.622816  [1, 2, 6]
+1     10      3  1.361005  [0, 3, 5]
+2     29      3  0.258521  [2, 4, 6]
+3     13      3 -0.001921  [0, 4, 6]
+4     32      3 -0.003323  [3, 4, 6]
+5     28      3 -0.007125  [2, 4, 5]
+</pre></div>
+</div>
+</section>
+<section id="combining-redundancy-and-synergy">
+<h2>Combining redundancy and synergy<a class="headerlink" href="#combining-redundancy-and-synergy" title="Permalink to this heading">#</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x and y</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># synergy between (0, 1, 2) and the first column of y</span>
+<span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+
+<span class="c1"># redundancy between (3, 4, 5) and the second column of x</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># define the RSI, launch it and inspect the best multiplets</span>
+<a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># plot the result at each order to observe the spreading at orders higher than</span>
+<span class="c1"># 3</span>
+<a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a><span class="p">(</span>
+    <span class="n">hoi</span><span class="p">,</span>
+    <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span>
+    <span class="n">undersampling</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">plt_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;turbo&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_rsi_001.png" srcset="../../_images/sphx_glr_plot_rsi_001.png" alt="plot rsi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.74it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    3.63it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    3.70it/s]
+
+   index  order       hoi  multiplet
+0      0      3  1.585721  [0, 1, 2]
+1      2      3  0.209048  [0, 1, 4]
+2      3      3  0.200949  [0, 1, 5]
+3      9      3 -0.285303  [0, 3, 4]
+4     32      3 -0.287532  [3, 4, 6]
+5     31      3 -0.597655  [3, 4, 5]
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 7.210 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  51 MB</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-rsi-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/34173e117578c11af63525b86b946924/plot_rsi.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_rsi.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/4e89a3c451ce8407889de983108afa1c/plot_rsi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_rsi.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="plot_oinfo.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Metrics example 1</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../miscellaneous/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Miscellaneous</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-univariate-redundancy">Simulate univariate redundancy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-multivariate-redundancy">Simulate multivariate redundancy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-univariate-and-multivariate-synergy">Simulate univariate and multivariate synergy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-redundancy-and-synergy">Combining redundancy and synergy</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div class="tocsection sourcelink">
+    <a href="../../_sources/auto_examples/metrics/plot_rsi.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+
+    <hr>
+    <footer>
+        <div class="foot">
+            <img src="https://cibul.s3.amazonaws.com/e9619f705931403093351210dc70d8ee.base.image.jpg" alt="INT" height="80">
+            <img src="https://www.engagement.fr/wp-content/uploads/2013/02/Aix-Marseille-Universit%C3%A9.png" alt=" Aix-Marseille university" height="80">
+            <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
+        <br>
+        <p>&copy; Copyright BraiNets.</p>
+        </div>
+    </footer>
+
+  </body>
+</html>

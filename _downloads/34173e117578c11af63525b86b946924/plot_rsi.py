@@ -129,10 +129,7 @@ x = np.random.rand(200, 7)
 
 # simulate y and introduce synergy between the subset (0, 3, 5) of x and the
 # subset (1, 2, 6)
-y = np.c_[
-    x[:, 0] + x[:, 3] + x[:, 5],
-    x[:, 1] + x[:, 2] + x[:, 6]
-]
+y = np.c_[x[:, 0] + x[:, 3] + x[:, 5], x[:, 1] + x[:, 2] + x[:, 6]]
 
 # define the RSI, launch it and inspect the best multiplets
 model = RSI(x, y)

@@ -83,10 +83,7 @@ class RedundancyMMI(HOIEstimator):
 
         # prepare the shapes of outputs
         n_mults = sum(
-            [
-                ccomb(self._n_features_x, c)
-                for c in range(minsize, maxsize + 1)
-            ]
+            [ccomb(self._n_features_x, c) for c in range(minsize, maxsize + 1)]
         )
         hoi = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
         h_idx = jnp.full((n_mults, maxsize), -1, dtype=int)

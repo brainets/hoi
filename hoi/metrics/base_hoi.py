@@ -78,16 +78,15 @@ class HOIEstimator(object):
 
         # 1d / 2d / 3d merging
         if y.ndim == 1:
-            y = y[:, np.newaxis, np.newaxis]
-        elif y.ndim == 2:
+            y = y[:, np.newaxis]
+        if y.ndim == 2:
             y = np.tile(y[:, :, np.newaxis], n_variables)
-        elif y.ndim == 3:
-            if y.shape[2] != n_variables:
-                raise IOError(
-                    f"The numer of variables of the variable y ({y.shape[2]}) "
-                    f"should match the number of variables of the variable x"
-                    f" ({n_variables})"
-                )
+        if y.shape[2] != n_variables:
+            raise IOError(
+                f"The numer of variables of the variable y ({y.shape[2]}) "
+                f"should match the number of variables of the variable x"
+                f" ({n_variables})"
+            )
         self._n_features_x = x.shape[1]
         self._n_features_y = y.shape[1]
 
@@ -272,7 +271,11 @@ class HOIEstimator(object):
             # task related filtering
             if self._task_related:
                 logger.info("    Selecting task-related multiplets")
-                keep_tr = (mults == self.n_features - 1).any(1)
+                keep_tr = []
+                for n_y in range(self._n_features_y):
+                    _is_y_in_x = (mults == self._n_features_x + n_y).any(1)
+                    keep_tr.append(_is_y_in_x)
+                keep_tr = jnp.stack(keep_tr).all(0)
                 keep = jnp.logical_and(keep, keep_tr)
 
             return mults[keep, :]

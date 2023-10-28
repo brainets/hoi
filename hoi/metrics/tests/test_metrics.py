@@ -10,11 +10,16 @@ np.random.seed(0)
 
 
 N_SAMPLES = 50
-N_FEATURES = 6
+N_FEATURES_X = 6
+N_FEATURES_Y = 3
 N_VARIABLES = 5
-x_2d = np.random.rand(N_SAMPLES, N_FEATURES)
-x_3d = np.random.rand(N_SAMPLES, N_FEATURES, N_VARIABLES)
-y_1d = np.random.rand(N_SAMPLES)
+METRICS = [Oinfo, InfoTopo]
+
+x_2d = np.random.rand(N_SAMPLES, N_FEATURES_X)
+x_3d = np.random.rand(N_SAMPLES, N_FEATURES_X, N_VARIABLES)
+y_1d = np.random.rand(N_SAMPLES, 1)
+y_2d = np.random.rand(N_SAMPLES, N_FEATURES_Y)
+y_3d = np.random.rand(N_SAMPLES, N_FEATURES_Y, N_VARIABLES)
 multiplets = [(0, 1), (2, 3), (0, 3, 4)]
 
 # TARGET-FREE
@@ -27,9 +32,9 @@ x_2d[:, 5] = x_2d[:, 3] + x_2d[:, 4]
 # TARGET-RELATED
 # redundancy (0, 1, y): y->0; 0->1
 # synergy    (3, 4, y): 3 = 4 + y
-x_3d[:, 0, 0] += y_1d
-x_3d[:, 1, 0] += y_1d
-x_3d[:, 3, 0] = x_3d[:, 4, 0] + y_1d
+x_3d[:, 0, 0] += y_1d.squeeze()
+x_3d[:, 1, 0] += y_1d.squeeze()
+x_3d[:, 3, 0] = x_3d[:, 4, 0] + y_1d.squeeze()
 
 
 class TestMetrics(object):
@@ -40,15 +45,21 @@ class TestMetrics(object):
         return np.where((model.multiplets == mult).all(1))[0]
 
     @pytest.mark.parametrize("multiplets", [None, multiplets])
-    @pytest.mark.parametrize("y", [None, y_1d])
+    @pytest.mark.parametrize("y", [None, y_1d, y_2d, y_3d])
     @pytest.mark.parametrize("x", [x_2d, x_3d])
-    @pytest.mark.parametrize("metric", [Oinfo, InfoTopo])
+    @pytest.mark.parametrize("metric", METRICS)
     def test_definition(self, metric, x, y, multiplets):
+        # x_2d & y_3d can't exist
+        if isinstance(y, np.ndarray) and (x.ndim < y.ndim):
+            return None
+
         model = metric(x, y=y, multiplets=multiplets)
         hoi = model.fit()
 
         if isinstance(y, np.ndarray) and not isinstance(multiplets, list):
-            assert all([N_FEATURES in k for k in model.multiplets])
+            assert (
+                model.multiplets.max(1).min() == N_FEATURES_X + y.shape[1] - 1
+            )
 
         if isinstance(multiplets, list):
             assert hoi.shape[0] == len(multiplets)
@@ -61,7 +72,7 @@ class TestMetrics(object):
 
     @pytest.mark.parametrize("mult", [[(0, 1)], [(0, 1), (2, 3, 4)]])
     @pytest.mark.parametrize("x", [x_2d, x_3d])
-    @pytest.mark.parametrize("metric", [Oinfo, InfoTopo])
+    @pytest.mark.parametrize("metric", METRICS)
     def test_multiplets(self, metric, x, mult):
         # compute all oinfo
         model = metric(x.copy())
@@ -78,29 +89,34 @@ class TestMetrics(object):
                 model_f.multiplets[n_m, 0 : len(m)], m
             )
 
-    @pytest.mark.parametrize("y", [y_1d])
+    @pytest.mark.parametrize("y", [y_1d, y_2d, y_3d])
     @pytest.mark.parametrize("x", [x_2d, x_3d])
-    @pytest.mark.parametrize("metric", [Oinfo, InfoTopo])
+    @pytest.mark.parametrize("metric", METRICS)
     def test_order(self, metric, x, y):
+        # x_2d & y_3d can't exist
+        if isinstance(y, np.ndarray) and (x.ndim < y.ndim):
+            return None
+
+        # compute task-free and task-related
         model_tf = metric(x.copy())
         hoi_tf = model_tf.fit(minsize=2, maxsize=5)
         model_tr = metric(x.copy(), y=y)
-        hoi_tr = model_tr.fit(minsize=2 + 1, maxsize=5 + 1)
+        hoi_tr = model_tr.fit(minsize=2 + y.shape[1], maxsize=5 + y.shape[1])
 
+        # check orders
         assert hoi_tr.shape == hoi_tf.shape
         assert model_tr.order.shape == model_tf.order.shape
-        assert all([6 in m for m in model_tr.multiplets])
-        assert all(
-            [
-                m[o] == 6
-                for m, o in zip(model_tr.multiplets, model_tr.order - 1)
-            ]
+        for m, o in zip(model_tr.multiplets, model_tr.order):
+            for n_y in range(y.shape[1]):
+                assert N_FEATURES_X + n_y in m
+                assert m[o - n_y - 1] == N_FEATURES_X + y.shape[1] - n_y - 1
+        np.testing.assert_array_equal(
+            model_tf.order + y.shape[1], model_tr.order
         )
-        np.testing.assert_array_equal(model_tf.order + 1, model_tr.order)
 
     @pytest.mark.parametrize("y", [y_1d])
     @pytest.mark.parametrize("x", [x_2d, x_3d])
-    @pytest.mark.parametrize("metric", [Oinfo, InfoTopo])
+    @pytest.mark.parametrize("metric", METRICS)
     def test_functional(self, metric, x, y):
         kw_best = dict(minsize=3, maxsize=3, n_best=1)
 
@@ -121,4 +137,5 @@ class TestMetrics(object):
 
 
 if __name__ == "__main__":
-    TestMetrics().test_functional(Oinfo, x_2d, y_1d)
+    # TestMetrics().test_definition(Oinfo, x_2d, y_1d, None)
+    TestMetrics().test_order(Oinfo, x_3d, y_3d)

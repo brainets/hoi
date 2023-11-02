@@ -44,10 +44,12 @@ class HOIEstimator(object):
         assert x.ndim >= 2
         if x.ndim == 2:
             x = x[..., np.newaxis]
+        self._n_features_x = x.shape[1]
+        self._n_features_y = 0
 
         # additional variable along feature dimension
-        self._task_related = isinstance(y, (list, np.ndarray, tuple))
-        if self._task_related:
+        self._has_target = isinstance(y, (list, np.ndarray, tuple))
+        if self._has_target:
             x = self._merge_xy(x, y=y)
 
         # compute only selected multiplets
@@ -214,9 +216,7 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def get_combinations(
-        self, minsize, maxsize=None, astype="jax", order=False
-    ):
+    def get_combinations(self, minsize, maxsize=None, astype="jax"):
         """Get combinations of features.
 
         Parameters
@@ -228,65 +228,42 @@ class HOIEstimator(object):
         astype : {'jax', 'numpy', 'iterator'}
             Specify the output type. Use either 'jax' get the data as a jax
             array [default], 'numpy' for NumPy array or 'iterator'.
-        order : bool, optional
-            If True, return the order of each multiplet. Default is False.
 
         Returns
         -------
         combinations : array_like
             Combinations of features.
         """
-        return combinations(
-            self.n_features,
-            minsize,
-            maxsize=maxsize,
-            astype=astype,
-            order=order,
-        )
+        logger.info("Get list of multiplets")
 
-    def filter_multiplets(self, mults, order):
-        """Filter multiplets.
-
-        Parameters
-        ----------
-        mults : array_like
-            Multiplets of shape (n_mult, maxsize)
-        order : array_like
-            Order of each multiplet of shape (n_mult,)
-
-        Returns
-        -------
-        keep : array_like
-            Boolean array of shape (n_mult,) indicating which multiplets to
-            keep.
-        """
-        # order filtering
-        if self._custom_mults is None:
-            keep = jnp.ones((len(order),), dtype=bool)
-
-            if self.minsize > 1:
-                logger.info(f"    Selecting order >= {self.minsize}")
-                keep = jnp.where(order >= self.minsize, keep, False)
-
-            # task related filtering
-            if self._task_related:
-                logger.info("    Selecting task-related multiplets")
-                keep_tr = []
-                for n_y in range(self._n_features_y):
-                    _is_y_in_x = (mults == self._n_features_x + n_y).any(1)
-                    keep_tr.append(_is_y_in_x)
-                keep_tr = jnp.stack(keep_tr).all(0)
-                keep = jnp.logical_and(keep, keep_tr)
-
-            return mults[keep, :]
-        else:
+        # custom list of multiplets don't require to full list of multiplets
+        if self._custom_mults is not None:
             logger.info("    Selecting custom multiplets")
             _orders = [len(m) for m in self._custom_mults]
             mults = jnp.full((len(self._custom_mults), max(_orders)), -1)
             for n_m, m in enumerate(self._custom_mults):
                 mults = mults.at[n_m, 0 : len(m)].set(m)
+            self._multiplets = mults
+        else:
+            # specify whether to include target or not
+            n = self._n_features_x
+            if not self._has_target:
+                target = None
+            else:
+                target = (np.arange(self._n_features_y) + n).tolist()
 
-            return mults
+            # get the full list of multiplets
+            self._multiplets = combinations(
+                n,
+                minsize,
+                maxsize=maxsize,
+                target=target,
+                astype=astype,
+                order=False,
+                fill_value=-1,
+            )
+
+        return self._multiplets, self.order
 
     def fit(self):  # noqa
         raise NotImplementedError()
@@ -313,7 +290,7 @@ class HOIEstimator(object):
     @property
     def order(self):
         """Order of each multiplet of shape (n_mult,)."""
-        return np.asarray((self._multiplets >= 0).sum(1))
+        return (self.multiplets >= 0).sum(1) - self._n_features_y
 
     @property
     def undersampling(self):

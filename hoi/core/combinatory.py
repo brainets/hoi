@@ -4,10 +4,10 @@ import itertools
 from math import comb as ccomb
 
 
-def _combinations(n, k, order):
+def _combinations(n, k, order, target):
     for c in itertools.combinations(range(n), k):
         # convert to list
-        c = list(c)
+        c = list(c) + target
 
         # deal with order
         if order:
@@ -17,7 +17,13 @@ def _combinations(n, k, order):
 
 
 def combinations(
-    n, minsize, maxsize=None, astype="iterator", order=False, fill_value=-1
+    n,
+    minsize,
+    maxsize=None,
+    astype="iterator",
+    order=False,
+    fill_value=-1,
+    target=None,
 ):
     """Get combinations.
 
@@ -34,6 +40,10 @@ def combinations(
         array [default], 'numpy' for NumPy array or 'iterator'.
     order : bool, optional
         If True, return the order of each multiplet. Default is False.
+    fill_value : int | -1
+        Value to use to fill missing values of multiplets.
+    target : list | None
+        List of indices to use as targets.
 
     Returns
     -------
@@ -44,10 +54,11 @@ def combinations(
     # ________________________________ ITERATOR _______________________________
     if not isinstance(maxsize, int):
         maxsize = minsize
+    target = [] if target is None else list(target)
     assert maxsize >= minsize
     iterators = []
     for msize in range(minsize, maxsize + 1):
-        iterators.append(_combinations(n, msize, order))
+        iterators.append(_combinations(n, msize, order, target))
     iterators = itertools.chain(*tuple(iterators))
 
     if astype == "iterator":
@@ -61,7 +72,9 @@ def combinations(
         n_mults = sum([ccomb(n, c) for c in range(minsize, maxsize + 1)])
 
         # prepare output
-        combs = np.full((n_mults, maxsize), fill_value, dtype=int)
+        combs = np.full(
+            (n_mults, maxsize + len(target)), fill_value, dtype=int
+        )
 
         # fill the array
         for n_c, c in enumerate(iterators):
@@ -75,6 +88,7 @@ def combinations(
 
 
 if __name__ == "__main__":
-    print(combinations(10, minsize=2, maxsize=None, astype="jax", order=False))
-
-    # print(np.array(list(itertools.combinations(np.arange(10), 3))).shape)
+    combs = combinations(
+        10, minsize=1, maxsize=3, astype="jax", order=False, target=[11, 12]
+    )
+    print(combs)

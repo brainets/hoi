@@ -22,6 +22,16 @@ def ent_at_index(x, idx, entropy=None):
 class HOIEstimator(object):
     def __init__(self, x, y=None, multiplets=None, verbose=None):
         set_log_level(verbose)
+
+        # check types of default properties
+        _prop_lst = ["null", "redundancy", "synergy", "info"]
+        assert isinstance(self.__name__, str)
+        assert isinstance(self._encoding, bool)
+        assert self._positive in _prop_lst
+        assert self._negative in _prop_lst
+        assert isinstance(self._symmetric, bool)
+
+        # prepare the data
         self._x = self._prepare_data(x, y=y, multiplets=multiplets)
 
     def __iter__(self):
@@ -177,30 +187,31 @@ class HOIEstimator(object):
 
         # ______________________________ ENTROPY ______________________________
         # get all of the combinations
-        kw_combs = dict(maxsize=maxsize, astype="jax")
-        h_idx = self.get_combinations(minsize, **kw_combs)
-        order = self.get_combinations(minsize, order=True, **kw_combs)
-        h_x = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
+        h_idx, order = self.get_combinations(minsize, maxsize=maxsize)
 
         # get progress bar
         pbar = get_pbar(iterable=range(minsize, maxsize + 1), leave=False)
 
         # compute entropies
         offset = 0
+        h_x = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
         for msize in pbar:
             pbar.set_description(desc=msg % msize, refresh=False)
 
-            # get order
-            keep = order == msize
-            n_mult = keep.sum()
+            # get the number of features when considering y
+            n_feat_xy = msize + self._n_features_y
+
+            # combinations of features
+            _h_idx = h_idx[order == msize, 0:n_feat_xy]
 
             # compute all entropies
-            _, _h_x = jax.lax.scan(entropy, x, h_idx[keep, 0:msize])
+            _, _h_x = jax.lax.scan(entropy, x, _h_idx)
 
             # fill entropies
-            h_x = h_x.at[offset : offset + n_mult, :].set(_h_x)
+            n_combs = _h_idx.shape[0]
+            h_x = h_x.at[offset : offset + n_combs, :].set(_h_x)
 
-            offset += n_mult
+            offset += n_combs
 
         pbar.close()
 
@@ -251,6 +262,8 @@ class HOIEstimator(object):
                 target = None
             else:
                 target = (np.arange(self._n_features_y) + n).tolist()
+            if self._encoding:
+                target = None
 
             # get the full list of multiplets
             self._multiplets = combinations(
@@ -290,7 +303,11 @@ class HOIEstimator(object):
     @property
     def order(self):
         """Order of each multiplet of shape (n_mult,)."""
-        return (self.multiplets >= 0).sum(1) - self._n_features_y
+        order = (self.multiplets >= 0).sum(1)
+        if self._encoding:
+            return order
+        else:
+            return order - self._n_features_y
 
     @property
     def undersampling(self):

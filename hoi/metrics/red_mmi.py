@@ -31,10 +31,18 @@ class RedundancyMMI(HOIEstimator):
     """
 
     __name__ = "Redundancy MMI"
+    _encoding = True
+    _positive = "redundancy"
+    _negative = "null"
+    _symmetric = False
 
     def __init__(self, x, y, multiplets=None, verbose=None):
         HOIEstimator.__init__(
-            self, x=x, y=y, multiplets=multiplets, verbose=verbose
+            self,
+            x=x,
+            y=y,
+            multiplets=multiplets,
+            verbose=verbose,
         )
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
@@ -71,79 +79,58 @@ class RedundancyMMI(HOIEstimator):
         mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
         compute_mi = partial(compute_mi_comb, mi=mi_fcn)
 
+        # get multiplet indices and order
+        h_idx, order = self.get_combinations(minsize, maxsize=maxsize)
+
+        # get progress bar
+        pbar = get_pbar(
+            iterable=range(order.min(), order.max() + 1), leave=False
+        )
+
         # _______________________________ HOI _________________________________
 
-        # compute mi I(x_{1}y y), ..., I(x_{n}; y)
+        # compute mi I(x_{1}; y), ..., I(x_{n}; y)
         _, i_xiy = jax.lax.scan(
             compute_mi, (x, y), jnp.arange(x.shape[1]).reshape(-1, 1)
         )
 
-        # get progress bar
-        pbar = get_pbar(iterable=range(minsize, maxsize + 1), leave=False)
-
-        # prepare the shapes of outputs
-        n_mults = sum(
-            [ccomb(self._n_features_x, c) for c in range(minsize, maxsize + 1)]
-        )
-        hoi = jnp.zeros((n_mults, self.n_variables), dtype=jnp.float32)
-        h_idx = jnp.full((n_mults, maxsize), -1, dtype=int)
-        order = jnp.zeros((n_mults,), dtype=int)
-
+        # prepare outputs
         offset = 0
+        hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
         for msize in pbar:
             pbar.set_description(desc="RedMMI order %s" % msize, refresh=False)
 
-            # get combinations
-            _h_idx = combinations(self._n_features_x, msize, astype="jax")
-            n_combs, n_feat = _h_idx.shape
-            sl = slice(offset, offset + n_combs)
-
-            # fill indices and order
-            h_idx = h_idx.at[sl, 0:n_feat].set(_h_idx)
-            order = order.at[sl].set(msize)
+            # combinations of features
+            _h_idx = h_idx[order == msize, 0:msize]
 
             # compute hoi
             _hoi = i_xiy[_h_idx, :].min(1)
-            hoi = hoi.at[sl, :].set(_hoi)
+
+            # fill variables
+            n_combs = _h_idx.shape[0]
+            hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs
-
-        self._order = order
-        self._multiplets = h_idx
-        self._keep = np.ones_like(self._order, dtype=bool)
 
         return np.asarray(hoi)
 
 
 if __name__ == "__main__":
-    import matplotlib.pyplot as plt
     from hoi.utils import get_nbest_mult
-    from hoi.plot import plot_landscape
 
-    plt.style.use("ggplot")
+    np.random.seed(0)
 
     x = np.random.rand(200, 7)
+    y_red = np.random.rand(x.shape[0])
 
-    # synergy (all-to-one)
-    # y = x[:, 0] + x[:, 3] + x[:, 5]
-    # redundancy (one-to-all)
-    y = np.random.rand(x.shape[0])
-    x[:, 1] += y
-    x[:, 3] += y
-    x[:, 5] += y
+    # redundancy: (1, 2, 6) + (7, 8)
+    x[:, 1] += y_red
+    x[:, 2] += y_red
+    x[:, 6] += y_red
 
-    model = RedundancyMMI(x, y)
-    # hoi = model.fit(minsize=2, maxsize=6, method='kernel')
-    hoi = model.fit(minsize=2, maxsize=6, method="gcmi")
+    model = RedundancyMMI(x, y_red)
+    hoi = model.fit(minsize=3, maxsize=5, method="gcmi")
+    print(hoi)
 
-    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=3))
-
-    plot_landscape(
-        hoi,
-        model,
-        kind="scatter",
-        undersampling=False,
-        plt_kwargs=dict(cmap="turbo"),
-    )
-    plt.show()
+    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=5, n_best=3))

@@ -78,6 +78,10 @@ class InfoTopo(HOIEstimator):
     """
 
     __name__ = "Topological Information"
+    _encoding = False
+    _positive = "redundancy"
+    _negative = "synergy"
+    _symmetric = True
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
         HOIEstimator.__init__(
@@ -127,8 +131,8 @@ class InfoTopo(HOIEstimator):
         h_x_sgn = jnp.multiply(((-1.0) ** (order.reshape(-1, 1) - 1)), h_x)
 
         # subselection of multiplets
-        self._multiplets = self.filter_multiplets(h_idx, order)
-        h_idx_2 = jnp.where(self._multiplets == -1, -2, self._multiplets)
+        mults, _ = self.get_combinations(minsize, maxsize=maxsize)
+        h_idx_2 = jnp.where(mults == -1, -2, mults)
         n_mult = h_idx_2.shape[0]
 
         # progress-bar definition
@@ -146,19 +150,26 @@ class InfoTopo(HOIEstimator):
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape
+    from hoi.utils import landscape, get_nbest_mult
     from matplotlib.colors import LogNorm
 
     plt.style.use("ggplot")
 
-    path = "/home/etienne/Downloads/data_200_trials"
-    x = np.load(path, allow_pickle=True)[..., 100]
+    x = np.random.rand(200, 7)
+    y_red = np.random.rand(x.shape[0])
 
-    # model = InfoTopo(digitize(x[..., 100], 3, axis=1))
-    # model = InfoTopo(x[..., 100])
-    model = InfoTopo(x)
+    # redundancy: (1, 2, 6) + (7, 8)
+    x[:, 1] += y_red
+    x[:, 2] += y_red
+    x[:, 6] += y_red
+    # synergy:    (0, 3, 5) + (7, 8)
+    y_syn = x[:, 0] + x[:, 3] + x[:, 5]
+    # bivariate target
+    y = np.c_[y_red, y_syn]
+
+    model = InfoTopo(x, y=y)
     hoi = model.fit(maxsize=None, method="gcmi")
-    # 0/0
+    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=3, n_best=3))
 
     lscp = landscape(hoi.squeeze(), model.order, output="xarray")
     lscp.plot(x="order", y="bins", cmap="jet", norm=LogNorm())

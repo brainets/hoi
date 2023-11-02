@@ -68,6 +68,10 @@ class Oinfo(HOIEstimator):
     """
 
     __name__ = "O-Information"
+    _encoding = False
+    _positive = "redundancy"
+    _negative = "synergy"
+    _symmetric = True
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
         HOIEstimator.__init__(
@@ -118,38 +122,35 @@ class Oinfo(HOIEstimator):
             entropy_4d=jax.vmap(entropy, in_axes=1),
         )
 
-        # prepare output
-        kw_combs = dict(maxsize=maxsize, astype="jax")
-        h_idx = self.get_combinations(minsize, **kw_combs)
-        order = self.get_combinations(minsize, order=True, **kw_combs)
-
-        # subselection of multiplets
-        self._multiplets = self.filter_multiplets(h_idx, order)
-        order = (self._multiplets >= 0).sum(1)
+        # get multiplet indices and order
+        h_idx, order = self.get_combinations(minsize, maxsize=maxsize)
 
         # get progress bar
         pbar = get_pbar(
             iterable=range(order.min(), order.max() + 1), leave=False
         )
 
-        # ______________________________ ENTROPY ____________________________
+        # _________________________________ HOI _______________________________
         offset = 0
         hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
         for msize in pbar:
             pbar.set_description(desc="Oinfo (%i)" % msize, refresh=False)
 
-            # combinations of features
-            keep = order == msize
-            _h_idx = self._multiplets[keep, 0:msize]
+            # get the number of features when considering y
+            n_feat_xy = msize + self._n_features_y
 
-            # generate indices for accumulated entropies
-            acc = jnp.mgrid[0:msize, 0:msize].sum(0) % msize
+            # combinations of features
+            _h_idx = h_idx[order == msize, 0:n_feat_xy]
+
+            # indices for X_{-j} and skip first column
+            acc = jnp.mgrid[0:n_feat_xy, 0:n_feat_xy].sum(0) % n_feat_xy
+            acc = acc[:, 1:]
 
             # compute oinfo
-            _, _hoi = jax.lax.scan(oinfo_no_ent, (x, acc[:, 1:]), _h_idx)
+            _, _hoi = jax.lax.scan(oinfo_no_ent, (x, acc), _h_idx)
 
             # fill variables
-            n_combs, n_feat = _h_idx.shape
+            n_combs = _h_idx.shape[0]
             hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
 
             # updates
@@ -159,24 +160,24 @@ class Oinfo(HOIEstimator):
 
 
 if __name__ == "__main__":
-    import matplotlib.pyplot as plt
-    from hoi.utils import landscape
-    from matplotlib.colors import LogNorm
+    from hoi.utils import get_nbest_mult
 
-    plt.style.use("ggplot")
+    np.random.seed(0)
 
-    path = "/home/etienne/Downloads/data_200_trials"
-    x = np.load(path, allow_pickle=True)[..., 100]
+    x = np.random.rand(200, 7)
+    y_red = np.random.rand(x.shape[0])
 
-    model = Oinfo(x, verbose="debug", multiplets=[(0, 1, 2), (4, 5, 7, 8)])
-    hoi = model.fit(minsize=1, maxsize=None, method="gcmi")
+    # redundancy: (1, 2, 6) + (7, 8)
+    x[:, 1] += y_red
+    x[:, 2] += y_red
+    x[:, 6] += y_red
+    # synergy:    (0, 3, 5) + (7, 8)
+    y_syn = x[:, 0] + x[:, 3] + x[:, 5]
+    # bivariate target
+    y = np.c_[y_red, y_syn]
 
-    print(hoi.shape)
-    print(model.order.shape)
-    print(model.multiplets.shape)
+    model = Oinfo(x, y=y)
+    # model = Oinfo(x, multiplets=[(0, 1, 2), (4, 5, 7, 8)])
+    hoi = model.fit(minsize=2, maxsize=3, method="gcmi")
 
-    lscp = landscape(hoi.squeeze(), model.order, output="xarray")
-    lscp.plot(x="order", y="bins", cmap="jet", norm=LogNorm())
-    plt.axvline(model.undersampling, linestyle="--", color="k")
-    plt.grid(True)
-    plt.show()
+    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=4, n_best=3))

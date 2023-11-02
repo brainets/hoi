@@ -40,13 +40,16 @@ class GradientOinfo(HOIEstimator):
     """
 
     __name__ = "Gradient O-Information"
+    _encoding = True
+    _positive = "redundancy"
+    _negative = "synergy"
+    _symmetric = True
 
     def __init__(self, x, y, multiplets=None, verbose=None):
-        HOIEstimator.__init__(
-            self, x=x, y=None, multiplets=multiplets, verbose=verbose
-        )
-        self._oinf_tr = Oinfo(x, y=y, multiplets=multiplets, verbose=verbose)
-        self._oinf_tf = Oinfo(x, multiplets=multiplets, verbose=verbose)
+        kw_oinfo = dict(multiplets=multiplets, verbose=verbose)
+        HOIEstimator.__init__(self, x=x, y=None, **kw_oinfo)
+        self._oinf_tr = Oinfo(x, y=y, **kw_oinfo)
+        self._oinf_tf = Oinfo(x, **kw_oinfo)
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the Gradient O-information.
@@ -83,12 +86,11 @@ class GradientOinfo(HOIEstimator):
         )
 
         self._multiplets = self._oinf_tf._multiplets
-        self._order = self._oinf_tf._order
 
         # __________________________ TASK-RELATED _____________________________
         hoi_tr = self._oinf_tr.fit(
-            minsize=self._oinf_tf.minsize + 1,
-            maxsize=self._oinf_tf.maxsize + 1,
+            minsize=minsize,
+            maxsize=maxsize,
             method=method,
             **kwargs
         )
@@ -97,26 +99,23 @@ class GradientOinfo(HOIEstimator):
 
 
 if __name__ == "__main__":
-    import matplotlib.pyplot as plt
-    from hoi.utils import landscape, get_nbest_mult
-    from matplotlib.colors import LogNorm
+    from hoi.utils import get_nbest_mult
 
-    plt.style.use("ggplot")
+    np.random.seed(0)
 
-    x = np.random.rand(300, 6)
-    y = x[:, 0] + x[:, 3]
+    x = np.random.rand(200, 7)
+    y_red = np.random.rand(x.shape[0])
+
+    # redundancy: (1, 2, 6) + (7, 8)
+    x[:, 1] += y_red
+    x[:, 2] += y_red
+    x[:, 6] += y_red
+    # synergy:    (0, 3, 5) + (7, 8)
+    y_syn = x[:, 0] + x[:, 3] + x[:, 5]
+    # bivariate target
+    y = np.c_[y_red, y_syn]
 
     model = GradientOinfo(x, y=y)
     hoi = model.fit(minsize=2, maxsize=None, method="gcmi")
 
-    print(hoi.shape)
-    print(model.order.shape)
-    print(model.multiplets.shape)
-
-    print(get_nbest_mult(hoi, model=model, minsize=2, maxsize=3))
-
-    lscp = landscape(hoi.squeeze(), model.order, output="xarray")
-    lscp.plot(x="order", y="bins", cmap="jet", norm=LogNorm())
-    plt.axvline(model.undersampling, linestyle="--", color="k")
-    plt.grid(True)
-    plt.show()
+    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=3, n_best=3))

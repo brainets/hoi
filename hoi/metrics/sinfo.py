@@ -64,6 +64,10 @@ class Sinfo(HOIEstimator):
     """
 
     __name__ = "S-Information"
+    _encoding = False
+    _positive = "null"
+    _negative = "null"
+    _symmetric = True
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
         HOIEstimator.__init__(
@@ -114,14 +118,8 @@ class Sinfo(HOIEstimator):
             entropy_4d=jax.vmap(entropy, in_axes=1),
         )
 
-        # prepare output
-        kw_combs = dict(maxsize=maxsize, astype="jax")
-        h_idx = self.get_combinations(minsize, **kw_combs)
-        order = self.get_combinations(minsize, order=True, **kw_combs)
-
-        # subselection of multiplets
-        self._multiplets = self.filter_multiplets(h_idx, order)
-        order = (self._multiplets >= 0).sum(1)
+        # get multiplet indices and order
+        h_idx, order = self.get_combinations(minsize, maxsize=maxsize)
 
         # get progress bar
         pbar = get_pbar(
@@ -134,18 +132,21 @@ class Sinfo(HOIEstimator):
         for msize in pbar:
             pbar.set_description(desc="Sinfo (%i)" % msize, refresh=False)
 
-            # combinations of features
-            keep = order == msize
-            _h_idx = self._multiplets[keep, 0:msize]
+            # get the number of features when considering y
+            n_feat_xy = msize + self._n_features_y
 
-            # generate indices for accumulated entropies
-            acc = jnp.mgrid[0:msize, 0:msize].sum(0) % msize
+            # combinations of features
+            _h_idx = h_idx[order == msize, 0:n_feat_xy]
+
+            # indices for X_{-j} and skip first column
+            acc = jnp.mgrid[0:n_feat_xy, 0:n_feat_xy].sum(0) % n_feat_xy
+            acc = acc[:, 1:]
 
             # compute sinfo
-            _, _hoi = jax.lax.scan(sinfo_no_ent, (x, acc[:, 1:]), _h_idx)
+            _, _hoi = jax.lax.scan(sinfo_no_ent, (x, acc), _h_idx)
 
             # fill variables
-            n_combs, n_feat = _h_idx.shape
+            n_combs = _h_idx.shape[0]
             hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
 
             # updates
@@ -155,17 +156,22 @@ class Sinfo(HOIEstimator):
 
 
 if __name__ == "__main__":
-    from hoi.plot import plot_landscape
+    from hoi.utils import get_nbest_mult
 
-    import matplotlib.pyplot as plt
+    np.random.seed(0)
 
-    plt.style.use("ggplot")
+    x = np.random.rand(200, 7)
+    y_red = np.random.rand(x.shape[0])
 
-    x = np.random.rand(500, 10)
+    # redundancy: (1, 2, 6) + (7, 8)
+    x[:, 1] += y_red
+    x[:, 2] += y_red
+    x[:, 6] += y_red
+    # synergy:    (0, 3, 5) + (7, 8)
+    y_syn = x[:, 0] + x[:, 3] + x[:, 5]
+    # bivariate target
+    y = np.c_[y_red, y_syn]
 
-    model = Sinfo(x)
-    hoi = model.fit(minsize=3, maxsize=None, method="gcmi")
-
-    plot_landscape(hoi, model=model, plt_kwargs=dict(cmap="turbo"))
-    plt.tight_layout()
-    plt.show()
+    model = Sinfo(x, y=y)
+    hoi = model.fit(minsize=3, maxsize=4, method="gcmi")
+    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=3, n_best=3))

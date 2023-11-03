@@ -1,4 +1,3 @@
-from math import comb as ccomb
 from functools import partial
 
 import numpy as np
@@ -7,7 +6,6 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.core.combinatory import combinations
 from hoi.core.entropies import prepare_for_entropy
 from hoi.core.mi import get_mi, compute_mi_comb
 from hoi.utils.progressbar import get_pbar

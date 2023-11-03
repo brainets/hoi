@@ -80,20 +80,17 @@ class GradientOinfo(HOIEstimator):
             The NumPy array containing values of higher-rder interactions of
             shape (n_multiplets, n_variables)
         """
-        # ____________________________ TASK-FREE ______________________________
-        hoi_tf = self._oinf_tf.fit(
+        kw_oinfo = dict(
             minsize=minsize, maxsize=maxsize, method=method, **kwargs
         )
+
+        # ____________________________ TASK-FREE ______________________________
+        hoi_tf = self._oinf_tf.fit(**kw_oinfo)
 
         self._multiplets = self._oinf_tf._multiplets
 
         # __________________________ TASK-RELATED _____________________________
-        hoi_tr = self._oinf_tr.fit(
-            minsize=minsize,
-            maxsize=maxsize,
-            method=method,
-            **kwargs
-        )
+        hoi_tr = self._oinf_tr.fit(**kw_oinfo)
 
         return hoi_tr - hoi_tf
 

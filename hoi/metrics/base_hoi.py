@@ -216,8 +216,6 @@ class HOIEstimator(object):
         pbar.close()
 
         self._entropies = h_x
-        self._multiplets = h_idx
-        self._order = order
 
         return h_x, h_idx, order
 

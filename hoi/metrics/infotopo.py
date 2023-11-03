@@ -1,3 +1,5 @@
+import warnings
+
 import numpy as np
 
 import jax
@@ -64,12 +66,6 @@ class InfoTopo(HOIEstimator):
     x : array_like
         Standard NumPy arrays of shape (n_samples, n_features) or
         (n_samples, n_features, n_variables)
-    y : array_like
-        The feature of shape (n_samples,) for estimating task-related O-info.
-    multiplets : list | None
-        List of multiplets to compute. Should be a list of multiplets, for
-        example [(0, 1, 2), (2, 7, 8, 9)]. By default, all multiplets are
-        going to be computed.
 
     References
     ----------
@@ -83,9 +79,14 @@ class InfoTopo(HOIEstimator):
     _negative = "synergy"
     _symmetric = True
 
-    def __init__(self, x, y=None, multiplets=None, verbose=None):
+    def __init__(self, x, y=None, verbose=None):
+        # for infotopo, the multiplets are set to None because this metric
+        # first require to compute entropies and then associate them to form
+        # the MI. Same for the target y.
+        if y is not None:
+            warnings.warn("For InfoTopo, y input is going to be ignored.")
         HOIEstimator.__init__(
-            self, x=x, y=y, multiplets=multiplets, verbose=verbose
+            self, x=x, y=None, multiplets=None, verbose=verbose
         )
 
     def fit(self, minsize=1, maxsize=None, method="gcmi", **kwargs):
@@ -120,20 +121,20 @@ class InfoTopo(HOIEstimator):
         # ____________________________ ENTROPIES ______________________________
 
         minsize, maxsize = self._check_minmax(minsize, maxsize)
-        h_x, h_idx, order = self.compute_entropies(
+        h_x, h_idx, _ = self.compute_entropies(
             minsize=1, maxsize=maxsize, method=method, **kwargs
         )
-        n_mult = h_x.shape[0]
 
         # _______________________________ HOI _________________________________
 
         # compute order and multiply entropies
+        order = (h_idx >= 0).sum(1)
         h_x_sgn = jnp.multiply(((-1.0) ** (order.reshape(-1, 1) - 1)), h_x)
 
         # subselection of multiplets
         mults, _ = self.get_combinations(minsize, maxsize=maxsize)
         h_idx_2 = jnp.where(mults == -1, -2, mults)
-        n_mult = h_idx_2.shape[0]
+        n_mult = mults.shape[0]
 
         # progress-bar definition
         pbar = scan_tqdm(n_mult, message="Mutual information")
@@ -150,28 +151,23 @@ class InfoTopo(HOIEstimator):
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    from hoi.utils import landscape, get_nbest_mult
-    from matplotlib.colors import LogNorm
+    from hoi.utils import get_nbest_mult
+    from hoi.plot import plot_landscape
 
     plt.style.use("ggplot")
 
     x = np.random.rand(200, 7)
     y_red = np.random.rand(x.shape[0])
 
-    # redundancy: (1, 2, 6) + (7, 8)
-    x[:, 1] += y_red
-    x[:, 2] += y_red
-    x[:, 6] += y_red
+    # redundancy: (1, 2, 6)
+    x[:, 2] += x[:, 1]
+    x[:, 6] += x[:, 2]
     # synergy:    (0, 3, 5) + (7, 8)
-    y_syn = x[:, 0] + x[:, 3] + x[:, 5]
-    # bivariate target
-    y = np.c_[y_red, y_syn]
+    x[:, 0] = x[:, 0] + x[:, 3] + x[:, 5]
 
-    model = InfoTopo(x, y=y)
-    hoi = model.fit(maxsize=None, method="gcmi")
+    model = InfoTopo(x)
+    hoi = model.fit(minsize=3, maxsize=5, method="gcmi")
     print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=3, n_best=3))
 
-    lscp = landscape(hoi.squeeze(), model.order, output="xarray")
-    lscp.plot(x="order", y="bins", cmap="jet", norm=LogNorm())
-    plt.axvline(model.undersampling, linestyle="--", color="k")
+    plot_landscape(hoi, model=model)
     plt.show()

@@ -145,6 +145,7 @@ class TestMetricsSmoke(object):
             # special case of InfoTopo
             if metric in [InfoTopo]:
                 model = metric(x.copy())
+                model.fit(minsize=2, maxsize=5)
                 np.testing.assert_array_equal(model.order.min(), 2)
                 np.testing.assert_array_equal(model.order.max(), 5)
                 return None
@@ -277,5 +278,5 @@ class TestMetricsFunc(object):
 if __name__ == "__main__":
     # TestMetricsSmoke().test_definition(InfoTopo, x_2d, y_1d, None)
     # TestMetricsSmoke().test_multiplets(InfoTopo, x_2d, [(0, 1)])
-    # TestMetricsSmoke().test_order(RSI, x_2d, y_1d)
-    TestMetricsFunc().test_infotot(InfoTot, (x_3d, y_1d))
+    TestMetricsSmoke().test_order(InfoTopo, x_2d, y_1d)
+    # TestMetricsFunc().test_infotot(InfoTot, (x_3d, y_1d))

@@ -121,14 +121,13 @@ class InfoTopo(HOIEstimator):
         # ____________________________ ENTROPIES ______________________________
 
         minsize, maxsize = self._check_minmax(minsize, maxsize)
-        h_x, h_idx, _ = self.compute_entropies(
+        h_x, h_idx, order = self.compute_entropies(
             minsize=1, maxsize=maxsize, method=method, **kwargs
         )
 
         # _______________________________ HOI _________________________________
 
         # compute order and multiply entropies
-        order = (h_idx >= 0).sum(1)
         h_x_sgn = jnp.multiply(((-1.0) ** (order.reshape(-1, 1) - 1)), h_x)
 
         # subselection of multiplets

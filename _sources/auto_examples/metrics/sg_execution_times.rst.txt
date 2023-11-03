@@ -6,12 +6,12 @@
 
 Computation times
 =================
-**00:14.493** total execution time for **auto_examples_metrics** files:
+**00:09.985** total execution time for **auto_examples_metrics** files:
 
 +-------------------------------------------------------------------------+-----------+----------+
-| :ref:`sphx_glr_auto_examples_metrics_plot_rsi.py` (``plot_rsi.py``)     | 00:08.069 | 51.3 MB  |
+| :ref:`sphx_glr_auto_examples_metrics_plot_rsi.py` (``plot_rsi.py``)     | 00:05.800 | 53.1 MB  |
 +-------------------------------------------------------------------------+-----------+----------+
-| :ref:`sphx_glr_auto_examples_metrics_plot_oinfo.py` (``plot_oinfo.py``) | 00:06.424 | 131.8 MB |
+| :ref:`sphx_glr_auto_examples_metrics_plot_oinfo.py` (``plot_oinfo.py``) | 00:04.185 | 132.0 MB |
 +-------------------------------------------------------------------------+-----------+----------+
 | :ref:`sphx_glr_auto_examples_metrics_metrics2.py` (``metrics2.py``)     | 00:00.000 | 0.0 MB   |
 +-------------------------------------------------------------------------+-----------+----------+

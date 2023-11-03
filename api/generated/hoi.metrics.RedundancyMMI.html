@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../../_static/panels-bootstrap.min.css?v=21c0b90a" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=f6245a2f"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
@@ -381,15 +381,15 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../api_metrics.html">Metrics of HOI</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.Oinfo.html">hoi.metrics.Oinfo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">hoi.metrics.RedundancyMMI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.TC.html">hoi.metrics.TC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">hoi.metrics.RedundancyMMI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../api_sim.html">Simulation of HOI</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -519,13 +519,10 @@ going to be computed.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.compute_entropies" title="hoi.metrics.RedundancyMMI.compute_entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code></a>([method, minsize, ...])</p></td>
 <td><p>Compute entropies for all multiplets.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.filter_multiplets" title="hoi.metrics.RedundancyMMI.filter_multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_multiplets</span></code></a>(mults, order)</p></td>
-<td><p>Filter multiplets.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.fit" title="hoi.metrics.RedundancyMMI.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.fit" title="hoi.metrics.RedundancyMMI.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
 <td><p>Redundancy Index.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.get_combinations" title="hoi.metrics.RedundancyMMI.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(minsize[, maxsize, astype, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.RedundancyMMI.get_combinations" title="hoi.metrics.RedundancyMMI.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(minsize[, maxsize, astype])</p></td>
 <td><p>Get combinations of features.</p></td>
 </tr>
 </tbody>
@@ -588,29 +585,6 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.RedundancyMMI.filter_multiplets">
-<span class="sig-name descname"><span class="pre">filter_multiplets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mults</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RedundancyMMI.filter_multiplets" title="Permalink to this definition">#</a></dt>
-<dd><p>Filter multiplets.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>mults</strong><span class="classifier">array_like</span></dt><dd><p>Multiplets of shape (n_mult, maxsize)</p>
-</dd>
-<dt><strong>order</strong><span class="classifier">array_like</span></dt><dd><p>Order of each multiplet of shape (n_mult,)</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>keep</strong><span class="classifier">array_like</span></dt><dd><p>Boolean array of shape (n_mult,) indicating which multiplets to
-keep.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.RedundancyMMI.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/red_mmi.html#RedundancyMMI.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.RedundancyMMI.fit" title="Permalink to this definition">#</a></dt>
 <dd><p>Redundancy Index.</p>
@@ -643,7 +617,7 @@ shape (n_multiplets, n_variables)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.RedundancyMMI.get_combinations">
-<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">astype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jax'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RedundancyMMI.get_combinations" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">astype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jax'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RedundancyMMI.get_combinations" title="Permalink to this definition">#</a></dt>
 <dd><p>Get combinations of features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -654,8 +628,6 @@ shape (n_multiplets, n_variables)</p>
 </dd>
 <dt><strong>astype</strong><span class="classifier">{‘jax’, ‘numpy’, ‘iterator’}</span></dt><dd><p>Specify the output type. Use either ‘jax’ get the data as a jax
 array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
-</dd>
-<dt><strong>order</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, return the order of each multiplet. Default is False.</p>
 </dd>
 </dl>
 </dd>
@@ -738,7 +710,6 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.RedundancyMMI.__iter__"><code class="docutils literal notranslate"><span class="pre">RedundancyMMI.__iter__()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.RedundancyMMI.compute_entropies"><code class="docutils literal notranslate"><span class="pre">RedundancyMMI.compute_entropies()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.RedundancyMMI.entropies"><code class="docutils literal notranslate"><span class="pre">RedundancyMMI.entropies</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.RedundancyMMI.filter_multiplets"><code class="docutils literal notranslate"><span class="pre">RedundancyMMI.filter_multiplets()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.RedundancyMMI.fit"><code class="docutils literal notranslate"><span class="pre">RedundancyMMI.fit()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.RedundancyMMI.get_combinations"><code class="docutils literal notranslate"><span class="pre">RedundancyMMI.get_combinations()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.RedundancyMMI.multiplets"><code class="docutils literal notranslate"><span class="pre">RedundancyMMI.multiplets</span></code></a></li>
@@ -770,8 +741,8 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
     <hr>
     <footer>

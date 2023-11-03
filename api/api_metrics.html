@@ -18,12 +18,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.min.css?v=21c0b90a" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=f6245a2f"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
@@ -381,15 +381,15 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Metrics of HOI</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.Oinfo.html">hoi.metrics.Oinfo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.TC.html">hoi.metrics.TC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="api_sim.html">Simulation of HOI</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -480,25 +480,15 @@ document.write(`
   <section id="metrics-of-hoi">
 <h1>Metrics of HOI<a class="headerlink" href="#metrics-of-hoi" title="Permalink to this heading">#</a></h1>
 <p><a class="reference internal" href="#module-hoi.metrics" title="hoi.metrics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hoi.metrics</span></code></a>:</p>
-<span class="target" id="module-hoi.metrics"></span><table class="autosummary longtable table autosummary">
+<span class="target" id="module-hoi.metrics"></span><section id="network-behavior">
+<h2>Network behavior<a class="headerlink" href="#network-behavior" title="Permalink to this heading">#</a></h2>
+<table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Oinfo</span></code></a>(x[, y, multiplets, verbose])</p></td>
 <td><p>O-information.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo" title="hoi.metrics.GradientOinfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GradientOinfo</span></code></a>(x, y[, multiplets, verbose])</p></td>
-<td><p>First order Gradient O-information.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InfoTopo</span></code></a>(x[, y, multiplets, verbose])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InfoTopo</span></code></a>(x[, y, verbose])</p></td>
 <td><p>Topological Information.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RSI</span></code></a>(x, y[, multiplets, verbose])</p></td>
-<td><p>Redundancy-Synergy Index (RSI).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI" title="hoi.metrics.RedundancyMMI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RedundancyMMI</span></code></a>(x, y[, multiplets, verbose])</p></td>
-<td><p>Redundancy estimated using the Minimum Mutual Information.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SynergyMMI</span></code></a>(x, y[, multiplets, verbose])</p></td>
-<td><p>Synergy estimated using the Minimum Mutual Information.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.InfoTot.html#hoi.metrics.InfoTot" title="hoi.metrics.InfoTot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InfoTot</span></code></a>(x, y[, multiplets, verbose])</p></td>
 <td><p>Total information.</p></td>
@@ -514,6 +504,26 @@ document.write(`
 </tr>
 </tbody>
 </table>
+</section>
+<section id="network-encoding">
+<h2>Network encoding<a class="headerlink" href="#network-encoding" title="Permalink to this heading">#</a></h2>
+<table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo" title="hoi.metrics.GradientOinfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GradientOinfo</span></code></a>(x, y[, multiplets, verbose])</p></td>
+<td><p>First order Gradient O-information.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RSI</span></code></a>(x, y[, multiplets, verbose])</p></td>
+<td><p>Redundancy-Synergy Index (RSI).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI" title="hoi.metrics.RedundancyMMI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RedundancyMMI</span></code></a>(x, y[, multiplets, verbose])</p></td>
+<td><p>Redundancy estimated using the Minimum Mutual Information.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SynergyMMI</span></code></a>(x, y[, multiplets, verbose])</p></td>
+<td><p>Synergy estimated using the Minimum Mutual Information.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 
 
@@ -554,6 +564,17 @@ document.write(`
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
   <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-behavior">Network behavior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#network-encoding">Network encoding</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
     <a href="../_sources/api/api_metrics.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
@@ -574,8 +595,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
     <hr>
     <footer>

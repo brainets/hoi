@@ -17,12 +17,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="../../../_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -37,9 +37,9 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-bootstrap.min.css?v=21c0b90a" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
-  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=f6245a2f"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
@@ -420,8 +420,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <h1>Source code for hoi.metrics.red_mmi</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">comb</span> <span class="k">as</span> <span class="n">ccomb</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -429,7 +428,6 @@ document.write(`
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">hoi.metrics.base_hoi</span> <span class="kn">import</span> <span class="n">HOIEstimator</span>
-<span class="kn">from</span> <span class="nn">hoi.core.combinatory</span> <span class="kn">import</span> <span class="n">combinations</span>
 <span class="kn">from</span> <span class="nn">hoi.core.entropies</span> <span class="kn">import</span> <span class="n">prepare_for_entropy</span>
 <span class="kn">from</span> <span class="nn">hoi.core.mi</span> <span class="kn">import</span> <span class="n">get_mi</span><span class="p">,</span> <span class="n">compute_mi_comb</span>
 <span class="kn">from</span> <span class="nn">hoi.utils.progressbar</span> <span class="kn">import</span> <span class="n">get_pbar</span>
@@ -453,10 +451,18 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="vm">__name__</span> <span class="o">=</span> <span class="s2">&quot;Redundancy MMI&quot;</span>
+    <span class="n">_encoding</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_positive</span> <span class="o">=</span> <span class="s2">&quot;redundancy&quot;</span>
+    <span class="n">_negative</span> <span class="o">=</span> <span class="s2">&quot;null&quot;</span>
+    <span class="n">_symmetric</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">multiplets</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">HOIEstimator</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">multiplets</span><span class="o">=</span><span class="n">multiplets</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span>
+            <span class="n">multiplets</span><span class="o">=</span><span class="n">multiplets</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
         <span class="p">)</span>
 
 <div class="viewcode-block" id="RedundancyMMI.fit"><a class="viewcode-back" href="../../../api/generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -493,82 +499,61 @@ document.write(`
         <span class="n">mi_fcn</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">get_mi</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
         <span class="n">compute_mi</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">compute_mi_comb</span><span class="p">,</span> <span class="n">mi</span><span class="o">=</span><span class="n">mi_fcn</span><span class="p">)</span>
 
+        <span class="c1"># get multiplet indices and order</span>
+        <span class="n">h_idx</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_combinations</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="n">maxsize</span><span class="p">)</span>
+
+        <span class="c1"># get progress bar</span>
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">get_pbar</span><span class="p">(</span>
+            <span class="n">iterable</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">order</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">order</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">leave</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">)</span>
+
         <span class="c1"># _______________________________ HOI _________________________________</span>
 
-        <span class="c1"># compute mi I(x_{1}y y), ..., I(x_{n}; y)</span>
+        <span class="c1"># compute mi I(x_{1}; y), ..., I(x_{n}; y)</span>
         <span class="n">_</span><span class="p">,</span> <span class="n">i_xiy</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span>
             <span class="n">compute_mi</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="c1"># get progress bar</span>
-        <span class="n">pbar</span> <span class="o">=</span> <span class="n">get_pbar</span><span class="p">(</span><span class="n">iterable</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-        <span class="c1"># prepare the shapes of outputs</span>
-        <span class="n">n_mults</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">ccomb</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_features_x</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
-        <span class="p">)</span>
-        <span class="n">hoi</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_mults</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
-        <span class="n">h_idx</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">n_mults</span><span class="p">,</span> <span class="n">maxsize</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-        <span class="n">order</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_mults</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-
+        <span class="c1"># prepare outputs</span>
         <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">hoi</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">msize</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
             <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;RedMMI order </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msize</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-            <span class="c1"># get combinations</span>
-            <span class="n">_h_idx</span> <span class="o">=</span> <span class="n">combinations</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_n_features_x</span><span class="p">,</span> <span class="n">msize</span><span class="p">,</span> <span class="n">astype</span><span class="o">=</span><span class="s2">&quot;jax&quot;</span><span class="p">)</span>
-            <span class="n">n_combs</span><span class="p">,</span> <span class="n">n_feat</span> <span class="o">=</span> <span class="n">_h_idx</span><span class="o">.</span><span class="n">shape</span>
-            <span class="n">sl</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">n_combs</span><span class="p">)</span>
-
-            <span class="c1"># fill indices and order</span>
-            <span class="n">h_idx</span> <span class="o">=</span> <span class="n">h_idx</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">sl</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">n_feat</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">_h_idx</span><span class="p">)</span>
-            <span class="n">order</span> <span class="o">=</span> <span class="n">order</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">sl</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">msize</span><span class="p">)</span>
+            <span class="c1"># combinations of features</span>
+            <span class="n">_h_idx</span> <span class="o">=</span> <span class="n">h_idx</span><span class="p">[</span><span class="n">order</span> <span class="o">==</span> <span class="n">msize</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">msize</span><span class="p">]</span>
 
             <span class="c1"># compute hoi</span>
             <span class="n">_hoi</span> <span class="o">=</span> <span class="n">i_xiy</span><span class="p">[</span><span class="n">_h_idx</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">hoi</span> <span class="o">=</span> <span class="n">hoi</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">sl</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">_hoi</span><span class="p">)</span>
+
+            <span class="c1"># fill variables</span>
+            <span class="n">n_combs</span> <span class="o">=</span> <span class="n">_h_idx</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">hoi</span> <span class="o">=</span> <span class="n">hoi</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">offset</span> <span class="p">:</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">n_combs</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">_hoi</span><span class="p">)</span>
 
             <span class="c1"># updates</span>
             <span class="n">offset</span> <span class="o">+=</span> <span class="n">n_combs</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_order</span> <span class="o">=</span> <span class="n">order</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_multiplets</span> <span class="o">=</span> <span class="n">h_idx</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_keep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_order</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">hoi</span><span class="p">)</span></div></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
     <span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <span class="n">get_nbest_mult</span>
-    <span class="kn">from</span> <span class="nn">hoi.plot</span> <span class="kn">import</span> <span class="n">plot_landscape</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+    <span class="n">y_red</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-    <span class="c1"># synergy (all-to-one)</span>
-    <span class="c1"># y = x[:, 0] + x[:, 3] + x[:, 5]</span>
-    <span class="c1"># redundancy (one-to-all)</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span>
-    <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span>
-    <span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span>
+    <span class="c1"># redundancy: (1, 2, 6) + (7, 8)</span>
+    <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y_red</span>
+    <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y_red</span>
+    <span class="n">x</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y_red</span>
 
-    <span class="n">model</span> <span class="o">=</span> <span class="n">RedundancyMMI</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="c1"># hoi = model.fit(minsize=2, maxsize=6, method=&#39;kernel&#39;)</span>
-    <span class="n">hoi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">RedundancyMMI</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_red</span><span class="p">)</span>
+    <span class="n">hoi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">hoi</span><span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="n">get_nbest_mult</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
-
-    <span class="n">plot_landscape</span><span class="p">(</span>
-        <span class="n">hoi</span><span class="p">,</span>
-        <span class="n">model</span><span class="p">,</span>
-        <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span>
-        <span class="n">undersampling</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">plt_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;turbo&quot;</span><span class="p">),</span>
-    <span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">get_nbest_mult</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
 </pre></div>
 
                 </article>
@@ -598,8 +583,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+  <script src="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
     <hr>
     <footer>

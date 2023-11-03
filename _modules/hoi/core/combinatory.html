@@ -17,12 +17,12 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../../_static/styles/theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="../../../_static/styles/bootstrap.css?digest=c5ced968eda925caa686" rel="stylesheet" />
-<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="../../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=c5ced968eda925caa686" rel="stylesheet" />
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
@@ -37,9 +37,9 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/panels-bootstrap.min.css?v=21c0b90a" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686" />
-<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686" />
-  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=c5ced968eda925caa686"></script>
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=f6245a2f"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
@@ -426,10 +426,10 @@ document.write(`
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">comb</span> <span class="k">as</span> <span class="n">ccomb</span>
 
 
-<span class="k">def</span> <span class="nf">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">order</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">k</span><span class="p">):</span>
         <span class="c1"># convert to list</span>
-        <span class="n">c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">target</span>
 
         <span class="c1"># deal with order</span>
         <span class="k">if</span> <span class="n">order</span><span class="p">:</span>
@@ -439,7 +439,13 @@ document.write(`
 
 
 <div class="viewcode-block" id="combinations"><a class="viewcode-back" href="../../../api/generated/hoi.core.combinations.html#hoi.core.combinations">[docs]</a><span class="k">def</span> <span class="nf">combinations</span><span class="p">(</span>
-    <span class="n">n</span><span class="p">,</span> <span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">astype</span><span class="o">=</span><span class="s2">&quot;iterator&quot;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=-</span><span class="mi">1</span>
+    <span class="n">n</span><span class="p">,</span>
+    <span class="n">minsize</span><span class="p">,</span>
+    <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">astype</span><span class="o">=</span><span class="s2">&quot;iterator&quot;</span><span class="p">,</span>
+    <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">fill_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get combinations.</span>
 
@@ -456,6 +462,10 @@ document.write(`
 <span class="sd">        array [default], &#39;numpy&#39; for NumPy array or &#39;iterator&#39;.</span>
 <span class="sd">    order : bool, optional</span>
 <span class="sd">        If True, return the order of each multiplet. Default is False.</span>
+<span class="sd">    fill_value : int | -1</span>
+<span class="sd">        Value to use to fill missing values of multiplets.</span>
+<span class="sd">    target : list | None</span>
+<span class="sd">        List of indices to use as targets.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -466,10 +476,11 @@ document.write(`
     <span class="c1"># ________________________________ ITERATOR _______________________________</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">maxsize</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
         <span class="n">maxsize</span> <span class="o">=</span> <span class="n">minsize</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">maxsize</span> <span class="o">&gt;=</span> <span class="n">minsize</span>
     <span class="n">iterators</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">msize</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">iterators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">msize</span><span class="p">,</span> <span class="n">order</span><span class="p">))</span>
+        <span class="n">iterators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">msize</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">target</span><span class="p">))</span>
     <span class="n">iterators</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="nb">tuple</span><span class="p">(</span><span class="n">iterators</span><span class="p">))</span>
 
     <span class="k">if</span> <span class="n">astype</span> <span class="o">==</span> <span class="s2">&quot;iterator&quot;</span><span class="p">:</span>
@@ -483,7 +494,9 @@ document.write(`
         <span class="n">n_mults</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">ccomb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
 
         <span class="c1"># prepare output</span>
-        <span class="n">combs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">n_mults</span><span class="p">,</span> <span class="n">maxsize</span><span class="p">),</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">combs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">n_mults</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">target</span><span class="p">)),</span> <span class="n">fill_value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+        <span class="p">)</span>
 
         <span class="c1"># fill the array</span>
         <span class="k">for</span> <span class="n">n_c</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterators</span><span class="p">):</span>
@@ -497,9 +510,10 @@ document.write(`
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">combinations</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">astype</span><span class="o">=</span><span class="s2">&quot;jax&quot;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
-
-    <span class="c1"># print(np.array(list(itertools.combinations(np.arange(10), 3))).shape)</span>
+    <span class="n">combs</span> <span class="o">=</span> <span class="n">combinations</span><span class="p">(</span>
+        <span class="mi">10</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">astype</span><span class="o">=</span><span class="s2">&quot;jax&quot;</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">combs</span><span class="p">)</span>
 </pre></div>
 
                 </article>
@@ -529,8 +543,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../../_static/scripts/bootstrap.js?digest=c5ced968eda925caa686"></script>
-<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=c5ced968eda925caa686"></script>
+  <script src="../../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
     <hr>
     <footer>

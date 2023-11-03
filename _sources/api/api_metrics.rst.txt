@@ -9,16 +9,26 @@ Metrics of HOI
    :no-members:
    :no-inherited-members:
 
+Network behavior
+++++++++++++++++
+
 .. autosummary::
    :toctree: generated/
 
    Oinfo
-   GradientOinfo
    InfoTopo
-   RSI
-   RedundancyMMI
-   SynergyMMI
    InfoTot
    TC
    DTC
    Sinfo
+
+Network encoding
+++++++++++++++++
+
+.. autosummary::
+   :toctree: generated/
+
+   GradientOinfo
+   RSI
+   RedundancyMMI
+   SynergyMMI

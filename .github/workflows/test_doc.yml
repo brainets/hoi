@@ -28,7 +28,11 @@ jobs:
 
     - name: Test with pytest 🔧
       run: |
-        pytest -v
+        pytest -v  --cov
+
+    - name: Run codecov 🔧
+      run: |
+        codecov
 
   deploy:
     needs: test
@@ -47,15 +51,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .['doc']
 
-      - name: Run codecov 🔧
-        run: |
-          codecov
-
-      - name: Upload coverage reports to Codecov 🚀
-        uses: codecov/codecov-action@v3
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-
       - name: Build the Doc 🔧
         run: |
           cd docs
@@ -70,3 +65,8 @@ jobs:
           folder: docs/_build/html/
           clean: true
           ssh-key: ${{ secrets.DEPLOY_KEY }}
+
+      - name: Upload coverage reports to Codecov 🚀
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

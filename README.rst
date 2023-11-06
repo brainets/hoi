@@ -1,8 +1,12 @@
-|Black|_
+.. -*- mode: rst -*-
+
+|Black|_ |Codecov|_
 
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
 .. _Black: https://github.com/psf/black
 
+.. |Codecov| image:: https://codecov.io/gh/brainets/hoi/graph/badge.svg?token=7PNM2VD994
+.. _Codecov: https://codecov.io/gh/brainets/hoi
 
 # Information theoretical analysis of multivariate time series for the inference of higher-order interdependencies
 

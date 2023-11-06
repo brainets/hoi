@@ -50,7 +50,7 @@ setup(
     package_data=PACKAGE_DATA,
     include_package_data=True,
     description=DESCRIPTION,
-    long_description=read("README.md"),
+    long_description=read("README.rst"),
     platforms="any",
     setup_requires=["numpy"],
     install_requires=requirements,

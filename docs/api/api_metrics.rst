@@ -17,7 +17,6 @@ Network behavior
 
    Oinfo
    InfoTopo
-   InfoTot
    TC
    DTC
    Sinfo
@@ -32,3 +31,4 @@ Network encoding
    RSI
    RedundancyMMI
    SynergyMMI
+   InfoTot

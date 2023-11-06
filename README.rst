@@ -4,7 +4,7 @@
 .. _Black: https://github.com/psf/black
 
 
-# Information theoretical analysis of multivariate time series for the inference of higher-order interactions
+# Information theoretical analysis of multivariate time series for the inference of higher-order interdependencies
 
 ## Project description
 

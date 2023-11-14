@@ -2,6 +2,7 @@ Overview
 ========
 
 Since the seminal work of Claude Shannon :cite:`shannon1948mathematical`, in the second half of the 20th century, Information Theory (IT) has been proven to be an invaluable framework to decipher the intricate web of interactions underlying a broad range of different complex systems :cite:`watanabe1960information`. In this line of research, a plethora of approaches has been developed to investigate relationships between pairs of variables, shedding light on many properties of complex systems. However, a growing body of literature has recently highlighted that investigating the interactions between groups of more than 2 units, i.e. higher-order interactions (HOIs), allows to unveil effects that can be neglected by pairwise approaches :cite:`battiston2020networks`. Hence, how to study HOIs has become a more and more important question in recent times :cite:`battiston2021physics`. In this context, new approaches based on IT emerged to investigate HOIs in terms of information content; more into details, different metrics have been developed to estimate from the activity patterns of a set of variables, whether or not they were interacting and which kind of interaction they presented  :cite:`timme2014synergy, varley2023information`. Most of these metrics are based on the concepts of synergy and redundancy, formalized in terms of IT by the Partial Information Decomposition (PID) framework :cite:`williams2010nonnegative`. Even though these metrics are theoretically well defined and fascinating, when concretely using them to study and computing the higher-order structure of a system, two main problems come into play: how to estimate entropies and information from limited data set, with different hypothesis and characteristics, and how to handle the computational cost of such operations. In our work we provided a complete set of estimators to deal with different kinds of data sets, e.g. continuous or discrete, and we used the python library Jax (https://jax.readthedocs.io/en/latest/index.html) to deal with the high computational cost. In the following part we will introduce the information theoretical tools necessary to understand and use the metrics developed in this toolbox. Then we will present quickly the theory behind the metrics developed, their use and possible interpretation. Finally, we are going to discuss limitations and future developments of our work.
+Since the seminal work of Claude Shannon :cite:`shannon1948mathematical`, in the second half of the 20th century, Information Theory (IT) has been proven to be an invaluable framework to decipher the intricate web of interactions underlying a broad range of different complex systems :cite:`watanabe1960information`. In this line of research, a plethora of approaches has been developed to investigate relationships between pairs of variables, shedding light on many properties of complex systems. However, a growing body of literature has recently highlighted that investigating the interactions between groups of more than 2 units, i.e. higher-order interactions (HOIs), allows to unveil effects that can be neglected by pairwise approaches :cite:`battiston2020networks`. Hence, how to study HOIs has become a more and more important question in recent times :cite:`battiston2021physics`. In this context, new approaches based on IT emerged to investigate HOIs in terms of information content; more into details, different metrics have been developed to estimate from the activity patterns of a set of variables, whether or not they were interacting and which kind of interaction they presented  :cite:`timme2014synergy, varley2023information`. Most of these metrics are based on the concepts of synergy and redundancy, formalized in terms of IT by the Partial Information Decomposition (PID) framework :cite:`williams2010nonnegative`. Even though these metrics are theoretically well defined and fascinating, when concretely using them to study and computing the higher-order structure of a system, two main problems come into play: how to estimate entropies and information from limited data set, with different hypothesis and characteristics, and how to handle the computational cost of such operations. In our work we provided a complete set of estimators to deal with different kinds of data sets, e.g. continuous or discrete, and we used the python library Jax (https://jax.readthedocs.io/en/latest/index.html) to deal with the high computational cost. In the following part we will introduce the information theoretical tools necessary to understand and use the metrics developed in this toolbox. Then we will present quickly the theory behind the metrics developed, their use and possible interpretation. Finally, we are going to discuss limitations and future developments of our work.
 
 Core information theoretic measures
 +++++++++++++++++++++++++++++++++++
@@ -21,7 +22,7 @@ However, estimating the probability distribution :math:`P(X)` from data can be c
 
 A more complicated and common scenario is the one of continuous variables. To estimate the entropy of a continuous variable, different methods are implemented in the toolbox:
 
-- Binning method, that consists in binning the continuous data in a discrete set of bins. In this way, variables are discretized and the entropy can be computed as described above. This procedure can be performed in many different ways :cite:`endres2005bayesian, darbellay1999estimation, fraser1986independent`. 
+- Binning method, that consists in binning the continuous data in a discrete set of bins. In this way, variables are discretized and the entropy can be computed as described above. This procedure can be performed in many different ways :cite:`endres2005bayesian, darbellay1999estimation, fraser1986independent`.
 - K-Nearest Neighbors (KNN), that estimates the probability distribution by considering the K nearest neighbors of each data point :cite:`kraskov2004estimating`.
 - Kernel Density Estimation that uses kernel functions to estimate the probability density function, offering a smooth approximation :cite:`moon1995estimation`.
 - The parametric estimation, that is used when the data is gaussian and allows to compute the entropy as a function of the variance :cite:`goodman1963statistical`.
@@ -41,7 +42,7 @@ Where:
 
 :math:`H(X)` and :math:`H(Y)` are the entropies of individual variables :math:`X` and :math:`Y`.
 :math:`H(X,Y)`  is the joint entropy of :math:`X` and :math:`Y`.
-MI between two variables, quantifies how much knowing one variable reduces the uncertainty about the other and measures the interdependency between the two variables. If they are independent, we have :math:`H(X,Y)=H(X)+H(Y)`, hence :math:`MI(X,Y)=0`. Since the MI can be reduced to a signed sum of entropies, the problem of how to estimate MI from continuous data can be reconducted to the problem, discussed above, of how to estimate entropies. An estimator that has been recently developed and presents interesting properties when computing the MI is the Gaussian Copula estimator :cite:`ince2017statistical`. This estimator is based on the statistical theory of copulas and is proven to provide a lower bound to the real value of MI, this is one of its main advantages: when computing MI, Gaussian copula estimator avoids false positives. Play attention to the fact that this can be mainly used to investigate relationships between two variables that are monotonic. 
+MI between two variables, quantifies how much knowing one variable reduces the uncertainty about the other and measures the interdependency between the two variables. If they are independent, we have :math:`H(X,Y)=H(X)+H(Y)`, hence :math:`MI(X,Y)=0`. Since the MI can be reduced to a signed sum of entropies, the problem of how to estimate MI from continuous data can be reconducted to the problem, discussed above, of how to estimate entropies. An estimator that has been recently developed and presents interesting properties when computing the MI is the Gaussian Copula estimator :cite:`ince2017statistical`. This estimator is based on the statistical theory of copulas and is proven to provide a lower bound to the real value of MI, this is one of its main advantages: when computing MI, Gaussian copula estimator avoids false positives. Play attention to the fact that this can be mainly used to investigate relationships between two variables that are monotonic.
 
 From pairwise to higher-order interactions 
 ++++++++++++++++++++++++++++++++++++++++++	
@@ -109,9 +110,9 @@ Topological information
 The topological information, :class:`hoi.metrics.InfoTopo`, a generalization of the mutual information to higher-order, :math:`I_k` has been introduced and presented to test uniformity and dependence in the data :cite:`baudot2019infotopo`. Its formal definition is the following:
 
 .. math::
-	
+
     I_{k}(X_{1}; ...; X_{k}) = \sum_{i=1}^{k} (-1)^{i - 1} \sum_{I\subset[k];card(I)=i} H_{i}(X_{I})
-    
+
 Note that :math:`I_2(X,Y) = MI(X,Y)` and that :math:`I_3(X,Y,Z)=\Omega(X,Y,Z)`. As the O-information this function can be interpreted in terms of redundancy and synergy, more into details when it is positive it indicates that the system is dominated by redundancy, when it is negative, synergy.
 
 Network encoding 
@@ -137,7 +138,7 @@ Another metric, proposed by Gal Chichek et al in 2001 :cite:`chechik2001group`, 
 
 	RSI(X^n, Y) = I(X^n, Y) - \sum_{i=0}^n I(X_i,Y)
 
-The RSI is designed to measure directly whether the sum of the information provided separately by all the variables is greater or not with respect to the information provided by the whole group. When RSI is positive, the whole group is more informative than the sum of its parts separately, so the interaction between the variables and the target is dominated by synergy. A negative RSI should instead suggest redundancy among the variables with respect to the target. 
+The RSI is designed to measure directly whether the sum of the information provided separately by all the variables is greater or not with respect to the information provided by the whole group. When RSI is positive, the whole group is more informative than the sum of its parts separately, so the interaction between the variables and the target is dominated by synergy. A negative RSI should instead suggest redundancy among the variables with respect to the target.
 
 Synergy and redundancy (MMI)
 ----------------------------
@@ -153,8 +154,8 @@ When computing the redundancy in this way the definition of synergy, :class:`hoi
 .. math::
 
 	synergy (Y, X^n) =  I \left( Y, X^n \right) - max_{i<n} I \left( Y, X^n_{ -i } \right)
-    
-Where :math:`X^n_{-i}` is the set of variables :math:`X^n`, excluding the variable :math:`i`. This metric has been proven to be accurate when working with gaussian systems; we advise care when interpreting the results of the redundant interactions, since the definition of redundancy reflects simply the minimum information provided by the source variables. 
+
+Where :math:`X^n_{-i}` is the set of variables :math:`X^n`, excluding the variable :math:`i`. This metric has been proven to be accurate when working with gaussian systems; we advise care when interpreting the results of the redundant interactions, since the definition of redundancy reflects simply the minimum information provided by the source variables.
 
 Computing HOI using jax
 +++++++++++++++++++++++

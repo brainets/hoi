@@ -26,7 +26,7 @@ Index (RSI).
 
 .. GENERATED FROM PYTHON SOURCE LINES 8-17
 
-.. code-block:: default
+.. code-block:: Python
 
     import numpy as np
 
@@ -77,7 +77,7 @@ we will observe redundancy between :math:`X_{1}, X_{2}, X_{3}` and :math:`Y`.
 
 .. GENERATED FROM PYTHON SOURCE LINES 44-65
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # lets start by simulating a variable x with 200 samples and 7 features
@@ -108,13 +108,13 @@ we will observe redundancy between :math:`X_{1}, X_{2}, X_{3}` and :math:`Y`.
 
  .. code-block:: none
 
-      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:01,    1.20it/s]     67%|██████▋   | RSI order 4:  2/3 [00:01<00:00,    1.63it/s]    100%|██████████| RSI order 5:  3/3 [00:01<00:00,    1.73it/s]                                                                    index  order       hoi  multiplet
-    0     16      3  0.002748  [1, 2, 4]
-    1     13      3  0.000515  [0, 4, 6]
-    2     29      3  0.000215  [2, 4, 6]
-    3      3      3 -0.202059  [0, 1, 5]
-    4     24      3 -0.204457  [1, 5, 6]
-    5     20      3 -0.413461  [1, 3, 5]
+      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:01,    1.84it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    2.51it/s]    100%|██████████| RSI order 5:  3/3 [00:01<00:00,    2.68it/s]                                                                    index  order       hoi  multiplet
+    0     14      3  0.023832  [0, 5, 6]
+    1     12      3  0.023389  [0, 4, 5]
+    2      7      3  0.019492  [0, 2, 5]
+    3     15      3 -0.231998  [1, 2, 3]
+    4      1      3 -0.235001  [0, 1, 3]
+    5     20      3 -0.458094  [1, 3, 5]
 
 
 
@@ -134,7 +134,7 @@ single column). However, it's possible to simulate a multivariate variable.
 
 .. GENERATED FROM PYTHON SOURCE LINES 75-97
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # simulate x again
@@ -166,13 +166,13 @@ single column). However, it's possible to simulate a multivariate variable.
 
  .. code-block:: none
 
-      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:01,    1.58it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    2.07it/s]    100%|██████████| RSI order 5:  3/3 [00:01<00:00,    2.30it/s]                                                                    index  order       hoi  multiplet
-    0     28      3  0.009873  [2, 4, 5]
-    1     16      3  0.004922  [1, 2, 4]
-    2     25      3  0.002236  [2, 3, 4]
-    3     33      3 -0.211472  [3, 5, 6]
-    4      8      3 -0.442681  [0, 2, 6]
-    5     20      3 -0.443747  [1, 3, 5]
+      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    2.59it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    3.43it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    3.82it/s]                                                                    index  order       hoi  multiplet
+    0     34      3  0.006562  [4, 5, 6]
+    1     32      3  0.004384  [3, 4, 6]
+    2     28      3  0.002897  [2, 4, 5]
+    3      0      3 -0.324311  [0, 1, 2]
+    4     20      3 -0.502361  [1, 3, 5]
+    5      8      3 -0.595258  [0, 2, 6]
 
 
 
@@ -194,7 +194,7 @@ variable by knowing the subset of X.
 
 .. GENERATED FROM PYTHON SOURCE LINES 109-122
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # simulate the variable x
@@ -217,13 +217,13 @@ variable by knowing the subset of X.
 
  .. code-block:: none
 
-      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    2.05it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    2.75it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    3.10it/s]                                                                    index  order       hoi  multiplet
-    0     10      3  1.441758  [0, 3, 5]
-    1     11      3  0.230390  [0, 3, 6]
-    2      5      3  0.221096  [0, 2, 3]
-    3     13      3 -0.003800  [0, 4, 6]
-    4      6      3 -0.004742  [0, 2, 4]
-    5      2      3 -0.004920  [0, 1, 4]
+      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    3.36it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    4.42it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.93it/s]                                                                    index  order       hoi  multiplet
+    0     10      3  1.544767  [0, 3, 5]
+    1     26      3  0.208820  [2, 3, 5]
+    2     33      3  0.203551  [3, 5, 6]
+    3     15      3 -0.004108  [1, 2, 3]
+    4     21      3 -0.004383  [1, 3, 6]
+    5     19      3 -0.007372  [1, 3, 4]
 
 
 
@@ -236,7 +236,7 @@ same for multivariate synergy
 
 .. GENERATED FROM PYTHON SOURCE LINES 126-140
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # simulate the variable x
@@ -260,13 +260,13 @@ same for multivariate synergy
 
  .. code-block:: none
 
-      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:01,    1.77it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    2.40it/s]    100%|██████████| RSI order 5:  3/3 [00:01<00:00,    2.68it/s]                                                                    index  order       hoi  multiplet
-    0     18      3  1.475879  [1, 2, 6]
-    1     10      3  1.192344  [0, 3, 5]
-    2     24      3  0.259339  [1, 5, 6]
-    3     34      3 -0.002141  [4, 5, 6]
-    4      2      3 -0.002724  [0, 1, 4]
-    5     19      3 -0.003241  [1, 3, 4]
+      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    2.88it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    3.84it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.31it/s]                                                                    index  order       hoi  multiplet
+    0     10      3  1.634013  [0, 3, 5]
+    1     18      3  1.552980  [1, 2, 6]
+    2     27      3  0.231429  [2, 3, 6]
+    3      2      3 -0.004182  [0, 1, 4]
+    4     28      3 -0.004230  [2, 4, 5]
+    5      6      3 -0.007297  [0, 2, 4]
 
 
 
@@ -279,7 +279,7 @@ Combining redundancy and synergy
 
 .. GENERATED FROM PYTHON SOURCE LINES 144-173
 
-.. code-block:: default
+.. code-block:: Python
 
 
     # simulate the variable x and y
@@ -323,13 +323,13 @@ Combining redundancy and synergy
 
  .. code-block:: none
 
-      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:01,    1.75it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    2.37it/s]    100%|██████████| RSI order 5:  3/3 [00:01<00:00,    2.71it/s]                                                                    index  order       hoi  multiplet
-    0      0      3  1.427798  [0, 1, 2]
-    1      6      3  0.265780  [0, 2, 4]
-    2      7      3  0.246642  [0, 2, 5]
-    3     34      3 -0.278834  [4, 5, 6]
-    4     28      3 -0.280801  [2, 4, 5]
-    5     31      3 -0.612134  [3, 4, 5]
+      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    2.83it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    3.79it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.28it/s]                                                                    index  order       hoi  multiplet
+    0      0      3  1.619448  [0, 1, 2]
+    1      1      3  0.259148  [0, 1, 3]
+    2      4      3  0.251009  [0, 1, 6]
+    3     32      3 -0.194989  [3, 4, 6]
+    4     25      3 -0.204618  [2, 3, 4]
+    5     31      3 -0.432311  [3, 4, 5]
 
 
 
@@ -337,7 +337,7 @@ Combining redundancy and synergy
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.471 seconds)
+   **Total running time of the script:** (0 minutes 4.809 seconds)
 
 **Estimated memory usage:**  53 MB
 
@@ -348,16 +348,13 @@ Combining redundancy and synergy
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
+      :download:`Download Jupyter notebook: plot_rsi.ipynb <plot_rsi.ipynb>`
 
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_rsi.py <plot_rsi.py>`
-
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-      :download:`Download Jupyter notebook: plot_rsi.ipynb <plot_rsi.ipynb>`
 
 
 .. only:: html

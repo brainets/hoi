@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Metrics of HOI &#8212; HOI 0.0.1 documentation</title>
+    <title>Computation times &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -18,40 +18,38 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-dropdown.css?v=995e94df" />
-    <link rel="stylesheet" type="text/css" href="../../_static/panels-bootstrap.min.css?v=21c0b90a" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-dropdown.css?v=995e94df" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-bootstrap.min.css?v=21c0b90a" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=f6245a2f"></script>
-    <script src="../../_static/doctools.js?v=888ff710"></script>
-    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/metrics/index';</script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Metrics example 2" href="metrics2.html" />
-    <link rel="prev" title="Entropy example 1" href="../it/it1.html" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=f6245a2f"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'sg_execution_times';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -104,7 +102,7 @@
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
-      action="../../search.html"
+      action="search.html"
       method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
@@ -133,7 +131,7 @@
       <div class="navbar-item">
   
 
-<a class="navbar-brand logo" href="../../index.html">
+<a class="navbar-brand logo" href="index.html">
   
   
   
@@ -160,28 +158,28 @@
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../install.html">
+                      <a class="nav-link nav-internal" href="install.html">
                         Installation
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../overview/index.html">
+                      <a class="nav-link nav-internal" href="overview/index.html">
                         Overview
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../api/modules.html">
+                      <a class="nav-link nav-internal" href="api/modules.html">
                         API Reference
                       </a>
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="../index.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="auto_examples/index.html">
                         Examples
                       </a>
                     </li>
@@ -277,7 +275,7 @@ document.write(`
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
   
@@ -296,28 +294,28 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../install.html">
+                      <a class="nav-link nav-internal" href="install.html">
                         Installation
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../overview/index.html">
+                      <a class="nav-link nav-internal" href="overview/index.html">
                         Overview
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../api/modules.html">
+                      <a class="nav-link nav-internal" href="api/modules.html">
                         API Reference
                       </a>
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="../index.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="auto_examples/index.html">
                         Examples
                       </a>
                     </li>
@@ -374,37 +372,6 @@ document.write(`
     
   </div>
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
-     aria-label="Section Navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorials/tut2.html">Tutorial example 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorials/tut1.html">Tutorial example 1</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../it/index.html">Entropy and mutual information</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../it/it2.html">Entropy example 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../it/it1.html">Entropy example 1</a></li>
-</ul>
-</li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Metrics of HOI</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="metrics2.html">Metrics example 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_oinfo.html">Metrics example 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_rsi.html">Redundancy-Synergy Index</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../miscellaneous/index.html">Miscellaneous</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../miscellaneous/misc2.html">Miscellaneous example 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../miscellaneous/misc1.html">Miscellaneous example 1</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</nav></div>
-    </div>
-  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -433,14 +400,11 @@ document.write(`
   <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
-      <a href="../../index.html" class="nav-link" aria-label="Home">
+      <a href="index.html" class="nav-link" aria-label="Home">
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
-    
-    <li class="breadcrumb-item active" aria-current="page">Metrics of HOI</li>
+    <li class="breadcrumb-item active" aria-current="page">Computation times</li>
   </ul>
 </nav>
 </div>
@@ -457,18 +421,67 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="metrics-of-hoi">
-<span id="sphx-glr-auto-examples-metrics"></span><h1>Metrics of HOI<a class="headerlink" href="#metrics-of-hoi" title="Permalink to this heading">#</a></h1>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Metrics example 2"><img alt="" src="../../_images/sphx_glr_metrics2_thumb.png" />
-<p><a class="reference internal" href="metrics2.html#sphx-glr-auto-examples-metrics-metrics2-py"><span class="std std-ref">Metrics example 2</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Metrics example 2</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="Metrics example 1"><img alt="" src="../../_images/sphx_glr_plot_oinfo_thumb.png" />
-<p><a class="reference internal" href="plot_oinfo.html#sphx-glr-auto-examples-metrics-plot-oinfo-py"><span class="std std-ref">Metrics example 1</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Metrics example 1</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret the Redundancy-Synergy Index (RSI)."><img alt="" src="../../_images/sphx_glr_plot_rsi_thumb.png" />
-<p><a class="reference internal" href="plot_rsi.html#sphx-glr-auto-examples-metrics-plot-rsi-py"><span class="std std-ref">Redundancy-Synergy Index</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Redundancy-Synergy Index</div>
-</div></div><div class="toctree-wrapper compound">
+  <section id="computation-times">
+<span id="sphx-glr-sg-execution-times"></span><h1>Computation times<a class="headerlink" href="#computation-times" title="Permalink to this heading">#</a></h1>
+<p><strong>00:08.308</strong> total execution time for 9 files <strong>from all galleries</strong>:</p>
+<div class="docutils container">
+<style scoped>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+</style>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" class="init">
+$(document).ready( function () {
+    $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
+} );
+</script><table class="table table-striped sg-datatable">
+<thead>
+<tr class="row-odd"><th class="head"><p>Example</p></th>
+<th class="head"><p>Time</p></th>
+<th class="head"><p>Mem (MB)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/metrics/plot_rsi.html#sphx-glr-auto-examples-metrics-plot-rsi-py"><span class="std std-ref">Redundancy-Synergy Index</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/metrics/plot_rsi.py</span></code>)</p></td>
+<td><p>00:04.809</p></td>
+<td><p>53.1</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/metrics/plot_oinfo.html#sphx-glr-auto-examples-metrics-plot-oinfo-py"><span class="std std-ref">Metrics example 1</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/metrics/plot_oinfo.py</span></code>)</p></td>
+<td><p>00:03.499</p></td>
+<td><p>138.1</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/it/it1.html#sphx-glr-auto-examples-it-it1-py"><span class="std std-ref">Entropy example 1</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/it/it1.py</span></code>)</p></td>
+<td><p>00:00.000</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/it/it2.html#sphx-glr-auto-examples-it-it2-py"><span class="std std-ref">Entropy example 2</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/it/it2.py</span></code>)</p></td>
+<td><p>00:00.000</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/metrics/metrics2.html#sphx-glr-auto-examples-metrics-metrics2-py"><span class="std std-ref">Metrics example 2</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/metrics/metrics2.py</span></code>)</p></td>
+<td><p>00:00.000</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/miscellaneous/misc1.html#sphx-glr-auto-examples-miscellaneous-misc1-py"><span class="std std-ref">Miscellaneous example 1</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/miscellaneous/misc1.py</span></code>)</p></td>
+<td><p>00:00.000</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/miscellaneous/misc2.html#sphx-glr-auto-examples-miscellaneous-misc2-py"><span class="std std-ref">Miscellaneous example 2</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/miscellaneous/misc2.py</span></code>)</p></td>
+<td><p>00:00.000</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="auto_examples/tutorials/tut1.html#sphx-glr-auto-examples-tutorials-tut1-py"><span class="std std-ref">Tutorial example 1</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/tutorials/tut1.py</span></code>)</p></td>
+<td><p>00:00.000</p></td>
+<td><p>0.0</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="auto_examples/tutorials/tut2.html#sphx-glr-auto-examples-tutorials-tut2-py"><span class="std std-ref">Tutorial example 2</span></a> (<code class="docutils literal notranslate"><span class="pre">../examples/tutorials/tut2.py</span></code>)</p></td>
+<td><p>00:00.000</p></td>
+<td><p>0.0</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </section>
 
@@ -482,24 +495,6 @@ document.write(`
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../it/it1.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Entropy example 1</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="metrics2.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Metrics example 2</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -511,7 +506,7 @@ document.write(`
 
   <div class="sidebar-secondary-item">
   <div class="tocsection sourcelink">
-    <a href="../../_sources/auto_examples/metrics/index.rst.txt">
+    <a href="_sources/sg_execution_times.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>
@@ -530,8 +525,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
 
     <hr>
     <footer>

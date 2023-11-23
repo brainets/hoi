@@ -386,8 +386,8 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../it/index.html">Entropy and mutual information</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../it/it1.html">Entropy example 1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../it/it2.html">Entropy example 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../it/it1.html">Entropy example 1</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Metrics of HOI</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
@@ -470,7 +470,7 @@ to download the full example code</p>
 <span id="sphx-glr-auto-examples-metrics-plot-rsi-py"></span><h1>Redundancy-Synergy Index<a class="headerlink" href="#redundancy-synergy-index" title="Permalink to this heading">#</a></h1>
 <p>This example illustrates how to use and interpret the Redundancy-Synergy
 Index (RSI).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">hoi.metrics</span> <span class="kn">import</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a>
 <span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a>
@@ -497,7 +497,7 @@ redundancy between the X and Y variables.</p>
 <p>A very simple way to simulate redundancy is to observe that if a triplet of
 variables <span class="math notranslate nohighlight">\(X_{1}, X_{2}, X_{3}\)</span> receive a copy of a variable <span class="math notranslate nohighlight">\(Y\)</span>,
 we will observe redundancy between <span class="math notranslate nohighlight">\(X_{1}, X_{2}, X_{3}\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets start by simulating a variable x with 200 samples and 7 features</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets start by simulating a variable x with 200 samples and 7 features</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 
 <span class="c1"># now we can also generate a univariate random variable y</span>
@@ -519,17 +519,17 @@ we will observe redundancy between <span class="math notranslate nohighlight">\(
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:01,    1.20it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:01&lt;00:00,    1.63it/s]
-100%|██████████| RSI order 5:  3/3 [00:01&lt;00:00,    1.73it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:01,    1.84it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.51it/s]
+100%|██████████| RSI order 5:  3/3 [00:01&lt;00:00,    2.68it/s]
 
    index  order       hoi  multiplet
-0     16      3  0.002748  [1, 2, 4]
-1     13      3  0.000515  [0, 4, 6]
-2     29      3  0.000215  [2, 4, 6]
-3      3      3 -0.202059  [0, 1, 5]
-4     24      3 -0.204457  [1, 5, 6]
-5     20      3 -0.413461  [1, 3, 5]
+0     14      3  0.023832  [0, 5, 6]
+1     12      3  0.023389  [0, 4, 5]
+2      7      3  0.019492  [0, 2, 5]
+3     15      3 -0.231998  [1, 2, 3]
+4      1      3 -0.235001  [0, 1, 3]
+5     20      3 -0.458094  [1, 3, 5]
 </pre></div>
 </div>
 <p>as you see from the printed table, the multiplet with the lowest (i.e. the
@@ -539,7 +539,7 @@ most redundant multiplets) is (1, 3, 5).</p>
 <h2>Simulate multivariate redundancy<a class="headerlink" href="#simulate-multivariate-redundancy" title="Permalink to this heading">#</a></h2>
 <p>In the example above, we simulated a univariate <span class="math notranslate nohighlight">\(Y\)</span> variable (i.e.
 single column). However, it’s possible to simulate a multivariate variable.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate x again</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate x again</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 
 <span class="c1"># simulate a bivariate y variable</span>
@@ -562,17 +562,17 @@ single column). However, it’s possible to simulate a multivariate variable.</p
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:01,    1.58it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.07it/s]
-100%|██████████| RSI order 5:  3/3 [00:01&lt;00:00,    2.30it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.59it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    3.43it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    3.82it/s]
 
    index  order       hoi  multiplet
-0     28      3  0.009873  [2, 4, 5]
-1     16      3  0.004922  [1, 2, 4]
-2     25      3  0.002236  [2, 3, 4]
-3     33      3 -0.211472  [3, 5, 6]
-4      8      3 -0.442681  [0, 2, 6]
-5     20      3 -0.443747  [1, 3, 5]
+0     34      3  0.006562  [4, 5, 6]
+1     32      3  0.004384  [3, 4, 6]
+2     28      3  0.002897  [2, 4, 5]
+3      0      3 -0.324311  [0, 1, 2]
+4     20      3 -0.502361  [1, 3, 5]
+5      8      3 -0.595258  [0, 2, 6]
 </pre></div>
 </div>
 <p>This time, as expected, the two most redundant triplets are (1, 3, 5) and
@@ -584,7 +584,7 @@ single column). However, it’s possible to simulate a multivariate variable.</p
 of simulating synergy is to go the other way of redundancy, meaning we are
 going to add features of x inside y. That way, we can only retrieve the Y
 variable by knowing the subset of X.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 
 <span class="c1"># synergy between (0, 3, 5) and 5</span>
@@ -598,23 +598,23 @@ variable by knowing the subset of X.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.05it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.75it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    3.10it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.36it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.42it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.93it/s]
 
    index  order       hoi  multiplet
-0     10      3  1.441758  [0, 3, 5]
-1     11      3  0.230390  [0, 3, 6]
-2      5      3  0.221096  [0, 2, 3]
-3     13      3 -0.003800  [0, 4, 6]
-4      6      3 -0.004742  [0, 2, 4]
-5      2      3 -0.004920  [0, 1, 4]
+0     10      3  1.544767  [0, 3, 5]
+1     26      3  0.208820  [2, 3, 5]
+2     33      3  0.203551  [3, 5, 6]
+3     15      3 -0.004108  [1, 2, 3]
+4     21      3 -0.004383  [1, 3, 6]
+5     19      3 -0.007372  [1, 3, 4]
 </pre></div>
 </div>
 <p>as we can see here, the highest values of higher-order interactions
 (i.e. synergy) is achieved for the multiplet (0, 3, 5). Now we can do the
 same for multivariate synergy</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 
 <span class="c1"># simulate y and introduce synergy between the subset (0, 3, 5) of x and the</span>
@@ -629,23 +629,23 @@ same for multivariate synergy</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:01,    1.77it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.40it/s]
-100%|██████████| RSI order 5:  3/3 [00:01&lt;00:00,    2.68it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.88it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    3.84it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.31it/s]
 
    index  order       hoi  multiplet
-0     18      3  1.475879  [1, 2, 6]
-1     10      3  1.192344  [0, 3, 5]
-2     24      3  0.259339  [1, 5, 6]
-3     34      3 -0.002141  [4, 5, 6]
-4      2      3 -0.002724  [0, 1, 4]
-5     19      3 -0.003241  [1, 3, 4]
+0     10      3  1.634013  [0, 3, 5]
+1     18      3  1.552980  [1, 2, 6]
+2     27      3  0.231429  [2, 3, 6]
+3      2      3 -0.004182  [0, 1, 4]
+4     28      3 -0.004230  [2, 4, 5]
+5      6      3 -0.007297  [0, 2, 4]
 </pre></div>
 </div>
 </section>
 <section id="combining-redundancy-and-synergy">
 <h2>Combining redundancy and synergy<a class="headerlink" href="#combining-redundancy-and-synergy" title="Permalink to this heading">#</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x and y</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x and y</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
@@ -676,27 +676,27 @@ same for multivariate synergy</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_rsi_001.png" srcset="../../_images/sphx_glr_plot_rsi_001.png" alt="plot rsi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:01,    1.75it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.37it/s]
-100%|██████████| RSI order 5:  3/3 [00:01&lt;00:00,    2.71it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.83it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    3.79it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.28it/s]
 
    index  order       hoi  multiplet
-0      0      3  1.427798  [0, 1, 2]
-1      6      3  0.265780  [0, 2, 4]
-2      7      3  0.246642  [0, 2, 5]
-3     34      3 -0.278834  [4, 5, 6]
-4     28      3 -0.280801  [2, 4, 5]
-5     31      3 -0.612134  [3, 4, 5]
+0      0      3  1.619448  [0, 1, 2]
+1      1      3  0.259148  [0, 1, 3]
+2      4      3  0.251009  [0, 1, 6]
+3     32      3 -0.194989  [3, 4, 6]
+4     25      3 -0.204618  [2, 3, 4]
+5     31      3 -0.432311  [3, 4, 5]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 7.471 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.809 seconds)</p>
 <p><strong>Estimated memory usage:</strong>  53 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-rsi-py">
-<div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/34173e117578c11af63525b86b946924/plot_rsi.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_rsi.py</span></code></a></p>
-</div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/4e89a3c451ce8407889de983108afa1c/plot_rsi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_rsi.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/34173e117578c11af63525b86b946924/plot_rsi.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_rsi.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>

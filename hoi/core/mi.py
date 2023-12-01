@@ -4,7 +4,7 @@ import jax
 import jax.numpy as jnp
 from jax.scipy.special import digamma as psi
 
-from .entropies import prepare_for_entropy
+from .entropies import prepare_for_entropy, get_entropy
 
 ###############################################################################
 ###############################################################################
@@ -18,7 +18,7 @@ def get_mi(method="gcmi", mi_type="cc", **kwargs):
 
     Parameters
     ----------
-    method : {'gcmi'}
+    method : {'gcmi', 'binning', 'knn', 'kernel'}
         Name of the method to compute mutual-information.
     mi_type : {'cc', 'cd'}
         Mutual-information type might depends on the type of inputs.
@@ -41,7 +41,11 @@ def get_mi(method="gcmi", mi_type="cc", **kwargs):
         elif mi_type == "cd":
             return partial(mi_gcmi_gd, **kwargs)
     else:
-        raise ValueError(f"Method {method} doesn't exist.")
+        # get the entropy unction
+        _entropy = get_entropy(method=method, **kwargs)
+
+        # wrap the mi function with it
+        return partial(mi_fcn, entropy_fcn=_entropy)
 
 
 ###############################################################################
@@ -277,3 +281,37 @@ def _accumulate_psiterms(inputs, vi):
     idx = ntrl_y - vi
     psiterms += psi(idx.astype(float) / 2.0)
     return (psiterms, ntrl_y), psiterms
+
+
+###############################################################################
+###############################################################################
+#                                 OTHERS
+###############################################################################
+###############################################################################
+
+
+@partial(jax.jit, static_argnums=(2,))
+def mi_fcn(x, y, entropy_fcn=None):
+    """Compute the mutual-information by providing an entropy function.
+
+    Parameters
+    ----------
+    x, y : array_like
+        Arrays to consider for computing the Mutual Information. The two input
+        variables x and y should have a shape of (n_features_x, n_samples) and
+        (n_features_y, n_samples)
+    entropy_fcn : function | None
+        Function to use for computing the entropy.
+
+    Returns
+    -------
+    mi : float
+        Floating value describing the mutual-information between x and y
+    """
+    # compute mi
+    mi = (
+        entropy_fcn(x)
+        + entropy_fcn(y)
+        - entropy_fcn(jnp.concatenate((x, y), axis=0))
+    )
+    return mi

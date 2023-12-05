@@ -486,9 +486,9 @@ document.write(`
 <span class="c1">###############################################################################</span>
 
 
-<div class="viewcode-block" id="prepare_for_entropy"><a class="viewcode-back" href="../../../api/generated/hoi.core.prepare_for_entropy.html#hoi.core.prepare_for_entropy">[docs]</a><span class="k">def</span> <span class="nf">prepare_for_entropy</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="prepare_for_entropy"><a class="viewcode-back" href="../../../api/generated/hoi.core.prepare_for_entropy.html#hoi.core.prepare_for_entropy">[docs]</a><span class="k">def</span> <span class="nf">prepare_for_entropy</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">reshape</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare the data before computing entropy.&quot;&quot;&quot;</span>
-    <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">n_variables</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+    <span class="c1"># data.shape = n_samples, n_features, n_variables</span>
 
     <span class="c1"># type checking</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binning&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">):</span>
@@ -514,7 +514,8 @@ document.write(`
         <span class="k">pass</span>
 
     <span class="c1"># make the data (n_variables, n_features, n_samples)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">reshape</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">kwargs</span></div>
 

@@ -3,7 +3,7 @@ from functools import partial
 import jax
 import jax.numpy as jnp
 
-from .entropies import prepare_for_entropy, get_entropy
+from .entropies import get_entropy
 
 ###############################################################################
 ###############################################################################

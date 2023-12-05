@@ -2,7 +2,6 @@ from functools import partial
 
 import jax
 import jax.numpy as jnp
-from jax.scipy.special import digamma as psi
 
 from .entropies import prepare_for_entropy, get_entropy
 
@@ -43,12 +42,10 @@ def get_mi(method="gcmi", **kwargs):
 ###############################################################################
 
 
-def prepare_for_mi(x, y, method, **kwargs):
-    """Prepare the data before computing mutual-information."""
-    x, _ = prepare_for_entropy(x, method, **kwargs.copy())
-    y, kwargs = prepare_for_entropy(y, method, reshape=False, **kwargs.copy())
-
-    return x, y, kwargs
+# def prepare_for_mi(x, y, method, **kwargs):
+#     """Prepare the data before computing mutual-information."""
+#     x, kwargs = prepare_for_entropy(x, method, **kwargs.copy())
+#     return x, y, kwargs
 
 
 @partial(jax.jit, static_argnums=(2))

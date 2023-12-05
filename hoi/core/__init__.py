@@ -8,4 +8,4 @@ from .entropies import (  # noqa
     prepare_for_entropy,
     entropy_kernel,
 )
-from .mi import mi_gcmi_gg, mi_gcmi_gd  # noqa
+from .mi import get_mi  # noqa

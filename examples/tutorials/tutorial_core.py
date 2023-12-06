@@ -63,13 +63,14 @@ print("Analytical entropy of x: %.2f" % entropy_analytical)
 #
 # The mutual information is another fundamental information theoretical metric.
 # In this tutorial we will compute the mutual information between two variables
-# `x` and `y` extracted from a multivariate Gaussian distribution with zero mean
-# and unit variance. We show that since the two variables are independent, the
-# mutual information is very close to zero.
+# `x` and `y`. `x` is a multivariate Gaussian with zero mean and unit variance,
+# while `y` is a multivariate uniform distribution in the interval :math:`[0,1]`.
+# Since the two variables are independent, the mutual information between them is expected
+# to be zero.
 
 D = 3
 x = np.random.normal(size=(D, 1000))
-y = np.random.normal(size=(D, 1000))
+y = np.random.rand(D,1000)
 
 mi = get_mi(method="gcmi")
 print("Mutual information between x and y: %.2f" % mi(x, y))

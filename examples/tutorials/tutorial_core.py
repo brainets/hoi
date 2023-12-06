@@ -17,14 +17,14 @@ from hoi.core import get_mi
 # other higher-order metrics of information theory defined in HOI are based on
 # the entropy.
 #
-# In HOI there are 4 different methods to compute the entropy, in this tutorial 
+# In HOI there are 4 different methods to compute the entropy, in this tutorial
 # we will use the estimation based on the Gaussian Copula estimation.
 #
 # Let's start by extracting a sample `x` from a multivariate Gaussian distribution
 # with zero mean and unit variance:
 
 D = 3
-x = np.random.normal(size=(D,1000));
+x = np.random.normal(size=(D, 1000))
 
 ###############################################################################
 # Now we can compute the entropy of `x`. We use the function `get_entropy` to
@@ -35,14 +35,14 @@ x = np.random.normal(size=(D,1000));
 entropy = get_entropy(method="gcmi")
 
 ###############################################################################
-# Now we can compute the entropy of `x` by calling the function `entropy`. This 
+# Now we can compute the entropy of `x` by calling the function `entropy`. This
 # function takes as input an array of data of shape `(n_features, n_samples)`. For
 # the Gaussian Copula estimation, the entropy is computed in bits. We have:
 
 print("Entropy of x: %.2f" % entropy(x))
 
 ###############################################################################
-# For comparison, we can compute the entropy of a multivariate Gaussian with 
+# For comparison, we can compute the entropy of a multivariate Gaussian with
 # the analytical formula, which is:
 # .. math::
 #   H(X) = \frac{1}{2} \log \left( (2 \pi e)^D \det(\Sigma) \right)
@@ -50,11 +50,13 @@ print("Entropy of x: %.2f" % entropy(x))
 # the covariance matrix of the Gaussian. We have:
 
 C = np.cov(x, rowvar=True)
-entropy_analytical = (0.5*(np.log(np.linalg.det(C))+D*(1+np.log(2*np.pi))))/np.log(2)
+entropy_analytical = (
+    0.5 * (np.log(np.linalg.det(C)) + D * (1 + np.log(2 * np.pi)))
+) / np.log(2)
 print("Analytical entropy of x: %.2f" % entropy_analytical)
 
 ###############################################################################
-# We see that the two values are very close.
+# We see that the two values are very close.
 #
 # Mutual information
 # ------------------
@@ -66,8 +68,8 @@ print("Analytical entropy of x: %.2f" % entropy_analytical)
 # mutual information is very close to zero.
 
 D = 3
-x = np.random.normal(size=(D,1000))
-y = np.random.normal(size=(D,1000))
+x = np.random.normal(size=(D, 1000))
+y = np.random.normal(size=(D, 1000))
 
 mi = get_mi(method="gcmi")
-print("Mutual information between x and y: %.2f" % mi(x,y))
+print("Mutual information between x and y: %.2f" % mi(x, y))

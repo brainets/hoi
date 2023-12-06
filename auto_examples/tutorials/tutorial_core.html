@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Miscellaneous &#8212; HOI 0.0.1 documentation</title>
+    <title>Core information theoretical metrics &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -47,11 +47,12 @@
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/miscellaneous/index';</script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/tutorials/tutorial_core';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Miscellaneous example 2" href="misc2.html" />
-    <link rel="prev" title="Redundancy-Synergy Index" href="../metrics/plot_rsi.html" />
+    <link rel="next" title="Entropy and mutual information" href="../it/index.html" />
+    <link rel="prev" title="Tutorial example 1" href="tut1.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -387,10 +388,10 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../tutorials/tut2.html">Tutorial example 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorials/tut1.html">Tutorial example 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_core.html">Core information theoretical metrics</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="tut2.html">Tutorial example 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tut1.html">Tutorial example 1</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Core information theoretical metrics</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../it/index.html">Entropy and mutual information</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -404,9 +405,9 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="../metrics/plot_rsi.html">Redundancy-Synergy Index</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Miscellaneous</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="misc2.html">Miscellaneous example 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="misc1.html">Miscellaneous example 1</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../miscellaneous/index.html">Miscellaneous</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../miscellaneous/misc2.html">Miscellaneous example 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../miscellaneous/misc1.html">Miscellaneous example 1</a></li>
 </ul>
 </li>
 </ul>
@@ -449,7 +450,10 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Examples</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">Miscellaneous</li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Core...</li>
   </ul>
 </nav>
 </div>
@@ -466,16 +470,90 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="miscellaneous">
-<span id="sphx-glr-auto-examples-miscellaneous"></span><h1>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this heading">#</a></h1>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Miscellaneous example 2"><img alt="" src="../../_images/sphx_glr_misc2_thumb.png" />
-<p><a class="reference internal" href="misc2.html#sphx-glr-auto-examples-miscellaneous-misc2-py"><span class="std std-ref">Miscellaneous example 2</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Miscellaneous example 2</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="Miscellaneous example 1"><img alt="" src="../../_images/sphx_glr_misc1_thumb.png" />
-<p><a class="reference internal" href="misc1.html#sphx-glr-auto-examples-miscellaneous-misc1-py"><span class="std std-ref">Miscellaneous example 1</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Miscellaneous example 1</div>
-</div></div><div class="toctree-wrapper compound">
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-tutorials-tutorial-core-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code</p>
 </div>
+<section class="sphx-glr-example-title" id="core-information-theoretical-metrics">
+<span id="sphx-glr-auto-examples-tutorials-tutorial-core-py"></span><h1>Core information theoretical metrics<a class="headerlink" href="#core-information-theoretical-metrics" title="Permalink to this heading">#</a></h1>
+<p>This tutorial guides you through the core information theoretical metrics
+available. These metrics are the entropy and the mutual information.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">hoi.core</span> <span class="kn">import</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a>
+<span class="kn">from</span> <span class="nn">hoi.core</span> <span class="kn">import</span> <span class="n">get_mi</span>
+</pre></div>
+</div>
+<section id="entropy">
+<h2>Entropy<a class="headerlink" href="#entropy" title="Permalink to this heading">#</a></h2>
+<p>The fundamental information theoretical metric is the entropy. Most of the
+other higher-order metrics of information theory defined in HOI are based on
+the entropy.</p>
+<p>In HOI there are 4 different methods to compute the entropy, in this tutorial
+we will use the estimation based on the Gaussian Copula estimation.</p>
+<p>Let’s start by extracting a sample <cite>x</cite> from a multivariate Gaussian distribution
+with zero mean and unit variance:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Now we can compute the entropy of <cite>x</cite>. We use the function <cite>get_entropy</cite> to
+build a callable function to compute the entropy. The function <cite>get_entropy</cite>
+takes as input the method to use to compute the entropy. In this case we use
+the Gaussian Copula estimation, so we set the method to <a href="#id1"><span class="problematic" id="id2">`</span></a>”gcmi”:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">entropy</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we can compute the entropy of <cite>x</cite> by calling the function <cite>entropy</cite>. This
+function takes as input an array of data of shape <cite>(n_features, n_samples)</cite>. For
+the Gaussian Copula estimation, the entropy is computed in bits. We have:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>For comparison, we can compute the entropy of a multivariate Gaussian with
+the analytical formula, which is:
+.. math:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">H</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span><span class="mi">1</span><span class="p">}{</span><span class="mi">2</span><span class="p">}</span> \<span class="n">log</span> \<span class="n">left</span><span class="p">(</span> <span class="p">(</span><span class="mi">2</span> \<span class="n">pi</span> <span class="n">e</span><span class="p">)</span><span class="o">^</span><span class="n">D</span> \<span class="n">det</span><span class="p">(</span>\<span class="n">Sigma</span><span class="p">)</span> \<span class="n">right</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(D\)</span> is the dimensionality of the Gaussian and <span class="math notranslate nohighlight">\(\Sigma\)</span> is
+the covariance matrix of the Gaussian. We have:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">entropy_analytical</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">C</span><span class="p">))</span> <span class="o">+</span> <span class="n">D</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)))</span>
+<span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analytical entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy_analytical</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We see that the two values are very close.</p>
+</section>
+<section id="mutual-information">
+<h2>Mutual information<a class="headerlink" href="#mutual-information" title="Permalink to this heading">#</a></h2>
+<p>The mutual information is another fundamental information theoretical metric.
+In this tutorial we will compute the mutual information between two variables
+<cite>x</cite> and <cite>y</cite>. <cite>x</cite> is a multivariate Gaussian with zero mean and unit variance,
+while <cite>y</cite> is a multivariate uniform distribution in the interval <span class="math notranslate nohighlight">\([0,1]\)</span>.
+Since the two variables are independent, the mutual information between them is expected
+to be zero.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="n">mi</span> <span class="o">=</span> <span class="n">get_mi</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mutual information between x and y: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">mi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Estimated memory usage:</strong>  0 MB</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-core-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/8899a6dcbff824b67c83b1b179fe712c/tutorial_core.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_core.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/797cf1a03654f606d1d746b1b2b76968/tutorial_core.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">tutorial_core.py</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
 </section>
 
 
@@ -489,20 +567,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../metrics/plot_rsi.html"
+       href="tut1.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Redundancy-Synergy Index</p>
+        <p class="prev-next-title">Tutorial example 1</p>
       </div>
     </a>
     <a class="right-next"
-       href="misc2.html"
+       href="../it/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Miscellaneous example 2</p>
+        <p class="prev-next-title">Entropy and mutual information</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -517,8 +595,20 @@ document.write(`
 
   <div class="sidebar-secondary-item">
 
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy">Entropy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mutual-information">Mutual information</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
   <div class="tocsection sourcelink">
-    <a href="../../_sources/auto_examples/miscellaneous/index.rst.txt">
+    <a href="../../_sources/auto_examples/tutorials/tutorial_core.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:00.000** total execution time for 2 files **from auto_examples/tutorials**:
+**00:00.000** total execution time for 3 files **from auto_examples/tutorials**:
 
 .. container::
 
@@ -36,5 +36,8 @@ Computation times
      - 00:00.000
      - 0.0
    * - :ref:`sphx_glr_auto_examples_tutorials_tut2.py` (``tut2.py``)
+     - 00:00.000
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_tutorials_tutorial_core.py` (``tutorial_core.py``)
      - 00:00.000
      - 0.0

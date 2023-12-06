@@ -70,7 +70,7 @@ print("Analytical entropy of x: %.2f" % entropy_analytical)
 
 D = 3
 x = np.random.normal(size=(D, 1000))
-y = np.random.rand(D,1000)
+y = np.random.rand(D, 1000)
 
 mi = get_mi(method="gcmi")
 print("Mutual information between x and y: %.2f" % mi(x, y))

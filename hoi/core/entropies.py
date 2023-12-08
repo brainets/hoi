@@ -22,7 +22,7 @@ from hoi.utils.logging import logger
 ###############################################################################
 
 
-def get_entropy(method="gcmi", **kwargs):
+def get_entropy(method="gcmi", vmap=False, **kwargs):
     """Get entropy function.
 
     Parameters
@@ -43,7 +43,10 @@ def get_entropy(method="gcmi", **kwargs):
     elif method == "binning":
         return partial(entropy_bin, **kwargs)
     elif method == "knn":
-        return partial(entropy_knn, **kwargs)
+        # wrap distance funtion with k
+        k = kwargs.get("k", 1)
+        cdist = partial(cdistk, k=k)
+        return partial(_entropy_knn, cdist=cdist, k=k)
     elif method == "kernel":
         return partial(entropy_kernel, **kwargs)
     else:
@@ -57,7 +60,7 @@ def get_entropy(method="gcmi", **kwargs):
 ###############################################################################
 
 
-def prepare_for_entropy(data, method, reshape=True, **kwargs):
+def prepare_for_entropy(data, method, **kwargs):
     """Prepare the data before computing entropy."""
     # data.shape = n_samples, n_features, n_variables
 
@@ -84,10 +87,6 @@ def prepare_for_entropy(data, method, reshape=True, **kwargs):
     elif method == "binning":
         pass
 
-    # make the data (n_variables, n_features, n_samples)
-    if reshape:
-        data = jnp.asarray(data.transpose(2, 1, 0))
-
     return data, kwargs
 
 
@@ -110,7 +109,7 @@ def entropy_gcmi(
     Parameters
     ----------
     x : array_like
-        Array of data of shape (n_features, n_samples)
+        Array of data of shape (n_samples, n_features)
     biascorrect : bool | False
         Specifies whether bias correction should be applied to the estimated MI
     demean : bool | False
@@ -121,14 +120,14 @@ def entropy_gcmi(
     hx : float
         Entropy of the gaussian variable (in bits)
     """
-    nfeat, nsamp = x.shape
+    nsamp, nfeat = x.shape
 
     # demean data
     if demean:
-        x = x - x.mean(axis=1, keepdims=True)
+        x = x - x.mean(axis=0, keepdims=True)
 
     # covariance
-    c = jnp.dot(x, x.T) / float(nsamp - 1)
+    c = jnp.dot(x.T, x) / float(nsamp - 1)
     chc = jnp.linalg.cholesky(c)
 
     # entropy in nats
@@ -218,7 +217,7 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
     Parameters
     ----------
     x : array_like
-        Input data of shape (n_features, n_samples). The data should already
+        Input data of shape (n_samples, n_features). The data should already
         be discretize
     base : int | 2
         The logarithmic base to use. Default is base 2.
@@ -228,13 +227,13 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
     hx : float
         Entropy of x
     """
-    n_features, n_samples = x.shape
+    n_samples, n_features = x.shape
     # here, we count the number of possible multiplets. The worst is that each
     # trial is unique. So we can prepare the output to be at most (n_samples,)
     # and if trials are repeated, just set to zero it's going to be compensated
     # by the entr() function
     counts = jnp.unique(
-        x, return_counts=True, size=n_samples, axis=1, fill_value=0
+        x, return_counts=True, size=n_samples, axis=0, fill_value=0
     )[1]
     probs = counts / n_samples
     return jax.scipy.special.entr(probs).sum() / np.log(base)
@@ -257,10 +256,10 @@ def set_to_inf(x, _):
 @partial(jax.jit, static_argnums=(2,))
 def cdistk(xx, idx, k=1):
     """K-th minimum euclidian distance."""
-    x, y = xx[:, [idx]], xx
+    x, y = xx[[idx], :], xx
 
     # compute euclidian distance
-    eucl = jnp.sqrt(jnp.sum((x - y) ** 2, axis=0))
+    eucl = jnp.sqrt(jnp.sum((x - y) ** 2, axis=1))
 
     # in case of 0-distances, replace them by infinity
     eucl = jnp.where(eucl == 0, jnp.inf, eucl)
@@ -271,8 +270,8 @@ def cdistk(xx, idx, k=1):
     return xx, eucl[jnp.argmin(eucl)]
 
 
-@partial(jax.jit, static_argnums=(1,))
-def entropy_knn(x: jnp.array, k: int = 1) -> jnp.array:
+@partial(jax.jit, static_argnums=(1, 2))
+def entropy_knn(x: jnp.array, k: int = 1, cdist=None) -> jnp.array:
     """Entropy using the k-nearest neighbor.
 
     Original code: https://github.com/blakeaw/Python-knn-entropy/
@@ -292,6 +291,14 @@ def entropy_knn(x: jnp.array, k: int = 1) -> jnp.array:
     hx : float
         Entropy of x
     """
+    # wrap cdist
+    cdist = partial(cdistk, k=k)
+    fcn = partial(_entropy_knn, cdist=cdist, k=k)
+    return fcn(x)
+
+
+@partial(jax.jit, static_argnums=(1, 2))
+def _entropy_knn(x: jnp.array, k: int = 1, cdist=None) -> jnp.array:
     # x = jnp.atleast_2d(x)
     d, n = float(x.shape[0]), float(x.shape[1])
 
@@ -330,14 +337,15 @@ def entropy_kernel(
     Parameters
     ----------
     x : array_like
-        Input data of shape (n_features, n_samples)
+        Input data of shape (n_samples, n_features)
 
     Returns
     -------
     hx : float
         Entropy of x
     """
-    model = gaussian_kde(x, bw_method=bw_method)
-    return -jnp.mean(jnp.log2(model(x)))
+    x_t = x.T
+    model = gaussian_kde(x_t, bw_method=bw_method)
+    return -jnp.mean(jnp.log2(model(x_t)))
     # p = model.pdf(x)
     # return jax.scipy.special.entr(p).sum() / np.log(base)

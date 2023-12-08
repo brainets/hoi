@@ -111,7 +111,7 @@ class Sinfo(HOIEstimator):
         x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
 
         # get entropy function
-        entropy = jax.vmap(get_entropy(method=method, **kwargs))
+        entropy = jax.vmap(get_entropy(method=method, **kwargs), in_axes=2)
         sinfo_no_ent = partial(
             _sinfo_no_ent,
             entropy_3d=entropy,

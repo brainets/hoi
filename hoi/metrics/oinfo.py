@@ -21,10 +21,10 @@ def _oinfo_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
     # compute h(x^{n})
     h_xn = entropy_3d(x_c)
 
-    # compute \sum_{j=1}^{n} h(x_{j}
+    # compute \sum_{j=1}^{n} h(x_{j})
     h_xj_sum = entropy_4d(x_c[:, :, jnp.newaxis, :]).sum(0)
 
-    # compute \sum_{j=1}^{n} h(x_{-j}
+    # compute \sum_{j=1}^{n} h(x_{-j})
     h_xmj_sum = entropy_4d(x_c[:, acc, :]).sum(0)
 
     # compute oinfo
@@ -115,7 +115,7 @@ class Oinfo(HOIEstimator):
         x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
 
         # get entropy function
-        entropy = jax.vmap(get_entropy(method=method, **kwargs))
+        entropy = jax.vmap(get_entropy(method=method, **kwargs), in_axes=2)
         oinfo_no_ent = partial(
             _oinfo_no_ent,
             entropy_3d=entropy,

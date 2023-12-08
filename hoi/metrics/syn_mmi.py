@@ -90,7 +90,7 @@ class SynergyMMI(HOIEstimator):
         x, y = self._split_xy(x)
 
         # prepare mi functions
-        mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
+        mi_fcn = jax.vmap(get_mi(method=method, **kwargs), in_axes=2)
         compute_mi = partial(compute_mi_comb, mi=mi_fcn)
         compute_syn = partial(_compute_syn, mi_fcn=compute_mi)
 

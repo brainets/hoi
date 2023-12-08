@@ -70,8 +70,8 @@ def compute_mi(x, y, entropy_fcn=None):
     ----------
     x, y : array_like
         Arrays to consider for computing the Mutual Information. The two input
-        variables x and y should have a shape of (n_features_x, n_samples) and
-        (n_features_y, n_samples)
+        variables x and y should have a shape of (n_samples, n_features_x) and
+        (n_samples, n_features_y)
     entropy_fcn : function | None
         Function to use for computing the entropy.
 
@@ -84,6 +84,6 @@ def compute_mi(x, y, entropy_fcn=None):
     mi = (
         entropy_fcn(x)
         + entropy_fcn(y)
-        - entropy_fcn(jnp.concatenate((x, y), axis=0))
+        - entropy_fcn(jnp.concatenate((x, y), axis=1))
     )
     return mi

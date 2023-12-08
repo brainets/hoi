@@ -182,7 +182,7 @@ class HOIEstimator(object):
         # get entropy function
         entropy = partial(
             ent_at_index,
-            entropy=jax.vmap(get_entropy(method=method, **kwargs)),
+            entropy=jax.vmap(get_entropy(method=method, **kwargs), in_axes=2),
         )
 
         # ______________________________ ENTROPY ______________________________

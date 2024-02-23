@@ -1,38 +1,36 @@
 from functools import partial
-from itertools import combinations
-
 import numpy as np
-
 import jax
 import jax.numpy as jnp
-
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.entropies import prepare_for_entropy
 from hoi.core.mi import get_mi, compute_mi_comb2
 from hoi.utils.progressbar import get_pbar
 
-@partial(jax.jit, static_argnums=(2,))
-def _compute_phiID_red(inputs, comb, mi_fcn=None):
-    x,y, ind = inputs
+
+@partial(jax.jit, static_argnums=(2, ))
+def _compute_phiid_red(inputs, comb, mi_fcn=None):
+    x, y, ind = inputs
 
     # select combination
-    x_c=x[:,comb,:]
-    y_c=y[:,comb,:]
+    x_c = x[:, comb, :]
+    y_c = y[:, comb, :]
 
     # compute max(I(x_{-j}; S))
     _, i_minj = jax.lax.scan(mi_fcn, (x_c, y_c), ind)
 
     return inputs, i_minj.min(0)
 
+
 class RedundancyphiID(HOIEstimator):
 
     r"""Redundancy :math:`\rightarrow` redundancy (phiID).
-    
     Estimated using the Minimum Mutual Information as follow:
-    
+
     .. math::
 
-        Red(X,Y) =   min \{ I(X_{t- \tau};X_t), I(X_{t-\tau};Y_t), I(Y_{t-\tau};X_t), I(Y_{t-\tau};Y_t) \}
+        Red(X,Y) =   min \{ I(X_{t- \tau};X_t), I(X_{t-\tau};Y_t),
+                            I(Y_{t-\tau}; X_t), I(Y_{t-\tau};Y_t) \}
 
     Parameters
     ----------
@@ -63,7 +61,14 @@ class RedundancyphiID(HOIEstimator):
             verbose=verbose,
         )
 
-    def fit(self, minsize=2, tau=1, direction_axis=0, maxsize=None, method="gcmi", **kwargs):
+    def fit(self,
+            minsize=2,
+            tau=1,
+            direction_axis=0,
+            maxsize=None,
+            method="gcmi",
+            **kwargs):
+
         """Redundancy (phiID).
 
         Parameters
@@ -76,11 +81,11 @@ class RedundancyphiID(HOIEstimator):
                 * 'gcmi': gaussian copula MI [default]. See
                   :func:`hoi.core.mi_gcmi_gg`
         tau : int
-            The length of the delay to use to compute the redundancy as 
+            The length of the delay to use to compute the redundancy as
             defined in the phiID.
             Default 1
         direction_axis : {0,2}
-            the axis on which to consider the evolution. 
+            the axis on which to consider the evolution.
             0 for the samples axis, 2 for the variables axis
             Default 0
         kwargs : dict | {}
@@ -102,7 +107,7 @@ class RedundancyphiID(HOIEstimator):
         # prepare mi functions
         mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
         compute_mi = partial(compute_mi_comb2, mi=mi_fcn)
-        compute_phiID_red=partial(_compute_phiID_red, mi_fcn=compute_mi)
+        compute_phiID_red = partial(_compute_phiid_red, mi_fcn=compute_mi)
 
         # get multiplet indices and order
         h_idx, order = self.get_combinations(minsize, maxsize=maxsize)
@@ -114,18 +119,20 @@ class RedundancyphiID(HOIEstimator):
 
         # _______________________________ HOI _________________________________
 
-        if direction_axis==0:
-            x_c=x[:,:,:-tau]
-            y=x[:,:,tau:]
+        if direction_axis == 0:
+            x_c = x[:, :, :-tau]
+            y = x[:, :, tau:]
 
-        elif direction_axis==2:
-            x_c=x[:-tau,:,:]
-            y=x[tau:,:,:]
+        elif direction_axis == 2:
+            x_c = x[:-tau, :, :]
+            y = x[tau:, :, :]
 
         # prepare outputs
         offset = 0
-        if direction_axis==2:
-            hoi = jnp.zeros((len(order), self.n_variables-tau), dtype=jnp.float32)
+        if direction_axis == 2:
+            hoi = jnp.zeros(
+                    (len(order), self.n_variables-tau),
+                    dtype=jnp.float32)
         else:
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
@@ -135,17 +142,17 @@ class RedundancyphiID(HOIEstimator):
             # combinations of features
             _h_idx = h_idx[order == msize, 0:msize]
 
-            ind = jnp.array(np.meshgrid(jnp.arange(msize), jnp.arange(msize))).T.reshape(-1, 2,1)
+            dd = jnp.array(np.meshgrid(jnp.arange(msize), jnp.arange(msize))).T
+            ind = dd.reshape(-1, 2, 1)
 
             # compute hoi
-            _, _hoi = jax.lax.scan(compute_phiID_red, (x_c,y, ind), _h_idx)
+            _, _hoi = jax.lax.scan(compute_phiID_red, (x_c, y, ind), _h_idx)
 
             # fill variables
             n_combs = _h_idx.shape[0]
-            hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
+            hoi = hoi.at[offset: offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs
-
 
         return np.asarray(hoi)

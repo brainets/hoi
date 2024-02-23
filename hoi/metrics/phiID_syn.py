@@ -13,17 +13,17 @@ from hoi.utils.progressbar import get_pbar
 
 @partial(jax.jit, static_argnums=(2,))
 def _compute_phi_syn(inputs, comb, mi_fcn=None):
-    x,y, ind = inputs
+    x, y, ind = inputs
 
     # select combination
-    x_c=x[:,:,:]
-    y_c=y[:,comb,:]
+    x_c = x[:, :, :]
+    y_c = y[:, comb, :]
 
     # compute info tot I({x_{1}, ..., x_{n}}; S)
-    _, i_tot = mi_fcn((x_c, y_c),comb)
+    _, i_tot = mi_fcn((x_c, y_c), comb)
 
     # compute max(I(x_{-j}; S))
-    _, i_maxj = jax.lax.scan(mi_fcn, (x_c[:,comb,:], y_c), ind)
+    _, i_maxj = jax.lax.scan(mi_fcn, (x_c[:, comb, :], y_c), ind)
 
     return inputs, i_tot - i_maxj.max(0)
 
@@ -32,11 +32,14 @@ class SynergyphiID(HOIEstimator):
 
     r"""Synergy (phiID).
 
-    For each couple of variable the synergy about their future as in Luppi et al, using the MMi approach:
+    For each couple of variable the synergy about their future as in 
+    Luppi et al (2022), using the MMi approach:
 
     .. math::
 
-        Syn(X,Y) =  I(X_{t-\tau},Y_{t-\tau};X_{t},Y_t) - max \{ I(X_{t-\tau};X_t,Y_t), I(Y_{t-\tau};X_t,Y_t) \}
+        Syn(X,Y) =  I(X_{t-\tau},Y_{t-\tau};X_{t},Y_t) -
+                            max \{ I(X_{t-\tau};X_t,Y_t),
+                            I(Y_{t-\tau};X_t,Y_t) \}
 
     Parameters
     ----------
@@ -67,7 +70,16 @@ class SynergyphiID(HOIEstimator):
             verbose=verbose,
         )
 
-    def fit(self, minsize=2, tau=1, direction_axis=0, maxsize=None, method="gcmi", **kwargs):
+    def fit(
+            self,
+            minsize=2,
+            tau=1,
+            direction_axis=0,
+            maxsize=None,
+            method="gcmi",
+            **kwargs
+            ):
+
         r"""Synergy (phiID).
 
         Parameters
@@ -120,8 +132,10 @@ class SynergyphiID(HOIEstimator):
         # _______________________________ HOI _________________________________
 
         offset = 0
-        if direction_axis==2:
-            hoi = jnp.zeros((len(order), self.n_variables-tau), dtype=jnp.float32)
+        if direction_axis == 2:
+            hoi = jnp.zeros(
+                (len(order), self.n_variables-tau), dtype=jnp.float32
+                )
         else:
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
@@ -134,13 +148,13 @@ class SynergyphiID(HOIEstimator):
             # define indices for I(x_{-j}; S)
             ind = (jnp.mgrid[0:msize, 0:msize].sum(0) % msize)[:, 1:]
 
-            if direction_axis==0:
-                x_c=x[:,:,:-tau]
-                y=x[:,:,tau:]
+            if direction_axis == 0:
+                x_c = x[:, :, :-tau]
+                y = x[:, :, tau:]
 
-            elif direction_axis==2:
-                x_c=x[:-tau,:,:]
-                y=x[tau:,:,:]
+            elif direction_axis == 2:
+                x_c = x[:-tau, :, :]
+                y = x[tau:, :, :]
             
             else:
                 raise ValueError(
@@ -148,11 +162,11 @@ class SynergyphiID(HOIEstimator):
                 )
 
             # compute hoi
-            _, _hoi = jax.lax.scan(compute_syn, (x_c,y, ind), _h_idx)
+            _, _hoi = jax.lax.scan(compute_syn, (x_c, y, ind), _h_idx)
 
             # fill variables
             n_combs = _h_idx.shape[0]
-            hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
+            hoi = hoi.at[offset: offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs

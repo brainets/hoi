@@ -45,11 +45,12 @@ class GradientOinfo(HOIEstimator):
     _negative = "synergy"
     _symmetric = True
 
-    def __init__(self, x, y, multiplets=None, verbose=None):
+    def __init__(self, x, y, multiplets=None, base_model=Oinfo, verbose=None):
         kw_oinfo = dict(multiplets=multiplets, verbose=verbose)
         HOIEstimator.__init__(self, x=x, y=None, **kw_oinfo)
-        self._oinf_tr = Oinfo(x, y=y, **kw_oinfo)
-        self._oinf_tf = Oinfo(x, **kw_oinfo)
+        self._oinf_tr = base_model(x, y=y, **kw_oinfo)
+        self._oinf_tf = base_model(x, **kw_oinfo)
+        self.__name__ = self.__name__ + "(%s)" % base_model.__name__
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the Gradient O-information.

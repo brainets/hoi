@@ -528,17 +528,17 @@ we will observe redundancy between <span class="math notranslate nohighlight">\(
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.06it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.85it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    3.05it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.01it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.77it/s]
+100%|██████████| RSI order 5:  3/3 [00:01&lt;00:00,    2.98it/s]
 
    index  order       hoi  multiplet
-0      7      3  0.007179  [0, 2, 5]
-1     12      3  0.006330  [0, 4, 5]
-2     28      3  0.005737  [2, 4, 5]
-3      3      3 -0.286787  [0, 1, 5]
-4     24      3 -0.289735  [1, 5, 6]
-5     20      3 -0.590558  [1, 3, 5]
+0     25      3  0.007817  [2, 3, 4]
+1      9      3  0.004797  [0, 3, 4]
+2      6      3  0.001110  [0, 2, 4]
+3     33      3 -0.250171  [3, 5, 6]
+4     10      3 -0.251449  [0, 3, 5]
+5     20      3 -0.461988  [1, 3, 5]
 </pre></div>
 </div>
 <p>as you see from the printed table, the multiplet with the lowest (i.e. the
@@ -571,17 +571,17 @@ single column). However, it’s possible to simulate a multivariate variable.</p
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.12it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.16it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.70it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.10it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.14it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.68it/s]
 
    index  order       hoi  multiplet
-0     28      3  0.016019  [2, 4, 5]
-1     34      3  0.001567  [4, 5, 6]
-2     23      3  0.000526  [1, 4, 6]
-3      3      3 -0.297344  [0, 1, 5]
-4      8      3 -0.498016  [0, 2, 6]
-5     20      3 -0.606770  [1, 3, 5]
+0      2      3  0.015064  [0, 1, 4]
+1     12      3  0.007300  [0, 4, 5]
+2     16      3  0.003209  [1, 2, 4]
+3     24      3 -0.218918  [1, 5, 6]
+4      8      3 -0.362709  [0, 2, 6]
+5     20      3 -0.474228  [1, 3, 5]
 </pre></div>
 </div>
 <p>This time, as expected, the two most redundant triplets are (1, 3, 5) and
@@ -607,17 +607,17 @@ variable by knowing the subset of X.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.17it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.16it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.74it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.18it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.27it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.85it/s]
 
    index  order       hoi  multiplet
-0     10      3  1.292449  [0, 3, 5]
-1      5      3  0.203923  [0, 2, 3]
-2     11      3  0.199982  [0, 3, 6]
-3     32      3 -0.007898  [3, 4, 6]
-4     19      3 -0.008710  [1, 3, 4]
-5     21      3 -0.014667  [1, 3, 6]
+0     10      3  1.455835  [0, 3, 5]
+1      3      3  0.211445  [0, 1, 5]
+2     14      3  0.200322  [0, 5, 6]
+3     30      3 -0.002140  [2, 5, 6]
+4      6      3 -0.002739  [0, 2, 4]
+5     13      3 -0.002830  [0, 4, 6]
 </pre></div>
 </div>
 <p>as we can see here, the highest values of higher-order interactions
@@ -638,17 +638,17 @@ same for multivariate synergy</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.98it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.03it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.58it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.95it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.00it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.54it/s]
 
    index  order       hoi  multiplet
-0     18      3  1.380780  [1, 2, 6]
-1     10      3  1.365631  [0, 3, 5]
-2     33      3  0.239739  [3, 5, 6]
-3      2      3 -0.006698  [0, 1, 4]
-4     19      3 -0.009154  [1, 3, 4]
-5     25      3 -0.009191  [2, 3, 4]
+0     10      3  1.603179  [0, 3, 5]
+1     18      3  1.177814  [1, 2, 6]
+2     17      3  0.225488  [1, 2, 5]
+3     19      3 -0.001972  [1, 3, 4]
+4      2      3 -0.003852  [0, 1, 4]
+5     22      3 -0.005366  [1, 4, 5]
 </pre></div>
 </div>
 </section>
@@ -685,21 +685,21 @@ same for multivariate synergy</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_rsi_001.png" srcset="../../_images/sphx_glr_plot_rsi_001.png" alt="plot rsi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.94it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    3.96it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.52it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.93it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    3.98it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.55it/s]
 
    index  order       hoi  multiplet
-0      0      3  1.317345  [0, 1, 2]
-1      8      3  0.221482  [0, 2, 6]
-2      6      3  0.217542  [0, 2, 4]
-3     19      3 -0.225460  [1, 3, 4]
-4     25      3 -0.233335  [2, 3, 4]
-5     31      3 -0.490175  [3, 4, 5]
+0      0      3  1.243010  [0, 1, 2]
+1      5      3  0.222746  [0, 2, 3]
+2      8      3  0.221662  [0, 2, 6]
+3     10      3 -0.259009  [0, 3, 5]
+4     26      3 -0.259619  [2, 3, 5]
+5     31      3 -0.432617  [3, 4, 5]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.426 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  47 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.449 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  46 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-rsi-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/4e89a3c451ce8407889de983108afa1c/plot_rsi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_rsi.ipynb</span></code></a></p>

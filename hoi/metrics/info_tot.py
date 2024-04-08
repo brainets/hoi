@@ -12,7 +12,6 @@ from hoi.utils.progressbar import get_pbar
 
 
 class InfoTot(HOIEstimator):
-
     """Total information.
 
     The total information is the mutual information between set `S` and a
@@ -46,13 +45,14 @@ class InfoTot(HOIEstimator):
             self, x=x, y=y, multiplets=multiplets, verbose=verbose
         )
 
-    def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
-        """Compute RSI.
+    def fit(self, minsize=1, maxsize=None, method="gcmi", **kwargs):
+        """Compute total information.
 
         Parameters
         ----------
-        minsize, maxsize : int | 2, None
-            Minimum and maximum size of the multiplets
+        minsize, maxsize : int | 1, None
+            Minimum and maximum size of the multiplets. If minsize is 1, pairwise
+            mutual information will be computed.
         method : {'gcmi'}
             Name of the method to compute mutual-information. Use either :
 
@@ -70,7 +70,7 @@ class InfoTot(HOIEstimator):
         """
         # ________________________________ I/O ________________________________
         # check minsize and maxsize
-        minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
+        minsize, maxsize = self._check_minmax(max(minsize, 1), maxsize)
 
         # prepare the x for computing mi
         x, kwargs = prepare_for_entropy(self._x, method, **kwargs)

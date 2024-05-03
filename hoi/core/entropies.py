@@ -57,9 +57,9 @@ def get_entropy(method="gcmi", **kwargs):
 ###############################################################################
 
 
-def prepare_for_entropy(data, method, **kwargs):
+def prepare_for_entropy(data, method, reshape=True, **kwargs):
     """Prepare the data before computing entropy."""
-    n_samples, n_features, n_variables = data.shape
+    # data.shape = n_samples, n_features, n_variables
 
     # type checking
     if (method in ["binning"]) and (data.dtype != int):
@@ -85,7 +85,8 @@ def prepare_for_entropy(data, method, **kwargs):
         pass
 
     # make the data (n_variables, n_features, n_samples)
-    data = jnp.asarray(data.transpose(2, 1, 0))
+    if reshape:
+        data = jnp.asarray(data.transpose(2, 1, 0))
 
     return data, kwargs
 

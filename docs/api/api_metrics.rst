@@ -20,6 +20,9 @@ Network behavior
    TC
    DTC
    Sinfo
+   RedundancyphiID
+   SynergyphiID
+
 
 Network encoding
 ++++++++++++++++

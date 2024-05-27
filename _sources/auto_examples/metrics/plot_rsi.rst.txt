@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_metrics_plot_rsi.py>`
-        to download the full example code
+        to download the full example code.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -108,13 +108,13 @@ we will observe redundancy between :math:`X_{1}, X_{2}, X_{3}` and :math:`Y`.
 
  .. code-block:: none
 
-      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    2.01it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    2.77it/s]    100%|██████████| RSI order 5:  3/3 [00:01<00:00,    2.98it/s]                                                                    index  order       hoi  multiplet
-    0     25      3  0.007817  [2, 3, 4]
-    1      9      3  0.004797  [0, 3, 4]
-    2      6      3  0.001110  [0, 2, 4]
-    3     33      3 -0.250171  [3, 5, 6]
-    4     10      3 -0.251449  [0, 3, 5]
-    5     20      3 -0.461988  [1, 3, 5]
+      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    2.06it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    2.83it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    3.03it/s]                                                                    index  order       hoi  multiplet
+    0     30      3  0.012585  [2, 5, 6]
+    1     34      3  0.008255  [4, 5, 6]
+    2      4      3  0.007454  [0, 1, 6]
+    3     22      3 -0.190783  [1, 4, 5]
+    4     31      3 -0.191932  [3, 4, 5]
+    5     20      3 -0.430326  [1, 3, 5]
 
 
 
@@ -166,13 +166,13 @@ single column). However, it's possible to simulate a multivariate variable.
 
  .. code-block:: none
 
-      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    3.10it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    4.14it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.68it/s]                                                                    index  order       hoi  multiplet
-    0      2      3  0.015064  [0, 1, 4]
-    1     12      3  0.007300  [0, 4, 5]
-    2     16      3  0.003209  [1, 2, 4]
-    3     24      3 -0.218918  [1, 5, 6]
-    4      8      3 -0.362709  [0, 2, 6]
-    5     20      3 -0.474228  [1, 3, 5]
+      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    3.11it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    4.15it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.69it/s]                                                                    index  order       hoi  multiplet
+    0     34      3  0.008913  [4, 5, 6]
+    1      9      3  0.008743  [0, 3, 4]
+    2     12      3  0.008345  [0, 4, 5]
+    3     11      3 -0.257740  [0, 3, 6]
+    4     20      3 -0.467608  [1, 3, 5]
+    5      8      3 -0.486442  [0, 2, 6]
 
 
 
@@ -217,13 +217,13 @@ variable by knowing the subset of X.
 
  .. code-block:: none
 
-      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    3.18it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    4.27it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.85it/s]                                                                    index  order       hoi  multiplet
-    0     10      3  1.455835  [0, 3, 5]
-    1      3      3  0.211445  [0, 1, 5]
-    2     14      3  0.200322  [0, 5, 6]
-    3     30      3 -0.002140  [2, 5, 6]
-    4      6      3 -0.002739  [0, 2, 4]
-    5     13      3 -0.002830  [0, 4, 6]
+      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    3.16it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    4.26it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.83it/s]                                                                    index  order       hoi  multiplet
+    0     10      3  1.208614  [0, 3, 5]
+    1     12      3  0.194619  [0, 4, 5]
+    2      7      3  0.194138  [0, 2, 5]
+    3     13      3 -0.000282  [0, 4, 6]
+    4      4      3 -0.000809  [0, 1, 6]
+    5     24      3 -0.000838  [1, 5, 6]
 
 
 
@@ -260,13 +260,13 @@ same for multivariate synergy
 
  .. code-block:: none
 
-      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    2.95it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    4.00it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.54it/s]                                                                    index  order       hoi  multiplet
-    0     10      3  1.603179  [0, 3, 5]
-    1     18      3  1.177814  [1, 2, 6]
-    2     17      3  0.225488  [1, 2, 5]
-    3     19      3 -0.001972  [1, 3, 4]
-    4      2      3 -0.003852  [0, 1, 4]
-    5     22      3 -0.005366  [1, 4, 5]
+      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    2.97it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    4.00it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.56it/s]                                                                    index  order       hoi  multiplet
+    0     18      3  1.511805  [1, 2, 6]
+    1     10      3  1.402449  [0, 3, 5]
+    2      8      3  0.242227  [0, 2, 6]
+    3     28      3 -0.000461  [2, 4, 5]
+    4      2      3 -0.004410  [0, 1, 4]
+    5     19      3 -0.004609  [1, 3, 4]
 
 
 
@@ -323,13 +323,13 @@ Combining redundancy and synergy
 
  .. code-block:: none
 
-      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    2.93it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    3.98it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.55it/s]                                                                    index  order       hoi  multiplet
-    0      0      3  1.243010  [0, 1, 2]
-    1      5      3  0.222746  [0, 2, 3]
-    2      8      3  0.221662  [0, 2, 6]
-    3     10      3 -0.259009  [0, 3, 5]
-    4     26      3 -0.259619  [2, 3, 5]
-    5     31      3 -0.432617  [3, 4, 5]
+      0%|          |  0/3 [00:00<?,       ?it/s]     33%|███▎      | RSI order 3:  1/3 [00:00<00:00,    2.93it/s]     67%|██████▋   | RSI order 4:  2/3 [00:00<00:00,    3.97it/s]    100%|██████████| RSI order 5:  3/3 [00:00<00:00,    4.50it/s]                                                                    index  order       hoi  multiplet
+    0      0      3  1.434463  [0, 1, 2]
+    1      3      3  0.224820  [0, 1, 5]
+    2      1      3  0.219835  [0, 1, 3]
+    3     19      3 -0.237479  [1, 3, 4]
+    4     25      3 -0.246954  [2, 3, 4]
+    5     31      3 -0.511070  [3, 4, 5]
 
 
 
@@ -337,9 +337,9 @@ Combining redundancy and synergy
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.449 seconds)
+   **Total running time of the script:** (0 minutes 4.427 seconds)
 
-**Estimated memory usage:**  46 MB
+**Estimated memory usage:**  47 MB
 
 
 .. _sphx_glr_download_auto_examples_metrics_plot_rsi.py:

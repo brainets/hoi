@@ -36,11 +36,11 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinx.ext.githubpages",
     "sphinx.ext.autosummary",
-    # "sphinx_panels",
     "numpydoc",
-    "sphinx_copybutton",
     "sphinxcontrib.bibtex",
     "sphinx_gallery.gen_gallery",
+    # "sphinx_panels",
+    # "sphinx_copybutton",
 ]
 bibtex_bibfiles = ["refs.bib"]
 

@@ -9,7 +9,7 @@
 .. _Codecov: https://codecov.io/gh/brainets/hoi
 
 
-.. image:: https://github.com/brainets/hoi/tree/main/docs/_static/hoi-logo.png
+.. image:: https://github.com/brainets/hoi/blob/main/docs/_static/hoi-logo.png
   :target: https://brainets.github.io/hoi/
 
 Description

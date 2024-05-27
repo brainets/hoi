@@ -29,10 +29,9 @@ def _compute_phi_syn(inputs, comb, mi_fcn=None):
 
 
 class SynergyphiID(HOIEstimator):
-
     r"""Synergy (phiID).
 
-    For each couple of variable the synergy about their future as in 
+    For each couple of variable the synergy about their future as in
     Luppi et al (2022), using the MMi approach:
 
     .. math::
@@ -71,15 +70,14 @@ class SynergyphiID(HOIEstimator):
         )
 
     def fit(
-            self,
-            minsize=2,
-            tau=1,
-            direction_axis=0,
-            maxsize=None,
-            method="gcmi",
-            **kwargs
-            ):
-
+        self,
+        minsize=2,
+        tau=1,
+        direction_axis=0,
+        maxsize=None,
+        method="gcmi",
+        **kwargs
+    ):
         r"""Synergy (phiID).
 
         Parameters
@@ -92,7 +90,7 @@ class SynergyphiID(HOIEstimator):
                 * 'gcmi': gaussian copula MI [default]. See
                   :func:`hoi.core.mi_gcmi_gg`
         tau : int | 1
-            The length of the delay to use to compute the redundancy as 
+            The length of the delay to use to compute the redundancy as
             defined in the phiID.
             Default 1
         direction_axis : {0,2}
@@ -134,8 +132,8 @@ class SynergyphiID(HOIEstimator):
         offset = 0
         if direction_axis == 2:
             hoi = jnp.zeros(
-                (len(order), self.n_variables-tau), dtype=jnp.float32
-                )
+                (len(order), self.n_variables - tau), dtype=jnp.float32
+            )
         else:
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
@@ -155,18 +153,16 @@ class SynergyphiID(HOIEstimator):
             elif direction_axis == 2:
                 x_c = x[:-tau, :, :]
                 y = x[tau:, :, :]
-            
+
             else:
-                raise ValueError(
-                    "axis can be eaither equal 0 or 2."
-                )
+                raise ValueError("axis can be eaither equal 0 or 2.")
 
             # compute hoi
             _, _hoi = jax.lax.scan(compute_syn, (x_c, y, ind), _h_idx)
 
             # fill variables
             n_combs = _h_idx.shape[0]
-            hoi = hoi.at[offset: offset + n_combs, :].set(_hoi)
+            hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs

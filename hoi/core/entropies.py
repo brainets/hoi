@@ -280,7 +280,7 @@ def entropy_knn(x: jnp.array, k: int = 1) -> jnp.array:
     and references. See also Kraskov et al., Estimating mutual information,
     Phy rev, 2004
 
-    
+
     Parameters
     ----------
     x : array_like

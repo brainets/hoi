@@ -8,7 +8,7 @@ from hoi.core.mi import get_mi, compute_mi_comb_phi
 from hoi.utils.progressbar import get_pbar
 
 
-@partial(jax.jit, static_argnums=(2, ))
+@partial(jax.jit, static_argnums=(2,))
 def _compute_phiid_red(inputs, comb, mi_fcn=None):
     x, y, ind = inputs
 
@@ -23,7 +23,6 @@ def _compute_phiid_red(inputs, comb, mi_fcn=None):
 
 
 class RedundancyphiID(HOIEstimator):
-
     r"""Redundancy :math:`\rightarrow` redundancy (phiID).
     Estimated using the Minimum Mutual Information as follow:
 
@@ -61,14 +60,15 @@ class RedundancyphiID(HOIEstimator):
             verbose=verbose,
         )
 
-    def fit(self,
-            minsize=2,
-            tau=1,
-            direction_axis=0,
-            maxsize=None,
-            method="gcmi",
-            **kwargs):
-
+    def fit(
+        self,
+        minsize=2,
+        tau=1,
+        direction_axis=0,
+        maxsize=None,
+        method="gcmi",
+        **kwargs
+    ):
         """Redundancy (phiID).
 
         Parameters
@@ -131,8 +131,8 @@ class RedundancyphiID(HOIEstimator):
         offset = 0
         if direction_axis == 2:
             hoi = jnp.zeros(
-                (len(order), self.n_variables - tau),
-                dtype=jnp.float32)
+                (len(order), self.n_variables - tau), dtype=jnp.float32
+            )
         else:
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
@@ -150,7 +150,7 @@ class RedundancyphiID(HOIEstimator):
 
             # fill variables
             n_combs = _h_idx.shape[0]
-            hoi = hoi.at[offset: offset + n_combs, :].set(_hoi)
+            hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs

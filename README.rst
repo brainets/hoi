@@ -68,6 +68,7 @@ The full installation of HOI includes additional packages to test the software a
 - pytest
 - pytest-cov
 - codecov
+- xarray
 - sphinx!=4.1.0
 - sphinx-gallery
 - pydata-sphinx-theme

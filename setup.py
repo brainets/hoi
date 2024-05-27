@@ -31,7 +31,8 @@ test_deps = [
     "pytest",
     "pytest-sugar",
     "pytest-cov",
-    "codecov"
+    "codecov",
+    "xarray"
 ]
 doc_deps = [
     "sphinx!=4.1.0",

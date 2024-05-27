@@ -4,7 +4,7 @@ import jax
 import jax.numpy as jnp
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.entropies import prepare_for_entropy
-from hoi.core.mi import get_mi, compute_mi_comb2
+from hoi.core.mi import get_mi, compute_mi_comb_phi
 from hoi.utils.progressbar import get_pbar
 
 
@@ -80,7 +80,7 @@ class RedundancyphiID(HOIEstimator):
 
                 * 'gcmi': gaussian copula MI [default]. See
                   :func:`hoi.core.mi_gcmi_gg`
-        tau : int
+        tau : int | 1
             The length of the delay to use to compute the redundancy as
             defined in the phiID.
             Default 1
@@ -106,7 +106,7 @@ class RedundancyphiID(HOIEstimator):
 
         # prepare mi functions
         mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
-        compute_mi = partial(compute_mi_comb2, mi=mi_fcn)
+        compute_mi = partial(compute_mi_comb_phi, mi=mi_fcn)
         compute_phiid_red = partial(_compute_phiid_red, mi_fcn=compute_mi)
 
         # get multiplet indices and order

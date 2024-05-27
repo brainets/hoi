@@ -12,7 +12,6 @@ def plot_landscape(
     kind="hist",
     undersampling=True,
     cbar=True,
-    plot_legend=False,
     hist_kwargs={},
     plt_kwargs={},
 ):
@@ -52,7 +51,7 @@ def plot_landscape(
     """
     import matplotlib.pyplot as plt
     from matplotlib.colors import LogNorm
-    
+
     # get orders
     if model:
         orders = model.order
@@ -76,65 +75,22 @@ def plot_landscape(
         plt.pcolormesh(order, bins, lscp, norm=LogNorm(), **plt_kwargs)
         if cbar:
             plt.colorbar(label=hist_kwargs.get("stat", "probability"))
-    elif kind == "scatter" and 'c' not in plt_kwargs.keys():
+    elif kind == "scatter":
         size = normalize(np.abs(hoi), to_min=2, to_max=200)
         minmax = abs(np.nanpercentile(hoi, [1, 99])).max()
-        
-        if 'vmin' not in plt_kwargs:
-            plt_kwargs['vmin']= - minmax
-        if 'vmax' not in plt_kwargs:
-            plt_kwargs['vmax']= minmax    
-        
         for o in range(minsize, maxsize + 1):
             keep = orders == o
             hoi_o = hoi[keep]
-            plt_kwargs['c']=hoi_o
-            
             x = np.random.normal(loc=o, scale=0.13, size=hoi_o.size)
             plt.scatter(
                 x,
                 hoi_o,
+                c=hoi_o,
+                vmin=-minmax,
+                vmax=minmax,
                 s=size[keep],
                 **plt_kwargs,
             )
-    elif kind == "scatter" and 'c' in plt_kwargs.keys():
-        size = normalize(np.abs(hoi), to_min=2, to_max=200)
-       
-        minmax = abs(np.nanpercentile(hoi, [1, 99])).max()   
-        colors=plt_kwargs['c']
-        labels=plt_kwargs['label']
-        del plt_kwargs['c']
-        del plt_kwargs['label']
-
-        b=0
-        if 'size' not in plt_kwargs.keys():
-            b+=1
-
-        else:
-            siz = plt_kwargs['size']
-            del plt_kwargs['size']
-
-        for o in np.unique(colors):
-            index_color=np.where(colors==o)[0]
-            hoi_o = hoi[index_color]
-            if b==1:
-                siz=size[index_color]
-
-
-            x = orders[index_color] + np.random.normal(loc=0, scale=0.08, size=hoi_o.size)
-            plt.scatter(
-                x,
-                hoi_o,
-                c=o,
-                s=siz,
-                label=labels[index_color][0],
-                **plt_kwargs,
-            )
-            print(labels[index_color][0])
-
-        if plot_legend == True:
-            plt.legend()
-
 
     plt.xlabel("Order")
     plt.xticks(np.arange(minsize, maxsize + 1))

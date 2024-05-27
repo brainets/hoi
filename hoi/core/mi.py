@@ -56,7 +56,7 @@ def compute_mi_comb(inputs, comb, mi=None):
 
 
 @partial(jax.jit, static_argnums=(2))
-def compute_mi_comb2(inputs, comb, mi=None):
+def compute_mi_comb_phi(inputs, comb, mi=None):
     x, y = inputs
     x_c = jnp.atleast_2d(x[:, comb[0], :])
     y_c = y[:, comb[1], :]

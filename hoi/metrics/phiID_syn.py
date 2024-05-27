@@ -91,7 +91,7 @@ class SynergyphiID(HOIEstimator):
 
                 * 'gcmi': gaussian copula MI [default]. See
                   :func:`hoi.core.mi_gcmi_gg`
-        tau : int
+        tau : int | 1
             The length of the delay to use to compute the redundancy as 
             defined in the phiID.
             Default 1

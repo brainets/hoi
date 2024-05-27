@@ -59,6 +59,14 @@ def compute_mi_comb(inputs, comb, mi=None):
     return inputs, mi(x_c, y)
 
 
+@partial(jax.jit, static_argnums=(2))
+def compute_mi_comb_phi(inputs, comb, mi=None):
+    x, y = inputs
+    x_c = jnp.atleast_2d(x[:, comb[0], :])
+    y_c = y[:, comb[1], :]
+
+    return inputs, mi(x_c, y_c)
+
 ###############################################################################
 ###############################################################################
 #                         GENERAL MUTUAL INFORMATION

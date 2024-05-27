@@ -1,6 +1,7 @@
 """
 Functions to compute entropies.
 """
+
 from functools import partial
 
 import numpy as np

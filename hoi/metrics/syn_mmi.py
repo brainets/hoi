@@ -28,7 +28,6 @@ def _compute_syn(inputs, comb, mi_fcn=None):
 
 
 class SynergyMMI(HOIEstimator):
-
     """Synergy estimated using the Minimum Mutual Information.
 
     Parameters

@@ -44,7 +44,6 @@ def compute_mi(inputs, iterators):
 
 
 class InfoTopo(HOIEstimator):
-
     """Topological Information.
 
     The multivariate mutual information :math:`I_{k}` quantify the

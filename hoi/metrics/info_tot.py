@@ -12,7 +12,6 @@ from hoi.utils.progressbar import get_pbar
 
 
 class InfoTot(HOIEstimator):
-
     """Total information.
 
     The total information is the mutual information between set `S` and a

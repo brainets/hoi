@@ -12,7 +12,6 @@ from hoi.utils.progressbar import get_pbar
 
 
 class RedundancyMMI(HOIEstimator):
-
     """Redundancy estimated using the Minimum Mutual Information.
 
     Parameters

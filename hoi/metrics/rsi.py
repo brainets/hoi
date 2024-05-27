@@ -12,7 +12,6 @@ from hoi.utils.progressbar import get_pbar
 
 
 class RSI(HOIEstimator):
-
     """Redundancy-Synergy Index (RSI).
 
     The RSI is designed to be maximal and positive when the variables in S are

@@ -9,10 +9,13 @@
 .. _Codecov: https://codecov.io/gh/brainets/hoi
 
 
+.. image:: https://github.com/brainets/hoi/tree/main/docs/hoi-logo.png
+  :target: https://brainets.github.io/hoi/
+
 Description
 ===========
 
-HOI (Higher Order Interactions) is a Python package to go beyond pairwise interactions by quantifying the statistical dependencies between 2 or more units using information-theoretical metrics. The package is built on top of `Jax <https://github.com/google/jax>`_ allowing computations no CPU or GPU.
+HOI (Higher Order Interactions) is a Python package to go beyond pairwise interactions by quantifying the statistical dependencies between 2 or more units using information-theoretical metrics. The package is built on top of `Jax <https://github.com/google/jax>`_ allowing computations on CPU or GPU.
 
 Installation
 ============
@@ -36,7 +39,7 @@ User installation
 To install Jax on GPU or CPU-only, please refer to Jax's documentation : https://jax.readthedocs.io/en/latest/installation.html
 
 If you already have a working installation of NumPy, SciPy and Jax,
-the easiest way to install hoi is using ``pip``::
+the easiest way to install hoi is using ``pip``:
 
 .. code-block:: shell
 

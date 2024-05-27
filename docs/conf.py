@@ -85,7 +85,7 @@ sphinx_gallery_conf = {
     "backreferences_dir": "api/generated",
     "show_memory": True,
     "filename_pattern": "/plot_|sim_",
-    "default_thumb_file": "BraiNets.png",
+    "default_thumb_file": "_static/hoi-logo.png",
     "subsection_order": ExplicitOrder(
         [
             "../examples/tutorials",
@@ -99,3 +99,18 @@ sphinx_gallery_conf = {
 }
 
 autodoc_mock_imports = ["jax", "tqdm", "jax_tqdm"]
+
+
+# The name of an image file (relative to this directory) to place at the top
+# of the sidebar.
+html_logo = '_static/hoi-logo.png'
+
+
+# The name of an image file (relative to this directory) to use as a favicon of
+# the docs.  This file should be a Windows icon file (.ico) being 16x16 or
+# 32x32 pixels large.
+html_favicon = '_static/favicon.ico'
+
+html_show_sourcelink = True
+html_copy_source = False
+html_show_sphinx = False

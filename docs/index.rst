@@ -8,6 +8,9 @@
 .. |Codecov| image:: https://codecov.io/gh/brainets/hoi/graph/badge.svg?token=7PNM2VD994
 .. _Codecov: https://codecov.io/gh/brainets/hoi
 
+.. figure::  _static/hoi-logo.png
+    :align:  center
+
 HOI jax implementation
 ======================
 

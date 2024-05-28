@@ -437,34 +437,60 @@ document.write(`
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#dependencies" id="id1">Dependencies</a></p></li>
-<li><p><a class="reference internal" href="#installation-from-github" id="id2">Installation from Github</a></p></li>
-<li><p><a class="reference internal" href="#developer-installation" id="id3">Developer installation</a></p></li>
+<li><p><a class="reference internal" href="#user-installation" id="id2">User installation</a></p></li>
+<li><p><a class="reference internal" href="#for-developers" id="id3">For developers</a></p></li>
 </ul>
 </nav>
 <section id="dependencies">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Dependencies</a><a class="headerlink" href="#dependencies" title="Permalink to this heading">#</a></h2>
-<p>The main dependencies of the HOI package are :</p>
+<p>HOI requires :</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://numpy.org/">Numpy</a></p></li>
-<li><p><a class="reference external" href="https://www.scipy.org/">Scipy</a></p></li>
-<li><p><a class="reference external" href="https://jax.readthedocs.io/en/latest/notebooks/quickstart.html">JAX</a></p></li>
+<li><p>Python (&gt;= 3.8)</p></li>
+<li><p>numpy(&gt;=1.22)</p></li>
+<li><p>scipy (&gt;=1.9)</p></li>
+<li><p>jax</p></li>
+<li><p>pandas</p></li>
+<li><p>scikit-learn</p></li>
+<li><p>tqdm</p></li>
 </ul>
 </section>
-<section id="installation-from-github">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">Installation from Github</a><a class="headerlink" href="#installation-from-github" title="Permalink to this heading">#</a></h2>
-<p>Run the following line in your terminal to install the latest version of HOI hosted on Github :</p>
+<section id="user-installation">
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">User installation</a><a class="headerlink" href="#user-installation" title="Permalink to this heading">#</a></h2>
+<p>To install Jax on GPU or CPU-only, please refer to Jax’s documentation : <a class="reference external" href="https://jax.readthedocs.io/en/latest/installation.html">https://jax.readthedocs.io/en/latest/installation.html</a></p>
+<p>If you already have a working installation of NumPy, SciPy and Jax,
+the easiest way to install hoi is using <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>hoi
+</pre></div>
+</div>
+<p>You can also install the latest version of the software directly from Github :</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/brainets/hoi.git
 </pre></div>
 </div>
 </section>
-<section id="developer-installation">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Developer installation</a><a class="headerlink" href="#developer-installation" title="Permalink to this heading">#</a></h2>
-<p>For developers, you can install HOI in develop mode with the following commands :</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/brainets/hoi
+<section id="for-developers">
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">For developers</a><a class="headerlink" href="#for-developers" title="Permalink to this heading">#</a></h2>
+<p>For developers, you can install it in develop mode with the following commands :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/brainets/hoi.git
 <span class="nb">cd</span><span class="w"> </span>hoi
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span><span class="s1">&#39;full&#39;</span><span class="o">]</span>
 </pre></div>
 </div>
+<p>The full installation of HOI includes additional packages to test the software and build the documentation :</p>
+<ul class="simple">
+<li><p>pytest</p></li>
+<li><p>pytest-cov</p></li>
+<li><p>codecov</p></li>
+<li><p>xarray</p></li>
+<li><p>sphinx!=4.1.0</p></li>
+<li><p>sphinx-gallery</p></li>
+<li><p>pydata-sphinx-theme</p></li>
+<li><p>sphinxcontrib-bibtex</p></li>
+<li><p>numpydoc</p></li>
+<li><p>matplotlib</p></li>
+<li><p>flake8</p></li>
+<li><p>pep8-naming</p></li>
+<li><p>black</p></li>
+</ul>
 </section>
 </section>
 
@@ -513,8 +539,8 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-from-github">Installation from Github</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#developer-installation">Developer installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-installation">User installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For developers</a></li>
 </ul>
   </nav></div>
 

@@ -21,12 +21,14 @@ authors:
   - name: Andrea Brovelli
     orcid: 0000-0002-5342-1330
     affiliation: 1
-  - Daniele Marinazzo¤
+  - Daniele Marinazzo
     orcid: 0000-0002-9803-0122
     affiliation: 2
-  - name: Etienne Combrisson¤
+    equal-contrib: true
+  - name: Etienne Combrisson
     orcid: 0000-0002-7362-3247
     affiliation: 1
+    equal-contrib: true
 affiliations:
  - name: Institut de Neurosciences de la Timone, Aix Marseille Université, UMR 7289 CNRS, 13005, Marseille, France
    index: 1

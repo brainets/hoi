@@ -495,10 +495,10 @@ document.write(`
 <h1>hoi.metrics.SynergyphiID<a class="headerlink" href="#hoi-metrics-synergyphiid" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="hoi.metrics.SynergyphiID">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">SynergyphiID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/phiID_syn.html#SynergyphiID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.SynergyphiID" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">SynergyphiID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/phiid_syn.html#SynergyphiID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.SynergyphiID" title="Permalink to this definition">#</a></dt>
 <dd><p>Synergy (phiID).</p>
 <p>For each couple of variable the synergy about their future as in
-Luppi et al (2022), using the MMi approach:</p>
+Luppi et al (2022), using the Minimum Mutual Information (MMI) approach:</p>
 <div class="math notranslate nohighlight">
 \[Syn(X,Y) =  I(X_{t-\tau},Y_{t-\tau};X_{t},Y_t) -
                     max \{ I(X_{t-\tau};X_t,Y_t),
@@ -605,7 +605,7 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.SynergyphiID.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/phiID_syn.html#SynergyphiID.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.SynergyphiID.fit" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/phiid_syn.html#SynergyphiID.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.SynergyphiID.fit" title="Permalink to this definition">#</a></dt>
 <dd><p>Synergy (phiID).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -615,8 +615,15 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 <dt><strong>method</strong><span class="classifier">{‘gcmi’}</span></dt><dd><p>Name of the method to compute mutual-information. Use either :</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>‘gcmi’: gaussian copula MI [default]. See
-<code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.mi_gcmi_gg()</span></code></p></li>
+<li><p>‘gcmi’: gaussian copula entropy [default]. See
+<a class="reference internal" href="hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi" title="hoi.core.entropy_gcmi"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gcmi()</span></code></a></p></li>
+<li><p>‘binning’: binning-based estimator of entropy. Note that to
+use this estimator, the data have be to discretized. See
+<a class="reference internal" href="hoi.core.entropy_bin.html#hoi.core.entropy_bin" title="hoi.core.entropy_bin"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_bin()</span></code></a></p></li>
+<li><p>‘knn’: k-nearest neighbor estimator. See
+<a class="reference internal" href="hoi.core.entropy_knn.html#hoi.core.entropy_knn" title="hoi.core.entropy_knn"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_knn()</span></code></a></p></li>
+<li><p>‘kernel’: kernel-based estimator of entropy
+see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.entropy_kernel" title="hoi.core.entropy_kernel"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_kernel()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 </dd>

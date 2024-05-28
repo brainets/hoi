@@ -495,9 +495,9 @@ document.write(`
 <h1>hoi.metrics.RedundancyphiID<a class="headerlink" href="#hoi-metrics-redundancyphiid" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="hoi.metrics.RedundancyphiID">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">RedundancyphiID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/phiID_red.html#RedundancyphiID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.RedundancyphiID" title="Permalink to this definition">#</a></dt>
-<dd><p>Redundancy <span class="math notranslate nohighlight">\(\rightarrow\)</span> redundancy (phiID).
-Estimated using the Minimum Mutual Information as follow:</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">RedundancyphiID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/phiid_red.html#RedundancyphiID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.RedundancyphiID" title="Permalink to this definition">#</a></dt>
+<dd><p>Redundancy (phiID).</p>
+<p>Estimated using the Minimum Mutual Information (MMI) as follow:</p>
 <div class="math notranslate nohighlight">
 \[Red(X,Y) =   min \{ I(X_{t- \tau};X_t), I(X_{t-\tau};Y_t),
                     I(Y_{t-\tau}; X_t), I(Y_{t-\tau};Y_t) \}\]</div>
@@ -603,7 +603,7 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.RedundancyphiID.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/phiID_red.html#RedundancyphiID.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.RedundancyphiID.fit" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/phiid_red.html#RedundancyphiID.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.RedundancyphiID.fit" title="Permalink to this definition">#</a></dt>
 <dd><p>Redundancy (phiID).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -613,8 +613,15 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 <dt><strong>method</strong><span class="classifier">{‘gcmi’}</span></dt><dd><p>Name of the method to compute mutual-information. Use either :</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>‘gcmi’: gaussian copula MI [default]. See
-<code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.mi_gcmi_gg()</span></code></p></li>
+<li><p>‘gcmi’: gaussian copula entropy [default]. See
+<a class="reference internal" href="hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi" title="hoi.core.entropy_gcmi"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gcmi()</span></code></a></p></li>
+<li><p>‘binning’: binning-based estimator of entropy. Note that to
+use this estimator, the data have be to discretized. See
+<a class="reference internal" href="hoi.core.entropy_bin.html#hoi.core.entropy_bin" title="hoi.core.entropy_bin"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_bin()</span></code></a></p></li>
+<li><p>‘knn’: k-nearest neighbor estimator. See
+<a class="reference internal" href="hoi.core.entropy_knn.html#hoi.core.entropy_knn" title="hoi.core.entropy_knn"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_knn()</span></code></a></p></li>
+<li><p>‘kernel’: kernel-based estimator of entropy
+see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.entropy_kernel" title="hoi.core.entropy_kernel"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_kernel()</span></code></a></p></li>
 </ul>
 </div></blockquote>
 </dd>

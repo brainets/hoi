@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>hoi.metrics.phiID_red &#8212; HOI 0.0.1 documentation</title>
+    <title>hoi.metrics.phiid_red &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -41,7 +41,7 @@
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js?v=2286c29d"></script>
     <script src="../../../_static/doctools.js?v=888ff710"></script>
     <script src="../../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/hoi/metrics/phiID_red';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/hoi/metrics/phiid_red';</script>
     <link rel="icon" href="../../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -428,7 +428,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <h1>Source code for hoi.metrics.phiID_red</h1><div class="highlight"><pre>
+  <h1>Source code for hoi.metrics.phiid_red</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">jax</span>
@@ -454,8 +454,9 @@ document.write(`
 
 
 <div class="viewcode-block" id="RedundancyphiID"><a class="viewcode-back" href="../../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID">[docs]</a><span class="k">class</span> <span class="nc">RedundancyphiID</span><span class="p">(</span><span class="n">HOIEstimator</span><span class="p">):</span>
-<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Redundancy :math:`\rightarrow` redundancy (phiID).</span>
-<span class="sd">    Estimated using the Minimum Mutual Information as follow:</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Redundancy (phiID).</span>
+
+<span class="sd">    Estimated using the Minimum Mutual Information (MMI) as follow:</span>
 
 <span class="sd">    .. math::</span>
 
@@ -509,8 +510,16 @@ document.write(`
 <span class="sd">        method : {&#39;gcmi&#39;}</span>
 <span class="sd">            Name of the method to compute mutual-information. Use either :</span>
 
-<span class="sd">                * &#39;gcmi&#39;: gaussian copula MI [default]. See</span>
-<span class="sd">                  :func:`hoi.core.mi_gcmi_gg`</span>
+<span class="sd">                * &#39;gcmi&#39;: gaussian copula entropy [default]. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_gcmi`</span>
+<span class="sd">                * &#39;binning&#39;: binning-based estimator of entropy. Note that to</span>
+<span class="sd">                  use this estimator, the data have be to discretized. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_bin`</span>
+<span class="sd">                * &#39;knn&#39;: k-nearest neighbor estimator. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_knn`</span>
+<span class="sd">                * &#39;kernel&#39;: kernel-based estimator of entropy</span>
+<span class="sd">                  see :func:`hoi.core.entropy_kernel`</span>
+
 <span class="sd">        tau : int | 1</span>
 <span class="sd">            The length of the delay to use to compute the redundancy as</span>
 <span class="sd">            defined in the phiID.</span>

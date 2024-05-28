@@ -5,11 +5,13 @@ tags:
   - information theory
   - information-based measures
 authors:
-  - name: Dishie Vinchhi¤
+  - name: Dishie Vinchhi
     affiliation: 3
-  - name: Matteo Neri¤
+    equal-contrib: true
+  - name: Matteo Neri
     orcid: 0009-0007-0998-552X
     affiliation: 1
+    equal-contrib: true
   - name: Christian Ferreyra
     affiliation: 1
   - name: Thomas Robiglio
@@ -19,10 +21,10 @@ authors:
   - name: Andrea Brovelli
     orcid: 0000-0002-5342-1330
     affiliation: 1
-  - Daniele Marinazzo*
+  - Daniele Marinazzo¤
     orcid: 0000-0002-9803-0122
     affiliation: 2
-  - name: Etienne Combrisson*
+  - name: Etienne Combrisson¤
     orcid: 0000-0002-7362-3247
     affiliation: 1
 affiliations:

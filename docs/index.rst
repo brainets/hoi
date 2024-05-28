@@ -16,11 +16,8 @@ HOI jax implementation
 
 Description
 +++++++++++
-The estimation of **Higher-Order Interactions (HOIs)** involves various approaches from diverse fields, such as graph theory and information theory. One notable information-theoretical quantity used in this context is the O-information, which stands for **Information about Organizational structure.**
 
-The O-information is a powerful tool for characterizing statistical interdependencies within multiplets of three or more variables. It goes beyond simply quantifying the amount of information carried by brain regions' multiplets; it also provides valuable insights into the nature of this information. Specifically, the O-information informs us about whether the multiplets predominantly convey redundant or synergistic information among the interconnected brain regions.
-
-In summary, this package aims at calculating the O-information thereby understanding and deciphering complex interactions among multiple brain regions, shedding light on the underlying organizational structure and the type of information exchanges taking place within these multiplets.
+**HOI** (Higher Order Interactions) is a Python package to go beyond pairwise interactions by quantifying the statistical dependencies between 2 or more units using information-theoretical metrics. The package is built on top of `Jax <https://github.com/google/jax>`_ allowing computations on CPU or GPU.
 
 .. toctree::
    :maxdepth: 2

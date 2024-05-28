@@ -12,6 +12,7 @@ from hoi.utils import get_nbest_mult
 from hoi.plot import plot_landscape
 
 import matplotlib.pyplot as plt
+plt.style.use('ggplot')
 
 
 ###############################################################################

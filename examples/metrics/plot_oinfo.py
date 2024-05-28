@@ -23,7 +23,6 @@ from hoi.utils import get_nbest_mult
 from hoi.simulation import simulate_hois_gauss
 
 import matplotlib.pyplot as plt
-
 plt.style.use("ggplot")
 
 x = simulate_hois_gauss()

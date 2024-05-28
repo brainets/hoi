@@ -21,7 +21,7 @@ authors:
   - name: Andrea Brovelli
     orcid: 0000-0002-5342-1330
     affiliation: 1
-  - Daniele Marinazzo
+  - name: Daniele Marinazzo
     orcid: 0000-0002-9803-0122
     affiliation: 2
     equal-contrib: true

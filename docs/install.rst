@@ -8,31 +8,59 @@ Installation
 Dependencies
 ++++++++++++
 
-The main dependencies of the HOI package are :
+HOI requires :
 
-* `Numpy <https://numpy.org/>`_
-* `Scipy <https://www.scipy.org/>`_
-* `JAX <https://jax.readthedocs.io/en/latest/notebooks/quickstart.html>`_
+- Python (>= 3.8)
+- numpy(>=1.22)
+- scipy (>=1.9)
+- jax
+- pandas
+- scikit-learn
+- tqdm
 
+User installation
++++++++++++++++++
 
+To install Jax on GPU or CPU-only, please refer to Jax's documentation : https://jax.readthedocs.io/en/latest/installation.html
 
-Installation from Github
-++++++++++++++++++++++++
+If you already have a working installation of NumPy, SciPy and Jax,
+the easiest way to install hoi is using ``pip``:
 
-Run the following line in your terminal to install the latest version of HOI hosted on Github :
+.. code-block:: shell
+
+    pip install -U hoi
+
+You can also install the latest version of the software directly from Github :
 
 .. code-block:: shell
 
     pip install git+https://github.com/brainets/hoi.git
 
 
-Developer installation
-++++++++++++++++++++++
+For developers
+++++++++++++++
 
-For developers, you can install HOI in develop mode with the following commands :
+For developers, you can install it in develop mode with the following commands :
 
 .. code-block:: shell
 
-    git clone https://github.com/brainets/hoi
+    git clone https://github.com/brainets/hoi.git
     cd hoi
-    pip install -e .
+    pip install -e .['full']
+
+The full installation of HOI includes additional packages to test the software and build the documentation :
+
+- pytest
+- pytest-cov
+- codecov
+- xarray
+- sphinx!=4.1.0
+- sphinx-gallery
+- pydata-sphinx-theme
+- sphinxcontrib-bibtex
+- numpydoc
+- matplotlib
+- flake8
+- pep8-naming
+- black
+

@@ -74,7 +74,6 @@ class HOIEstimator(object):
         if isinstance(multiplets, (list, np.ndarray)):
             self._custom_mults = multiplets
 
-
         return x
 
     def _merge_xy(self, x, y=None):

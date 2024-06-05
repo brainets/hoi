@@ -60,7 +60,7 @@ def get_entropy(method="gcmi", **kwargs):
 
 def prepare_for_entropy(data, method, reshape=True, **kwargs):
     """Prepare the data before computing entropy."""
-    # data.shape = n_samples, n_features, n_variables
+    # data.shape = n_variables, n_features, n_samples
 
     # type checking
     if (method in ["binning"]) and (data.dtype != int):
@@ -74,22 +74,18 @@ def prepare_for_entropy(data, method, reshape=True, **kwargs):
     # method specific preprocessing
     if method == "gcmi":
         logger.info("    Copnorm data")
-        data = copnorm_nd(data, axis=0)
-        data = data - data.mean(axis=0, keepdims=True)
+        data = copnorm_nd(data, axis=2)
+        data = data - data.mean(axis=2, keepdims=True)
         kwargs["demean"] = False
     elif method == "kernel":
         logger.info("    Unit circle normalization")
         from hoi.utils import normalize
 
-        data = np.apply_along_axis(normalize, 0, data, to_min=-1.0, to_max=1.0)
+        data = np.apply_along_axis(normalize, 2, data, to_min=-1.0, to_max=1.0)
     elif method == "binning":
         pass
 
-    # make the data (n_variables, n_features, n_samples)
-    if reshape:
-        data = jnp.asarray(data.transpose(2, 1, 0))
-
-    return data, kwargs
+    return jnp.asarray(data), kwargs
 
 
 ###############################################################################

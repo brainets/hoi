@@ -64,13 +64,16 @@ class HOIEstimator(object):
         if self._has_target:
             x = self._merge_xy(x, y=y)
 
+        # ----------------------------- TRANSPOSE -----------------------------
+        x = x.transpose(2, 1, 0)
+        self.n_variables, self.n_features, self.n_samples = x.shape
+
         # ----------------------------- MULTIPLETS ----------------------------
         # compute only selected multiplets
         self._custom_mults = None
         if isinstance(multiplets, (list, np.ndarray)):
             self._custom_mults = multiplets
 
-        self.n_samples, self.n_features, self.n_variables = x.shape
 
         return x
 

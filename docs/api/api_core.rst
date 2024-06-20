@@ -25,8 +25,7 @@ Measures of Mutual Information
 .. autosummary::
    :toctree: generated/
 
-   mi_gcmi_gg
-   mi_gcmi_gd
+   get_mi
 
 
 Combinatory

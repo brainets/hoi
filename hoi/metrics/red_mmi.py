@@ -52,8 +52,7 @@ class RedundancyMMI(HOIEstimator):
         method : {'gcmi'}
             Name of the method to compute mutual-information. Use either :
 
-                * 'gcmi': gaussian copula MI [default]. See
-                  :func:`hoi.core.mi_gcmi_gg`
+                * 'gcmi': gaussian copula MI [default].
 
         kwargs : dict | {}
             Additional arguments are sent to each MI function

@@ -31,6 +31,7 @@ test_deps = ["pytest", "pytest-sugar", "pytest-cov", "codecov", "xarray"]
 doc_deps = [
     "sphinx!=4.1.0",
     "sphinx-gallery",
+    "sphinx_design",
     "pydata-sphinx-theme",
     "sphinxcontrib-bibtex",
     "numpydoc",

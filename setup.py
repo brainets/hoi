@@ -33,6 +33,7 @@ doc_deps = [
     "sphinx-gallery",
     "sphinx_design",
     "pydata-sphinx-theme",
+    "sphinx-book-theme",
     "sphinxcontrib-bibtex",
     "numpydoc",
     "matplotlib",

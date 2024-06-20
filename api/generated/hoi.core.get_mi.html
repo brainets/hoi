@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Computation times &#8212; HOI 0.0.1 documentation</title>
+    <title>hoi.core.get_mi &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -42,10 +42,12 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=2286c29d"></script>
     <script src="../../_static/doctools.js?v=888ff710"></script>
     <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/tutorials/sg_execution_times';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.core.get_mi';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="hoi.core.combinations" href="hoi.core.combinations.html" />
+    <link rel="prev" title="hoi.core.prepare_for_entropy" href="hoi.core.prepare_for_entropy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -175,15 +177,15 @@
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../api/modules.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../modules.html">
                         API Reference
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../index.html">
+                      <a class="nav-link nav-internal" href="../../auto_examples/index.html">
                         Examples
                       </a>
                     </li>
@@ -271,6 +273,10 @@ document.write(`
   
 
   
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
 </div>
 
     </nav>
@@ -278,7 +284,7 @@ document.write(`
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -311,15 +317,15 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../../api/modules.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../modules.html">
                         API Reference
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../index.html">
+                      <a class="nav-link nav-internal" href="../../auto_examples/index.html">
                         Examples
                       </a>
                     </li>
@@ -377,6 +383,59 @@ document.write(`
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api_metrics.html">Metrics of HOI</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.Oinfo.html">hoi.metrics.Oinfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.TC.html">hoi.metrics.TC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.SynergyphiID.html">hoi.metrics.SynergyphiID</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api_sim.html">Simulation of HOI</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="hoi.simulation.simulate_hois_gauss.html">hoi.simulation.simulate_hois_gauss</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api_utils.html">Utility functions</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="hoi.utils.digitize.html">hoi.utils.digitize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.utils.normalize.html">hoi.utils.normalize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.utils.landscape.html">hoi.utils.landscape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.utils.get_nbest_mult.html">hoi.utils.get_nbest_mult</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api_plot.html">Plot HOI</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="hoi.plot.plot_landscape.html">hoi.plot.plot_landscape</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../api_core.html">Core information-theoretical measures and combinatory</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.core.prepare_for_entropy.html">hoi.core.prepare_for_entropy</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">hoi.core.get_mi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoi.core.combinations.html">hoi.core.combinations</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -409,7 +468,13 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Computation times</li>
+    
+    <li class="breadcrumb-item"><a href="../modules.html" class="nav-link">List of classes and functions</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../api_core.html" class="nav-link">Core information-theoretical measures and combinatory</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">hoi.core.get_mi</li>
   </ul>
 </nav>
 </div>
@@ -426,44 +491,37 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="computation-times">
-<span id="sphx-glr-auto-examples-tutorials-sg-execution-times"></span><h1>Computation times<a class="headerlink" href="#computation-times" title="Permalink to this heading">#</a></h1>
-<p><strong>00:08.884</strong> total execution time for 3 files <strong>from auto_examples/tutorials</strong>:</p>
-<div class="docutils container">
-<style scoped>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
-</style>
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-<script type="text/javascript" class="init">
-$(document).ready( function () {
-    $('table.sg-datatable').DataTable({order: [[1, 'desc']]});
-} );
-</script><table class="table table-striped sg-datatable">
-<thead>
-<tr class="row-odd"><th class="head"><p>Example</p></th>
-<th class="head"><p>Time</p></th>
-<th class="head"><p>Mem (MB)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><a class="reference internal" href="plot_ml_vs_it.html#sphx-glr-auto-examples-tutorials-plot-ml-vs-it-py"><span class="std std-ref">Machine-learning vs. Information theoretic approaches for HOI</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_ml_vs_it.py</span></code>)</p></td>
-<td><p>00:08.685</p></td>
-<td><p>0.0</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="plot_tutorial_core.html#sphx-glr-auto-examples-tutorials-plot-tutorial-core-py"><span class="std std-ref">Core information theoretical metrics</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_tutorial_core.py</span></code>)</p></td>
-<td><p>00:00.198</p></td>
-<td><p>0.0</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="tut2.html#sphx-glr-auto-examples-tutorials-tut2-py"><span class="std std-ref">Tutorial example 2</span></a> (<code class="docutils literal notranslate"><span class="pre">tut2.py</span></code>)</p></td>
-<td><p>00:00.000</p></td>
-<td><p>0.0</p></td>
-</tr>
-</tbody>
-</table>
-</div>
+  <section id="hoi-core-get-mi">
+<h1>hoi.core.get_mi<a class="headerlink" href="#hoi-core-get-mi" title="Permalink to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="hoi.core.get_mi">
+<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">get_mi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/core/mi.html#get_mi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.get_mi" title="Permalink to this definition">#</a></dt>
+<dd><p>Get Mutual-Information function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel’}</span></dt><dd><p>Name of the method to compute mutual-information.</p>
+</dd>
+<dt><strong>kwargs</strong><span class="classifier">dict | {}</span></dt><dd><p>Additional arguments sent to the mutual-information function.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>fcn</strong><span class="classifier">callable</span></dt><dd><p>Function to compute mutual information on variables of shapes
+(n_features, n_samples)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="examples-using-hoi-core-get-mi">
+<span id="sphx-glr-backreferences-hoi-core-get-mi"></span><h2>Examples using <code class="docutils literal notranslate"><span class="pre">hoi.core.get_mi</span></code><a class="headerlink" href="#examples-using-hoi-core-get-mi" title="Permalink to this heading">#</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This tutorial guides you through the core information theoretical metrics available. These metr..."><img alt="" src="../../_images/sphx_glr_plot_tutorial_core_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/tutorials/plot_tutorial_core.html#sphx-glr-auto-examples-tutorials-plot-tutorial-core-py"><span class="std std-ref">Core information theoretical metrics</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Core information theoretical metrics</div>
+</div></div></section>
 </section>
 
 
@@ -476,12 +534,46 @@ $(document).ready( function () {
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="hoi.core.prepare_for_entropy.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">hoi.core.prepare_for_entropy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="hoi.core.combinations.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">hoi.core.combinations</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.core.get_mi"><code class="docutils literal notranslate"><span class="pre">get_mi()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-using-hoi-core-get-mi">Examples using <code class="docutils literal notranslate"><span class="pre">hoi.core.get_mi</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -491,7 +491,7 @@ document.write(`
 
 <div class="viewcode-block" id="prepare_for_entropy"><a class="viewcode-back" href="../../../api/generated/hoi.core.prepare_for_entropy.html#hoi.core.prepare_for_entropy">[docs]</a><span class="k">def</span> <span class="nf">prepare_for_entropy</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">reshape</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare the data before computing entropy.&quot;&quot;&quot;</span>
-    <span class="c1"># data.shape = n_samples, n_features, n_variables</span>
+    <span class="c1"># data.shape = n_variables, n_features, n_samples</span>
 
     <span class="c1"># type checking</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binning&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">):</span>
@@ -505,22 +505,18 @@ document.write(`
     <span class="c1"># method specific preprocessing</span>
     <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gcmi&quot;</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    Copnorm data&quot;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">copnorm_nd</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">copnorm_nd</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;demean&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;kernel&quot;</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    Unit circle normalization&quot;</span><span class="p">)</span>
         <span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <span class="n">normalize</span>
 
-        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">normalize</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">to_min</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">to_max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">apply_along_axis</span><span class="p">(</span><span class="n">normalize</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">to_min</span><span class="o">=-</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">to_max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;binning&quot;</span><span class="p">:</span>
         <span class="k">pass</span>
 
-    <span class="c1"># make the data (n_variables, n_features, n_samples)</span>
-    <span class="k">if</span> <span class="n">reshape</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
-
-    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">kwargs</span></div>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">kwargs</span></div>
 
 
 <span class="c1">###############################################################################</span>

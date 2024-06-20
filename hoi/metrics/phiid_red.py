@@ -68,7 +68,7 @@ class RedundancyphiID(HOIEstimator):
         direction_axis=0,
         maxsize=None,
         method="gcmi",
-        **kwargs
+        **kwargs,
     ):
         """Redundancy (phiID).
 

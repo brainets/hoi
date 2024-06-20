@@ -145,27 +145,3 @@ class InfoTopo(HOIEstimator):
         )
 
         return np.asarray(hoi)
-
-
-if __name__ == "__main__":
-    import matplotlib.pyplot as plt
-    from hoi.utils import get_nbest_mult
-    from hoi.plot import plot_landscape
-
-    plt.style.use("ggplot")
-
-    x = np.random.rand(200, 7)
-    y_red = np.random.rand(x.shape[0])
-
-    # redundancy: (1, 2, 6)
-    x[:, 2] += x[:, 1]
-    x[:, 6] += x[:, 2]
-    # synergy:    (0, 3, 5) + (7, 8)
-    x[:, 0] = x[:, 0] + x[:, 3] + x[:, 5]
-
-    model = InfoTopo(x)
-    hoi = model.fit(minsize=3, maxsize=5, method="gcmi")
-    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=3, n_best=3))
-
-    plot_landscape(hoi, model=model)
-    plt.show()

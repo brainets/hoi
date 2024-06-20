@@ -24,7 +24,7 @@ class TestEntropy(object):
     @pytest.mark.parametrize("biascorrect", [True, False])
     @pytest.mark.parametrize("demean", [True, False])
     def test_entropy_gcmi(self, x, biascorrect, demean):
-        hx = entropy_gcmi(x, biascorrect, demean)
+        hx = entropy_gcmi(x, biascorrect=biascorrect, demean=demean)
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
         assert hx.shape == ()
@@ -44,14 +44,15 @@ class TestEntropy(object):
         "base", [np.random.randint(1, 100) for _ in range(10)]
     )
     def test_entropy_kernel(self, x, base):
-        hx = entropy_kernel(x, base)
+        hx = entropy_kernel(x, base=base)
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
         assert hx.shape == ()
 
     @pytest.mark.parametrize("x", [x1, x2, j1, j2])
-    def test_entropy_knn(self, x):
-        hn = entropy_knn(x)
+    @pytest.mark.parametrize("k", [2, 10])
+    def test_entropy_knn(self, x, k):
+        hn = entropy_knn(x, k=k)
         assert hn.dtype == np.float32
         assert hn.shape == ()
 

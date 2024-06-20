@@ -76,7 +76,7 @@ class SynergyphiID(HOIEstimator):
         direction_axis=0,
         maxsize=None,
         method="gcmi",
-        **kwargs
+        **kwargs,
     ):
         r"""Synergy (phiID).
 

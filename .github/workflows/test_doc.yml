@@ -28,11 +28,19 @@ jobs:
 
     - name: Test with pytest 🔧
       run: |
-        pytest -v  --cov
-
-    - name: Run codecov 🔧
-      run: |
-        codecov
+        pytest --cov=./ --cov-report=xml -v
+        
+    - name: Upload coverage to Codecov 🚀
+      uses: codecov/codecov-action@v4
+      with:
+        directory: ./coverage/reports/
+        env_vars: OS,PYTHON
+        fail_ci_if_error: true
+        files: ./coverage1.xml,./coverage2.xml,!./cache
+        flags: unittests
+        name: codecov-umbrella
+        token: ${{ secrets.CODECOV_TOKEN }}
+        verbose: true
 
   deploy:
     needs: test
@@ -65,8 +73,3 @@ jobs:
           folder: docs/_build/html/
           clean: true
           ssh-key: ${{ secrets.DEPLOY_KEY }}
-
-      - name: Upload coverage reports to Codecov 🚀
-        uses: codecov/codecov-action@v4
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

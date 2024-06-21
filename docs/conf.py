@@ -61,7 +61,7 @@ autodoc_default_options = {"inherited-members": None}
 html_theme = "sphinx_book_theme"
 
 html_theme_options = {
-    "show_toc_level": 2,
+    "show_toc_level": 1,
     "use_edit_page_button": False,
     "icon_links": [
         {
@@ -77,6 +77,10 @@ html_theme_options = {
     ],
 }
 html_static_path = ["_static"]
+
+html_css_files = [
+    "style.css",
+]
 
 sphinx_gallery_conf = {
     # path to your examples scripts
@@ -95,7 +99,7 @@ sphinx_gallery_conf = {
             "../examples/miscellaneous",
         ]
     ),
-    "doc_module": ("hoi",)
+    "doc_module": ("hoi",),
     # "thumbnail_size": (100, 100),
 }
 
@@ -104,13 +108,13 @@ autodoc_mock_imports = ["jax", "tqdm", "jax_tqdm"]
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = '_static/hoi-logo.png'
+html_logo = "_static/hoi-logo.png"
 
 
 # The name of an image file (relative to this directory) to use as a favicon of
 # the docs.  This file should be a Windows icon file (.ico) being 16x16 or
 # 32x32 pixels large.
-html_favicon = '_static/favicon.ico'
+html_favicon = "_static/favicon.ico"
 
 html_show_sourcelink = True
 html_copy_source = False

@@ -1,7 +1,7 @@
-Core information-theoretical measures and combinatory
------------------------------------------------------
+``hoi.core`` 
+------------
 
-:py:mod:`hoi.core`:
+Core information-theoretical measures and combinatory.
 
 .. currentmodule:: hoi.core
 

@@ -1,0 +1,31 @@
+Glossary
+========
+
+.. glossary::
+
+    Higher Order Interactions
+      Higher Order Interactions (HOI) :cite:`battiston2020networks` refer to complex relationships or effects among three or more variables in a system, which cannot be explained by simply considering pairwise interactions. These interactions are often found in biological, ecological, and social networks, and require advanced analytical techniques to be fully understood.
+
+    Information Theory
+      Information Theory (IT) :cite:`shannon1948mathematical,timme2018tutorial` is a mathematical framework that studies the quantification, storage, and communication of information. It was developed by Claude Shannon in the 1940s and provides a way to measure the amount of information in a message, as well as the capacity of a communication channel to transmit that information. The theory also addresses the compression and encoding of data, error detection and correction, and cryptography. In essence, Information Theory provides a fundamental understanding of how information is represented, processed, and transmitted.
+
+    Entropy
+      Entropy :cite:`shannon1948mathematical,timme2018tutorial` is a measure of the randomness or uncertainty in a system. It quantifies the amount of information required to describe the state of a system.
+
+    Mutual Information
+      Mutual information (MI) :cite:`shannon1948mathematical,timme2018tutorial` is a measure of the amount of information that one variable provides about another variable. It quantifies the reduction in uncertainty about one variable given knowledge of the other variable. In other words, mutual information measures the shared information between two variables.
+
+    Redundancy
+      Redundancy :cite:`williams2010nonnegative,timme2014synred` refers to the presence of multiple copies or versions of the same information in a system. It is often used as a strategy to improve reliability and fault tolerance, as it allows for the recovery of information in case of errors or failures.
+
+    Synergy
+      Synergy :cite:`williams2010nonnegative,timme2014synred` refers to the phenomenon in which two or more elements or systems work together to produce an effect that is greater than the sum of their individual contributions. In other words, synergy occurs when the combined effect of multiple components is more than what would be expected from their separate effects. This concept is often used in biology, ecology, and engineering to describe the cooperative interactions between different components of a system.
+
+    Partial Information Decomposition
+      Partial Information Decomposition (PID) :cite:`williams2010nonnegative` is a framework for quantifying the unique, shared, and synergistic information that multiple variables provide about a target variable. It aims to decompose the mutual information between a set of predictor variables and a target variable into non-negative components, representing the unique information contributed by each predictor variable, the redundant information shared among predictor variables, and the synergistic information that can only be obtained by considering multiple predictor variables together. PID provides a more nuanced understanding of the relationships between variables in complex systems, beyond traditional pairwise measures of association.
+    
+    Network behavior
+      Higher Order Interactions between a set of variables.
+    
+    Network encoding
+      Higher Order Interactions between a set of variables about a target variable.

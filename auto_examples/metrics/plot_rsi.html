@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="../../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Redundancy-Synergy Index &#8212; HOI 0.0.1 documentation</title>
   
@@ -15,39 +14,39 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
 
   
-  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
-    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/style.css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=48c8e310" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
 
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/sphinx_highlight.js"></script>
-    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../../_static/design-tabs.js"></script>
+    <script src="../../_static/documentation_options.js?v=55ff85c6"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/metrics/plot_rsi';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
@@ -64,7 +63,7 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 <head>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Maven+Pro&family=Roboto+Mono:wght@332&display=swap');
@@ -83,25 +82,20 @@
 
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -123,12 +117,20 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -189,13 +191,24 @@
             <span class="sr-only">Twitter</span></a>
         </li>
 </ul></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/modules.html">List of functions</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_metrics.html"><code class="docutils literal notranslate"><span class="pre">hoi.metrics</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/modules.html">List of functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_metrics.html"><code class="docutils literal notranslate"><span class="pre">hoi.metrics</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.Oinfo.html">hoi.metrics.Oinfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.TC.html">hoi.metrics.TC</a></li>
@@ -209,23 +222,23 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_sim.html"><code class="docutils literal notranslate"><span class="pre">hoi.simulation</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_sim.html"><code class="docutils literal notranslate"><span class="pre">hoi.simulation</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.simulation.simulate_hois_gauss.html">hoi.simulation.simulate_hois_gauss</a></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_utils.html"><code class="docutils literal notranslate"><span class="pre">hoi.utils</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_utils.html"><code class="docutils literal notranslate"><span class="pre">hoi.utils</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.digitize.html">hoi.utils.digitize</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.normalize.html">hoi.utils.normalize</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.landscape.html">hoi.utils.landscape</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.get_nbest_mult.html">hoi.utils.get_nbest_mult</a></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_plot.html"><code class="docutils literal notranslate"><span class="pre">hoi.plot</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_plot.html"><code class="docutils literal notranslate"><span class="pre">hoi.plot</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.plot.plot_landscape.html">hoi.plot.plot_landscape</a></li>
 </ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
@@ -236,9 +249,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
-</li>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../index.html">Examples</a></li>
 
 
@@ -247,11 +260,11 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../overview/index.html">Theoretical background</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../overview/index.html">Theoretical background</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../overview/ovw_theory.html">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../overview/ovw_refs.html">References</a></li>
 </ul>
-</li>
+</details></li>
 </ul>
 
     </div>
@@ -267,7 +280,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -276,14 +289,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -377,9 +390,9 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -414,7 +427,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
@@ -422,7 +435,7 @@ document.write(`
 to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="redundancy-synergy-index">
-<span id="sphx-glr-auto-examples-metrics-plot-rsi-py"></span><h1>Redundancy-Synergy Index<a class="headerlink" href="#redundancy-synergy-index" title="Permalink to this heading">#</a></h1>
+<span id="sphx-glr-auto-examples-metrics-plot-rsi-py"></span><h1>Redundancy-Synergy Index<a class="headerlink" href="#redundancy-synergy-index" title="Link to this heading">#</a></h1>
 <p>This example illustrates how to use and interpret the Redundancy-Synergy
 Index (RSI).</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -436,7 +449,7 @@ Index (RSI).</p>
 </pre></div>
 </div>
 <section id="definition">
-<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h2>
+<h2>Definition<a class="headerlink" href="#definition" title="Link to this heading">#</a></h2>
 <p>The RSI is a multivariate measure of information capable of disentangling
 whether a subset of a variable X carry either redundant or synergistic
 information about a variable Y. The RSI is defined as :</p>
@@ -449,7 +462,7 @@ information about a variable Y. The RSI is defined as :</p>
 redundancy between the X and Y variables.</p>
 </section>
 <section id="simulate-univariate-redundancy">
-<h2>Simulate univariate redundancy<a class="headerlink" href="#simulate-univariate-redundancy" title="Permalink to this heading">#</a></h2>
+<h2>Simulate univariate redundancy<a class="headerlink" href="#simulate-univariate-redundancy" title="Link to this heading">#</a></h2>
 <p>A very simple way to simulate redundancy is to observe that if a triplet of
 variables <span class="math notranslate nohighlight">\(X_{1}, X_{2}, X_{3}\)</span> receive a copy of a variable <span class="math notranslate nohighlight">\(Y\)</span>,
 we will observe redundancy between <span class="math notranslate nohighlight">\(X_{1}, X_{2}, X_{3}\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
@@ -475,24 +488,24 @@ we will observe redundancy between <span class="math notranslate nohighlight">\(
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.10it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.86it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    3.05it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:01,    1.76it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.40it/s]
+100%|██████████| RSI order 5:  3/3 [00:01&lt;00:00,    2.50it/s]
 
    index  order       hoi  multiplet
-0      4      3  0.005647  [0, 1, 6]
-1      0      3  0.004775  [0, 1, 2]
-2     11      3  0.003920  [0, 3, 6]
-3     17      3 -0.272306  [1, 2, 5]
-4     22      3 -0.272503  [1, 4, 5]
-5     20      3 -0.532771  [1, 3, 5]
+0     28      3  0.007167  [2, 4, 5]
+1     30      3  0.005337  [2, 5, 6]
+2      7      3  0.004701  [0, 2, 5]
+3     19      3 -0.205156  [1, 3, 4]
+4     15      3 -0.208229  [1, 2, 3]
+5     20      3 -0.378046  [1, 3, 5]
 </pre></div>
 </div>
 <p>as you see from the printed table, the multiplet with the lowest (i.e. the
 most redundant multiplets) is (1, 3, 5).</p>
 </section>
 <section id="simulate-multivariate-redundancy">
-<h2>Simulate multivariate redundancy<a class="headerlink" href="#simulate-multivariate-redundancy" title="Permalink to this heading">#</a></h2>
+<h2>Simulate multivariate redundancy<a class="headerlink" href="#simulate-multivariate-redundancy" title="Link to this heading">#</a></h2>
 <p>In the example above, we simulated a univariate <span class="math notranslate nohighlight">\(Y\)</span> variable (i.e.
 single column). However, it’s possible to simulate a multivariate variable.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate x again</span>
@@ -518,24 +531,24 @@ single column). However, it’s possible to simulate a multivariate variable.</p
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.13it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.15it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.69it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.18it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.24it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.75it/s]
 
    index  order       hoi  multiplet
-0     25      3  0.021366  [2, 3, 4]
-1     28      3  0.019980  [2, 4, 5]
-2     16      3  0.017528  [1, 2, 4]
-3     18      3 -0.197862  [1, 2, 6]
-4     20      3 -0.362238  [1, 3, 5]
-5      8      3 -0.427176  [0, 2, 6]
+0     28      3  0.004573  [2, 4, 5]
+1     12      3  0.003413  [0, 4, 5]
+2     34      3  0.001739  [4, 5, 6]
+3      5      3 -0.273423  [0, 2, 3]
+4     20      3 -0.452176  [1, 3, 5]
+5      8      3 -0.549223  [0, 2, 6]
 </pre></div>
 </div>
 <p>This time, as expected, the two most redundant triplets are (1, 3, 5) and
 (0, 2, 6)</p>
 </section>
 <section id="simulate-univariate-and-multivariate-synergy">
-<h2>Simulate univariate and multivariate synergy<a class="headerlink" href="#simulate-univariate-and-multivariate-synergy" title="Permalink to this heading">#</a></h2>
+<h2>Simulate univariate and multivariate synergy<a class="headerlink" href="#simulate-univariate-and-multivariate-synergy" title="Link to this heading">#</a></h2>
 <p>Lets move on to the simulation of synergy that is a bit more subtle. One way
 of simulating synergy is to go the other way of redundancy, meaning we are
 going to add features of x inside y. That way, we can only retrieve the Y
@@ -554,17 +567,17 @@ variable by knowing the subset of X.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.34it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.39it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.94it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.53it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.59it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.13it/s]
 
    index  order       hoi  multiplet
-0     10      3  1.447778  [0, 3, 5]
-1      3      3  0.226969  [0, 1, 5]
-2      7      3  0.219356  [0, 2, 5]
-3      6      3 -0.002546  [0, 2, 4]
-4     25      3 -0.002883  [2, 3, 4]
-5     13      3 -0.005364  [0, 4, 6]
+0     10      3  1.384631  [0, 3, 5]
+1      9      3  0.225969  [0, 3, 4]
+2      5      3  0.223909  [0, 2, 3]
+3     27      3 -0.002915  [2, 3, 6]
+4     21      3 -0.003183  [1, 3, 6]
+5     32      3 -0.003740  [3, 4, 6]
 </pre></div>
 </div>
 <p>as we can see here, the highest values of higher-order interactions
@@ -585,22 +598,21 @@ same for multivariate synergy</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.08it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.10it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.63it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.21it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.28it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.71it/s]
 
    index  order       hoi  multiplet
-0     18      3  1.392712  [1, 2, 6]
-1     10      3  1.377692  [0, 3, 5]
-2      9      3  0.241921  [0, 3, 4]
-3      2      3 -0.000304  [0, 1, 4]
-4     13      3 -0.001531  [0, 4, 6]
-5     32      3 -0.003951  [3, 4, 6]
+0     18      3  1.402108  [1, 2, 6]
+1     10      3  1.341845  [0, 3, 5]
+2      5      3  0.268455  [0, 2, 3]
+3     32      3 -0.000131  [3, 4, 6]
+4     34      3 -0.007142  [4, 5, 6]
 </pre></div>
 </div>
 </section>
 <section id="combining-redundancy-and-synergy">
-<h2>Combining redundancy and synergy<a class="headerlink" href="#combining-redundancy-and-synergy" title="Permalink to this heading">#</a></h2>
+<h2>Combining redundancy and synergy<a class="headerlink" href="#combining-redundancy-and-synergy" title="Link to this heading">#</a></h2>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x and y</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -632,20 +644,20 @@ same for multivariate synergy</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_rsi_001.png" srcset="../../_images/sphx_glr_plot_rsi_001.png" alt="plot rsi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.09it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.10it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.63it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.18it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.24it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.79it/s]
 
    index  order       hoi  multiplet
-0      0      3  1.401454  [0, 1, 2]
-1     15      3  0.218639  [1, 2, 3]
-2     16      3  0.217486  [1, 2, 4]
-3     19      3 -0.246266  [1, 3, 4]
-4     32      3 -0.251521  [3, 4, 6]
-5     31      3 -0.513471  [3, 4, 5]
+0      0      3  1.506530  [0, 1, 2]
+1      1      3  0.198722  [0, 1, 3]
+2     15      3  0.196333  [1, 2, 3]
+3     25      3 -0.259661  [2, 3, 4]
+4     26      3 -0.259669  [2, 3, 5]
+5     31      3 -0.581963  [3, 4, 5]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.752 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.887 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-rsi-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/4e89a3c451ce8407889de983108afa1c/plot_rsi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_rsi.ipynb</span></code></a></p>
@@ -666,7 +678,7 @@ same for multivariate synergy</p>
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -695,6 +707,7 @@ same for multivariate synergy</p>
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -755,8 +768,8 @@ By BraiNets
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="../../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
 
     <hr>
     <footer>

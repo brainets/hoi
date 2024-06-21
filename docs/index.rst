@@ -34,22 +34,22 @@ Description
     .. grid-item-card:: :material-regular:`laptop_chromebook;2em` Examples
       :columns: 12 6 6 4
       :link: auto_examples/index
-      :link-type: ref
+      :link-type: doc
       :class-card: box3
 
 .. toctree::
    :hidden:
    :maxdepth: 2
-   :caption: Getting Started
+   :caption: Getting Started 🚀
 
    Installation <install>
-   List of functions <api/modules>
-   Examples <auto_examples/index>
+   Theoretical background <overview/index>
 
 
 .. toctree::
    :hidden:
    :maxdepth: 1
-   :caption: Further Resources
+   :caption: Further Resources 🔪
 
-   Theoretical background <overview/index>
+   List of functions <api/modules>
+   Examples <auto_examples/index>

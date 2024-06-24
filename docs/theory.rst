@@ -155,3 +155,9 @@ When computing the redundancy in this way the definition of synergy, :class:`hoi
 	synergy (Y, X^n) =  I \left( Y, X^n \right) - max_{i<n} I \left( Y, X^n_{ -i } \right)
 
 Where :math:`X^n_{-i}` is the set of variables :math:`X^n`, excluding the variable :math:`i`. This metric has been proven to be accurate when working with gaussian systems; we advise care when interpreting the results of the redundant interactions, since the definition of redundancy reflects simply the minimum information provided by the source variables.
+
+Bibliography
+============
+
+.. bibliography:: refs.bib
+    :style: plain

@@ -9,9 +9,8 @@
 .. _Codecov: https://codecov.io/gh/brainets/hoi
 
 
-HOI : Estimating Higher-Order Interactions on CPU and GPU
-=========================================================
-
+HOI : High-Performance Estimation of Higher-Order Interactions
+==============================================================
 
 **HOI** (Higher Order Interactions) is a Python package to go beyond pairwise interactions by quantifying the statistical dependencies between 2 or more units using information-theoretical metrics. The package is built on top of `Jax <https://github.com/google/jax>`_ allowing computations on CPU or GPU.
 
@@ -70,7 +69,6 @@ HOI : Estimating Higher-Order Interactions on CPU and GPU
    Quickstart <quickstart>
    Glossary <glossary>
    Theoretical background <theory>
-   Bibliography <bibliography>
    Jax <jax>
 
 

@@ -110,7 +110,7 @@ def compute_mi(x, y, entropy_fcn=None):
 
 
 @partial(jax.jit, static_argnums=(2,))
-def n_neighbours(xy, idx, k=1):
+def n_neighbours(xy, idx, k=3):
     """Return number of neighbours for each point based on kth neighbour."""
     xi, x = xy[0][:, [idx]], xy[0]
     yi, y = xy[1][:, [idx]], xy[1]
@@ -134,7 +134,7 @@ def n_neighbours(xy, idx, k=1):
 
 
 @partial(jax.jit, static_argnums=(2,))
-def compute_mi_knn(x, y, k: int = 1) -> jnp.array:
+def compute_mi_knn(x, y, k: int = 3) -> jnp.array:
     """Mutual information using the KSG estimator.
 
     First algorithm proposed in Kraskov et al., Estimating mutual information,

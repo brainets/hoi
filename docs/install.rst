@@ -21,7 +21,6 @@ HOI requires :
 
 Here's the list of optional dependencies :
 
-- pandas
 - xarray
 
 User installation

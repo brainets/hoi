@@ -3,4 +3,5 @@ jaxlib
 numpy>=1.22
 scipy>=1.9
 scikit-learn
+pandas
 tqdm

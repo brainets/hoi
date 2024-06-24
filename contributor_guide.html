@@ -6,7 +6,9 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Search - HOI 0.0.1 documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Developer Documentation &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -45,13 +47,11 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'search';</script>
-  <script src="_static/searchtools.js"></script>
-  <script src="_static/language_data.js"></script>
-  <script src="searchindex.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'contributor_guide';</script>
     <link rel="icon" href="_static/favicon.ico"/>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Jax: linear algebra backend" href="jax.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -99,7 +99,7 @@
     <div class="search-button__overlay"></div>
     <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
-      action="#"
+      action="search.html"
       method="get">
   <i class="fa-solid fa-magnifying-glass"></i>
   <input type="search"
@@ -129,8 +129,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -218,7 +216,7 @@
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources 🔪</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="api/modules.html">Public API: list of functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/api_metrics.html"><code class="docutils literal notranslate"><span class="pre">hoi.metrics</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.metrics.Oinfo.html">hoi.metrics.Oinfo</a></li>
@@ -265,7 +263,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="jax.html">Jax</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributor_guide.html">Developer Documentation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Developer Documentation</a></li>
 </ul>
 
     </div>
@@ -310,6 +308,54 @@
 
 
 
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
 <button onclick="toggleFullScreen()"
   class="btn btn-sm btn-fullscreen-button"
   title="Fullscreen mode"
@@ -343,7 +389,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -352,42 +400,135 @@ document.write(`
 </div>
               
               
-  <div class="bd-search-container">
-    <h1>Search</h1>
-    <noscript>
-      <div class="admonition error">
-        <p class="admonition-title">Error</p>
-        <p>Please activate JavaScript to enable the search functionality.</p>
-      </div>
-    </noscript>
-    
-<form class="bd-search d-flex align-items-center"
-      action="#"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search..."
-         aria-label="Search..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-    <div id="search-results"></div>
-  </div>
-  <script>
-    // Activate the search field on page load
-    let searchInput = document.querySelector("form.bd-search input");
-    if (searchInput) {
-        searchInput.focus();
-        searchInput.select();
-        console.log("[PST]: Set focus on search field.");
-    }
-  </script>
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Developer Documentation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-developers">Installation for developers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing-to-hoi">Contributing to HOI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing-code-using-pull-requests">Contributing code using pull requests</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="developer-documentation">
+<h1>Developer Documentation<a class="headerlink" href="#developer-documentation" title="Link to this heading">#</a></h1>
+<section id="installation-for-developers">
+<h2>Installation for developers<a class="headerlink" href="#installation-for-developers" title="Link to this heading">#</a></h2>
+<p>For developers, you can install it in develop mode with the following commands :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/brainets/hoi.git
+<span class="nb">cd</span><span class="w"> </span>hoi
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span><span class="s1">&#39;full&#39;</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>The full installation of HOI includes additional packages to test the software and build the documentation :</p>
+<ul class="simple">
+<li><p>pytest</p></li>
+<li><p>pytest-cov</p></li>
+<li><p>codecov</p></li>
+<li><p>pandas</p></li>
+<li><p>xarray</p></li>
+<li><p>sphinx!=4.1.0</p></li>
+<li><p>sphinx-gallery</p></li>
+<li><p>sphinx-book-theme</p></li>
+<li><p>sphinxcontrib-bibtex</p></li>
+<li><p>numpydoc</p></li>
+<li><p>matplotlib</p></li>
+<li><p>flake8</p></li>
+<li><p>pep8-naming</p></li>
+<li><p>black</p></li>
+</ul>
+</section>
+<section id="contributing-to-hoi">
+<h2>Contributing to HOI<a class="headerlink" href="#contributing-to-hoi" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>For questions, please use the <a class="reference external" href="https://github.com/brainets/hoi/discussions">discusssions page</a></p></li>
+<li><p>You can signal a bug or suggests improvements to the code base or the documentation by <a class="reference external" href="https://github.com/brainets/hoi/issues">opening an issue</a></p></li>
+</ul>
+</section>
+<section id="contributing-code-using-pull-requests">
+<h2>Contributing code using pull requests<a class="headerlink" href="#contributing-code-using-pull-requests" title="Link to this heading">#</a></h2>
+<p>We do all of our development using git, so basic knowledge is assumed.</p>
+<p>Follow these steps to contribute code:</p>
+<ol class="arabic simple">
+<li><p>Fork the hoi repository by cliking the <strong>Fork</strong> button on the <a class="reference external" href="https://github.com/brainets/hoi">repository page</a></p></li>
+<li><p>Install Python &gt;= 3.8</p></li>
+<li><p>Clone the hoi repository to your computer and install hoi :</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR_USERNAME/hoi
+<span class="nb">cd</span><span class="w"> </span>hoi
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span><span class="s1">&#39;full&#39;</span><span class="o">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Add the HOI repo as an upstream remote, so you can use it to sync your changes.</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/brainets/hoi
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Create a branch where you will develop from and implement your changes using your favorite editor  :</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>branch_name
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Make sure your code passes HOI’s lint and type checks, by running the following from the top of the repository:</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>black<span class="w"> </span>hoi/
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p>Make sure the tests pass by running the following command from the top of the repository:</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>-v
+</pre></div>
+</div>
+<p>Each python file inside HOI is tested to ensure that fonctionalities of HOI are maintained with each commit. If you modify a file, or example <cite>hoi/core/entropies.py</cite>, you can run the tests for this specific file only located in <cite>hoi/core/tests/tests_entropies.py</cite> If you want to only test the files you modified you can use :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pytest<span class="w"> </span>-v<span class="w"> </span>hoi/path_to_test_file
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>Once you are satisfied with your change, create a commit as follows :</p></li>
+</ol>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>file1.py<span class="w"> </span>file2.py<span class="w"> </span>...
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Your commit message&quot;</span>
+</pre></div>
+</div>
+<p>Then sync your code with the main repo:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>fetch<span class="w"> </span>upstream
+git<span class="w"> </span>rebase<span class="w"> </span>upstream/main
+</pre></div>
+</div>
+<p>Finally, push your commit on your development branch and create a remote branch in your fork that you can use to create a pull request from:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>push<span class="w"> </span>--set-upstream<span class="w"> </span>origin<span class="w"> </span>branch_name
+</pre></div>
+</div>
+<p>Please ensure your contribution is a single commit</p>
+<ol class="arabic simple" start="9">
+<li><p>Create a Pull request. To this end, in your web browser go to your hoi repository and you should see a message proposing to draft a pull request.</p></li>
+</ol>
+</section>
+</section>
+
+
+                </article>
+              
 
               
               
@@ -396,12 +537,38 @@ document.write(`
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="jax.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Jax: linear algebra backend</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation-for-developers">Installation for developers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing-to-hoi">Contributing to HOI</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing-code-using-pull-requests">Contributing code using pull requests</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

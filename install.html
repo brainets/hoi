@@ -35,7 +35,7 @@
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
-    <link rel="stylesheet" type="text/css" href="_static/style.css?v=2e6c716f" />
+    <link rel="stylesheet" type="text/css" href="_static/style.css?v=b7615940" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
@@ -207,14 +207,18 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Examples</a></li>
+
+
+
+
 <li class="toctree-l1"><a class="reference internal" href="glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical background</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="jax.html">Jax</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources 🔪</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="api/modules.html">List of functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api/modules.html">Public API: list of functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api/api_metrics.html"><code class="docutils literal notranslate"><span class="pre">hoi.metrics</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.metrics.Oinfo.html">hoi.metrics.Oinfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
@@ -259,11 +263,8 @@
 </details></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="auto_examples/index.html">Examples</a></li>
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="jax.html">Jax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributor_guide.html">Developer Documentation</a></li>
 </ul>
 
     </div>
@@ -414,7 +415,6 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-installation">User installation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For developers</a></li>
 </ul>
             </nav>
         </div>
@@ -440,6 +440,10 @@ document.write(`
 <li><p>scikit-learn</p></li>
 <li><p>tqdm</p></li>
 </ul>
+<p>Here’s the list of optional dependencies :</p>
+<ul class="simple">
+<li><p>xarray</p></li>
+</ul>
 </section>
 <section id="user-installation">
 <h2>User installation<a class="headerlink" href="#user-installation" title="Link to this heading">#</a></h2>
@@ -453,31 +457,6 @@ the easiest way to install hoi is using <code class="docutils literal notranslat
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/brainets/hoi.git
 </pre></div>
 </div>
-</section>
-<section id="for-developers">
-<h2>For developers<a class="headerlink" href="#for-developers" title="Link to this heading">#</a></h2>
-<p>For developers, you can install it in develop mode with the following commands :</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/brainets/hoi.git
-<span class="nb">cd</span><span class="w"> </span>hoi
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span><span class="s1">&#39;full&#39;</span><span class="o">]</span>
-</pre></div>
-</div>
-<p>The full installation of HOI includes additional packages to test the software and build the documentation :</p>
-<ul class="simple">
-<li><p>pytest</p></li>
-<li><p>pytest-cov</p></li>
-<li><p>codecov</p></li>
-<li><p>xarray</p></li>
-<li><p>sphinx!=4.1.0</p></li>
-<li><p>sphinx-gallery</p></li>
-<li><p>pydata-sphinx-theme</p></li>
-<li><p>sphinxcontrib-bibtex</p></li>
-<li><p>numpydoc</p></li>
-<li><p>matplotlib</p></li>
-<li><p>flake8</p></li>
-<li><p>pep8-naming</p></li>
-<li><p>black</p></li>
-</ul>
 </section>
 </section>
 
@@ -528,7 +507,6 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies">Dependencies</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-installation">User installation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-developers">For developers</a></li>
 </ul>
   </nav></div>
 

@@ -385,13 +385,13 @@ document.write(`
 <span class="c1">###############################################################################</span>
 
 
-<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
-<span class="k">def</span> <span class="nf">find_indices</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-    <span class="n">combs</span><span class="p">,</span> <span class="n">keep</span> <span class="o">=</span> <span class="n">inputs</span>
+<span class="c1"># @jax.jit</span>
+<span class="c1"># def find_indices(inputs, c):</span>
+<span class="c1">#     combs, keep = inputs</span>
 
-    <span class="n">keep</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">keep</span><span class="p">,</span> <span class="p">(</span><span class="n">combs</span> <span class="o">==</span> <span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+<span class="c1">#     keep = jnp.add(keep, (combs == c).any(1).astype(int))</span>
 
-    <span class="k">return</span> <span class="p">(</span><span class="n">combs</span><span class="p">,</span> <span class="n">keep</span><span class="p">),</span> <span class="kc">None</span>
+<span class="c1">#     return (combs, keep), None</span>
 
 
 <span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>

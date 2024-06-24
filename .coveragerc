@@ -1,0 +1,14 @@
+[run]
+branch = True
+source = hoi
+include = */hoi/*
+omit =
+    */setup.py
+    */test/*
+    */docs/*
+    */examples/*
+    */tests/*
+
+[report]
+show_missing = False
+# sort = Cover

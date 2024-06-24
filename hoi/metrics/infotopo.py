@@ -16,13 +16,13 @@ from hoi.utils.progressbar import scan_tqdm
 ###############################################################################
 
 
-@jax.jit
-def find_indices(inputs, c):
-    combs, keep = inputs
+# @jax.jit
+# def find_indices(inputs, c):
+#     combs, keep = inputs
 
-    keep = jnp.add(keep, (combs == c).any(1).astype(int))
+#     keep = jnp.add(keep, (combs == c).any(1).astype(int))
 
-    return (combs, keep), None
+#     return (combs, keep), None
 
 
 @jax.jit

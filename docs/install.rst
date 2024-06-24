@@ -15,6 +15,7 @@ HOI requires :
 - numpy(>=1.22)
 - scipy (>=1.9)
 - jax
+- pandas
 - scikit-learn
 - tqdm
 

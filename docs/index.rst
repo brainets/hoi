@@ -67,9 +67,9 @@ HOI : High-Performance Estimation of Higher-Order Interactions
 
    Installation <install>
    Quickstart <quickstart>
+   Examples <auto_examples/index>
    Glossary <glossary>
    Theoretical background <theory>
-   Jax <jax>
 
 
 .. toctree::
@@ -77,6 +77,6 @@ HOI : High-Performance Estimation of Higher-Order Interactions
    :maxdepth: 1
    :caption: Further Resources 🔪
 
-   List of functions <api/modules>
-   Examples <auto_examples/index>
+   Public API: list of functions <api/modules>
+   Jax <jax>
    Developer Documentation <contributor_guide>

@@ -79,3 +79,4 @@ HOI : High-Performance Estimation of Higher-Order Interactions
 
    List of functions <api/modules>
    Examples <auto_examples/index>
+   Developer Documentation <contributor_guide>

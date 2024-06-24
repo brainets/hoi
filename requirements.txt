@@ -2,6 +2,5 @@ jax
 jaxlib
 numpy>=1.22
 scipy>=1.9
-pandas
 scikit-learn
 tqdm

@@ -36,7 +36,7 @@ doc_deps = [
     "sphinxcontrib-bibtex",
     "numpydoc",
     "matplotlib",
-    "xgi"
+    "xgi",
 ]
 lint_deps = ["flake8", "pep8-naming", "black"]
 

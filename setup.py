@@ -27,18 +27,16 @@ def read(fname):
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
-test_deps = ["pytest", "pytest-sugar", "pytest-cov", "codecov", "xarray"]
+test_deps = ["pytest", "pytest-cov", "codecov", "xarray"]
 doc_deps = [
     "sphinx!=4.1.0",
     "sphinx-gallery",
-    "pydata-sphinx-theme",
+    "sphinx_design",
+    "sphinx-book-theme",
     "sphinxcontrib-bibtex",
     "numpydoc",
-    "seaborn",
     "matplotlib",
-    "memory-profiler",
-    "sphinx-panels",
-    "sphinx-copybutton",
+    "xgi",
 ]
 lint_deps = ["flake8", "pep8-naming", "black"]
 
@@ -74,7 +72,6 @@ setup(
         "Intended Audience :: Education",
         "Intended Audience :: Developers",
         "Topic :: Scientific/Engineering :: Visualization",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",

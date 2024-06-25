@@ -28,7 +28,6 @@ def _compute_syn(inputs, comb, mi_fcn=None):
 
 
 class SynergyMMI(HOIEstimator):
-
     """Synergy estimated using the Minimum Mutual Information.
 
     Parameters
@@ -69,8 +68,7 @@ class SynergyMMI(HOIEstimator):
         method : {'gcmi'}
             Name of the method to compute mutual-information. Use either :
 
-                * 'gcmi': gaussian copula MI [default]. See
-                  :func:`hoi.core.mi_gcmi_gg`
+                * 'gcmi': gaussian copula MI [default].
 
         kwargs : dict | {}
             Additional arguments are sent to each MI function
@@ -126,19 +124,3 @@ class SynergyMMI(HOIEstimator):
             offset += n_combs
 
         return np.asarray(hoi)
-
-
-if __name__ == "__main__":
-    from hoi.utils import get_nbest_mult
-
-    np.random.seed(0)
-
-    x = np.random.rand(200, 7)
-
-    # synergy:    (0, 3, 5) + (7, 8)
-    y_syn = x[:, 0] + x[:, 3] + x[:, 5]
-
-    model = SynergyMMI(x, y_syn)
-    hoi = model.fit(minsize=3, maxsize=4, method="gcmi")
-
-    print(get_nbest_mult(hoi, model, minsize=3, maxsize=3, n_best=3))

@@ -8,7 +8,7 @@ from hoi.core.mi import get_mi, compute_mi_comb_phi
 from hoi.utils.progressbar import get_pbar
 
 
-@partial(jax.jit, static_argnums=(2, ))
+@partial(jax.jit, static_argnums=(2,))
 def _compute_phiid_red(inputs, comb, mi_fcn=None):
     x, y, ind = inputs
 
@@ -23,9 +23,9 @@ def _compute_phiid_red(inputs, comb, mi_fcn=None):
 
 
 class RedundancyphiID(HOIEstimator):
+    r"""Redundancy (phiID).
 
-    r"""Redundancy :math:`\rightarrow` redundancy (phiID).
-    Estimated using the Minimum Mutual Information as follow:
+    Estimated using the Minimum Mutual Information (MMI) as follow:
 
     .. math::
 
@@ -61,14 +61,15 @@ class RedundancyphiID(HOIEstimator):
             verbose=verbose,
         )
 
-    def fit(self,
-            minsize=2,
-            tau=1,
-            direction_axis=0,
-            maxsize=None,
-            method="gcmi",
-            **kwargs):
-
+    def fit(
+        self,
+        minsize=2,
+        tau=1,
+        direction_axis=0,
+        maxsize=None,
+        method="gcmi",
+        **kwargs,
+    ):
         """Redundancy (phiID).
 
         Parameters
@@ -78,8 +79,16 @@ class RedundancyphiID(HOIEstimator):
         method : {'gcmi'}
             Name of the method to compute mutual-information. Use either :
 
-                * 'gcmi': gaussian copula MI [default]. See
-                  :func:`hoi.core.mi_gcmi_gg`
+                * 'gcmi': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gcmi`
+                * 'binning': binning-based estimator of entropy. Note that to
+                  use this estimator, the data have be to discretized. See
+                  :func:`hoi.core.entropy_bin`
+                * 'knn': k-nearest neighbor estimator. See
+                  :func:`hoi.core.entropy_knn`
+                * 'kernel': kernel-based estimator of entropy
+                  see :func:`hoi.core.entropy_kernel`
+
         tau : int | 1
             The length of the delay to use to compute the redundancy as
             defined in the phiID.
@@ -131,8 +140,8 @@ class RedundancyphiID(HOIEstimator):
         offset = 0
         if direction_axis == 2:
             hoi = jnp.zeros(
-                (len(order), self.n_variables - tau),
-                dtype=jnp.float32)
+                (len(order), self.n_variables - tau), dtype=jnp.float32
+            )
         else:
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
@@ -150,7 +159,7 @@ class RedundancyphiID(HOIEstimator):
 
             # fill variables
             n_combs = _h_idx.shape[0]
-            hoi = hoi.at[offset: offset + n_combs, :].set(_hoi)
+            hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs

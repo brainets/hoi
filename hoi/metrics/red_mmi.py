@@ -12,7 +12,6 @@ from hoi.utils.progressbar import get_pbar
 
 
 class RedundancyMMI(HOIEstimator):
-
     """Redundancy estimated using the Minimum Mutual Information.
 
     Parameters
@@ -53,8 +52,7 @@ class RedundancyMMI(HOIEstimator):
         method : {'gcmi'}
             Name of the method to compute mutual-information. Use either :
 
-                * 'gcmi': gaussian copula MI [default]. See
-                  :func:`hoi.core.mi_gcmi_gg`
+                * 'gcmi': gaussian copula MI [default].
 
         kwargs : dict | {}
             Additional arguments are sent to each MI function
@@ -112,23 +110,3 @@ class RedundancyMMI(HOIEstimator):
             offset += n_combs
 
         return np.asarray(hoi)
-
-
-if __name__ == "__main__":
-    from hoi.utils import get_nbest_mult
-
-    np.random.seed(0)
-
-    x = np.random.rand(200, 7)
-    y_red = np.random.rand(x.shape[0])
-
-    # redundancy: (1, 2, 6) + (7, 8)
-    x[:, 1] += y_red
-    x[:, 2] += y_red
-    x[:, 6] += y_red
-
-    model = RedundancyMMI(x, y_red)
-    hoi = model.fit(minsize=3, maxsize=5, method="gcmi")
-    print(hoi)
-
-    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=5, n_best=3))

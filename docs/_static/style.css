@@ -1,0 +1,51 @@
+@import url("theme.css");
+
+:root {
+    --block-bg-opacity: .5;
+}
+
+.wy-side-nav-search {
+    background-color: #fff;
+}
+
+.box1 {
+    background-color: rgba(63, 81, 181, var(--block-bg-opacity));
+}
+
+.box2 {
+    background-color: rgba(233, 30, 99, var(--block-bg-opacity));
+}
+
+.box3 {
+    background-color: rgba(103, 58, 183, var(--block-bg-opacity));
+}
+
+.box4 {
+    background-color: rgba(3, 169, 244, var(--block-bg-opacity));
+}
+
+.box5 {
+    background-color: rgba(244, 67, 54, var(--block-bg-opacity));
+}
+
+div.red-background pre {
+    background-color: rgba(244, 204, 204, var(--block-bg-opacity));
+}
+
+div.green-background pre {
+    background-color: rgba(204, 244, 204, var(--block-bg-opacity));
+}
+
+/* Python code block comments */
+html[data-theme="light"] .highlight span.c1 {
+    color: #fa8d59;
+}
+
+/* Python code traceback and exception */
+html[data-theme="light"] .highlight span.gt {
+    color: #ff0000;
+}
+
+html[data-theme="light"] .highlight span.gr {
+    color: #ff0000;
+}

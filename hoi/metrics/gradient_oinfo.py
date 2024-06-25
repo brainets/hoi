@@ -1,5 +1,3 @@
-import numpy as np
-
 from hoi.metrics.oinfo import Oinfo
 from hoi.metrics.base_hoi import HOIEstimator
 
@@ -45,11 +43,12 @@ class GradientOinfo(HOIEstimator):
     _negative = "synergy"
     _symmetric = True
 
-    def __init__(self, x, y, multiplets=None, verbose=None):
+    def __init__(self, x, y, multiplets=None, base_model=Oinfo, verbose=None):
         kw_oinfo = dict(multiplets=multiplets, verbose=verbose)
         HOIEstimator.__init__(self, x=x, y=None, **kw_oinfo)
-        self._oinf_tr = Oinfo(x, y=y, **kw_oinfo)
-        self._oinf_tf = Oinfo(x, **kw_oinfo)
+        self._oinf_tr = base_model(x, y=y, **kw_oinfo)
+        self._oinf_tf = base_model(x, **kw_oinfo)
+        self.__name__ = self.__name__ + "(%s)" % base_model.__name__
 
     def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
         """Compute the Gradient O-information.
@@ -93,26 +92,3 @@ class GradientOinfo(HOIEstimator):
         hoi_tr = self._oinf_tr.fit(**kw_oinfo)
 
         return hoi_tr - hoi_tf
-
-
-if __name__ == "__main__":
-    from hoi.utils import get_nbest_mult
-
-    np.random.seed(0)
-
-    x = np.random.rand(200, 7)
-    y_red = np.random.rand(x.shape[0])
-
-    # redundancy: (1, 2, 6) + (7, 8)
-    x[:, 1] += y_red
-    x[:, 2] += y_red
-    x[:, 6] += y_red
-    # synergy:    (0, 3, 5) + (7, 8)
-    y_syn = x[:, 0] + x[:, 3] + x[:, 5]
-    # bivariate target
-    y = np.c_[y_red, y_syn]
-
-    model = GradientOinfo(x, y=y)
-    hoi = model.fit(minsize=2, maxsize=None, method="gcmi")
-
-    print(get_nbest_mult(hoi, model=model, minsize=3, maxsize=3, n_best=3))

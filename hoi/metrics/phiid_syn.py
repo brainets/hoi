@@ -29,11 +29,10 @@ def _compute_phi_syn(inputs, comb, mi_fcn=None):
 
 
 class SynergyphiID(HOIEstimator):
-
     r"""Synergy (phiID).
 
-    For each couple of variable the synergy about their future as in 
-    Luppi et al (2022), using the MMi approach:
+    For each couple of variable the synergy about their future as in
+    Luppi et al (2022), using the Minimum Mutual Information (MMI) approach:
 
     .. math::
 
@@ -71,15 +70,14 @@ class SynergyphiID(HOIEstimator):
         )
 
     def fit(
-            self,
-            minsize=2,
-            tau=1,
-            direction_axis=0,
-            maxsize=None,
-            method="gcmi",
-            **kwargs
-            ):
-
+        self,
+        minsize=2,
+        tau=1,
+        direction_axis=0,
+        maxsize=None,
+        method="gcmi",
+        **kwargs,
+    ):
         r"""Synergy (phiID).
 
         Parameters
@@ -89,17 +87,24 @@ class SynergyphiID(HOIEstimator):
         method : {'gcmi'}
             Name of the method to compute mutual-information. Use either :
 
-                * 'gcmi': gaussian copula MI [default]. See
-                  :func:`hoi.core.mi_gcmi_gg`
+                * 'gcmi': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gcmi`
+                * 'binning': binning-based estimator of entropy. Note that to
+                  use this estimator, the data have be to discretized. See
+                  :func:`hoi.core.entropy_bin`
+                * 'knn': k-nearest neighbor estimator. See
+                  :func:`hoi.core.entropy_knn`
+                * 'kernel': kernel-based estimator of entropy
+                  see :func:`hoi.core.entropy_kernel`
+
         tau : int | 1
-            The length of the delay to use to compute the redundancy as 
+            The length of the delay to use to compute the redundancy as
             defined in the phiID.
             Default 1
         direction_axis : {0,2}
             The axis on which to consider the evolution,
             0 for the samples axis, 2 for the variables axis.
             Default 0
-
         kwargs : dict | {}
             Additional arguments are sent to each MI function
 
@@ -134,8 +139,8 @@ class SynergyphiID(HOIEstimator):
         offset = 0
         if direction_axis == 2:
             hoi = jnp.zeros(
-                (len(order), self.n_variables-tau), dtype=jnp.float32
-                )
+                (len(order), self.n_variables - tau), dtype=jnp.float32
+            )
         else:
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
@@ -155,18 +160,16 @@ class SynergyphiID(HOIEstimator):
             elif direction_axis == 2:
                 x_c = x[:-tau, :, :]
                 y = x[tau:, :, :]
-            
+
             else:
-                raise ValueError(
-                    "axis can be eaither equal 0 or 2."
-                )
+                raise ValueError("axis can be eaither equal 0 or 2.")
 
             # compute hoi
             _, _hoi = jax.lax.scan(compute_syn, (x_c, y, ind), _h_idx)
 
             # fill variables
             n_combs = _h_idx.shape[0]
-            hoi = hoi.at[offset: offset + n_combs, :].set(_hoi)
+            hoi = hoi.at[offset : offset + n_combs, :].set(_hoi)
 
             # updates
             offset += n_combs

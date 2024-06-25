@@ -1,6 +1,7 @@
 """
 Functions to compute entropies.
 """
+
 from functools import partial
 
 import numpy as np
@@ -59,7 +60,7 @@ def get_entropy(method="gcmi", **kwargs):
 
 def prepare_for_entropy(data, method, reshape=True, **kwargs):
     """Prepare the data before computing entropy."""
-    # data.shape = n_samples, n_features, n_variables
+    # data.shape = n_variables, n_features, n_samples
 
     # type checking
     if (method in ["binning"]) and (data.dtype != int):
@@ -73,22 +74,18 @@ def prepare_for_entropy(data, method, reshape=True, **kwargs):
     # method specific preprocessing
     if method == "gcmi":
         logger.info("    Copnorm data")
-        data = copnorm_nd(data, axis=0)
-        data = data - data.mean(axis=0, keepdims=True)
+        data = copnorm_nd(data, axis=2)
+        data = data - data.mean(axis=2, keepdims=True)
         kwargs["demean"] = False
     elif method == "kernel":
         logger.info("    Unit circle normalization")
         from hoi.utils import normalize
 
-        data = np.apply_along_axis(normalize, 0, data, to_min=-1.0, to_max=1.0)
+        data = np.apply_along_axis(normalize, 2, data, to_min=-1.0, to_max=1.0)
     elif method == "binning":
         pass
 
-    # make the data (n_variables, n_features, n_samples)
-    if reshape:
-        data = jnp.asarray(data.transpose(2, 1, 0))
-
-    return data, kwargs
+    return jnp.asarray(data), kwargs
 
 
 ###############################################################################
@@ -247,39 +244,32 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
 ###############################################################################
 
 
-@partial(jax.jit)
-def set_to_inf(x, _):
-    """Set to infinity the minimum in a vector."""
-    x = x.at[jnp.argmin(x)].set(jnp.inf)
-    return x, jnp.nan
-
-
 @partial(jax.jit, static_argnums=(2,))
-def cdistk(xx, idx, k=1):
+def cdistk(xx, idx, k=3):
     """K-th minimum euclidian distance."""
     x, y = xx[:, [idx]], xx
 
     # compute euclidian distance
     eucl = jnp.sqrt(jnp.sum((x - y) ** 2, axis=0))
 
-    # in case of 0-distances, replace them by infinity
-    eucl = jnp.where(eucl == 0, jnp.inf, eucl)
+    # remove distance from itself
+    eucl = eucl.at[idx].set(jnp.inf)
 
-    # set to inf to get k eucl
-    eucl, _ = jax.lax.scan(set_to_inf, eucl, jnp.arange(k))
+    # distance from xi to its kth neighbor
+    eucl = jnp.sort(eucl)[k - 1]
 
-    return xx, eucl[jnp.argmin(eucl)]
+    return xx, eucl
 
 
 @partial(jax.jit, static_argnums=(1,))
-def entropy_knn(x: jnp.array, k: int = 1) -> jnp.array:
+def entropy_knn(x: jnp.array, k: int = 3) -> jnp.array:
     """Entropy using the k-nearest neighbor.
 
     Original code: https://github.com/blakeaw/Python-knn-entropy/
     and references. See also Kraskov et al., Estimating mutual information,
     Phy rev, 2004
 
-    
+
     Parameters
     ----------
     x : array_like
@@ -301,17 +291,16 @@ def entropy_knn(x: jnp.array, k: int = 1) -> jnp.array:
     # compute euclidian distance
     _, r_k = jax.lax.scan(cdist, x, jnp.arange(int(n)).astype(int))
 
-    # log of the volume of unit ball in d^n
-    log_c_d = (d / 2.0) * jnp.log(jnp.pi) - jnp.log(
-        gamma(1 + d / 2.0)
-    )  # + d * jnp.log(2)
+    # volume of unit ball in d^n
+    c_d = (jnp.pi ** (d * 0.5)) / gamma(1.0 + d * 0.5) / (2**d)
+    log_c_d = jnp.log(c_d)
 
     # sum log of distances
     sum_log_dist = jnp.sum(jnp.log(2 * r_k))
 
     h = -psi(k) + psi(n) + log_c_d + (d / n) * sum_log_dist
 
-    return h
+    return jnp.maximum(0, h)
 
 
 ###############################################################################

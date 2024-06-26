@@ -283,8 +283,8 @@ defined as:
 
 	redundancy (Y, X^n) = min_{i<n} I \left( Y, X_i \right)
     
-When computing the redundancy in this way the definition of 
-synergy, :class:`hoi.metrics.SynergyMMI`, follows:
+When computing the redundancy in this way the definition 
+of synergy, :class:`hoi.metrics.SynergyMMI`, follows:
 
 .. math::
 

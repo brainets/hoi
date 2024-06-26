@@ -38,7 +38,7 @@ extensions = [
     "sphinx.ext.autosummary",
     "numpydoc",
     "sphinxcontrib.bibtex",
-    #"sphinx_gallery.gen_gallery",
+    "sphinx_gallery.gen_gallery",
     "sphinx_design",
     # "sphinx_panels",
     # "sphinx_copybutton",

@@ -259,7 +259,7 @@ class HOIEstimator(object):
             target = None
         else:
             target = (np.arange(self._n_features_y) + n).tolist()
-        
+
         if self._encoding:
             target = None
         # custom list of multiplets don't require to full list of multiplets
@@ -269,7 +269,9 @@ class HOIEstimator(object):
             logger.info("    Selecting custom multiplets")
             _orders = [len(m) for m in self._custom_mults]
             mults_ = [list(c) + target for c in self._custom_mults]
-            mults = jnp.full((len(self._custom_mults), max(_orders)+len(target)), -1)
+            mults = jnp.full(
+                (len(self._custom_mults), max(_orders) + len(target)), -1
+            )
             for n_m, m in enumerate(mults_):
                 mults = mults.at[n_m, 0 : len(m)].set(m)
             self._multiplets = mults

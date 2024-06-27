@@ -7,7 +7,7 @@ some distributions, such as normal, uniform or exponential distributions lead
 to specific values of entropies. In this this tutorial we are going to :
 
 1. Simulate data following either a normal, uniform or exponential
-distributions
+   distributions
 2. Define several estimators of entropy
 3. Compute the entropy for a varying number of samples
 4. See if the computed entropies converge toward the theoretical value
@@ -24,7 +24,7 @@ plt.style.use("ggplot")
 
 
 ###############################################################################
-# Definition of estimators en entropy
+# Definition of estimators of entropy
 # -----------------------------------
 #
 # Let us define several estimators of entropy. We are going to use the GCMI

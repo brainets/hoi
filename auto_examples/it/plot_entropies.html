@@ -53,7 +53,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Metrics of HOI" href="../metrics/index.html" />
-    <link rel="prev" title="Entropy example 2" href="it2.html" />
+    <link rel="prev" title="ntroduction to core information theoretical metrics" href="plot_tutorial_core.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -416,7 +416,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-estimators-en-entropy">Definition of estimators en entropy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-estimators-of-entropy">Definition of estimators of entropy</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-of-data-sampled-from-normal-distribution">Entropy of data sampled from normal distribution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-of-data-sampled-from-a-uniform-distribution">Entropy of data sampled from a uniform distribution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-of-data-sampled-from-an-exponential-distribution">Entropy of data sampled from an exponential distribution</a></li>
@@ -441,11 +441,13 @@ to download the full example code.</p>
 <p>In this example, we are going to compare entropy estimators. In particular,
 some distributions, such as normal, uniform or exponential distributions lead
 to specific values of entropies. In this this tutorial we are going to :</p>
-<p>1. Simulate data following either a normal, uniform or exponential
-distributions
-2. Define several estimators of entropy
-3. Compute the entropy for a varying number of samples
-4. See if the computed entropies converge toward the theoretical value</p>
+<ol class="arabic simple">
+<li><p>Simulate data following either a normal, uniform or exponential
+distributions</p></li>
+<li><p>Define several estimators of entropy</p></li>
+<li><p>Compute the entropy for a varying number of samples</p></li>
+<li><p>See if the computed entropies converge toward the theoretical value</p></li>
+</ol>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">hoi.core</span> <span class="kn">import</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a>
@@ -455,8 +457,8 @@ distributions
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<section id="definition-of-estimators-en-entropy">
-<h2>Definition of estimators en entropy<a class="headerlink" href="#definition-of-estimators-en-entropy" title="Link to this heading">#</a></h2>
+<section id="definition-of-estimators-of-entropy">
+<h2>Definition of estimators of entropy<a class="headerlink" href="#definition-of-estimators-of-entropy" title="Link to this heading">#</a></h2>
 <p>Let us define several estimators of entropy. We are going to use the GCMI
 (Gaussian Copula Mutual Information), the KNN (k Nearest Neighbor) and the
 kernel-based estimator.</p>
@@ -603,7 +605,7 @@ defined by :</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_entropies_003.png" srcset="../../_images/sphx_glr_plot_entropies_003.png" alt="Comparison of entropy estimators when the data are sampled from a exponential distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 26.987 seconds)</p>
+<img src="../../_images/sphx_glr_plot_entropies_003.png" srcset="../../_images/sphx_glr_plot_entropies_003.png" alt="Comparison of entropy estimators when the data are sampled from a exponential distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 26.924 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-entropies-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/a1ef8dbbc19c785bec2a5cc12335798e/plot_entropies.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_entropies.ipynb</span></code></a></p>
@@ -628,12 +630,12 @@ defined by :</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="it2.html"
+       href="plot_tutorial_core.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Entropy example 2</p>
+        <p class="prev-next-title">ntroduction to core information theoretical metrics</p>
       </div>
     </a>
     <a class="right-next"
@@ -661,7 +663,7 @@ defined by :</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-estimators-en-entropy">Definition of estimators en entropy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-estimators-of-entropy">Definition of estimators of entropy</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-of-data-sampled-from-normal-distribution">Entropy of data sampled from normal distribution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-of-data-sampled-from-a-uniform-distribution">Entropy of data sampled from a uniform distribution</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-of-data-sampled-from-an-exponential-distribution">Entropy of data sampled from an exponential distribution</a></li>

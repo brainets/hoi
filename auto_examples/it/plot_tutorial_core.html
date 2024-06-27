@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Core information theoretical metrics &#8212; HOI 0.0.1 documentation</title>
+    <title>ntroduction to core information theoretical metrics &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -48,12 +48,12 @@
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/tutorials/plot_tutorial_core';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/it/plot_tutorial_core';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Machine-learning vs. Information theoretic approaches for HOI" href="plot_ml_vs_it.html" />
-    <link rel="prev" title="Tutorial example 2" href="tut2.html" />
+    <link rel="next" title="Comparison of entropy estimators" href="plot_entropies.html" />
+    <link rel="prev" title="Entropy example 2" href="it2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -406,7 +406,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Core information theoretical metrics</h1>
+    <h1>ntroduction to core information theoretical metrics</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -431,12 +431,12 @@ document.write(`
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-tutorials-plot-tutorial-core-py"><span class="std std-ref">Go to the end</span></a>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-it-plot-tutorial-core-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code.</p>
 </div>
-<section class="sphx-glr-example-title" id="core-information-theoretical-metrics">
-<span id="sphx-glr-auto-examples-tutorials-plot-tutorial-core-py"></span><h1>Core information theoretical metrics<a class="headerlink" href="#core-information-theoretical-metrics" title="Link to this heading">#</a></h1>
-<p>This tutorial guides you through the core information theoretical metrics
+<section class="sphx-glr-example-title" id="ntroduction-to-core-information-theoretical-metrics">
+<span id="sphx-glr-auto-examples-it-plot-tutorial-core-py"></span><h1>ntroduction to core information theoretical metrics<a class="headerlink" href="#ntroduction-to-core-information-theoretical-metrics" title="Link to this heading">#</a></h1>
+<p>This introduction guides you through the core information theoretical metrics
 available. These metrics are the entropy and the mutual information.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">hoi.core</span> <span class="kn">import</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a>
@@ -450,8 +450,8 @@ other higher-order metrics of information theory defined in HOI are based on
 the entropy.</p>
 <p>In HOI there are 4 different methods to compute the entropy, in this tutorial
 we will use the estimation based on the Gaussian Copula estimation.</p>
-<p>Let’s start by extracting a sample <cite>x</cite> from a multivariate Gaussian distribution
-with zero mean and unit variance:</p>
+<p>Let’s start by extracting a sample <cite>x</cite> from a multivariate Gaussian
+distribution with zero mean and unit variance:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
 </pre></div>
@@ -464,20 +464,18 @@ the Gaussian Copula estimation, so we set the method to <a href="#id1"><span cla
 </pre></div>
 </div>
 <p>Now we can compute the entropy of <cite>x</cite> by calling the function <cite>entropy</cite>. This
-function takes as input an array of data of shape <cite>(n_features, n_samples)</cite>. For
-the Gaussian Copula estimation, the entropy is computed in bits. We have:</p>
+function takes as input an array of data of shape <cite>(n_features, n_samples)</cite>.
+For the Gaussian Copula estimation, the entropy is computed in bits. We have:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Entropy of x: 6.13
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Entropy of x: 6.03
 </pre></div>
 </div>
 <p>For comparison, we can compute the entropy of a multivariate Gaussian with
-the analytical formula, which is:
-.. math:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">H</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">=</span> \<span class="n">frac</span><span class="p">{</span><span class="mi">1</span><span class="p">}{</span><span class="mi">2</span><span class="p">}</span> \<span class="n">log</span> \<span class="n">left</span><span class="p">(</span> <span class="p">(</span><span class="mi">2</span> \<span class="n">pi</span> <span class="n">e</span><span class="p">)</span><span class="o">^</span><span class="n">D</span> \<span class="n">det</span><span class="p">(</span>\<span class="n">Sigma</span><span class="p">)</span> \<span class="n">right</span><span class="p">)</span>
-</pre></div>
-</div>
+the analytical formula, which is:</p>
+<div class="math notranslate nohighlight">
+\[H(X) = \frac{1}{2} \log \left( (2 \pi e)^D \det(\Sigma) \right)\]</div>
 <p>where <span class="math notranslate nohighlight">\(D\)</span> is the dimensionality of the Gaussian and <span class="math notranslate nohighlight">\(\Sigma\)</span> is
 the covariance matrix of the Gaussian. We have:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -487,7 +485,7 @@ the covariance matrix of the Gaussian. We have:</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analytical entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy_analytical</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Analytical entropy of x: 6.13
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Analytical entropy of x: 6.03
 </pre></div>
 </div>
 <p>We see that the two values are very close.</p>
@@ -498,8 +496,8 @@ the covariance matrix of the Gaussian. We have:</p>
 In this tutorial we will compute the mutual information between two variables
 <cite>x</cite> and <cite>y</cite>. <cite>x</cite> is a multivariate Gaussian with zero mean and unit variance,
 while <cite>y</cite> is a multivariate uniform distribution in the interval <span class="math notranslate nohighlight">\([0,1]\)</span>.
-Since the two variables are independent, the mutual information between them is expected
-to be zero.</p>
+Since the two variables are independent, the mutual information between them
+is expected to be zero.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
@@ -508,16 +506,16 @@ to be zero.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mutual information between x and y: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">mi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Mutual information between x and y: 0.00
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Mutual information between x and y: 0.01
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.170 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-plot-tutorial-core-py">
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.129 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-tutorial-core-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/ae76d1763ffda8f50078ac8525657af8/plot_tutorial_core.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_tutorial_core.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/5b339cefcfab9a7df160c5f43bed58df/plot_tutorial_core.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_tutorial_core.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/fba2f2c8f21016dffdcc64e40020eac3/plot_tutorial_core.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_tutorial_core.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/3ce8b19a79c03c966d2fd802d7567df5/plot_tutorial_core.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_tutorial_core.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -536,20 +534,20 @@ to be zero.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="tut2.html"
+       href="it2.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Tutorial example 2</p>
+        <p class="prev-next-title">Entropy example 2</p>
       </div>
     </a>
     <a class="right-next"
-       href="plot_ml_vs_it.html"
+       href="plot_entropies.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Machine-learning vs. Information theoretic approaches for HOI</p>
+        <p class="prev-next-title">Comparison of entropy estimators</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

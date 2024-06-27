@@ -1,6 +1,7 @@
 """
 Functions to compute entropies.
 """
+
 from functools import partial
 
 import numpy as np
@@ -237,7 +238,7 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
         x, return_counts=True, size=n_samples, axis=1, fill_value=0
     )[1]
     probs = counts / n_samples
-    return jax.scipy.special.entr(probs).sum() / np.log(base)
+    return jax.scipy.special.entr(probs).sum() / jnp.log(base)
 
 
 ###############################################################################

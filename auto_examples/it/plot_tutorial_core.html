@@ -52,8 +52,8 @@
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Comparison of entropy estimators" href="plot_entropies.html" />
-    <link rel="prev" title="Entropy example 2" href="it2.html" />
+    <link rel="next" title="Comparison of mutual-information estimators" href="plot_mi.html" />
+    <link rel="prev" title="Entropy and mutual information" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -469,7 +469,7 @@ For the Gaussian Copula estimation, the entropy is computed in bits. We have:</p
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Entropy of x: 6.03
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Entropy of x: 6.15
 </pre></div>
 </div>
 <p>For comparison, we can compute the entropy of a multivariate Gaussian with
@@ -485,7 +485,7 @@ the covariance matrix of the Gaussian. We have:</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analytical entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy_analytical</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Analytical entropy of x: 6.03
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Analytical entropy of x: 6.15
 </pre></div>
 </div>
 <p>We see that the two values are very close.</p>
@@ -506,10 +506,10 @@ is expected to be zero.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mutual information between x and y: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">mi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Mutual information between x and y: 0.01
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Mutual information between x and y: 0.00
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.129 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.127 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-tutorial-core-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5b339cefcfab9a7df160c5f43bed58df/plot_tutorial_core.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_tutorial_core.ipynb</span></code></a></p>
@@ -534,20 +534,20 @@ is expected to be zero.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="it2.html"
+       href="index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Entropy example 2</p>
+        <p class="prev-next-title">Entropy and mutual information</p>
       </div>
     </a>
     <a class="right-next"
-       href="plot_entropies.html"
+       href="plot_mi.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Comparison of entropy estimators</p>
+        <p class="prev-next-title">Comparison of mutual-information estimators</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

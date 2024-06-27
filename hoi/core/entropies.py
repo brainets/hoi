@@ -234,7 +234,7 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
         x, return_counts=True, size=n_samples, axis=1, fill_value=0
     )[1]
     probs = counts / n_samples
-    return jax.scipy.special.entr(probs).sum() / np.log(base)
+    return jax.scipy.special.entr(probs).sum() / jnp.log(base)
 
 
 ###############################################################################
@@ -300,7 +300,7 @@ def entropy_knn(x: jnp.array, k: int = 3) -> jnp.array:
 
     h = -psi(k) + psi(n) + log_c_d + (d / n) * sum_log_dist
 
-    return jnp.maximum(0, h)
+    return jnp.maximum(0, h) / jnp.log(2)  # added compared to original code
 
 
 ###############################################################################

@@ -1,7 +1,7 @@
-Metrics of HOI
---------------
+``hoi.metrics``
+---------------
 
-:py:mod:`hoi.metrics`:
+Metrics of HOI.
 
 .. currentmodule:: hoi.metrics
 
@@ -20,6 +20,9 @@ Network behavior
    TC
    DTC
    Sinfo
+   RedundancyphiID
+   SynergyphiID
+
 
 Network encoding
 ++++++++++++++++

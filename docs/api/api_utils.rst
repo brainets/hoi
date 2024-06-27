@@ -1,7 +1,7 @@
-Utility functions
------------------
+``hoi.utils``
+-------------
 
-:py:mod:`hoi.utils`:
+Utility functions.
 
 .. currentmodule:: hoi.utils
 

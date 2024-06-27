@@ -32,7 +32,7 @@ class HOIEstimator(object):
         assert isinstance(self._symmetric, bool)
 
         # prepare the data
-        self._x = self._prepare_data(x, y=y, multiplets=multiplets)
+        self._x = self._preprocessing(x, y=y, multiplets=multiplets)
 
     def __iter__(self):
         """Iteration over orders."""
@@ -45,11 +45,12 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
 
-    def _prepare_data(self, x, y=None, multiplets=None):
+    def _preprocessing(self, x, y=None, multiplets=None):
         """Check input x shape."""
 
-        logger.debug("    Prepare the data")
+        logger.debug("    Preprocessing of the data")
 
+        # ---------------------------- X RESHAPING ----------------------------
         # force x to be 3d
         assert x.ndim >= 2
         if x.ndim == 2:
@@ -57,17 +58,21 @@ class HOIEstimator(object):
         self._n_features_x = x.shape[1]
         self._n_features_y = 0
 
+        # ---------------------------- Y RESHAPING ----------------------------
         # additional variable along feature dimension
         self._has_target = isinstance(y, (list, np.ndarray, tuple))
         if self._has_target:
             x = self._merge_xy(x, y=y)
 
+        # ----------------------------- TRANSPOSE -----------------------------
+        x = x.transpose(2, 1, 0)
+        self.n_variables, self.n_features, self.n_samples = x.shape
+
+        # ----------------------------- MULTIPLETS ----------------------------
         # compute only selected multiplets
         self._custom_mults = None
         if isinstance(multiplets, (list, np.ndarray)):
             self._custom_mults = multiplets
-
-        self.n_samples, self.n_features, self.n_variables = x.shape
 
         return x
 
@@ -128,6 +133,10 @@ class HOIEstimator(object):
         self.minsize, self.maxsize = minsize, maxsize
 
         return minsize, maxsize
+
+    def _postprocessing(self, hoi):
+        """Post-processing of computed hoi."""
+        pass
 
     ###########################################################################
     ###########################################################################

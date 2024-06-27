@@ -1,7 +1,7 @@
-Core information-theoretical measures and combinatory
------------------------------------------------------
+``hoi.core`` 
+------------
 
-:py:mod:`hoi.core`:
+Core information-theoretical measures and combinatory.
 
 .. currentmodule:: hoi.core
 
@@ -25,8 +25,7 @@ Measures of Mutual Information
 .. autosummary::
    :toctree: generated/
 
-   mi_gcmi_gg
-   mi_gcmi_gd
+   get_mi
 
 
 Combinatory

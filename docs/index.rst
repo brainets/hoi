@@ -8,29 +8,75 @@
 .. |Codecov| image:: https://codecov.io/gh/brainets/hoi/graph/badge.svg?token=7PNM2VD994
 .. _Codecov: https://codecov.io/gh/brainets/hoi
 
-HOI jax implementation
-======================
 
-Description
-+++++++++++
-The estimation of **Higher-Order Interactions (HOIs)** involves various approaches from diverse fields, such as graph theory and information theory. One notable information-theoretical quantity used in this context is the O-information, which stands for **Information about Organizational structure.**
+HOI : High-Performance Estimation of Higher-Order Interactions
+==============================================================
 
-The O-information is a powerful tool for characterizing statistical interdependencies within multiplets of three or more variables. It goes beyond simply quantifying the amount of information carried by brain regions' multiplets; it also provides valuable insights into the nature of this information. Specifically, the O-information informs us about whether the multiplets predominantly convey redundant or synergistic information among the interconnected brain regions.
+**HOI** (Higher Order Interactions) is a Python package to go beyond pairwise interactions by quantifying the statistical dependencies between 2 or more units using information-theoretical metrics. The package is built on top of `Jax <https://github.com/google/jax>`_ allowing computations on CPU or GPU.
 
-In summary, this package aims at calculating the O-information thereby understanding and deciphering complex interactions among multiple brain regions, shedding light on the underlying organizational structure and the type of information exchanges taking place within these multiplets.
+.. grid:: 3
+   :margin: 0
+   :padding: 0
+   :gutter: 0
+
+   .. grid-item-card:: Familiar API
+      :columns: 12 6 6 4
+      :class-card: sd-border-0
+      :shadow: None
+
+      HOI provides a familiar Scikit-learn style API for ease of adoption by researchers and engineers.
+
+   .. grid-item-card:: Metrics
+      :columns: 12 6 6 4
+      :class-card: sd-border-0
+      :shadow: None
+
+      HOI provides cutting-edge and most up-to-date metrics to estimate higher-order interactions
+
+   .. grid-item-card:: Run Anywhere
+      :columns: 12 6 6 4
+      :class-card: sd-border-0
+      :shadow: None
+
+      The same code executes on multiple backends, including CPU, GPU, & TPU
+
+.. grid:: 3
+
+    .. grid-item-card:: :material-regular:`rocket_launch;2em` Install hoi
+      :columns: 12 6 6 4
+      :link: installation
+      :link-type: ref
+      :class-card: box1
+
+    .. grid-item-card:: :material-regular:`library_books;2em` List of functions
+      :columns: 12 6 6 4
+      :link: hoi_modules
+      :link-type: ref
+      :class-card: box2
+
+    .. grid-item-card:: :material-regular:`laptop_chromebook;2em` Examples
+      :columns: 12 6 6 4
+      :link: auto_examples/index
+      :link-type: doc
+      :class-card: box3
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :hidden:
+   :maxdepth: 1
+   :caption: Getting Started 🚀
 
    Installation <install>
-   Overview <overview/index>
-   API Reference <api/modules>
+   Quickstart <quickstart>
    Examples <auto_examples/index>
+   Glossary <glossary>
+   Theoretical background <theory>
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+.. toctree::
+   :hidden:
+   :maxdepth: 1
+   :caption: Further Resources 🔪
+
+   Public API: list of functions <api/modules>
+   Jax <jax>
+   Developer Documentation <contributor_guide>

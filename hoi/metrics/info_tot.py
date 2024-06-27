@@ -56,8 +56,7 @@ class InfoTot(HOIEstimator):
         method : {'gcmi'}
             Name of the method to compute mutual-information. Use either :
 
-                * 'gcmi': gaussian copula MI [default]. See
-                  :func:`hoi.core.mi_gcmi_gg`
+                * 'gcmi': gaussian copula MI [default]
 
         kwargs : dict | {}
             Additional arguments are sent to each MI function
@@ -110,27 +109,3 @@ class InfoTot(HOIEstimator):
             offset += n_combs
 
         return np.asarray(hoi)
-
-
-if __name__ == "__main__":
-    from hoi.utils import get_nbest_mult
-
-    np.random.seed(0)
-
-    x = np.random.rand(200, 7)
-    y_red = np.random.rand(x.shape[0])
-
-    # redundancy: (1, 2, 6) + (7, 8)
-    x[:, 1] += y_red
-    x[:, 2] += y_red
-    x[:, 6] += y_red
-    # synergy:    (0, 3, 5) + (7, 8)
-    y_syn = x[:, 0] + x[:, 3] + x[:, 5]
-    # bivariate target
-    y = np.c_[y_red, y_syn]
-
-    model = InfoTot(x, y_red)
-    hoi = model.fit(minsize=2, maxsize=4, method="gcmi")
-    print(model.multiplets)
-
-    print(get_nbest_mult(hoi, model, minsize=3, maxsize=3))

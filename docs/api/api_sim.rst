@@ -1,7 +1,7 @@
-Simulation of HOI
------------------
+``hoi.simulation``
+------------------
 
-:py:mod:`hoi.simulation`:
+Simulate HOI.
 
 .. currentmodule:: hoi.simulation
 

@@ -1,7 +1,7 @@
-Plot HOI
---------
+``hoi.plot``
+------------
 
-:py:mod:`hoi.plot`:
+Plotting functions.
 
 .. currentmodule:: hoi.plot
 

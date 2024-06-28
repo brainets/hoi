@@ -45,7 +45,7 @@ def mi_binning(x, y, **kwargs):
 # list of estimators to compare
 metrics = {
     "GCMI": get_mi("gcmi", biascorrect=False),
-    "KNN-3": get_mi("knn", k=1),
+    "KNN-3": get_mi("knn", k=3),
     "KNN-10": get_mi("knn", k=10),
     "Kernel": get_mi("kernel"),
     "Binning": partial(mi_binning, n_bins=4),
@@ -101,7 +101,7 @@ sigma_x = 1.0
 sigma_y = 1.0
 
 # covariance between x and y
-covariance = 0.3
+covariance = 0.5
 
 # covariance matrix
 cov_matrix = [[sigma_x**2, covariance], [covariance, sigma_y**2]]
@@ -135,3 +135,4 @@ plt.title(
     fontweight="bold",
 )
 plt.show()
+print("done")

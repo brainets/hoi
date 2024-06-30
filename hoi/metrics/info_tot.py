@@ -51,8 +51,8 @@ class InfoTot(HOIEstimator):
         Parameters
         ----------
         minsize, maxsize : int | 1, None
-            Minimum and maximum size of the multiplets. If minsize is 1, pairwise
-            mutual information will be computed.
+            Minimum and maximum size of the multiplets. If minsize is 1,
+            pairwise mutual information will be computed.
         method : {'gcmi'}
             Name of the method to compute mutual-information. Use either :
 

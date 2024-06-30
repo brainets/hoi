@@ -10,7 +10,7 @@ can be estimated theoretically. In this this tutorial we are going to:
 1. Simulate data sampled from a "splitted" multivariate normal distribution.
 2. Define estimators of MI.
 3. Compute the MI for a varying number of samples.
-4. See if the computed MI converge toward the theoretical value.
+4. See if the computed MI converge towards the theoretical value.
 
 This example is inspired from a similar simulation done by
 Czyz et al., NeurIPS 2023 :cite:`czyz2024beyond`.
@@ -102,8 +102,9 @@ def create_cov_matrix(n_dims, cov, mode="dense", k=None):
     return cov_matrix
 
 
-def compute_true_mi(cov_matrix, n_dims):
+def compute_true_mi(cov_matrix):
     """Compute the true MI (bits)."""
+    n_dims = cov_matrix.shape[0] // 2
     det_x = np.linalg.det(cov_matrix[n_dims:, n_dims:])
     det_y = np.linalg.det(cov_matrix[:n_dims, :n_dims])
     det_xy = np.linalg.det(cov_matrix)
@@ -130,7 +131,7 @@ mi = {k: np.zeros((n_repeat, len(n_samples))) for k in metrics.keys()}
 for i, mode in enumerate(modes):
     cov_matrix = create_cov_matrix(n_dims, covariance, mode=mode)
     # define the theoretic MI
-    mi_theoric = compute_true_mi(cov_matrix, n_dims)
+    mi_theoric = compute_true_mi(cov_matrix)
     ax = fig.add_subplot(1, 2, i + 1)
 
     for n_s, s in enumerate(n_samples):

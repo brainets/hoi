@@ -56,6 +56,7 @@ def simulate_hois_gauss(
             triplet_character=triplet_character,
         )
 
+
 ###############################################################################
 ###############################################################################
 #                                   STATIC HOIs
@@ -89,7 +90,7 @@ def sim_hoi_static_target(
     # n_triplets = int(n_nodes/3)
 
     mean_mvgauss = np.zeros(4)
-    
+
     cov = cov_order_4(triplet_character)
 
     simulated_data = np.zeros((n_trials, 4))
@@ -98,7 +99,7 @@ def sim_hoi_static_target(
         mean_mvgauss, cov, size=n_trials, check_valid="warn", tol=1e-8
     )
 
-    return simulated_data[:,:3], simulated_data[:,3]
+    return simulated_data[:, :3], simulated_data[:, 3]
 
 
 def sim_hoi_static(
@@ -134,6 +135,7 @@ def sim_hoi_static(
     )
 
     return simulated_data
+
 
 ###############################################################################
 ###############################################################################

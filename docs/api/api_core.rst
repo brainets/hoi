@@ -12,7 +12,7 @@ Measures of Entropy
    :toctree: generated/
 
    get_entropy
-   entropy_gcmi
+   entropy_gc
    entropy_bin
    entropy_knn
    entropy_kernel

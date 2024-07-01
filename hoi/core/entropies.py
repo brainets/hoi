@@ -23,12 +23,12 @@ from hoi.utils.logging import logger
 ###############################################################################
 
 
-def get_entropy(method="gcmi", **kwargs):
+def get_entropy(method="gc", **kwargs):
     """Get entropy function.
 
     Parameters
     ----------
-    method : {'gcmi', 'binning', 'knn', 'kernel'}
+    method : {'gc', 'binning', 'knn', 'kernel'}
         Name of the method to compute entropy.
     kwargs : dict | {}
         Additional arguments sent to the entropy function.
@@ -39,8 +39,8 @@ def get_entropy(method="gcmi", **kwargs):
         Function to compute entropy on a variable of shape
         (n_features, n_samples)
     """
-    if method == "gcmi":
-        return partial(entropy_gcmi, **kwargs)
+    if method == "gc":
+        return partial(entropy_gc, **kwargs)
     elif method == "binning":
         return partial(entropy_bin, **kwargs)
     elif method == "knn":
@@ -68,11 +68,11 @@ def prepare_for_entropy(data, method, reshape=True, **kwargs):
             "data dtype should be integer. Check that you discretized your"
             " data. If so, use `data.astype(int)`"
         )
-    elif (method in ["kernel", "gcmi", "knn"]) and (data.dtype != float):
+    elif (method in ["kernel", "gc", "knn"]) and (data.dtype != float):
         raise ValueError(f"data dtype should be float, not {data.dtype}")
 
     # method specific preprocessing
-    if method == "gcmi":
+    if method == "gc":
         logger.info("    Copnorm data")
         data = copnorm_nd(data, axis=2)
         data = data - data.mean(axis=2, keepdims=True)
@@ -96,7 +96,7 @@ def prepare_for_entropy(data, method, reshape=True, **kwargs):
 
 
 @partial(jax.jit, static_argnums=(1, 2))
-def entropy_gcmi(
+def entropy_gc(
     x: jnp.array, biascorrect: bool = False, demean: bool = False
 ) -> jnp.array:
     """Entropy of a Gaussian variable in bits.

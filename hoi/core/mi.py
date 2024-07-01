@@ -13,12 +13,12 @@ from .entropies import get_entropy
 ###############################################################################
 
 
-def get_mi(method="gcmi", **kwargs):
+def get_mi(method="gc", **kwargs):
     """Get Mutual-Information function.
 
     Parameters
     ----------
-    method : {'gcmi', 'binning', 'knn', 'kernel'}
+    method : {'gc', 'binning', 'knn', 'kernel'}
         Name of the method to compute mutual-information.
     kwargs : dict | {}
         Additional arguments sent to the mutual-information function.

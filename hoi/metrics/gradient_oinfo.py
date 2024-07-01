@@ -50,18 +50,18 @@ class GradientOinfo(HOIEstimator):
         self._oinf_tf = base_model(x, **kw_oinfo)
         self.__name__ = self.__name__ + "(%s)" % base_model.__name__
 
-    def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
+    def fit(self, minsize=2, maxsize=None, method="gc", **kwargs):
         """Compute the Gradient O-information.
 
         Parameters
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi', 'binning', 'knn', 'kernel}
+        method : {'gc', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See
-                  :func:`hoi.core.entropy_gcmi`
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
                   :func:`hoi.core.entropy_bin`

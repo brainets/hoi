@@ -28,7 +28,7 @@ plt.style.use("ggplot")
 x = simulate_hois_gauss()
 
 model = InfoTopo(x)
-hoi = model.fit(minsize=3, maxsize=None, method="gcmi")
+hoi = model.fit(minsize=3, maxsize=None, method="gc")
 
 print(get_nbest_mult(hoi, model))
 

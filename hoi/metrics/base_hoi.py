@@ -144,17 +144,17 @@ class HOIEstimator(object):
     ###########################################################################
     ###########################################################################
     def compute_entropies(
-        self, method="gcmi", minsize=1, maxsize=None, fill_value=-1, **kwargs
+        self, method="gc", minsize=1, maxsize=None, fill_value=-1, **kwargs
     ):
         """Compute entropies for all multiplets.
 
         Parameters
         ----------
-        method : {'gcmi', 'binning', 'knn', 'kernel}
+        method : {'gc', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See
-                  :func:`hoi.core.entropy_gcmi`
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
                   :func:`hoi.core.entropy_bin`

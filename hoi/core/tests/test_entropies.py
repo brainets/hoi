@@ -2,7 +2,7 @@ import pytest
 import numpy as np
 import jax
 from hoi.core.entropies import (
-    entropy_gcmi,
+    entropy_gc,
     entropy_bin,
     entropy_knn,
     entropy_kernel,
@@ -23,8 +23,8 @@ class TestEntropy(object):
     @pytest.mark.parametrize("x", [x1, x2, j1, j2])
     @pytest.mark.parametrize("biascorrect", [True, False])
     @pytest.mark.parametrize("demean", [True, False])
-    def test_entropy_gcmi(self, x, biascorrect, demean):
-        hx = entropy_gcmi(x, biascorrect=biascorrect, demean=demean)
+    def test_entropy_gc(self, x, biascorrect, demean):
+        hx = entropy_gc(x, biascorrect=biascorrect, demean=demean)
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
         assert hx.shape == ()

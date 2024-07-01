@@ -47,7 +47,7 @@ x[:, 3] += x[:, 4] + x[:, 5]
 model = InfoTopo(x)
 
 # estimate hoi from order 3 up to order 6
-hoi = model.fit(minsize=3, maxsize=6, method="gcmi")
+hoi = model.fit(minsize=3, maxsize=6, method="gc")
 
 ###############################################################################
 # Get a summary of the results

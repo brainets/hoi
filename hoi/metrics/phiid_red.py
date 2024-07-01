@@ -67,7 +67,7 @@ class RedundancyphiID(HOIEstimator):
         tau=1,
         direction_axis=0,
         maxsize=None,
-        method="gcmi",
+        method="gc",
         **kwargs,
     ):
         """Redundancy (phiID).
@@ -76,11 +76,11 @@ class RedundancyphiID(HOIEstimator):
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi'}
-            Name of the method to compute mutual-information. Use either :
+        method : {'gc', 'binning', 'knn', 'kernel}
+            Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See
-                  :func:`hoi.core.entropy_gcmi`
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
                   :func:`hoi.core.entropy_bin`

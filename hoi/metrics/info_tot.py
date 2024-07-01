@@ -45,17 +45,25 @@ class InfoTot(HOIEstimator):
             self, x=x, y=y, multiplets=multiplets, verbose=verbose
         )
 
-    def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
+    def fit(self, minsize=2, maxsize=None, method="gc", **kwargs):
         """Compute RSI.
 
         Parameters
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi'}
-            Name of the method to compute mutual-information. Use either :
+        method : {'gc', 'binning', 'knn', 'kernel}
+            Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula MI [default]
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
+                * 'binning': binning-based estimator of entropy. Note that to
+                  use this estimator, the data have be to discretized. See
+                  :func:`hoi.core.entropy_bin`
+                * 'knn': k-nearest neighbor estimator. See
+                  :func:`hoi.core.entropy_knn`
+                * 'kernel': kernel-based estimator of entropy
+                  see :func:`hoi.core.entropy_kernel`
 
         kwargs : dict | {}
             Additional arguments are sent to each MI function

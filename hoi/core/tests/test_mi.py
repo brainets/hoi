@@ -16,8 +16,8 @@ class TestMutualInformation(object):
     @pytest.mark.parametrize("xy", [(x1, x2), (j1, j2)])
     @pytest.mark.parametrize("biascorrect", [True, False])
     @pytest.mark.parametrize("demean", [True, False])
-    def test_mi_gcmi(self, xy, biascorrect, demean):
-        mi_fcn = get_mi(method="gcmi", biascorrect=biascorrect, demean=demean)
+    def test_mi_gc(self, xy, biascorrect, demean):
+        mi_fcn = get_mi(method="gc", biascorrect=biascorrect, demean=demean)
         mi = mi_fcn(xy[0], xy[1])
         assert mi.dtype == np.float32
         assert mi.shape == ()
@@ -26,7 +26,7 @@ class TestMutualInformation(object):
     @pytest.mark.parametrize("biascorrect", [True, False])
     @pytest.mark.parametrize("demean", [True, False])
     def test_mi_bin(self, xy, biascorrect, demean):
-        mi_fcn = get_mi(method="gcmi", biascorrect=biascorrect, demean=demean)
+        mi_fcn = get_mi(method="gc", biascorrect=biascorrect, demean=demean)
         x_binned = digitize(xy[0], n_bins=3)
         y_binned = digitize(xy[1], n_bins=3)
         mi = mi_fcn(x_binned, y_binned)

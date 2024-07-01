@@ -29,8 +29,10 @@ def get_mi(method="gc", **kwargs):
         Function to compute mutual information on variables of shapes
         (n_features, n_samples)
     """
-    if method == "knn":
-        return partial(compute_mi_knn, **kwargs)
+    if method == "gc":
+        return partial(mi_gc, **kwargs)
+    elif method == "knn":
+        return partial(mi_knn, **kwargs)
     else:
         # get the entropy function
         _entropy = get_entropy(method=method, **kwargs)
@@ -104,6 +106,81 @@ def compute_mi(x, y, entropy_fcn=None):
 
 ###############################################################################
 ###############################################################################
+#                     GAUSSIAN COPULA MUTUAL INFORMATION
+###############################################################################
+###############################################################################
+
+
+@partial(jax.jit, static_argnums=(2, 3))
+def mi_gc(
+    x: jnp.array, y: jnp.array, biascorrect: bool = False, demean: bool = False
+):
+    """Mutual information (MI) between two Gaussian variables in bits.
+
+    Parameters
+    ----------
+    x, y : array_like
+        Arrays to consider for computing the Mutual Information. The two input
+        variables x and y should have a shape of (n_features_x, n_samples) and
+        (n_features_y, n_samples)
+    biascorrect : bool | False
+        Specifies whether bias correction should be applied to the estimated MI
+    demean : bool | False
+        Specifies whether the input data have to be demeaned
+
+
+    Returns
+    -------
+    i : float
+        Information shared by x and y (in bits)
+    """
+    n_features_x, n_samples = x.shape
+    n_features_x = y.shape[0]
+    n_features_xy = n_features_x + n_features_x
+
+    if y.shape[1] != n_samples:
+        raise ValueError("number of trials do not match")
+
+    # joint variable
+    xy = jnp.vstack((x, y))
+    if demean:
+        xy = xy - xy.mean(axis=1)[:, jnp.newaxis]
+    cxy = jnp.dot(xy, xy.T) / float(n_samples - 1)
+    # submatrices of joint covariance
+    cx = cxy[:n_features_x, :n_features_x]
+    cy = cxy[n_features_x:, n_features_x:]
+
+    chcxy = jnp.linalg.cholesky(cxy)
+    chcx = jnp.linalg.cholesky(cx)
+    chcy = jnp.linalg.cholesky(cy)
+
+    # entropies in nats
+    # normalizations cancel for mutual information
+    hx = jnp.sum(jnp.log(jnp.diagonal(chcx)))
+    hy = jnp.sum(jnp.log(jnp.diagonal(chcy)))
+    hxy = jnp.sum(jnp.log(jnp.diagonal(chcxy)))
+
+    ln2 = jnp.log(2)
+    if biascorrect:
+        psiterms = (
+            psi(
+                (n_samples - jnp.arange(1, n_features_xy + 1)).astype(float)
+                / 2.0
+            )
+            / 2.0
+        )
+        dterm = (ln2 - jnp.log(n_samples - 1.0)) / 2.0
+        hx = hx - n_features_x * dterm - psiterms[:n_features_x].sum()
+        hy = hy - n_features_x * dterm - psiterms[:n_features_x].sum()
+        hxy = hxy - n_features_xy * dterm - psiterms[:n_features_xy].sum()
+
+    # MI in bits
+    i = (hx + hy - hxy) / ln2
+    return i
+
+
+###############################################################################
+###############################################################################
 #                         KNN MUTUAL INFORMATION
 ###############################################################################
 ###############################################################################
@@ -134,7 +211,7 @@ def n_neighbours(xy, idx, k=3):
 
 
 @partial(jax.jit, static_argnums=(2,))
-def compute_mi_knn(x, y, k: int = 3) -> jnp.array:
+def mi_knn(x, y, k: int = 3) -> jnp.array:
     """Mutual information using the KSG estimator.
 
     First algorithm proposed in Kraskov et al., Estimating mutual information,
@@ -143,7 +220,9 @@ def compute_mi_knn(x, y, k: int = 3) -> jnp.array:
     Parameters
     ----------
     x, y : array_like
-        Input data of shape (n_features, n_samples).
+        Arrays to consider for computing the Mutual Information. The two input
+        variables x and y should have a shape of (n_features_x, n_samples) and
+        (n_features_y, n_samples)
     k : int
         Number of nearest neighbors to consider for the KSG estimator.
 

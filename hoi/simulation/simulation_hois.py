@@ -15,7 +15,8 @@ def simulate_hois_gauss(
     """Simulates High Order Interactions (HOIs) with or without target
     variable, depending on the 'target' parameter.
 
-    The parameter 'n_samples' allows to choose the length of the simulated data.
+    The parameter 'n_samples' allows to choose the length of the simulated
+    data.
 
     Parameters
     ----------
@@ -101,7 +102,8 @@ def sim_hoi_target(
         mean_mvgauss, cov, size=n_samples, check_valid="warn", tol=1e-8
     )
 
-    # Return the first three variables as the simulated data and the fourth as the target
+    # Return the first three variables as the simulated data and the fourth as
+    # # the target
     return simulated_data[:, :3], simulated_data[:, 3]
 
 

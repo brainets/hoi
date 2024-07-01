@@ -1,6 +1,6 @@
 """
-ntroduction to core information theoretical metrics
-===================================================
+Introduction to core information theoretical metrics
+====================================================
 
 This introduction guides you through the core information theoretical metrics
 available. These metrics are the entropy and the mutual information.

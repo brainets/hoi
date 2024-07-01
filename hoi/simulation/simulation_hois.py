@@ -12,13 +12,12 @@ import numpy as np
 def simulate_hois_gauss(
     target=False,
     n_trials=1000,
-    triplet_character=None,
+    triplet_character="null",
 ):
     """Simulates High Order Interactions (HOIs) with or without behavioral
     information, depending on the 'target' parameter.
 
-    The simulation can be conducted for a specified number of trials and nodes,
-    with an optional time component.
+    The simulation can be conducted for a specified number of trials.
 
     Parameters
     ----------
@@ -27,31 +26,34 @@ def simulate_hois_gauss(
         information (True) or not (False).
     n_trials : int | 1000
         Number of trials to simulate.
-    n_nodes : int | 12
-        Number of nodes in the simulated data.
-    triplet_character : list | None
-        List of triplet of desired HOIs.
-        If None, half of the triplet is syn and
-        the other half are red.
+    triplet_character : str | null
+        interaction character of the triplet of variables
+        to generate. When triplet_character='synergy', a
+        triplet of variable with negative O-information
+        will be generated. If triplet_character='null'
+        a triplet of variables with O-information close
+        to zero will be generated. If
+        triplet_character='redundancy' a triplet of
+        variables with positive O-information
+        will be generated.
 
     Returns
     -------
     Simulated data : numpy.ndarray
         A numpy array representing the simulated data.
         The shape of the generated data is n_trails, n_nodes
-
     """
 
     if not target:
-        # static without target
-        return sim_hoi_static(
+        # withou target
+        return sim_hoi(
             n_trials=n_trials,
             triplet_character=triplet_character,
         )
 
     elif target:
-        # static with target
-        return sim_hoi_static_target(
+        # with target
+        return sim_hoi_target(
             n_trials=n_trials,
             triplet_character=triplet_character,
         )
@@ -64,7 +66,7 @@ def simulate_hois_gauss(
 ###############################################################################
 
 
-def sim_hoi_static_target(
+def sim_hoi_target(
     n_trials=1000,
     triplet_character="null",
 ):
@@ -74,20 +76,15 @@ def sim_hoi_static_target(
     ----------
     n_trials : int | 1000
         Number of trials to simulate.
-    triplet_character : list | None
+    triplet_character : str | "null"
         List of triplet characteristics.
-    triplet_character_with_beh : list | None
-        List of triplet characteristics with
-        behavioral information.
 
     Returns
     -------
-        simulated data, simulated data without behavioral information,
-        simulated data with behavioral information : numpy.ndarray
+        simulated data without behavioral variable,
+        behavioral variable : numpy.ndarray
 
     """
-
-    # n_triplets = int(n_nodes/3)
 
     mean_mvgauss = np.zeros(4)
 
@@ -102,9 +99,9 @@ def sim_hoi_static_target(
     return simulated_data[:, :3], simulated_data[:, 3]
 
 
-def sim_hoi_static(
+def sim_hoi(
     n_trials=1000,
-    triplet_character=None,
+    triplet_character="null",
 ):
     """Simulates High Order Interactions (HOIs) without behavioral information.
 
@@ -112,9 +109,7 @@ def sim_hoi_static(
     ----------
     n_trials : int | 1000
         Number of trials to simulate.
-    n_nodes : int | 12
-        Number of nodes in the simulated data.
-    triplet_character : list | None
+    triplet_character : str | "null"
         List of triplet characteristics.
 
     Returns
@@ -145,19 +140,20 @@ def sim_hoi_static(
 
 
 def cov_order_3(character):
-    """Compute the covariance matrix for three brain regions based
-    on the given character.
+    """Compute the covariance matrix for three variables based
+    on the given interaction character.
 
     Parameters
     ----------
     character : str
-        'null', redundancy', or 'synergy' indicating the relationship
-        between brain regions
+        'null', redundancy', or 'synergy' indicating the interaction
+         character among the variables to simulate.
 
     Returns
     -------
     cov : numpy.ndarray
-        covariance matrix for the three brain regions
+        covariance matrix for the three variables with the specified
+        interaction pattern.
     """
 
     lambx = np.sqrt(0.99)
@@ -204,18 +200,20 @@ def cov_order_3(character):
 
 
 def cov_order_4(character):
-    """Calculate the covariance matrix for a given character.
+    """Calculate the covariance matrix for a given interaction
+    character.
 
     Parameters
     ----------
     character : str
-        The character specifying the type of covariance
-        matrix. It can be either 'redundancy' or 'synergy'.
+        The character specifying the kind of interactions character
+        of the three variable and the target variable. It can
+        be either 'redundancy' or 'synergy'.
 
     Returns
     -------
     cov_ : numpy.ndarray
-    The covariance matrix for the specified character.
+    The covariance matrix for the specified interaction character.
     """
     lambx = np.sqrt(0.99)
     lamby = np.sqrt(0.7)

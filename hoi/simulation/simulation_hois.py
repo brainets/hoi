@@ -1,7 +1,5 @@
 import numpy as np
 
-# import matplotlib.pyplot as plt
-
 ###############################################################################
 ###############################################################################
 #                                 SWITCHER SIMULATIONS
@@ -11,50 +9,53 @@ import numpy as np
 
 def simulate_hois_gauss(
     target=False,
-    n_trials=1000,
+    n_samples=1000,
     triplet_character="null",
 ):
-    """Simulates High Order Interactions (HOIs) with or without behavioral
-    information, depending on the 'target' parameter.
+    """Simulates High Order Interactions (HOIs) with or without target
+    variable, depending on the 'target' parameter.
 
-    The simulation can be conducted for a specified number of trials.
+    The parameter 'n_samples' allows to choose the length of the simulated data.
 
     Parameters
     ----------
     target : bool | False
-        Indicates whether to include behavioral
-        information (True) or not (False).
-    n_trials : int | 1000
-        Number of trials to simulate.
+        Indicates whether to include target
+        variable (True) or not (False).
+    n_samples : int | 1000
+        Number of samples to simulate.
     triplet_character : str | null
-        interaction character of the triplet of variables
+        Interaction character of the triplet of variables
         to generate. When triplet_character='synergy', a
-        triplet of variable with negative O-information
+        triplet of variables with negative O-information (about -0.8)
         will be generated. If triplet_character='null'
         a triplet of variables with O-information close
         to zero will be generated. If
         triplet_character='redundancy' a triplet of
-        variables with positive O-information
-        will be generated.
+        variables with positive O-information (about 0.3)
+        will be generated. In the case, target = True, triplet
+        character refers to the information conveyed by the triplet
+        with respect to the target variable.
 
     Returns
     -------
-    Simulated data : numpy.ndarray
+    Simulated data, target variable (if target) : numpy.ndarray
         A numpy array representing the simulated data.
-        The shape of the generated data is n_trails, n_nodes
+        An array representing the target variable, if target=True
+        The shape of the generated data is n_samples, n_variables
     """
 
     if not target:
-        # withou target
+        # without target
         return sim_hoi(
-            n_trials=n_trials,
+            n_samples=n_samples,
             triplet_character=triplet_character,
         )
 
     elif target:
         # with target
         return sim_hoi_target(
-            n_trials=n_trials,
+            n_samples=n_samples,
             triplet_character=triplet_character,
         )
 
@@ -67,48 +68,53 @@ def simulate_hois_gauss(
 
 
 def sim_hoi_target(
-    n_trials=1000,
+    n_samples=1000,
     triplet_character="null",
 ):
-    """Simulates High Order Interactions (HOIs) with behavioral information.
+    """Simulates High Order Interactions (HOIs) with target variable.
 
     Parameters
     ----------
-    n_trials : int | 1000
-        Number of trials to simulate.
+    n_samples : int | 1000
+        Number of samples to simulate.
     triplet_character : str | "null"
         List of triplet characteristics.
 
     Returns
     -------
-        simulated data without behavioral variable,
-        behavioral variable : numpy.ndarray
+        Simulated data without target variable,
+        target variable : numpy.ndarray
 
     """
 
+    # Mean vector for multivariate Gaussian distribution with 4 variables
     mean_mvgauss = np.zeros(4)
 
+    # Get the covariance matrix based on the triplet character
     cov = cov_order_4(triplet_character)
 
-    simulated_data = np.zeros((n_trials, 4))
+    # Initialize an array to hold the simulated data
+    simulated_data = np.zeros((n_samples, 4))
 
+    # Generate the simulated data using a multivariate normal distribution
     simulated_data = np.random.multivariate_normal(
-        mean_mvgauss, cov, size=n_trials, check_valid="warn", tol=1e-8
+        mean_mvgauss, cov, size=n_samples, check_valid="warn", tol=1e-8
     )
 
+    # Return the first three variables as the simulated data and the fourth as the target
     return simulated_data[:, :3], simulated_data[:, 3]
 
 
 def sim_hoi(
-    n_trials=1000,
+    n_samples=1000,
     triplet_character="null",
 ):
-    """Simulates High Order Interactions (HOIs) without behavioral information.
+    """Simulates High Order Interactions (HOIs) without target information.
 
     Parameters
     ----------
-    n_trials : int | 1000
-        Number of trials to simulate.
+    n_samples : int | 1000
+        Number of samples to simulate.
     triplet_character : str | "null"
         List of triplet characteristics.
 
@@ -118,17 +124,21 @@ def sim_hoi(
 
     """
 
-    # n_triplets = int(n_nodes/3)
-
+    # Mean vector for multivariate Gaussian distribution with 3 variables
     mean_mvgauss = np.zeros(3)
+
+    # Get the covariance matrix based on the triplet character
     cov = cov_order_3(triplet_character)
 
-    simulated_data = np.zeros((n_trials, 3))
+    # Initialize an array to hold the simulated data
+    simulated_data = np.zeros((n_samples, 3))
 
+    # Generate the simulated data using a multivariate normal distribution
     simulated_data = np.random.multivariate_normal(
-        mean_mvgauss, cov, size=n_trials, check_valid="warn", tol=1e-8
+        mean_mvgauss, cov, size=n_samples, check_valid="warn", tol=1e-8
     )
 
+    # Return the simulated data
     return simulated_data
 
 
@@ -147,15 +157,16 @@ def cov_order_3(character):
     ----------
     character : str
         'null', redundancy', or 'synergy' indicating the interaction
-         character among the variables to simulate.
+        character among the variables to simulate.
 
     Returns
     -------
     cov : numpy.ndarray
-        covariance matrix for the three variables with the specified
+        Covariance matrix for the three variables with the specified
         interaction pattern.
     """
 
+    # Define the standard deviations for the three variables
     lambx = np.sqrt(0.99)
     lamby = np.sqrt(0.7)
     lambz = np.sqrt(0.3)
@@ -171,7 +182,7 @@ def cov_order_3(character):
         theta = np.diagflat(1 - m**2)
         theta += np.diagflat([0, theta_yz], 1) + np.diagflat([0, theta_yz], -1)
 
-        # The covariance matrix for the three brain regions
+        # The covariance matrix for the three variables
         cov = m * m.T + theta
 
     elif character == "redundancy":
@@ -182,7 +193,7 @@ def cov_order_3(character):
         theta = np.diagflat(1 - m**2)
         theta += np.diagflat([0, theta_yz], 1) + np.diagflat([0, theta_yz], -1)
 
-        # The covariance matrix for the three brain regions
+        # The covariance matrix for the three variables
         cov = m * m.T + theta
 
     elif character == "synergy":
@@ -193,7 +204,7 @@ def cov_order_3(character):
         theta = np.diagflat(1 - m**2)
         theta += np.diagflat([0, theta_yz], 1) + np.diagflat([0, theta_yz], -1)
 
-        # The covariance matrix for the three brain regions
+        # The covariance matrix for the three variables
         cov = m * m.T + theta
 
     return cov
@@ -207,7 +218,7 @@ def cov_order_4(character):
     ----------
     character : str
         The character specifying the kind of interactions character
-        of the three variable and the target variable. It can
+        of the three variables and the target variable. It can
         be either 'redundancy' or 'synergy'.
 
     Returns
@@ -215,28 +226,41 @@ def cov_order_4(character):
     cov_ : numpy.ndarray
     The covariance matrix for the specified interaction character.
     """
+
+    # Define the standard deviations for the four variables
     lambx = np.sqrt(0.99)
     lamby = np.sqrt(0.7)
     lambz = np.sqrt(0.3)
     lambs = np.sqrt(0.2)
 
-    # Imposing the relationships with the behavior
+    # Imposing the relationships with the target
     m = np.array([lambx, lamby, lambz, lambs])[np.newaxis]
 
+    # Initialize the noise covariance matrix theta
     theta = np.diagflat(1 - m**2)
 
     if character == "redundancy":
+        # We fix theta_zs in such a way that the variables are redundant
         theta_zs = 0.25
+
+        # Update the noise covariance matrix theta
         theta += np.diagflat([0, 0, theta_zs], 1) + np.diagflat(
             [0, 0, theta_zs], -1
         )
+
+        # Calculate the full covariance matrix
         cov_ = m * m.T + theta
 
     if character == "synergy":
+        # We fix theta_zs in such a way that the variables show synergy
         theta_zs = -0.52
+
+        # Update the noise covariance matrix theta
         theta += np.diagflat([0, 0, theta_zs], 1) + np.diagflat(
             [0, 0, theta_zs], -1
         )
+
+        # Calculate the full covariance matrix
         cov_ = m * m.T + theta
 
     return cov_
@@ -246,13 +270,17 @@ if __name__ == "__main__":
     from hoi.metrics import Oinfo
     from hoi.utils import get_nbest_mult
 
-    # simulate hois
+    # simulate HOIs
     x = simulate_hois_gauss()
 
-    # compute hois
+    # initialize an array to hold the O-information values
     oi = np.zeros((3, 4))  # x
+
+    # create an Oinfo model
     model = Oinfo(x=oi)
+
+    # fit the model to the simulated data
     hoi = model.fit(x)
 
-    # print the results and check that it correspond to the ground truth
+    # print the results and check that they correspond to the ground truth
     df = get_nbest_mult(hoi, model=model)

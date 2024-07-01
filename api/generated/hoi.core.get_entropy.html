@@ -51,7 +51,7 @@
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="hoi.core.entropy_gcmi" href="hoi.core.entropy_gcmi.html" />
+    <link rel="next" title="hoi.core.entropy_gc" href="hoi.core.entropy_gc.html" />
     <link rel="prev" title="hoi.core" href="../api_core.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -253,7 +253,7 @@
 </details></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">hoi.core.get_entropy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
@@ -432,12 +432,12 @@ document.write(`
 <h1>hoi.core.get_entropy<a class="headerlink" href="#hoi-core-get-entropy" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="hoi.core.get_entropy">
-<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">get_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/core/entropies.html#get_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.get_entropy" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">get_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/core/entropies.html#get_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.get_entropy" title="Link to this definition">#</a></dt>
 <dd><p>Get entropy function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel’}</span></dt><dd><p>Name of the method to compute entropy.</p>
+<dt><strong>method</strong><span class="classifier">{‘gc’, ‘binning’, ‘knn’, ‘kernel’}</span></dt><dd><p>Name of the method to compute entropy.</p>
 </dd>
 <dt><strong>kwargs</strong><span class="classifier">dict | {}</span></dt><dd><p>Additional arguments sent to the entropy function.</p>
 </dd>
@@ -456,8 +456,8 @@ document.write(`
 <section id="examples-using-hoi-core-get-entropy">
 <span id="sphx-glr-backreferences-hoi-core-get-entropy"></span><h2>Examples using <code class="docutils literal notranslate"><span class="pre">hoi.core.get_entropy</span></code><a class="headerlink" href="#examples-using-hoi-core-get-entropy" title="Link to this heading">#</a></h2>
 <div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This introduction guides you through the core information theoretical metrics available. These ..."><img alt="" src="../../_images/sphx_glr_plot_tutorial_core_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/it/plot_tutorial_core.html#sphx-glr-auto-examples-it-plot-tutorial-core-py"><span class="std std-ref">ntroduction to core information theoretical metrics</span></a></p>
-  <div class="sphx-glr-thumbnail-title">ntroduction to core information theoretical metrics</div>
+<p><a class="reference internal" href="../../auto_examples/it/plot_tutorial_core.html#sphx-glr-auto-examples-it-plot-tutorial-core-py"><span class="std std-ref">Introduction to core information theoretical metrics</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Introduction to core information theoretical metrics</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are going to compare entropy estimators. In particular, some distributions,..."><img alt="" src="../../_images/sphx_glr_plot_entropies_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/it/plot_entropies.html#sphx-glr-auto-examples-it-plot-entropies-py"><span class="std std-ref">Comparison of entropy estimators</span></a></p>
   <div class="sphx-glr-thumbnail-title">Comparison of entropy estimators</div>
@@ -485,11 +485,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="hoi.core.entropy_gcmi.html"
+       href="hoi.core.entropy_gc.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">hoi.core.entropy_gcmi</p>
+        <p class="prev-next-title">hoi.core.entropy_gc</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -252,7 +252,7 @@
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
@@ -417,17 +417,25 @@ document.write(`
 
 <div class="viewcode-block" id="RedundancyMMI.fit">
 <a class="viewcode-back" href="../../../api/generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI.fit">[docs]</a>
-    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Redundancy Index.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        minsize, maxsize : int | 2, None</span>
 <span class="sd">            Minimum and maximum size of the multiplets</span>
-<span class="sd">        method : {&#39;gcmi&#39;}</span>
-<span class="sd">            Name of the method to compute mutual-information. Use either :</span>
+<span class="sd">        method : {&#39;gc&#39;, &#39;binning&#39;, &#39;knn&#39;, &#39;kernel}</span>
+<span class="sd">            Name of the method to compute entropy. Use either :</span>
 
-<span class="sd">                * &#39;gcmi&#39;: gaussian copula MI [default].</span>
+<span class="sd">                * &#39;gc&#39;: gaussian copula entropy [default]. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_gc`</span>
+<span class="sd">                * &#39;binning&#39;: binning-based estimator of entropy. Note that to</span>
+<span class="sd">                  use this estimator, the data have be to discretized. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_bin`</span>
+<span class="sd">                * &#39;knn&#39;: k-nearest neighbor estimator. See</span>
+<span class="sd">                  :func:`hoi.core.entropy_knn`</span>
+<span class="sd">                * &#39;kernel&#39;: kernel-based estimator of entropy</span>
+<span class="sd">                  see :func:`hoi.core.entropy_kernel`</span>
 
 <span class="sd">        kwargs : dict | {}</span>
 <span class="sd">            Additional arguments are sent to each MI function</span>

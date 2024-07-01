@@ -252,7 +252,7 @@
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
@@ -396,12 +396,12 @@ document.write(`
 
 <div class="viewcode-block" id="get_entropy">
 <a class="viewcode-back" href="../../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy">[docs]</a>
-<span class="k">def</span> <span class="nf">get_entropy</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_entropy</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get entropy function.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    method : {&#39;gcmi&#39;, &#39;binning&#39;, &#39;knn&#39;, &#39;kernel&#39;}</span>
+<span class="sd">    method : {&#39;gc&#39;, &#39;binning&#39;, &#39;knn&#39;, &#39;kernel&#39;}</span>
 <span class="sd">        Name of the method to compute entropy.</span>
 <span class="sd">    kwargs : dict | {}</span>
 <span class="sd">        Additional arguments sent to the entropy function.</span>
@@ -412,8 +412,8 @@ document.write(`
 <span class="sd">        Function to compute entropy on a variable of shape</span>
 <span class="sd">        (n_features, n_samples)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gcmi&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">entropy_gcmi</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gc&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">entropy_gc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;binning&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">entropy_bin</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span><span class="p">:</span>
@@ -444,11 +444,11 @@ document.write(`
             <span class="s2">&quot;data dtype should be integer. Check that you discretized your&quot;</span>
             <span class="s2">&quot; data. If so, use `data.astype(int)`&quot;</span>
         <span class="p">)</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;kernel&quot;</span><span class="p">,</span> <span class="s2">&quot;gcmi&quot;</span><span class="p">,</span> <span class="s2">&quot;knn&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;kernel&quot;</span><span class="p">,</span> <span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="s2">&quot;knn&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data dtype should be float, not </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="c1"># method specific preprocessing</span>
-    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gcmi&quot;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gc&quot;</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    Copnorm data&quot;</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">copnorm_nd</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -472,10 +472,10 @@ document.write(`
 <span class="c1">###############################################################################</span>
 
 
-<div class="viewcode-block" id="entropy_gcmi">
-<a class="viewcode-back" href="../../../api/generated/hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi">[docs]</a>
+<div class="viewcode-block" id="entropy_gc">
+<a class="viewcode-back" href="../../../api/generated/hoi.core.entropy_gc.html#hoi.core.entropy_gc">[docs]</a>
 <span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-<span class="k">def</span> <span class="nf">entropy_gcmi</span><span class="p">(</span>
+<span class="k">def</span> <span class="nf">entropy_gc</span><span class="p">(</span>
     <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">biascorrect</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">demean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Entropy of a Gaussian variable in bits.</span>

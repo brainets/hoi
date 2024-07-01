@@ -252,7 +252,7 @@
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
@@ -386,12 +386,12 @@ document.write(`
 
 <div class="viewcode-block" id="get_mi">
 <a class="viewcode-back" href="../../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi">[docs]</a>
-<span class="k">def</span> <span class="nf">get_mi</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">get_mi</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get Mutual-Information function.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    method : {&#39;gcmi&#39;, &#39;binning&#39;, &#39;knn&#39;, &#39;kernel&#39;}</span>
+<span class="sd">    method : {&#39;gc&#39;, &#39;binning&#39;, &#39;knn&#39;, &#39;kernel&#39;}</span>
 <span class="sd">        Name of the method to compute mutual-information.</span>
 <span class="sd">    kwargs : dict | {}</span>
 <span class="sd">        Additional arguments sent to the mutual-information function.</span>
@@ -402,8 +402,10 @@ document.write(`
 <span class="sd">        Function to compute mutual information on variables of shapes</span>
 <span class="sd">        (n_features, n_samples)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">compute_mi_knn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gc&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_gc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_knn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># get the entropy function</span>
         <span class="n">_entropy</span> <span class="o">=</span> <span class="n">get_entropy</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -478,6 +480,81 @@ document.write(`
 
 <span class="c1">###############################################################################</span>
 <span class="c1">###############################################################################</span>
+<span class="c1">#                     GAUSSIAN COPULA MUTUAL INFORMATION</span>
+<span class="c1">###############################################################################</span>
+<span class="c1">###############################################################################</span>
+
+
+<span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">mi_gc</span><span class="p">(</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">biascorrect</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">demean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mutual information (MI) between two Gaussian variables in bits.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x, y : array_like</span>
+<span class="sd">        Arrays to consider for computing the Mutual Information. The two input</span>
+<span class="sd">        variables x and y should have a shape of (n_features_x, n_samples) and</span>
+<span class="sd">        (n_features_y, n_samples)</span>
+<span class="sd">    biascorrect : bool | False</span>
+<span class="sd">        Specifies whether bias correction should be applied to the estimated MI</span>
+<span class="sd">    demean : bool | False</span>
+<span class="sd">        Specifies whether the input data have to be demeaned</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    i : float</span>
+<span class="sd">        Information shared by x and y (in bits)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_features_x</span><span class="p">,</span> <span class="n">n_samples</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">n_features_x</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n_features_xy</span> <span class="o">=</span> <span class="n">n_features_x</span> <span class="o">+</span> <span class="n">n_features_x</span>
+
+    <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">n_samples</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;number of trials do not match&quot;</span><span class="p">)</span>
+
+    <span class="c1"># joint variable</span>
+    <span class="n">xy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">demean</span><span class="p">:</span>
+        <span class="n">xy</span> <span class="o">=</span> <span class="n">xy</span> <span class="o">-</span> <span class="n">xy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    <span class="n">cxy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span> <span class="n">xy</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># submatrices of joint covariance</span>
+    <span class="n">cx</span> <span class="o">=</span> <span class="n">cxy</span><span class="p">[:</span><span class="n">n_features_x</span><span class="p">,</span> <span class="p">:</span><span class="n">n_features_x</span><span class="p">]</span>
+    <span class="n">cy</span> <span class="o">=</span> <span class="n">cxy</span><span class="p">[</span><span class="n">n_features_x</span><span class="p">:,</span> <span class="n">n_features_x</span><span class="p">:]</span>
+
+    <span class="n">chcxy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">cxy</span><span class="p">)</span>
+    <span class="n">chcx</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">cx</span><span class="p">)</span>
+    <span class="n">chcy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">cy</span><span class="p">)</span>
+
+    <span class="c1"># entropies in nats</span>
+    <span class="c1"># normalizations cancel for mutual information</span>
+    <span class="n">hx</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">chcx</span><span class="p">)))</span>
+    <span class="n">hy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">chcy</span><span class="p">)))</span>
+    <span class="n">hxy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">chcxy</span><span class="p">)))</span>
+
+    <span class="n">ln2</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">biascorrect</span><span class="p">:</span>
+        <span class="n">psiterms</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">psi</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">n_samples</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_features_xy</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+                <span class="o">/</span> <span class="mf">2.0</span>
+            <span class="p">)</span>
+            <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="p">)</span>
+        <span class="n">dterm</span> <span class="o">=</span> <span class="p">(</span><span class="n">ln2</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">hx</span> <span class="o">=</span> <span class="n">hx</span> <span class="o">-</span> <span class="n">n_features_x</span> <span class="o">*</span> <span class="n">dterm</span> <span class="o">-</span> <span class="n">psiterms</span><span class="p">[:</span><span class="n">n_features_x</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">hy</span> <span class="o">=</span> <span class="n">hy</span> <span class="o">-</span> <span class="n">n_features_x</span> <span class="o">*</span> <span class="n">dterm</span> <span class="o">-</span> <span class="n">psiterms</span><span class="p">[:</span><span class="n">n_features_x</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">hxy</span> <span class="o">=</span> <span class="n">hxy</span> <span class="o">-</span> <span class="n">n_features_xy</span> <span class="o">*</span> <span class="n">dterm</span> <span class="o">-</span> <span class="n">psiterms</span><span class="p">[:</span><span class="n">n_features_xy</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="c1"># MI in bits</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">hx</span> <span class="o">+</span> <span class="n">hy</span> <span class="o">-</span> <span class="n">hxy</span><span class="p">)</span> <span class="o">/</span> <span class="n">ln2</span>
+    <span class="k">return</span> <span class="n">i</span>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1">###############################################################################</span>
 <span class="c1">#                         KNN MUTUAL INFORMATION</span>
 <span class="c1">###############################################################################</span>
 <span class="c1">###############################################################################</span>
@@ -508,7 +585,7 @@ document.write(`
 
 
 <span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
-<span class="k">def</span> <span class="nf">compute_mi_knn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">mi_knn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mutual information using the KSG estimator.</span>
 
 <span class="sd">    First algorithm proposed in Kraskov et al., Estimating mutual information,</span>
@@ -517,7 +594,9 @@ document.write(`
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    x, y : array_like</span>
-<span class="sd">        Input data of shape (n_features, n_samples).</span>
+<span class="sd">        Arrays to consider for computing the Mutual Information. The two input</span>
+<span class="sd">        variables x and y should have a shape of (n_features_x, n_samples) and</span>
+<span class="sd">        (n_features_y, n_samples)</span>
 <span class="sd">    k : int</span>
 <span class="sd">        Number of nearest neighbors to consider for the KSG estimator.</span>
 

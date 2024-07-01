@@ -53,7 +53,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Comparison of entropy estimators" href="plot_entropies.html" />
-    <link rel="prev" title="ntroduction to core information theoretical metrics" href="plot_tutorial_core.html" />
+    <link rel="prev" title="Introduction to core information theoretical metrics" href="plot_tutorial_core.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -254,7 +254,7 @@
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
@@ -459,7 +459,7 @@ to :</p>
 </div>
 <section id="definition-of-mi-estimators">
 <h2>Definition of MI estimators<a class="headerlink" href="#definition-of-mi-estimators" title="Link to this heading">#</a></h2>
-<p>Let us define several estimators of MI. We are going to use the GCMI
+<p>Let us define several estimators of MI. We are going to use the GC MI
 (Gaussian Copula Mutual Information), the KNN (k Nearest Neighbor) and the
 kernel-based estimator and using the a binning approach.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a special function for the binning approach as it requires binary data</span>
@@ -474,7 +474,7 @@ kernel-based estimator and using the a binning approach.</p>
 
 <span class="c1"># list of estimators to compare</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;GCMI&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;gcmi&quot;</span><span class="p">,</span> <span class="n">biascorrect</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="s2">&quot;GC&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="n">biascorrect</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
     <span class="s2">&quot;KNN-3&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
     <span class="s2">&quot;KNN-10&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
     <span class="s2">&quot;Kernel&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;kernel&quot;</span><span class="p">),</span>
@@ -563,7 +563,7 @@ kernel-based estimator and using the a binning approach.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_mi_001.png" srcset="../../_images/sphx_glr_plot_mi_001.png" alt="Comparison of MI estimators when the data are sampled from a normal distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 17.462 seconds)</p>
+<img src="../../_images/sphx_glr_plot_mi_001.png" srcset="../../_images/sphx_glr_plot_mi_001.png" alt="Comparison of MI estimators when the data are sampled from a normal distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 17.523 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-mi-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/f14e92090ebeb63084124f7809315b90/plot_mi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_mi.ipynb</span></code></a></p>
@@ -593,7 +593,7 @@ kernel-based estimator and using the a binning approach.</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">ntroduction to core information theoretical metrics</p>
+        <p class="prev-next-title">Introduction to core information theoretical metrics</p>
       </div>
     </a>
     <a class="right-next"

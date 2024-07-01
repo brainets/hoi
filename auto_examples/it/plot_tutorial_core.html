@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ntroduction to core information theoretical metrics &#8212; HOI 0.0.1 documentation</title>
+    <title>Introduction to core information theoretical metrics &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -254,7 +254,7 @@
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
@@ -406,7 +406,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>ntroduction to core information theoretical metrics</h1>
+    <h1>Introduction to core information theoretical metrics</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -434,8 +434,8 @@ document.write(`
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-it-plot-tutorial-core-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code.</p>
 </div>
-<section class="sphx-glr-example-title" id="ntroduction-to-core-information-theoretical-metrics">
-<span id="sphx-glr-auto-examples-it-plot-tutorial-core-py"></span><h1>ntroduction to core information theoretical metrics<a class="headerlink" href="#ntroduction-to-core-information-theoretical-metrics" title="Link to this heading">#</a></h1>
+<section class="sphx-glr-example-title" id="introduction-to-core-information-theoretical-metrics">
+<span id="sphx-glr-auto-examples-it-plot-tutorial-core-py"></span><h1>Introduction to core information theoretical metrics<a class="headerlink" href="#introduction-to-core-information-theoretical-metrics" title="Link to this heading">#</a></h1>
 <p>This introduction guides you through the core information theoretical metrics
 available. These metrics are the entropy and the mutual information.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -459,8 +459,8 @@ distribution with zero mean and unit variance:</p>
 <p>Now we can compute the entropy of <cite>x</cite>. We use the function <cite>get_entropy</cite> to
 build a callable function to compute the entropy. The function <cite>get_entropy</cite>
 takes as input the method to use to compute the entropy. In this case we use
-the Gaussian Copula estimation, so we set the method to <a href="#id1"><span class="problematic" id="id2">`</span></a>”gcmi”:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">entropy</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">)</span>
+the Gaussian Copula estimation, so we set the method to <a href="#id1"><span class="problematic" id="id2">`</span></a>”gc”:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">entropy</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Now we can compute the entropy of <cite>x</cite> by calling the function <cite>entropy</cite>. This
@@ -469,7 +469,7 @@ For the Gaussian Copula estimation, the entropy is computed in bits. We have:</p
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Entropy of x: 6.08
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Entropy of x: 6.24
 </pre></div>
 </div>
 <p>For comparison, we can compute the entropy of a multivariate Gaussian with
@@ -485,7 +485,7 @@ the covariance matrix of the Gaussian. We have:</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analytical entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy_analytical</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Analytical entropy of x: 6.08
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Analytical entropy of x: 6.24
 </pre></div>
 </div>
 <p>We see that the two values are very close.</p>
@@ -502,14 +502,14 @@ is expected to be zero.</p>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 
-<span class="n">mi</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gcmi&quot;</span><span class="p">)</span>
+<span class="n">mi</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mutual information between x and y: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">mi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Mutual information between x and y: 0.01
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.129 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.150 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-tutorial-core-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5b339cefcfab9a7df160c5f43bed58df/plot_tutorial_core.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_tutorial_core.ipynb</span></code></a></p>

@@ -254,7 +254,7 @@
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
@@ -507,16 +507,16 @@ is defined by :</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.InfoTopo.compute_entropies">
-<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.InfoTopo.compute_entropies" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.InfoTopo.compute_entropies" title="Link to this definition">#</a></dt>
 <dd><p>Compute entropies for all multiplets.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
+<dt><strong>method</strong><span class="classifier">{‘gc’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>‘gcmi’: gaussian copula entropy [default]. See
-<a class="reference internal" href="hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi" title="hoi.core.entropy_gcmi"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gcmi()</span></code></a></p></li>
+<li><p>‘gc’: gaussian copula entropy [default]. See
+<a class="reference internal" href="hoi.core.entropy_gc.html#hoi.core.entropy_gc" title="hoi.core.entropy_gc"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gc()</span></code></a></p></li>
 <li><p>‘binning’: binning-based estimator of entropy. Note that to
 use this estimator, the data have be to discretized. See
 <a class="reference internal" href="hoi.core.entropy_bin.html#hoi.core.entropy_bin" title="hoi.core.entropy_bin"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_bin()</span></code></a></p></li>
@@ -558,18 +558,18 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.InfoTopo.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/infotopo.html#InfoTopo.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.InfoTopo.fit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/infotopo.html#InfoTopo.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.InfoTopo.fit" title="Link to this definition">#</a></dt>
 <dd><p>Compute Topological Information.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
 <dt><strong>minsize, maxsize</strong><span class="classifier">int | 2, None</span></dt><dd><p>Minimum and maximum size of the multiplets</p>
 </dd>
-<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
+<dt><strong>method</strong><span class="classifier">{‘gc’, ‘binning’, ‘knn’, ‘kernel}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>‘gcmi’: gaussian copula entropy [default]. See
-<a class="reference internal" href="hoi.core.entropy_gcmi.html#hoi.core.entropy_gcmi" title="hoi.core.entropy_gcmi"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gcmi()</span></code></a></p></li>
+<li><p>‘gc’: gaussian copula entropy [default]. See
+<a class="reference internal" href="hoi.core.entropy_gc.html#hoi.core.entropy_gc" title="hoi.core.entropy_gc"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gc()</span></code></a></p></li>
 <li><p>‘binning’: binning-based estimator of entropy. Note that to
 use this estimator, the data have be to discretized. See
 <a class="reference internal" href="hoi.core.entropy_bin.html#hoi.core.entropy_bin" title="hoi.core.entropy_bin"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_bin()</span></code></a></p></li>

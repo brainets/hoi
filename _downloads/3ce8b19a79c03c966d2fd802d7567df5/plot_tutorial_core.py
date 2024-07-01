@@ -1,6 +1,6 @@
 """
-ntroduction to core information theoretical metrics
-===================================================
+Introduction to core information theoretical metrics
+====================================================
 
 This introduction guides you through the core information theoretical metrics
 available. These metrics are the entropy and the mutual information.
@@ -30,9 +30,9 @@ x = np.random.normal(size=(D, 1000))
 # Now we can compute the entropy of `x`. We use the function `get_entropy` to
 # build a callable function to compute the entropy. The function `get_entropy`
 # takes as input the method to use to compute the entropy. In this case we use
-# the Gaussian Copula estimation, so we set the method to `"gcmi":
+# the Gaussian Copula estimation, so we set the method to `"gc":
 
-entropy = get_entropy(method="gcmi")
+entropy = get_entropy(method="gc")
 
 ###############################################################################
 # Now we can compute the entropy of `x` by calling the function `entropy`. This
@@ -74,5 +74,5 @@ D = 3
 x = np.random.normal(size=(D, 1000))
 y = np.random.rand(D, 1000)
 
-mi = get_mi(method="gcmi")
+mi = get_mi(method="gc")
 print("Mutual information between x and y: %.2f" % mi(x, y))

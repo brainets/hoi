@@ -253,7 +253,7 @@
 </details></li>
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gcmi.html">hoi.core.entropy_gcmi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
@@ -432,12 +432,12 @@ document.write(`
 <h1>hoi.core.get_mi<a class="headerlink" href="#hoi-core-get-mi" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="hoi.core.get_mi">
-<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">get_mi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gcmi'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/core/mi.html#get_mi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.get_mi" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">get_mi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/core/mi.html#get_mi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.get_mi" title="Link to this definition">#</a></dt>
 <dd><p>Get Mutual-Information function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>method</strong><span class="classifier">{‘gcmi’, ‘binning’, ‘knn’, ‘kernel’}</span></dt><dd><p>Name of the method to compute mutual-information.</p>
+<dt><strong>method</strong><span class="classifier">{‘gc’, ‘binning’, ‘knn’, ‘kernel’}</span></dt><dd><p>Name of the method to compute mutual-information.</p>
 </dd>
 <dt><strong>kwargs</strong><span class="classifier">dict | {}</span></dt><dd><p>Additional arguments sent to the mutual-information function.</p>
 </dd>
@@ -456,8 +456,8 @@ document.write(`
 <section id="examples-using-hoi-core-get-mi">
 <span id="sphx-glr-backreferences-hoi-core-get-mi"></span><h2>Examples using <code class="docutils literal notranslate"><span class="pre">hoi.core.get_mi</span></code><a class="headerlink" href="#examples-using-hoi-core-get-mi" title="Link to this heading">#</a></h2>
 <div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This introduction guides you through the core information theoretical metrics available. These ..."><img alt="" src="../../_images/sphx_glr_plot_tutorial_core_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/it/plot_tutorial_core.html#sphx-glr-auto-examples-it-plot-tutorial-core-py"><span class="std std-ref">ntroduction to core information theoretical metrics</span></a></p>
-  <div class="sphx-glr-thumbnail-title">ntroduction to core information theoretical metrics</div>
+<p><a class="reference internal" href="../../auto_examples/it/plot_tutorial_core.html#sphx-glr-auto-examples-it-plot-tutorial-core-py"><span class="std std-ref">Introduction to core information theoretical metrics</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Introduction to core information theoretical metrics</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are going to compare estimators of mutual-information (MI). In particular, ..."><img alt="" src="../../_images/sphx_glr_plot_mi_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/it/plot_mi.html#sphx-glr-auto-examples-it-plot-mi-py"><span class="std std-ref">Comparison of mutual-information estimators</span></a></p>
   <div class="sphx-glr-thumbnail-title">Comparison of mutual-information estimators</div>

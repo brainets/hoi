@@ -233,7 +233,6 @@ print(get_nbest_mult(hoi, model, n_best=3))
 # Combining redundant and synergistic codings using a multivariate target
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-
 # network of 6 nodes and 1000 samples each
 x = np.random.rand(1000, 6)
 
@@ -258,3 +257,38 @@ print(get_nbest_mult(hoi, model, n_best=3))
 # %%
 # The gradient O-info retrieved the redundant interactions between (0, 1, 2)
 # and synergistic interactions between (3, 4, 5) about :math:`Y`.
+
+
+# %%
+# Dynamic redundant and synergistic codings
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# Finally, we can compute the O-information and Gradient O-information on
+# dynamic data
+
+# network of 6 nodes, 1000 samples each and a 100 time points
+x = np.random.rand(1000, 4, 100)
+
+# define a dynamic target variable
+y = np.random.rand(1000, 1, 100)
+
+# define a hanning window
+win = np.hanning(30)
+
+# redundancy between nodes (0, 1, 2) about :math:`Y` between samples [20, 50]
+x[:, 0, 20:50] += y[:, 0, 20:50] * win
+x[:, 1, 20:50] += y[:, 0, 20:50] * win
+x[:, 2, 20:50] += y[:, 0, 20:50] * win
+
+# synergy between nodes (1, 2, 3) about :math:`Y` between samples [50, 80]
+y[:, 0, 50:80] += (x[:, 1, 50:80] + x[:, 2, 50:80] + x[:, 3, 50:80]) * win
+
+model = GradientOinfo(x, y)
+hoi = model.fit(method="gc", minsize=3, maxsize=3)
+
+for n_m, m in enumerate(model.multiplets):
+    plt.plot(hoi[n_m], label=str(m))
+plt.xlabel("Times")
+plt.ylabel("Gradient O-info [bits]")
+plt.title("Dynamic gradient O-information", fontweight="bold")
+plt.legend()
+plt.show()

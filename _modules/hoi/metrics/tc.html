@@ -405,18 +405,17 @@ document.write(`
 <span class="k">class</span> <span class="nc">TC</span><span class="p">(</span><span class="n">HOIEstimator</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Total correlation.</span>
 
-<span class="sd">    Total correlation is the oldest exstension of mutual information to</span>
+<span class="sd">    Total correlation is the oldest extension of mutual information to</span>
 <span class="sd">    an arbitrary number of variables. It is defined as:</span>
 
 <span class="sd">    .. math::</span>
 
 <span class="sd">        TC(X^{n})  &amp;=  \sum_{j=1}^{n} H(X_{j}) - H(X^{n}) \\</span>
 
-<span class="sd">    The total correlation is equivalent to the Kullback-Liebler</span>
-<span class="sd">    vergence between the joint distribution :math: `P(X)` and the product</span>
-<span class="sd">    of the marginals. The total correlation is largely a measure</span>
-<span class="sd">    of redundancy, sensitive to information shared between single</span>
-<span class="sd">    elements.</span>
+<span class="sd">    The total correlation is equivalent to the Kullback-Liebler divergence</span>
+<span class="sd">    between the joint distribution :math: `P(X)` and the product of the</span>
+<span class="sd">    marginals. The total correlation is largely a measure of redundancy,</span>
+<span class="sd">    sensitive to information shared between single elements.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>

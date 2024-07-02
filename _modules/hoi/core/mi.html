@@ -512,7 +512,6 @@ document.write(`
     <span class="n">n_features_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">n_features_xy</span> <span class="o">=</span> <span class="n">n_features_x</span> <span class="o">+</span> <span class="n">n_features_y</span>
 
-
     <span class="c1"># joint variable</span>
     <span class="n">xy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">demean</span><span class="p">:</span>

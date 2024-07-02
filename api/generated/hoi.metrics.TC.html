@@ -427,6 +427,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.TC.undersampling"><code class="docutils literal notranslate"><span class="pre">TC.undersampling</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-using-hoi-metrics-tc">Examples using <code class="docutils literal notranslate"><span class="pre">hoi.metrics.TC</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -444,15 +445,14 @@ document.write(`
 <dt class="sig sig-object py" id="hoi.metrics.TC">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">TC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/tc.html#TC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.TC" title="Link to this definition">#</a></dt>
 <dd><p>Total correlation.</p>
-<p>Total correlation is the oldest exstension of mutual information to
+<p>Total correlation is the oldest extension of mutual information to
 an arbitrary number of variables. It is defined as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}TC(X^{n})  &amp;=  \sum_{j=1}^{n} H(X_{j}) - H(X^{n}) \\\end{split}\]</div>
-<p>The total correlation is equivalent to the Kullback-Liebler
-vergence between the joint distribution :math: <cite>P(X)</cite> and the product
-of the marginals. The total correlation is largely a measure
-of redundancy, sensitive to information shared between single
-elements.</p>
+<p>The total correlation is equivalent to the Kullback-Liebler divergence
+between the joint distribution :math: <cite>P(X)</cite> and the product of the
+marginals. The total correlation is largely a measure of redundancy,
+sensitive to information shared between single elements.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
@@ -640,7 +640,13 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
 
 </dd></dl>
 
-<span class="target" id="sphx-glr-backreferences-hoi-metrics-tc"></span></section>
+<section id="examples-using-hoi-metrics-tc">
+<span id="sphx-glr-backreferences-hoi-metrics-tc"></span><h2>Examples using <code class="docutils literal notranslate"><span class="pre">hoi.metrics.TC</span></code><a class="headerlink" href="#examples-using-hoi-metrics-tc" title="Link to this heading">#</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such..."><img alt="" src="../../_images/sphx_glr_plot_oinfo_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/metrics/plot_oinfo.html#sphx-glr-auto-examples-metrics-plot-oinfo-py"><span class="std std-ref">O-information and its derivatives for network behavior and encoding</span></a></p>
+  <div class="sphx-glr-thumbnail-title">O-information and its derivatives for network behavior and encoding</div>
+</div></div></section>
+</section>
 
 
                 </article>
@@ -698,6 +704,7 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.TC.undersampling"><code class="docutils literal notranslate"><span class="pre">TC.undersampling</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-using-hoi-metrics-tc">Examples using <code class="docutils literal notranslate"><span class="pre">hoi.metrics.TC</span></code></a></li>
 </ul>
   </nav></div>
 

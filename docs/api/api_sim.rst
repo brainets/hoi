@@ -8,4 +8,4 @@ Simulate HOI.
 .. autosummary::
    :toctree: generated/
 
-   simulate_hois_gauss
+   simulate_hoi_gauss

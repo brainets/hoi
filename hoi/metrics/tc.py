@@ -32,18 +32,17 @@ def _tc_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
 class TC(HOIEstimator):
     r"""Total correlation.
 
-    Total correlation is the oldest exstension of mutual information to
+    Total correlation is the oldest extension of mutual information to
     an arbitrary number of variables. It is defined as:
 
     .. math::
 
         TC(X^{n})  &=  \sum_{j=1}^{n} H(X_{j}) - H(X^{n}) \\
 
-    The total correlation is equivalent to the Kullback-Liebler
-    vergence between the joint distribution :math: `P(X)` and the product
-    of the marginals. The total correlation is largely a measure
-    of redundancy, sensitive to information shared between single
-    elements.
+    The total correlation is equivalent to the Kullback-Liebler divergence
+    between the joint distribution :math: `P(X)` and the product of the
+    marginals. The total correlation is largely a measure of redundancy,
+    sensitive to information shared between single elements.
 
     Parameters
     ----------

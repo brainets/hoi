@@ -138,7 +138,6 @@ def mi_gc(
     n_features_y = y.shape[0]
     n_features_xy = n_features_x + n_features_y
 
-
     # joint variable
     xy = jnp.vstack((x, y))
     if demean:

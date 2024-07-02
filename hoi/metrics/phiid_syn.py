@@ -19,11 +19,13 @@ def _compute_phi_syn(inputs, comb, mi_fcn=None):
     x_c = x[:, :, :]
     y_c = y[:, comb, :]
 
-    # compute info tot I({x_{1}, ..., x_{n}}; S)
+    # compute info tot 
+    # I({x_{1}(t), ..., x_{n}(t)}; x_{1}(t=tau), ..., x_{n}(t+tau)})
     _, i_tot = mi_fcn((x_c, y_c), comb)
 
     # compute max(I(x_{-j}; S))
     _, i_maxj = jax.lax.scan(mi_fcn, (x_c[:, comb, :], y_c), ind)
+    print(i_tot.shape, i_maxj.shape)
 
     return inputs, i_tot - i_maxj.max(0)
 
@@ -122,8 +124,8 @@ class SynergyphiID(HOIEstimator):
         x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
 
         # prepare mi functions
-        mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
-        compute_mi = partial(compute_mi_comb, mi=mi_fcn)
+        mi_fc = jax.vmap(get_mi(method=method, **kwargs))
+        compute_mi = partial(compute_mi_comb, mi=mi_fc)
         compute_syn = partial(_compute_phi_syn, mi_fcn=compute_mi)
 
         # get multiplet indices and order

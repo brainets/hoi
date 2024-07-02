@@ -509,11 +509,9 @@ document.write(`
 <span class="sd">        Information shared by x and y (in bits)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">n_features_x</span><span class="p">,</span> <span class="n">n_samples</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
-    <span class="n">n_features_x</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">n_features_xy</span> <span class="o">=</span> <span class="n">n_features_x</span> <span class="o">+</span> <span class="n">n_features_x</span>
+    <span class="n">n_features_y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n_features_xy</span> <span class="o">=</span> <span class="n">n_features_x</span> <span class="o">+</span> <span class="n">n_features_y</span>
 
-    <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">n_samples</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;number of trials do not match&quot;</span><span class="p">)</span>
 
     <span class="c1"># joint variable</span>
     <span class="n">xy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
@@ -545,7 +543,7 @@ document.write(`
         <span class="p">)</span>
         <span class="n">dterm</span> <span class="o">=</span> <span class="p">(</span><span class="n">ln2</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">))</span> <span class="o">/</span> <span class="mf">2.0</span>
         <span class="n">hx</span> <span class="o">=</span> <span class="n">hx</span> <span class="o">-</span> <span class="n">n_features_x</span> <span class="o">*</span> <span class="n">dterm</span> <span class="o">-</span> <span class="n">psiterms</span><span class="p">[:</span><span class="n">n_features_x</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="n">hy</span> <span class="o">=</span> <span class="n">hy</span> <span class="o">-</span> <span class="n">n_features_x</span> <span class="o">*</span> <span class="n">dterm</span> <span class="o">-</span> <span class="n">psiterms</span><span class="p">[:</span><span class="n">n_features_x</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">hy</span> <span class="o">=</span> <span class="n">hy</span> <span class="o">-</span> <span class="n">n_features_y</span> <span class="o">*</span> <span class="n">dterm</span> <span class="o">-</span> <span class="n">psiterms</span><span class="p">[:</span><span class="n">n_features_y</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
         <span class="n">hxy</span> <span class="o">=</span> <span class="n">hxy</span> <span class="o">-</span> <span class="n">n_features_xy</span> <span class="o">*</span> <span class="n">dterm</span> <span class="o">-</span> <span class="n">psiterms</span><span class="p">[:</span><span class="n">n_features_xy</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
 
     <span class="c1"># MI in bits</span>

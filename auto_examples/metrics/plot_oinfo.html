@@ -52,8 +52,8 @@
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Redundancy-Synergy Index" href="plot_rsi.html" />
-    <link rel="prev" title="Metrics of HOI" href="index.html" />
+    <link rel="next" title="Miscellaneous" href="../miscellaneous/index.html" />
+    <link rel="prev" title="Redundancy-Synergy Index" href="plot_rsi.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -428,6 +428,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-redundant-encoding">Simulating redundant encoding</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-synergistic-encoding">Simulating synergistic encoding</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-redundant-and-synergistic-codings-using-a-multivariate-target">Combining redundant and synergistic codings using a multivariate target</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-redundant-and-synergistic-codings">Dynamic redundant and synergistic codings</a></li>
 </ul>
 </li>
 </ul>
@@ -507,14 +508,14 @@ related to redundancy.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| TC (3):  1/1 [00:00&lt;00:00,    3.93it/s]
+100%|██████████| TC (3):  1/1 [00:00&lt;00:00,    4.37it/s]
 
    index  order       hoi  multiplet
-0      0      3  0.953148  [0, 1, 2]
-1     19      3  0.741695  [3, 4, 5]
-2      1      3  0.490181  [0, 1, 3]
-3      3      3  0.487127  [0, 1, 5]
-4      2      3  0.487014  [0, 1, 4]
+0      0      3  0.879070  [0, 1, 2]
+1     19      3  0.732601  [3, 4, 5]
+2      5      3  0.480311  [0, 2, 4]
+3      4      3  0.478529  [0, 2, 3]
+4      6      3  0.478319  [0, 2, 5]
 </pre></div>
 </div>
 <p>As we can see from the table above, the TC found the multiplet (0, 1, 2),
@@ -545,14 +546,14 @@ is linked to the synergy.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| DTC (3):  1/1 [00:00&lt;00:00,    6.36it/s]
+100%|██████████| DTC (3):  1/1 [00:00&lt;00:00,    6.72it/s]
 
    index  order       hoi  multiplet
-0     19      3  0.881032  [3, 4, 5]
-1      0      3  0.748253  [0, 1, 2]
-2      1      3  0.488007  [0, 1, 3]
-3      3      3  0.487047  [0, 1, 5]
-4      2      3  0.487004  [0, 1, 4]
+0     19      3  0.899829  [3, 4, 5]
+1      0      3  0.700187  [0, 1, 2]
+2      5      3  0.479729  [0, 2, 4]
+3      4      3  0.478395  [0, 2, 3]
+4      6      3  0.478309  [0, 2, 5]
 </pre></div>
 </div>
 <p>This time, the DTC finds the triplet (3, 4, 5) as the one with the largest
@@ -580,19 +581,19 @@ given by :</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.11it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.31it/s]
 
    index  order       hoi  multiplet
-0      0      3  0.204894  [0, 1, 2]
-1      1      3  0.002174  [0, 1, 3]
-2      4      3  0.001061  [0, 2, 3]
-3     10      3  0.000997  [1, 2, 3]
-4      3      3  0.000079  [0, 1, 5]
-5     13      3 -0.000869  [1, 3, 4]
-6      7      3 -0.001184  [0, 3, 4]
-7     14      3 -0.002371  [1, 3, 5]
-8      8      3 -0.002501  [0, 3, 5]
-9     19      3 -0.139338  [3, 4, 5]
+0      0      3  0.178884  [0, 1, 2]
+1      5      3  0.000582  [0, 2, 4]
+2      4      3  0.000134  [0, 2, 3]
+3      1      3  0.000062  [0, 1, 3]
+4     10      3  0.000062  [1, 2, 3]
+5     14      3 -0.000405  [1, 3, 5]
+6     11      3 -0.000445  [1, 2, 4]
+7      7      3 -0.000829  [0, 3, 4]
+8     16      3 -0.002131  [2, 3, 4]
+9     19      3 -0.167228  [3, 4, 5]
 </pre></div>
 </div>
 <p>Finally, the O-information isolates the triplet (0, 1, 2) as the one with the
@@ -616,14 +617,14 @@ the smallest, negative and therefore synergistic multiplet.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Sinfo (3):  1/1 [00:00&lt;00:00,    5.07it/s]
+100%|██████████| Sinfo (3):  1/1 [00:00&lt;00:00,    5.30it/s]
 
    index  order       hoi  multiplet
-0      0      3  1.701402  [0, 1, 2]
-1     19      3  1.622727  [3, 4, 5]
-2      1      3  0.978189  [0, 1, 3]
-3      3      3  0.974174  [0, 1, 5]
-4      2      3  0.974018  [0, 1, 4]
+0     19      3  1.632430  [3, 4, 5]
+1      0      3  1.579257  [0, 1, 2]
+2      5      3  0.960040  [0, 2, 4]
+3      4      3  0.956924  [0, 2, 3]
+4      6      3  0.956628  [0, 2, 5]
 </pre></div>
 </div>
 <p>The S-info isolates the two triplets (0, 1, 2) and (3, 4, 5), even if both
@@ -669,18 +670,19 @@ O-information :</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.09it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.12it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    4.48it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    4.74it/s]
 
    index  order       hoi  multiplet
-0      0      3  0.390531  [0, 1, 2]
-1      4      3  0.227007  [0, 2, 3]
-2      6      3  0.226987  [0, 2, 5]
-3      9      3 -0.001525  [0, 4, 5]
-4      7      3 -0.001573  [0, 3, 4]
+0      0      3  0.359706  [0, 1, 2]
+1      2      3  0.213659  [0, 1, 4]
+2      3      3  0.213020  [0, 1, 5]
+3     14      3 -0.001121  [1, 3, 5]
+4     15      3 -0.004561  [1, 4, 5]
+5     13      3 -0.005138  [1, 3, 4]
 </pre></div>
 </div>
 <p>The gradient O-info retrieved redundant interactions between nodes (0, 1, 2)
@@ -705,19 +707,19 @@ between nodes (3, 4, 5)</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.01it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.35it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.04it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.35it/s]
 
    index  order       hoi  multiplet
-0      2      3  0.003178  [0, 1, 4]
-1     11      3  0.002637  [1, 2, 4]
-2     10      3  0.001500  [1, 2, 3]
-3      8      3 -0.192979  [0, 3, 5]
-4     14      3 -0.194378  [1, 3, 5]
-5     19      3 -2.435485  [3, 4, 5]
+0      4      3  0.000469  [0, 2, 3]
+1     12      3  0.000421  [1, 2, 5]
+2      6      3  0.000403  [0, 2, 5]
+3     13      3 -0.207323  [1, 3, 4]
+4     16      3 -0.208105  [2, 3, 4]
+5     19      3 -2.354747  [3, 4, 5]
 </pre></div>
 </div>
 <p>The gradient O-info retrieved synergistic interactions between nodes
@@ -748,24 +750,66 @@ between nodes (3, 4, 5)</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.05it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.32it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.60it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.97it/s]
 
    index  order       hoi  multiplet
-0      0      3  0.358632  [0, 1, 2]
-1      4      3  0.203325  [0, 2, 3]
-2      6      3  0.203283  [0, 2, 5]
-3      9      3 -0.098018  [0, 4, 5]
-4     18      3 -0.099792  [2, 4, 5]
-5     19      3 -0.435247  [3, 4, 5]
+0      0      3  0.342764  [0, 1, 2]
+1      2      3  0.200072  [0, 1, 4]
+2      1      3  0.198906  [0, 1, 3]
+3     15      3 -0.092234  [1, 4, 5]
+4     18      3 -0.092481  [2, 4, 5]
+5     19      3 -0.429821  [3, 4, 5]
 </pre></div>
 </div>
 <p>The gradient O-info retrieved the redundant interactions between (0, 1, 2)
 and synergistic interactions between (3, 4, 5) about <span class="math notranslate nohighlight">\(Y\)</span>.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.455 seconds)</p>
+</section>
+<section id="dynamic-redundant-and-synergistic-codings">
+<h3>Dynamic redundant and synergistic codings<a class="headerlink" href="#dynamic-redundant-and-synergistic-codings" title="Link to this heading">#</a></h3>
+<p>Finally, we can compute the O-information and Gradient O-information on
+dynamic data</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># network of 6 nodes, 1000 samples each and a 100 time points</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># define a dynamic target variable</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># define a hanning window</span>
+<span class="n">win</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hanning</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="c1"># redundancy between nodes (0, 1, 2) about :math:`Y` between samples [20, 50]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span> <span class="o">*</span> <span class="n">win</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span> <span class="o">*</span> <span class="n">win</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">:</span><span class="mi">50</span><span class="p">]</span> <span class="o">*</span> <span class="n">win</span>
+
+<span class="c1"># synergy between nodes (1, 2, 3) about :math:`Y` between samples [50, 80]</span>
+<span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">50</span><span class="p">:</span><span class="mi">80</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">:</span><span class="mi">80</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">50</span><span class="p">:</span><span class="mi">80</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">50</span><span class="p">:</span><span class="mi">80</span><span class="p">])</span> <span class="o">*</span> <span class="n">win</span>
+
+<a href="../../api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo" title="hoi.metrics.GradientOinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo" title="hoi.metrics.GradientOinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">GradientOinfo</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo.fit" title="hoi.metrics.GradientOinfo.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="../../api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo.multiplets" title="hoi.metrics.GradientOinfo.multiplets" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-property"><span class="n">model</span><span class="o">.</span><span class="n">multiplets</span></a><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">hoi</span><span class="p">[</span><span class="n">n_m</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Times&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Gradient O-info [bits]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Dynamic gradient O-information&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_oinfo_001.png" srcset="../../_images/sphx_glr_plot_oinfo_001.png" alt="Dynamic gradient O-information" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.89it/s]
+
+
+  0%|          |  0/1 [00:00&lt;?,       ?it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    3.41it/s]
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.979 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-oinfo-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/2d62e710e011551b615a935858a62b71/plot_oinfo.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_oinfo.ipynb</span></code></a></p>
@@ -791,20 +835,20 @@ and synergistic interactions between (3, 4, 5) about <span class="math notransla
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="index.html"
+       href="plot_rsi.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Metrics of HOI</p>
+        <p class="prev-next-title">Redundancy-Synergy Index</p>
       </div>
     </a>
     <a class="right-next"
-       href="plot_rsi.html"
+       href="../miscellaneous/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Redundancy-Synergy Index</p>
+        <p class="prev-next-title">Miscellaneous</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -836,6 +880,7 @@ and synergistic interactions between (3, 4, 5) about <span class="math notransla
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-redundant-encoding">Simulating redundant encoding</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-synergistic-encoding">Simulating synergistic encoding</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-redundant-and-synergistic-codings-using-a-multivariate-target">Combining redundant and synergistic codings using a multivariate target</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-redundant-and-synergistic-codings">Dynamic redundant and synergistic codings</a></li>
 </ul>
 </li>
 </ul>

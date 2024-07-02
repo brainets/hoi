@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Introduction to core information theoretical metrics &#8212; HOI 0.0.1 documentation</title>
+    <title>Topological Information : conditioning on orders &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -48,12 +48,12 @@
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/it/plot_tutorial_core';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/metrics/plot_infotopo';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Comparison of mutual-information estimators" href="plot_mi.html" />
-    <link rel="prev" title="Entropy and mutual information" href="index.html" />
+    <link rel="next" title="Redundancy-Synergy Index" href="plot_rsi.html" />
+    <link rel="prev" title="Metrics of HOI" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -406,7 +406,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Introduction to core information theoretical metrics</h1>
+    <h1>Topological Information : conditioning on orders</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -416,8 +416,9 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy">Entropy</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mutual-information">Mutual information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-redundant-and-synergistic-interactions">Simulate redundant and synergistic interactions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-spreading-the-problem-with-the-o-information">Spatial spreading : the problem with the O-information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplet-isolation-using-the-topological-information">Multiplet isolation using the Topological Information</a></li>
 </ul>
             </nav>
         </div>
@@ -431,91 +432,165 @@ document.write(`
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-it-plot-tutorial-core-py"><span class="std std-ref">Go to the end</span></a>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-metrics-plot-infotopo-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code.</p>
 </div>
-<section class="sphx-glr-example-title" id="introduction-to-core-information-theoretical-metrics">
-<span id="sphx-glr-auto-examples-it-plot-tutorial-core-py"></span><h1>Introduction to core information theoretical metrics<a class="headerlink" href="#introduction-to-core-information-theoretical-metrics" title="Link to this heading">#</a></h1>
-<p>This introduction guides you through the core information theoretical metrics
-available. These metrics are the entropy and the mutual information.</p>
+<section class="sphx-glr-example-title" id="topological-information-conditioning-on-orders">
+<span id="sphx-glr-auto-examples-metrics-plot-infotopo-py"></span><h1>Topological Information : conditioning on orders<a class="headerlink" href="#topological-information-conditioning-on-orders" title="Link to this heading">#</a></h1>
+<p>This example illustrates a metric called Topological Information published by
+Baudot et al., 2019 <span id="id1">[<a class="reference internal" href="../../theory.html#id33" title="Pierre Baudot, Monica Tapia, Daniel Bennequin, and Jean-Marc Goaillard. Topological information data analysis. Entropy. An International and Interdisciplinary Journal of Entropy and Information Studies, 2019. Number: 869. URL: https://www.mdpi.com/1099-4300/21/9/869, doi:10.3390/e21090869.">4</a>]</span>. This metric is based on
+differences of entropies and can be used to estimate Higher Order Interactions.
+One important feature of this metric relies on its ability to isolate an order.
+To be clear, we are going to see in this example that if we simulate a
+redundancy at order 3, a metric as the O-information (
+<a class="reference internal" href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Oinfo</span></code></a>) is going to return reduandancy for all of the
+quadruplets that are going to include the redundant triplet. However, the
+<a class="reference internal" href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.InfoTopo</span></code></a> is capable of isolating only the redundant
+triplet.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">hoi.core</span> <span class="kn">import</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a>
-<span class="kn">from</span> <span class="nn">hoi.core</span> <span class="kn">import</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a>
-</pre></div>
-</div>
-<section id="entropy">
-<h2>Entropy<a class="headerlink" href="#entropy" title="Link to this heading">#</a></h2>
-<p>The fundamental information theoretical metric is the entropy. Most of the
-other higher-order metrics of information theory defined in HOI are based on
-the entropy.</p>
-<p>In HOI there are 4 different methods to compute the entropy, in this tutorial
-we will use the estimation based on the Gaussian Copula estimation.</p>
-<p>Let’s start by extracting a sample <cite>x</cite> from a multivariate Gaussian
-distribution with zero mean and unit variance:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>Now we can compute the entropy of <cite>x</cite>. We use the function <cite>get_entropy</cite> to
-build a callable function to compute the entropy. The function <cite>get_entropy</cite>
-takes as input the method to use to compute the entropy. In this case we use
-the Gaussian Copula estimation, so we set the method to <a href="#id1"><span class="problematic" id="id2">`</span></a>”gc”:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">entropy</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Now we can compute the entropy of <cite>x</cite> by calling the function <cite>entropy</cite>. This
-function takes as input an array of data of shape <cite>(n_features, n_samples)</cite>.
-For the Gaussian Copula estimation, the entropy is computed in bits. We have:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Entropy of x: 6.05
-</pre></div>
-</div>
-<p>For comparison, we can compute the entropy of a multivariate Gaussian with
-the analytical formula, which is:</p>
-<div class="math notranslate nohighlight">
-\[H(X) = \frac{1}{2} \log \left( (2 \pi e)^D \det(\Sigma) \right)\]</div>
-<p>where <span class="math notranslate nohighlight">\(D\)</span> is the dimensionality of the Gaussian and <span class="math notranslate nohighlight">\(\Sigma\)</span> is
-the covariance matrix of the Gaussian. We have:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">entropy_analytical</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">C</span><span class="p">))</span> <span class="o">+</span> <span class="n">D</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)))</span>
-<span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Analytical entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy_analytical</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Analytical entropy of x: 6.05
-</pre></div>
-</div>
-<p>We see that the two values are very close.</p>
-</section>
-<section id="mutual-information">
-<h2>Mutual information<a class="headerlink" href="#mutual-information" title="Link to this heading">#</a></h2>
-<p>The mutual information is another fundamental information theoretical metric.
-In this tutorial we will compute the mutual information between two variables
-<cite>x</cite> and <cite>y</cite>. <cite>x</cite> is a multivariate Gaussian with zero mean and unit variance,
-while <cite>y</cite> is a multivariate uniform distribution in the interval <span class="math notranslate nohighlight">\([0,1]\)</span>.
-Since the two variables are independent, the mutual information between them
-is expected to be zero.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 
-<span class="n">mi</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mutual information between x and y: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">mi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="kn">from</span> <span class="nn">hoi.metrics</span> <span class="kn">import</span> <a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">InfoTopo</span></a><span class="p">,</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">Oinfo</span></a>
+<span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a>
+<span class="kn">from</span> <span class="nn">hoi.plot</span> <span class="kn">import</span> <a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Mutual information between x and y: 0.01
+<section id="simulate-redundant-and-synergistic-interactions">
+<h2>Simulate redundant and synergistic interactions<a class="headerlink" href="#simulate-redundant-and-synergistic-interactions" title="Link to this heading">#</a></h2>
+<p>Let’s start by simulating a small network of 7 nodes with 1000 samples each.
+Then we’re going to introduce redundancy between the triplet (0, 1, 2) and
+synergy between the quadruplet (3, 4, 5, 6)</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 7 nodes network with 1000 samples each</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+
+<span class="c1"># redundant interactions between triplet of nodes (0, 1, 2)</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># synergistic interactions between quadruplet of nodes (3, 4, 5, 6)</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.120 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-tutorial-core-py">
+</section>
+<section id="spatial-spreading-the-problem-with-the-o-information">
+<h2>Spatial spreading : the problem with the O-information<a class="headerlink" href="#spatial-spreading-the-problem-with-the-o-information" title="Link to this heading">#</a></h2>
+<p>Let’s compute the HOI using the O-information</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">Oinfo</span></a><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo.fit" title="hoi.metrics.InfoTopo.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/5 [00:00&lt;?,       ?it/s]
+ 20%|██        | Oinfo (3):  1/5 [00:00&lt;00:01,    2.94it/s]
+ 40%|████      | Oinfo (4):  2/5 [00:00&lt;00:00,    3.62it/s]
+ 60%|██████    | Oinfo (5):  3/5 [00:01&lt;00:00,    2.92it/s]
+ 80%|████████  | Oinfo (6):  4/5 [00:01&lt;00:00,    2.71it/s]
+100%|██████████| Oinfo (7):  5/5 [00:01&lt;00:00,    2.78it/s]
+</pre></div>
+</div>
+<p>Now we can plot the landscape. This landscape show the values of HOI for
+different orders. As a reminder, for the O-information, positive values stand
+for redundant interactions while negative values stand for synergistic
+interactions.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a><span class="p">(</span>
+    <span class="n">hoi</span><span class="p">,</span>
+    <a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span>
+    <span class="n">plt_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Spectral_r&quot;</span><span class="p">),</span>
+    <span class="n">undersampling</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_infotopo_001.png" srcset="../../_images/sphx_glr_plot_infotopo_001.png" alt="plot infotopo" class = "sphx-glr-single-img"/><p>we can also print the multiplets with the highest values of O-information</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">))</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>   index  order       hoi           multiplet
+0     75      5  0.196148     [0, 1, 2, 5, 6]
+1     72      5  0.195877     [0, 1, 2, 3, 6]
+2     94      6  0.195354  [0, 1, 2, 4, 5, 6]
+3     38      4  0.195354        [0, 1, 2, 6]
+4     74      5  0.194710     [0, 1, 2, 4, 6]
+5     90      5 -0.469822     [2, 3, 4, 5, 6]
+6     95      6 -0.470631  [0, 1, 3, 4, 5, 6]
+7     84      5 -0.471722     [0, 3, 4, 5, 6]
+8     69      4 -0.471928        [3, 4, 5, 6]
+9     89      5 -0.472095     [1, 3, 4, 5, 6]
+</pre></div>
+</div>
+<p>As we can see from the landscape and the printed table, the triplet (0, 1, 2)
+with redundant interactions is present in all of the multiplets of higher
+orders (order 4, 5, 6). Same thing holds with the synergistic quadruplets
+(3, 4, 5, 6). In short, the O-information can’t isolate both multiplets.</p>
+</section>
+<section id="multiplet-isolation-using-the-topological-information">
+<h2>Multiplet isolation using the Topological Information<a class="headerlink" href="#multiplet-isolation-using-the-topological-information" title="Link to this heading">#</a></h2>
+<p>In contrast to the O-information, the Topological Information is based on
+conditional mutual information and conditioned on lower orders. This
+conditioning should, in theory, avoid the spatial spreading. The mathematical
+definition of the Topological Information is given by :</p>
+<div class="math notranslate nohighlight">
+\[I_{k}(X_{1}; ...; X_{k}) = \sum_{i=1}^{k} (-1)^{i - 1} \sum_{
+    I\subset[k];card(I)=i} H_{i}(X_{I})\]</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">InfoTopo</span></a><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo.fit" title="hoi.metrics.InfoTopo.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/7 [00:00&lt;?,       ?it/s]
+ 14%|█▍        | Entropy H(1):  1/7 [00:00&lt;00:00,    8.95it/s]
+ 29%|██▊       | Entropy H(2):  2/7 [00:00&lt;00:00,    8.75it/s]
+ 43%|████▎     | Entropy H(3):  3/7 [00:00&lt;00:00,    8.73it/s]
+ 57%|█████▋    | Entropy H(4):  4/7 [00:00&lt;00:00,    9.19it/s]
+ 71%|███████▏  | Entropy H(5):  5/7 [00:00&lt;00:00,    9.49it/s]
+ 86%|████████▌ | Entropy H(6):  6/7 [00:00&lt;00:00,    9.62it/s]
+100%|██████████| Entropy H(7):  7/7 [00:00&lt;00:00,    9.84it/s]
+
+
+  0%|          |  0/99 [00:00&lt;?,       ?it/s]
+100%|██████████| Mutual information:  99/99 [00:00&lt;00:00, 138412.03it/s]
+</pre></div>
+</div>
+<p>Again, we can plot the landscape. This time, as we can see, there’s no more
+spatial spreading. There are only two points and, using the printed table
+below, we can see that those two points correspond to our two multiplets
+(0, 1, 2) and (3, 4, 5, 6). However, the Topological Information did not
+correctly inferred the type of interactions as the quadruplet (3, 4, 5, 6)
+is identified as a redundant multiplet despite being synergistic.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a><span class="p">(</span>
+    <span class="n">hoi</span><span class="p">,</span>
+    <a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span>
+    <span class="n">plt_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Spectral_r&quot;</span><span class="p">),</span>
+    <span class="n">undersampling</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">))</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_infotopo_002.png" srcset="../../_images/sphx_glr_plot_infotopo_002.png" alt="plot infotopo" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>   index  order       hoi        multiplet
+0      0      3  0.193250        [0, 1, 2]
+1     69      4  0.111715     [3, 4, 5, 6]
+2     66      4  0.002436     [2, 3, 4, 6]
+3      8      3  0.002326        [0, 2, 6]
+4     90      5  0.001057  [2, 3, 4, 5, 6]
+5     67      4 -0.001789     [2, 3, 5, 6]
+6     26      3 -0.002097        [2, 3, 5]
+7     33      3 -0.064898        [3, 5, 6]
+8     31      3 -0.065409        [3, 4, 5]
+9     32      3 -0.118180        [3, 4, 6]
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.131 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-infotopo-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/5b339cefcfab9a7df160c5f43bed58df/plot_tutorial_core.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_tutorial_core.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/ece4d51dfdf0dbf7235e94595766e7c5/plot_infotopo.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_infotopo.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/3ce8b19a79c03c966d2fd802d7567df5/plot_tutorial_core.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_tutorial_core.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/c040ac5aff1094f628dd6a9758b93e88/plot_infotopo.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_infotopo.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -539,15 +614,15 @@ is expected to be zero.</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Entropy and mutual information</p>
+        <p class="prev-next-title">Metrics of HOI</p>
       </div>
     </a>
     <a class="right-next"
-       href="plot_mi.html"
+       href="plot_rsi.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Comparison of mutual-information estimators</p>
+        <p class="prev-next-title">Redundancy-Synergy Index</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -567,8 +642,9 @@ is expected to be zero.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy">Entropy</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mutual-information">Mutual information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-redundant-and-synergistic-interactions">Simulate redundant and synergistic interactions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spatial-spreading-the-problem-with-the-o-information">Spatial spreading : the problem with the O-information</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiplet-isolation-using-the-topological-information">Multiplet isolation using the Topological Information</a></li>
 </ul>
   </nav></div>
 

@@ -508,14 +508,14 @@ related to redundancy.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| TC (3):  1/1 [00:00&lt;00:00,    4.37it/s]
+100%|██████████| TC (3):  1/1 [00:00&lt;00:00,    4.38it/s]
 
    index  order       hoi  multiplet
-0      0      3  0.879070  [0, 1, 2]
-1     19      3  0.732601  [3, 4, 5]
-2      5      3  0.480311  [0, 2, 4]
-3      4      3  0.478529  [0, 2, 3]
-4      6      3  0.478319  [0, 2, 5]
+0      0      3  0.940687  [0, 1, 2]
+1     19      3  0.806861  [3, 4, 5]
+2      2      3  0.501996  [0, 1, 4]
+3      1      3  0.497377  [0, 1, 3]
+4      3      3  0.496738  [0, 1, 5]
 </pre></div>
 </div>
 <p>As we can see from the table above, the TC found the multiplet (0, 1, 2),
@@ -546,14 +546,14 @@ is linked to the synergy.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| DTC (3):  1/1 [00:00&lt;00:00,    6.72it/s]
+100%|██████████| DTC (3):  1/1 [00:00&lt;00:00,    6.63it/s]
 
    index  order       hoi  multiplet
-0     19      3  0.899829  [3, 4, 5]
-1      0      3  0.700187  [0, 1, 2]
-2      5      3  0.479729  [0, 2, 4]
-3      4      3  0.478395  [0, 2, 3]
-4      6      3  0.478309  [0, 2, 5]
+0     19      3  0.980643  [3, 4, 5]
+1      0      3  0.755237  [0, 1, 2]
+2      2      3  0.506314  [0, 1, 4]
+3      1      3  0.498584  [0, 1, 3]
+4      3      3  0.497431  [0, 1, 5]
 </pre></div>
 </div>
 <p>This time, the DTC finds the triplet (3, 4, 5) as the one with the largest
@@ -581,19 +581,18 @@ given by :</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.31it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.26it/s]
 
    index  order       hoi  multiplet
-0      0      3  0.178884  [0, 1, 2]
-1      5      3  0.000582  [0, 2, 4]
-2      4      3  0.000134  [0, 2, 3]
-3      1      3  0.000062  [0, 1, 3]
-4     10      3  0.000062  [1, 2, 3]
-5     14      3 -0.000405  [1, 3, 5]
-6     11      3 -0.000445  [1, 2, 4]
-7      7      3 -0.000829  [0, 3, 4]
-8     16      3 -0.002131  [2, 3, 4]
-9     19      3 -0.167228  [3, 4, 5]
+0      0      3  0.185451  [0, 1, 2]
+1     13      3  0.000659  [1, 3, 4]
+2      4      3  0.000041  [0, 2, 3]
+3      7      3  0.000031  [0, 3, 4]
+4      1      3 -0.001207  [0, 1, 3]
+5     14      3 -0.001741  [1, 3, 5]
+6     11      3 -0.004127  [1, 2, 4]
+7      2      3 -0.004318  [0, 1, 4]
+8     19      3 -0.173781  [3, 4, 5]
 </pre></div>
 </div>
 <p>Finally, the O-information isolates the triplet (0, 1, 2) as the one with the
@@ -617,14 +616,14 @@ the smallest, negative and therefore synergistic multiplet.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Sinfo (3):  1/1 [00:00&lt;00:00,    5.30it/s]
+100%|██████████| Sinfo (3):  1/1 [00:00&lt;00:00,    5.24it/s]
 
    index  order       hoi  multiplet
-0     19      3  1.632430  [3, 4, 5]
-1      0      3  1.579257  [0, 1, 2]
-2      5      3  0.960040  [0, 2, 4]
-3      4      3  0.956924  [0, 2, 3]
-4      6      3  0.956628  [0, 2, 5]
+0     19      3  1.787504  [3, 4, 5]
+1      0      3  1.695925  [0, 1, 2]
+2      2      3  1.008311  [0, 1, 4]
+3      1      3  0.995961  [0, 1, 3]
+4      3      3  0.994170  [0, 1, 5]
 </pre></div>
 </div>
 <p>The S-info isolates the two triplets (0, 1, 2) and (3, 4, 5), even if both
@@ -670,19 +669,19 @@ O-information :</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.12it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.29it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
 100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    4.74it/s]
 
    index  order       hoi  multiplet
-0      0      3  0.359706  [0, 1, 2]
-1      2      3  0.213659  [0, 1, 4]
-2      3      3  0.213020  [0, 1, 5]
-3     14      3 -0.001121  [1, 3, 5]
-4     15      3 -0.004561  [1, 4, 5]
-5     13      3 -0.005138  [1, 3, 4]
+0      0      3  0.331462  [0, 1, 2]
+1     11      3  0.195291  [1, 2, 4]
+2     12      3  0.194887  [1, 2, 5]
+3     14      3 -0.000628  [1, 3, 5]
+4     15      3 -0.000666  [1, 4, 5]
+5     13      3 -0.002721  [1, 3, 4]
 </pre></div>
 </div>
 <p>The gradient O-info retrieved redundant interactions between nodes (0, 1, 2)
@@ -707,19 +706,18 @@ between nodes (3, 4, 5)</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.35it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.28it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.35it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.27it/s]
 
    index  order       hoi  multiplet
-0      4      3  0.000469  [0, 2, 3]
-1     12      3  0.000421  [1, 2, 5]
-2      6      3  0.000403  [0, 2, 5]
-3     13      3 -0.207323  [1, 3, 4]
-4     16      3 -0.208105  [2, 3, 4]
-5     19      3 -2.354747  [3, 4, 5]
+0     12      3  0.000300  [1, 2, 5]
+1      1      3  0.000221  [0, 1, 3]
+2     15      3 -0.231917  [1, 4, 5]
+3     18      3 -0.235984  [2, 4, 5]
+4     19      3 -2.447518  [3, 4, 5]
 </pre></div>
 </div>
 <p>The gradient O-info retrieved synergistic interactions between nodes
@@ -750,19 +748,19 @@ between nodes (3, 4, 5)</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.32it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.16it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.97it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    4.79it/s]
 
    index  order       hoi  multiplet
-0      0      3  0.342764  [0, 1, 2]
-1      2      3  0.200072  [0, 1, 4]
-2      1      3  0.198906  [0, 1, 3]
-3     15      3 -0.092234  [1, 4, 5]
-4     18      3 -0.092481  [2, 4, 5]
-5     19      3 -0.429821  [3, 4, 5]
+0      0      3  0.308378  [0, 1, 2]
+1     12      3  0.170630  [1, 2, 5]
+2     10      3  0.170200  [1, 2, 3]
+3     14      3 -0.098563  [1, 3, 5]
+4     17      3 -0.098565  [2, 3, 5]
+5     19      3 -0.457253  [3, 4, 5]
 </pre></div>
 </div>
 <p>The gradient O-info retrieved the redundant interactions between (0, 1, 2)
@@ -802,14 +800,14 @@ dynamic data</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_oinfo_001.png" srcset="../../_images/sphx_glr_plot_oinfo_001.png" alt="Dynamic gradient O-information" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.89it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.87it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
 100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    3.41it/s]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.979 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.864 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-oinfo-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/2d62e710e011551b615a935858a62b71/plot_oinfo.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_oinfo.ipynb</span></code></a></p>

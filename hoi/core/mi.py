@@ -135,11 +135,9 @@ def mi_gc(
         Information shared by x and y (in bits)
     """
     n_features_x, n_samples = x.shape
-    n_features_x = y.shape[0]
-    n_features_xy = n_features_x + n_features_x
+    n_features_y = y.shape[0]
+    n_features_xy = n_features_x + n_features_y
 
-    if y.shape[1] != n_samples:
-        raise ValueError("number of trials do not match")
 
     # joint variable
     xy = jnp.vstack((x, y))
@@ -171,7 +169,7 @@ def mi_gc(
         )
         dterm = (ln2 - jnp.log(n_samples - 1.0)) / 2.0
         hx = hx - n_features_x * dterm - psiterms[:n_features_x].sum()
-        hy = hy - n_features_x * dterm - psiterms[:n_features_x].sum()
+        hy = hy - n_features_y * dterm - psiterms[:n_features_y].sum()
         hxy = hxy - n_features_xy * dterm - psiterms[:n_features_xy].sum()
 
     # MI in bits

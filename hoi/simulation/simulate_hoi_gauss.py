@@ -7,7 +7,7 @@ import numpy as np
 ###############################################################################
 
 
-def simulate_hois_gauss(
+def simulate_hoi_gauss(
     n_samples=1000,
     target=False,
     triplet_character="synergy",
@@ -43,6 +43,7 @@ def simulate_hois_gauss(
         Target variable of shape (n_samples,). This parameter is only returned
         when the input parameter target is set to True
     """
+    assert triplet_character in ["redundancy", "synergy"]
 
     if not target:
         # without target

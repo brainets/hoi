@@ -5,7 +5,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.core.combinatory import combinations
-from hoi.core.entropies import get_entropy, prepare_for_entropy
+from hoi.core.entropies import get_entropy, prepare_for_it
 from hoi.utils.progressbar import get_pbar
 from hoi.utils.logging import logger, set_log_level
 
@@ -183,7 +183,7 @@ class HOIEstimator(object):
 
         # ________________________________ I/O ________________________________
         # prepare the data for computing entropy
-        x, kwargs = prepare_for_entropy(
+        x, kwargs = prepare_for_it(
             self._x, method, samples=samples, **kwargs
         )
 

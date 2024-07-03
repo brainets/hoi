@@ -5,7 +5,7 @@ from .entropies import (  # noqa
     entropy_gc,
     entropy_bin,
     entropy_knn,
-    prepare_for_entropy,
+    prepare_for_it,
     entropy_kernel,
 )
 from .mi import get_mi  # noqa

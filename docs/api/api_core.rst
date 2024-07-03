@@ -17,7 +17,7 @@ Measures of Entropy
    entropy_knn
    entropy_kernel
    copnorm_nd
-   prepare_for_entropy
+   prepare_for_it
 
 Measures of Mutual Information
 ++++++++++++++++++++++++++++++++

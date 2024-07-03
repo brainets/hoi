@@ -6,7 +6,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.core.entropies import prepare_for_entropy
+from hoi.core.entropies import prepare_for_it
 from hoi.core.mi import get_mi, compute_mi_comb
 from hoi.utils.progressbar import get_pbar
 
@@ -123,7 +123,7 @@ class SynergyphiID(HOIEstimator):
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the x for computing mi
-        x, kwargs = prepare_for_entropy(
+        x, kwargs = prepare_for_it(
             self._x, method, samples=samples, **kwargs
         )
 

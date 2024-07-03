@@ -50,7 +50,7 @@ def get_mi(method="gc", **kwargs):
 
 # def prepare_for_mi(x, y, method, **kwargs):
 #     """Prepare the data before computing mutual-information."""
-#     x, kwargs = prepare_for_entropy(x, method, **kwargs.copy())
+#     x, kwargs = prepare_for_it(x, method, **kwargs.copy())
 #     return x, y, kwargs
 
 

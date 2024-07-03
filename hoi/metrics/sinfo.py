@@ -6,7 +6,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.core.entropies import get_entropy, prepare_for_entropy
+from hoi.core.entropies import get_entropy, prepare_for_it
 from hoi.utils.progressbar import get_pbar
 
 
@@ -113,7 +113,7 @@ class Sinfo(HOIEstimator):
         minsize, maxsize = self._check_minmax(minsize, maxsize)
 
         # prepare the x for computing entropy
-        x, kwargs = prepare_for_entropy(
+        x, kwargs = prepare_for_it(
             self._x, method, samples=samples, **kwargs
         )
 

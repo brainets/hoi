@@ -183,9 +183,7 @@ class HOIEstimator(object):
 
         # ________________________________ I/O ________________________________
         # prepare the data for computing entropy
-        x, kwargs = prepare_for_it(
-            self._x, method, samples=samples, **kwargs
-        )
+        x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
 
         # get entropy function
         entropy = partial(

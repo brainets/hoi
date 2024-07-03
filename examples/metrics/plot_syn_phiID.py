@@ -2,9 +2,8 @@
 Integrated Information Decomposition
 ====================================
 
-This example illustrates how to use and interpret synergy and 
-redundancy as defined in the Integrated Information 
-Decomposition framework
+This example illustrates how to use and interpret synergy and redundancy as
+defined in the Integrated Information Decomposition framework
 """
 
 import numpy as np
@@ -36,17 +35,17 @@ plt.style.use("ggplot")
 # the couple of variables under study. It measures how much we can predict the
 # future state of the couple of variables when considering them as a whole with
 # respect to when considering them separately.
-# Redundancy instead, following the MMI framework approximation is computed in the following way:
+# Redundancy instead, following the MMI framework approximation is computed in
+# the following way:
 
 # %%
 # .. math::
-#     Red(X,Y) =  min (I(X_{t-\tau};Y_{t}), I(X_{t-\tau};X_t), I(Y_{t-\tau};X_t),
-#                      I(Y_{t-\tau};Y_t))
+#     Red(X,Y) =  min (I(X_{t-\tau}; Y_{t}), I(X_{t-\tau}; X_t),
+#                      I(Y_{t-\tau}; X_t), I(Y_{t-\tau}; Y_t))
 #
-# Redundancy relates to the ammount of information the two variables share about
-# their own future. An high presence of redundancy can be
-# associated with robustness, while an stroger presence of synergy to
-# emergence.
+# Redundancy relates to the ammount of information the two variables share
+# about their own future. An high presence of redundancy can be associated with
+# robustness, while an stroger presence of synergy to emergence.
 
 ###############################################################################
 # Simulate synergy

@@ -58,7 +58,7 @@ def get_entropy(method="gc", **kwargs):
 ###############################################################################
 
 
-def prepare_for_entropy(data, method, reshape=True, **kwargs):
+def prepare_for_entropy(data, method, **kwargs):
     """Prepare the data before computing entropy."""
     # data.shape = n_variables, n_features, n_samples
 

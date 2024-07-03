@@ -183,9 +183,7 @@ class HOIEstimator(object):
 
         # ________________________________ I/O ________________________________
         # prepare the data for computing entropy
-        x, kwargs = prepare_for_it(
-            self._x, method, samples=samples, **kwargs
-        )
+        x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
 
         # get entropy function
         entropy = partial(
@@ -252,13 +250,28 @@ class HOIEstimator(object):
             Combinations of features.
         """
         logger.info("Get list of multiplets")
+        # specify whether to include target or not
+        n = self._n_features_x
+        if not self._has_target:
+            target = None
+        else:
+            target = (np.arange(self._n_features_y) + n).tolist()
+
+        if self._encoding:
+            target = None
 
         # custom list of multiplets don't require to full list of multiplets
         if self._custom_mults is not None:
+            if self._encoding or not self._has_target:
+                target = []
             logger.info("    Selecting custom multiplets")
             _orders = [len(m) for m in self._custom_mults]
-            mults = jnp.full((len(self._custom_mults), max(_orders)), -1)
-            for n_m, m in enumerate(self._custom_mults):
+            # adding target for not encoding metrics
+            mults_ = [list(c) + target for c in self._custom_mults]
+            mults = jnp.full(
+                (len(self._custom_mults), max(_orders) + len(target)), -1
+            )
+            for n_m, m in enumerate(mults_):
                 mults = mults.at[n_m, 0 : len(m)].set(m)
             self._multiplets = mults
         else:

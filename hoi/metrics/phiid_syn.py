@@ -145,7 +145,9 @@ class SynergyphiID(HOIEstimator):
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
         for msize in pbar:
-            pbar.set_description(desc="SynMMI order %s" % msize, refresh=False)
+            pbar.set_description(
+                desc="SynPhiIDMMI order %s" % msize, refresh=False
+            )
 
             # combinations of features
             _h_idx = h_idx[order == msize, 0:msize]

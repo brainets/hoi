@@ -146,7 +146,9 @@ class RedundancyphiID(HOIEstimator):
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
         for msize in pbar:
-            pbar.set_description(desc="RedMMI order %s" % msize, refresh=False)
+            pbar.set_description(
+                desc="RedPhiIDMMI order %s" % msize, refresh=False
+            )
 
             # combinations of features
             _h_idx = h_idx[order == msize, 0:msize]

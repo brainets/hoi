@@ -488,9 +488,7 @@ document.write(`
         <span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_minmax</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">maxsize</span><span class="p">)</span>
 
         <span class="c1"># prepare the data for computing mi</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">prepare_for_it</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
-        <span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">prepare_for_it</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1"># prepare mi functions</span>
         <span class="n">mi_fcn</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">vmap</span><span class="p">(</span><span class="n">get_mi</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>

@@ -88,7 +88,9 @@ class InfoTopo(HOIEstimator):
             self, x=x, y=None, multiplets=None, verbose=verbose
         )
 
-    def fit(self, minsize=1, maxsize=None, method="gc", **kwargs):
+    def fit(
+        self, minsize=1, maxsize=None, method="gc", samples=None, **kwargs
+    ):
         """Compute Topological Information.
 
         Parameters
@@ -108,6 +110,9 @@ class InfoTopo(HOIEstimator):
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
 
@@ -121,7 +126,11 @@ class InfoTopo(HOIEstimator):
 
         minsize, maxsize = self._check_minmax(minsize, maxsize)
         h_x, h_idx, order = self.compute_entropies(
-            minsize=1, maxsize=maxsize, method=method, **kwargs
+            minsize=1,
+            maxsize=maxsize,
+            method=method,
+            samples=samples,
+            **kwargs,
         )
 
         # _______________________________ HOI _________________________________

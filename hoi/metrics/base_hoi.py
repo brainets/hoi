@@ -134,17 +134,13 @@ class HOIEstimator(object):
 
         return minsize, maxsize
 
-    def _postprocessing(self, hoi):
-        """Post-processing of computed hoi."""
-        pass
-
     ###########################################################################
     ###########################################################################
     #                         INFORMATION THEORY
     ###########################################################################
     ###########################################################################
     def compute_entropies(
-        self, method="gc", minsize=1, maxsize=None, fill_value=-1, **kwargs
+        self, method="gc", minsize=1, maxsize=None, samples=None, **kwargs
     ):
         """Compute entropies for all multiplets.
 
@@ -163,12 +159,13 @@ class HOIEstimator(object):
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         minsize : int, optional
             Minimum size of the multiplets. Default is 1.
         maxsize : int, optional
             Maximum size of the multiplets. Default is None.
-        fill_value : int, optional
-            Value to fill the multiplet indices with. Default is -1.
         kwargs : dict, optional
             Additional arguments to pass to the entropy function.
 
@@ -186,7 +183,9 @@ class HOIEstimator(object):
 
         # ________________________________ I/O ________________________________
         # prepare the data for computing entropy
-        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
+        x, kwargs = prepare_for_entropy(
+            self._x, method, samples=samples, **kwargs
+        )
 
         # get entropy function
         entropy = partial(

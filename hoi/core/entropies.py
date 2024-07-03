@@ -58,10 +58,11 @@ def get_entropy(method="gc", **kwargs):
 ###############################################################################
 
 
-def prepare_for_entropy(data, method, **kwargs):
+def prepare_for_entropy(data, method, samples=None, **kwargs):
     """Prepare the data before computing entropy."""
     # data.shape = n_variables, n_features, n_samples
 
+    # -------------------------------------------------------------------------
     # type checking
     if (method in ["binning"]) and (data.dtype != int):
         raise ValueError(
@@ -71,6 +72,12 @@ def prepare_for_entropy(data, method, **kwargs):
     elif (method in ["kernel", "gc", "knn"]) and (data.dtype != float):
         raise ValueError(f"data dtype should be float, not {data.dtype}")
 
+    # -------------------------------------------------------------------------
+    # trial selection
+    if isinstance(samples, (np.ndarray, jnp.ndarray, list, tuple)):
+        data = data[..., samples]
+
+    # -------------------------------------------------------------------------
     # method specific preprocessing
     if method == "gc":
         logger.info("    Copnorm data")

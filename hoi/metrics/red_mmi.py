@@ -42,7 +42,9 @@ class RedundancyMMI(HOIEstimator):
             verbose=verbose,
         )
 
-    def fit(self, minsize=2, maxsize=None, method="gc", **kwargs):
+    def fit(
+        self, minsize=2, maxsize=None, method="gc", samples=None, **kwargs
+    ):
         """Redundancy Index.
 
         Parameters
@@ -62,6 +64,9 @@ class RedundancyMMI(HOIEstimator):
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         kwargs : dict | {}
             Additional arguments are sent to each MI function
 
@@ -76,7 +81,9 @@ class RedundancyMMI(HOIEstimator):
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the data for computing mi
-        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
+        x, kwargs = prepare_for_entropy(
+            self._x, method, samples=samples, **kwargs
+        )
         x, y = self._split_xy(x)
 
         # prepare mi functions

@@ -68,6 +68,7 @@ class RedundancyphiID(HOIEstimator):
         direction_axis=0,
         maxsize=None,
         method="gc",
+        samples=None,
         **kwargs,
     ):
         """Redundancy (phiID).
@@ -89,6 +90,9 @@ class RedundancyphiID(HOIEstimator):
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         tau : int | 1
             The length of the delay to use to compute the redundancy as
             defined in the phiID.
@@ -111,7 +115,9 @@ class RedundancyphiID(HOIEstimator):
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the data for computing mi
-        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
+        x, kwargs = prepare_for_entropy(
+            self._x, method, samples=samples, **kwargs
+        )
 
         # prepare mi functions
         mi_fcn = jax.vmap(get_mi(method=method, **kwargs))

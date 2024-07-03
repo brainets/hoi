@@ -50,7 +50,9 @@ class GradientOinfo(HOIEstimator):
         self._oinf_tf = base_model(x, **kw_oinfo)
         self.__name__ = self.__name__ + "(%s)" % base_model.__name__
 
-    def fit(self, minsize=2, maxsize=None, method="gc", **kwargs):
+    def fit(
+        self, minsize=2, maxsize=None, method="gc", samples=None, **kwargs
+    ):
         """Compute the Gradient O-information.
 
         Parameters
@@ -70,6 +72,9 @@ class GradientOinfo(HOIEstimator):
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
 
@@ -80,7 +85,11 @@ class GradientOinfo(HOIEstimator):
             shape (n_multiplets, n_variables)
         """
         kw_oinfo = dict(
-            minsize=minsize, maxsize=maxsize, method=method, **kwargs
+            minsize=minsize,
+            maxsize=maxsize,
+            method=method,
+            samples=samples,
+            **kwargs,
         )
 
         # ____________________________ TASK-FREE ______________________________

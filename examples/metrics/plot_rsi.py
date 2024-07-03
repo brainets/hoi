@@ -42,6 +42,9 @@ plt.style.use('ggplot')
 # A very simple way to simulate redundancy is to observe that if a triplet of
 # variables :math:`X_{1}, X_{2}, X_{3}` receive a copy of a variable :math:`Y`,
 # we will observe redundancy between :math:`X_{1}, X_{2}, X_{3}` and :math:`Y`.
+# For further information about how to simulate redundant and synergistic
+# interactions, checkout the example
+# :ref:`sphx_glr_auto_examples_tutorials_plot_sim_red_syn.py`
 
 # lets start by simulating a variable x with 200 samples and 7 features
 x = np.random.rand(200, 7)

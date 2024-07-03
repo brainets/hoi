@@ -24,7 +24,10 @@ plt.style.use("ggplot")
 #
 # Let's first simulate some data to showcase the different metrics. Here, we
 # are going to simulate a network of 6 nodes, then we introduce redudancy
-# between nodes (0, 1, 2) and synergy between nodes (3, 4, 5) :
+# between nodes (0, 1, 2) and synergy between nodes (3, 4, 5). For further
+# information about how to simulate redundant and synergistic interactions,
+# checkout the example
+# :ref:`sphx_glr_auto_examples_tutorials_plot_sim_red_syn.py`
 
 # network of 6 nodes and 1000 samples each
 x = np.random.rand(1000, 6)

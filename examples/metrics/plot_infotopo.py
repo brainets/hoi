@@ -31,7 +31,9 @@ plt.style.use("ggplot")
 #
 # Let's start by simulating a small network of 7 nodes with 1000 samples each.
 # Then we're going to introduce redundancy between the triplet (0, 1, 2) and
-# synergy between the quadruplet (3, 4, 5, 6)
+# synergy between the quadruplet (3, 4, 5, 6). For further information about
+# how to simulate redundant and synergistic interactions, checkout the example
+# :ref:`sphx_glr_auto_examples_tutorials_plot_sim_red_syn.py`
 
 # 7 nodes network with 1000 samples each
 x = np.random.rand(1000, 7)

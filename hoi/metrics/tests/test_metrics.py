@@ -336,11 +336,3 @@ class TestMetricsFunc(object):
         elif metric == RedundancyphiID:
             mult = [0, 2]
         np.testing.assert_array_equal(df["multiplet"].values[0], mult)
-
-
-# if __name__ == "__main__":
-#     TestMetricsSmoke().test_definition(RedundancyphiID, x_2d, None, multiplets)
-    # TestMetricsSmoke().test_multiplets(InfoTopo, x_2d, [(0, 1)])
-    # TestMetricsSmoke().test_order(InfoTopo, x_2d, y_1d)
-    # TestMetricsFunc().test_infotot(InfoTot, (x_3d, y_1d))
-    # TestMetricsFunc().test_phiid(RedundancyphiID, (x_phiid, None))

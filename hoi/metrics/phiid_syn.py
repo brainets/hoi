@@ -19,13 +19,11 @@ def _compute_phi_syn(inputs, comb, mi_fcn=None):
     x_c = x[:, :, :]
     y_c = y[:, comb, :]
 
-    # compute info tot 
-    # I({x_{1}(t), ..., x_{n}(t)}; x_{1}(t=tau), ..., x_{n}(t+tau)})
+    # compute info tot I({x_{1}, ..., x_{n}}; S)
     _, i_tot = mi_fcn((x_c, y_c), comb)
 
     # compute max(I(x_{-j}; S))
     _, i_maxj = jax.lax.scan(mi_fcn, (x_c[:, comb, :], y_c), ind)
-    print(i_tot.shape, i_maxj.shape)
 
     return inputs, i_tot - i_maxj.max(0)
 
@@ -77,7 +75,7 @@ class SynergyphiID(HOIEstimator):
         tau=1,
         direction_axis=0,
         maxsize=None,
-        method="gcmi",
+        method="gc",
         **kwargs,
     ):
         r"""Synergy (phiID).
@@ -86,11 +84,11 @@ class SynergyphiID(HOIEstimator):
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi'}
-            Name of the method to compute mutual-information. Use either :
+        method : {'gc', 'binning', 'knn', 'kernel}
+            Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See
-                  :func:`hoi.core.entropy_gcmi`
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
                   :func:`hoi.core.entropy_bin`
@@ -124,8 +122,8 @@ class SynergyphiID(HOIEstimator):
         x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
 
         # prepare mi functions
-        mi_fc = jax.vmap(get_mi(method=method, **kwargs))
-        compute_mi = partial(compute_mi_comb, mi=mi_fc)
+        mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
+        compute_mi = partial(compute_mi_comb, mi=mi_fcn)
         compute_syn = partial(_compute_phi_syn, mi_fcn=compute_mi)
 
         # get multiplet indices and order

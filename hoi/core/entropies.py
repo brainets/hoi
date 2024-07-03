@@ -75,6 +75,7 @@ def prepare_for_it(data, method, samples=None, **kwargs):
     # -------------------------------------------------------------------------
     # trial selection
     if isinstance(samples, (np.ndarray, jnp.ndarray, list, tuple)):
+        logger.info("    Sample selection")
         data = data[..., samples]
 
     # -------------------------------------------------------------------------

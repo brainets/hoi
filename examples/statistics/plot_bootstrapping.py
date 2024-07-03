@@ -198,3 +198,5 @@ plt.title("O-information with [5, 95]% confidence interval", fontweight="bold")
 # multiplet (0, 1, 2, 3) doesn't includes the confidence interval of lower
 # order. Therefore we can conclude that the redundancy lies in the quadruplet
 # and not in any of the triplets.
+
+# sphinx_gallery_thumbnail_number = 2

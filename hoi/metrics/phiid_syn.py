@@ -59,14 +59,11 @@ class SynergyphiID(HOIEstimator):
     _encoding = False
     _positive = "synergy"
     _negative = "null"
-    _symmetric = True
+    _symmetric = False
 
     def __init__(self, x, multiplets=None, verbose=None):
         HOIEstimator.__init__(
-            self,
-            x=x,
-            multiplets=multiplets,
-            verbose=verbose,
+            self, x=x, multiplets=multiplets, verbose=verbose
         )
 
     def fit(
@@ -123,9 +120,7 @@ class SynergyphiID(HOIEstimator):
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the x for computing mi
-        x, kwargs = prepare_for_it(
-            self._x, method, samples=samples, **kwargs
-        )
+        x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
 
         # prepare mi functions
         mi_fcn = jax.vmap(get_mi(method=method, **kwargs))

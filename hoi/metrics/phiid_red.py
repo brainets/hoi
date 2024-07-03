@@ -51,14 +51,11 @@ class RedundancyphiID(HOIEstimator):
     _encoding = False
     _positive = "redundancy"
     _negative = "null"
-    _symmetric = True
+    _symmetric = False
 
     def __init__(self, x, multiplets=None, verbose=None):
         HOIEstimator.__init__(
-            self,
-            x=x,
-            multiplets=multiplets,
-            verbose=verbose,
+            self, x=x, multiplets=multiplets, verbose=verbose
         )
 
     def fit(

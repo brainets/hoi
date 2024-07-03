@@ -96,6 +96,7 @@ sphinx_gallery_conf = {
             "../examples/tutorials",
             "../examples/it",
             "../examples/metrics",
+            "../examples/statistics",
             "../examples/miscellaneous",
         ]
     ),

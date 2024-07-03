@@ -1,5 +1,5 @@
 Entropy and mutual information
--------------------------------------
+------------------------------
 
 .. contents:: Contents
    :local:

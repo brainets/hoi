@@ -520,7 +520,9 @@ document.write(`
             <span class="n">hoi</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_variables</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">msize</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
-            <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span><span class="n">desc</span><span class="o">=</span><span class="s2">&quot;SynMMI order </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msize</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">pbar</span><span class="o">.</span><span class="n">set_description</span><span class="p">(</span>
+                <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;SynPhiIDMMI order </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">msize</span><span class="p">,</span> <span class="n">refresh</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
 
             <span class="c1"># combinations of features</span>
             <span class="n">_h_idx</span> <span class="o">=</span> <span class="n">h_idx</span><span class="p">[</span><span class="n">order</span> <span class="o">==</span> <span class="n">msize</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">msize</span><span class="p">]</span>

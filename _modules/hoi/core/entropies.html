@@ -213,6 +213,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../theory.html">Theoretical background</a></li>
 
@@ -257,7 +258,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.prepare_for_entropy.html">hoi.core.prepare_for_entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
 </ul>
@@ -432,12 +433,13 @@ document.write(`
 <span class="c1">###############################################################################</span>
 
 
-<div class="viewcode-block" id="prepare_for_entropy">
-<a class="viewcode-back" href="../../../api/generated/hoi.core.prepare_for_entropy.html#hoi.core.prepare_for_entropy">[docs]</a>
-<span class="k">def</span> <span class="nf">prepare_for_entropy</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">reshape</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="prepare_for_it">
+<a class="viewcode-back" href="../../../api/generated/hoi.core.prepare_for_it.html#hoi.core.prepare_for_it">[docs]</a>
+<span class="k">def</span> <span class="nf">prepare_for_it</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare the data before computing entropy.&quot;&quot;&quot;</span>
     <span class="c1"># data.shape = n_variables, n_features, n_samples</span>
 
+    <span class="c1"># -------------------------------------------------------------------------</span>
     <span class="c1"># type checking</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binning&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
@@ -447,6 +449,13 @@ document.write(`
     <span class="k">elif</span> <span class="p">(</span><span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;kernel&quot;</span><span class="p">,</span> <span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="s2">&quot;knn&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data dtype should be float, not </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
+    <span class="c1"># -------------------------------------------------------------------------</span>
+    <span class="c1"># trial selection</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    Sample selection&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">samples</span><span class="p">]</span>
+
+    <span class="c1"># -------------------------------------------------------------------------</span>
     <span class="c1"># method specific preprocessing</span>
     <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gc&quot;</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;    Copnorm data&quot;</span><span class="p">)</span>

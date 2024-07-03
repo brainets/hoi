@@ -1,0 +1,811 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Bootstrapping and confidence interval &#8212; HOI 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=b7615940" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=55ff85c6"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/statistics/plot_bootstrapping';</script>
+    <link rel="icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Miscellaneous" href="../miscellaneous/index.html" />
+    <link rel="prev" title="Statistics : bootstrapping and permutations" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+<head>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro&family=Roboto+Mono:wght@332&display=swap');
+
+.foot {
+    width: 100%;
+    text-align: center;
+}
+
+/* Optionally, you can add styling to the images as well */
+.foot img {
+    margin: 0 10px; /* Add some space between the images if desired */
+}
+</style>
+</head>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/hoi-logo.png" class="logo__image only-light" alt="HOI 0.0.1 documentation - Home"/>
+    <script>document.write(`<img src="../../_static/hoi-logo.png" class="logo__image only-dark" alt="HOI 0.0.1 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/brainets/hoi" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://twitter.com/kNearNeighbors" title="Twitter" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-twitter-square fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Twitter</span></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started 🚀</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Examples</a></li>
+
+
+
+
+
+<li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theoretical background</a></li>
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources 🔪</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/modules.html">Public API: list of functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_metrics.html"><code class="docutils literal notranslate"><span class="pre">hoi.metrics</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.Oinfo.html">hoi.metrics.Oinfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.TC.html">hoi.metrics.TC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.SynergyphiID.html">hoi.metrics.SynergyphiID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_sim.html"><code class="docutils literal notranslate"><span class="pre">hoi.simulation</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.simulation.simulate_hoi_gauss.html">hoi.simulation.simulate_hoi_gauss</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_utils.html"><code class="docutils literal notranslate"><span class="pre">hoi.utils</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.digitize.html">hoi.utils.digitize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.normalize.html">hoi.utils.normalize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.landscape.html">hoi.utils.landscape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.get_nbest_mult.html">hoi.utils.get_nbest_mult</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_plot.html"><code class="docutils literal notranslate"><span class="pre">hoi.plot</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.plot.plot_landscape.html">hoi.plot.plot_landscape</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../jax.html">Jax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Developer Documentation</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Bootstrapping and confidence interval</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o-information-redundancy-and-synergy-spread-to-higher-orders">O-information : Redundancy and synergy spread to higher orders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimation-of-the-confidence-interval-using-a-bootstrapping-approach">Estimation of the confidence interval using a bootstrapping approach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-bootstrap">Compute bootstrap</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-the-o-information-with-the-confidence-interval">Plot the O-information with the confidence interval</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-statistics-plot-bootstrapping-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code.</p>
+</div>
+<section class="sphx-glr-example-title" id="bootstrapping-and-confidence-interval">
+<span id="sphx-glr-auto-examples-statistics-plot-bootstrapping-py"></span><h1>Bootstrapping and confidence interval<a class="headerlink" href="#bootstrapping-and-confidence-interval" title="Link to this heading">#</a></h1>
+<p>This example illustrates how to estimate the confidence interval arround
+Higher Order Interactions. In addition, it also shows how the boostrapping can
+be used to fix the spatial spreading limitation of the O-information. For
+further information, checkout the example
+<a class="reference internal" href="../metrics/plot_infotopo.html#sphx-glr-auto-examples-metrics-plot-infotopo-py"><span class="std std-ref">Topological Information : conditioning on orders</span></a></p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">hoi.metrics</span> <span class="kn">import</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">Oinfo</span></a>
+<span class="kn">from</span> <span class="nn">hoi.plot</span> <span class="kn">import</span> <a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a>
+<span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a>
+
+<span class="kn">from</span> <span class="nn">sklearn.utils</span> <span class="kn">import</span> <span class="n">resample</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="o-information-redundancy-and-synergy-spread-to-higher-orders">
+<h2>O-information : Redundancy and synergy spread to higher orders<a class="headerlink" href="#o-information-redundancy-and-synergy-spread-to-higher-orders" title="Link to this heading">#</a></h2>
+<p>As illustrated in the example
+<a class="reference internal" href="../metrics/plot_infotopo.html#sphx-glr-auto-examples-metrics-plot-infotopo-py"><span class="std std-ref">Topological Information : conditioning on orders</span></a>, when using the
+<a class="reference internal" href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Oinfo</span></code></a>, the redundancy define at one order is going to
+spread across orders. As a reminder, let’s simulate some simple data, a
+4-nodes network with 200 samples. For further information about how to
+simulate redundant and synergistic interactions, checkout the example
+<a class="reference internal" href="../tutorials/plot_sim_red_syn.html#sphx-glr-auto-examples-tutorials-plot-sim-red-syn-py"><span class="std std-ref">How to simulate redundancy and synergy</span></a></p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the number of samples and nodes in the network</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">n_nodes</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="c1"># simulate some data</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">)</span>
+
+<span class="c1"># create redundancy between nodes (0, 1, 2)</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Now we can estimate the O-information and plot the landscape of hoi</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute the o-information</span>
+<a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">Oinfo</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo.fit" title="hoi.metrics.Oinfo.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># plot the landscape</span>
+<a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a><span class="p">(</span>
+    <span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span> <span class="n">plt_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Spectral_r&quot;</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># also print the hoi with highest values</span>
+<span class="nb">print</span><span class="p">(</span><a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">))</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_bootstrapping_001.png" srcset="../../_images/sphx_glr_plot_bootstrapping_001.png" alt="plot bootstrapping" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>   index  order       hoi     multiplet
+0      0      3  0.207328     [0, 1, 2]
+1      4      4  0.206888  [0, 1, 2, 3]
+2      1      3  0.000271     [0, 1, 3]
+3      3      3 -0.000398     [1, 2, 3]
+4      2      3 -0.001073     [0, 2, 3]
+</pre></div>
+</div>
+<p>As we can see from the printed table and the landscape, the highest
+O-information is achieved for the multiplet (0, 1, 2) at order 3 and the
+multiplet (0, 1, 2, 3, 4) at order 4. However, we simulated redundancy only
+between the nodes (0, 1, 2). To fix this with non-parametric statistics, we
+are going to use bootstrapping to estimate the confidence interval
+surrounding each estimatation of hoi.</p>
+</section>
+<section id="estimation-of-the-confidence-interval-using-a-bootstrapping-approach">
+<h2>Estimation of the confidence interval using a bootstrapping approach<a class="headerlink" href="#estimation-of-the-confidence-interval-using-a-bootstrapping-approach" title="Link to this heading">#</a></h2>
+<p>To estimate the confidence interval, we are going to repeat the computations
+of hoi by randomly sampling the samples. To this end we are going to use the
+resample method of scikit-learn</p>
+<section id="compute-bootstrap">
+<h3>Compute bootstrap<a class="headerlink" href="#compute-bootstrap" title="Link to this heading">#</a></h3>
+<p>Regarding the number of bootstraps, the higher the better but is also more
+computationally intensive. Here we are going to use 20 to keep the example
+fast. We recommand at least 200-1000 boostraps.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the number of bootstrap.</span>
+<span class="n">n_boots</span> <span class="o">=</span> <span class="mi">20</span>
+
+<span class="c1"># define an empty list of hoi</span>
+<span class="n">hoi</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># repeat the computation of hoi `n_boots` times</span>
+<span class="k">for</span> <span class="n">n_b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bootstrap </span><span class="si">{</span><span class="n">n_b</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">n_boots</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># define a random list of trials</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">resample</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">n_b</span>
+    <span class="p">)</span>
+
+    <span class="c1"># compute the o-info using the subselected trials</span>
+    <span class="n">_hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo.fit" title="hoi.metrics.Oinfo.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+    <span class="c1"># append to the list</span>
+    <span class="n">hoi</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_hoi</span><span class="p">)</span>
+
+<span class="c1"># stack the boostraps over the first dimension</span>
+<span class="n">hoi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap 1 / 20
+Bootstrap 2 / 20
+Bootstrap 3 / 20
+Bootstrap 4 / 20
+Bootstrap 5 / 20
+Bootstrap 6 / 20
+Bootstrap 7 / 20
+Bootstrap 8 / 20
+Bootstrap 9 / 20
+Bootstrap 10 / 20
+Bootstrap 11 / 20
+Bootstrap 12 / 20
+Bootstrap 13 / 20
+Bootstrap 14 / 20
+Bootstrap 15 / 20
+Bootstrap 16 / 20
+Bootstrap 17 / 20
+Bootstrap 18 / 20
+Bootstrap 19 / 20
+Bootstrap 20 / 20
+</pre></div>
+</div>
+</section>
+<section id="plot-the-o-information-with-the-confidence-interval">
+<h3>Plot the O-information with the confidence interval<a class="headerlink" href="#plot-the-o-information-with-the-confidence-interval" title="Link to this heading">#</a></h3>
+<p>Now we can plot the O-information and its confidence interval.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute the mean of the o-information over the boostraps</span>
+<span class="n">hoi_m</span> <span class="o">=</span> <span class="n">hoi</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># get the [5, 95]% confidence interval</span>
+<span class="n">p_low</span><span class="p">,</span> <span class="n">p_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">95</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># plot the results</span>
+<span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">hoi_m</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">hoi_m</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s2">&quot;mid&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">p_low</span><span class="p">,</span> <span class="n">p_high</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="s2">&quot;mid&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">x_axis</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span>
+    <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">o</span><span class="p">])</span> <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo.multiplets" title="hoi.metrics.Oinfo.multiplets" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-property"><span class="n">model</span><span class="o">.</span><span class="n">multiplets</span></a><span class="p">,</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo.order" title="hoi.metrics.Oinfo.order" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-property"><span class="n">model</span><span class="o">.</span><span class="n">order</span></a><span class="p">)],</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Multiplet&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Oinfo [bits]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;O-information with [5, 95]</span><span class="si">% c</span><span class="s2">onfidence interval&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_bootstrapping_002.png" srcset="../../_images/sphx_glr_plot_bootstrapping_002.png" alt="O-information with [5, 95]% confidence interval" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;O-information with [5, 95]% confidence interval&#39;)
+</pre></div>
+</div>
+<p>The plot above depicts the average of the O-information over the bootstraps
+as a bold thick line for all of the multiplets and the shaded area represents
+the confidence interval. As we can see now, the confidence surrounding the
+multiplet (0, 1, 2, 3) is not really different from the multiplet (0, 1, 2).
+Therefore, we can say that the redundancy is mainly carried by the triplet
+(0, 1, 2) and the addition of the node 3 doesn’t bring much. For comparison,
+we are going to use the exact same code except that this time, we are going
+to create redundancy between the quadruplet (0, 1, 2, 3).</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate some data</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">)</span>
+
+<span class="c1"># create redundancy between nodes (0, 1, 2, 3)</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># initialize the o-information model</span>
+<a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">Oinfo</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># define an empty list of hoi</span>
+<span class="n">hoi</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># repeat the computation of hoi `n_boots` times</span>
+<span class="k">for</span> <span class="n">n_b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bootstrap </span><span class="si">{</span><span class="n">n_b</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> / </span><span class="si">{</span><span class="n">n_boots</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># define a random list of trials</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">resample</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">n_b</span>
+    <span class="p">)</span>
+
+    <span class="c1"># compute the o-info using the subselected trials</span>
+    <span class="n">_hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo.fit" title="hoi.metrics.Oinfo.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+    <span class="c1"># append to the list</span>
+    <span class="n">hoi</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_hoi</span><span class="p">)</span>
+
+<span class="c1"># stack the boostraps over the first dimension</span>
+<span class="n">hoi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># compute the mean of the o-information over the boostraps</span>
+<span class="n">hoi_m</span> <span class="o">=</span> <span class="n">hoi</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># get the [5, 95]% confidence interval</span>
+<span class="n">p_low</span><span class="p">,</span> <span class="n">p_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">95</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># plot the results</span>
+<span class="n">x_axis</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">hoi_m</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">hoi_m</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="s2">&quot;mid&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x_axis</span><span class="p">,</span> <span class="n">p_low</span><span class="p">,</span> <span class="n">p_high</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="s2">&quot;mid&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">x_axis</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span>
+    <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">o</span><span class="p">])</span> <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo.multiplets" title="hoi.metrics.Oinfo.multiplets" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-property"><span class="n">model</span><span class="o">.</span><span class="n">multiplets</span></a><span class="p">,</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo.order" title="hoi.metrics.Oinfo.order" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-property"><span class="n">model</span><span class="o">.</span><span class="n">order</span></a><span class="p">)],</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Multiplet&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Oinfo [bits]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;O-information with [5, 95]</span><span class="si">% c</span><span class="s2">onfidence interval&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_bootstrapping_003.png" srcset="../../_images/sphx_glr_plot_bootstrapping_003.png" alt="O-information with [5, 95]% confidence interval" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap 1 / 20
+Bootstrap 2 / 20
+Bootstrap 3 / 20
+Bootstrap 4 / 20
+Bootstrap 5 / 20
+Bootstrap 6 / 20
+Bootstrap 7 / 20
+Bootstrap 8 / 20
+Bootstrap 9 / 20
+Bootstrap 10 / 20
+Bootstrap 11 / 20
+Bootstrap 12 / 20
+Bootstrap 13 / 20
+Bootstrap 14 / 20
+Bootstrap 15 / 20
+Bootstrap 16 / 20
+Bootstrap 17 / 20
+Bootstrap 18 / 20
+Bootstrap 19 / 20
+Bootstrap 20 / 20
+Text(0.5, 1.0, &#39;O-information with [5, 95]% confidence interval&#39;)
+</pre></div>
+</div>
+<p>This time, the O-information and confidence interval surrounding the
+multiplet (0, 1, 2, 3) doesn’t includes the confidence interval of lower
+order. Therefore we can conclude that the redundancy lies in the quadruplet
+and not in any of the triplets.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_number = 2</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 14.024 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-statistics-plot-bootstrapping-py">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/d2e94d8bac717c85e2a37d7d973930a2/plot_bootstrapping.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_bootstrapping.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/2607ff05c8df70f3429e40e3a0bf6120/plot_bootstrapping.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_bootstrapping.py</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Statistics : bootstrapping and permutations</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../miscellaneous/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Miscellaneous</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#o-information-redundancy-and-synergy-spread-to-higher-orders">O-information : Redundancy and synergy spread to higher orders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimation-of-the-confidence-interval-using-a-bootstrapping-approach">Estimation of the confidence interval using a bootstrapping approach</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-bootstrap">Compute bootstrap</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-the-o-information-with-the-confidence-interval">Plot the O-information with the confidence interval</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By BraiNets
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright BraiNets.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <hr>
+    <footer>
+        <div class="foot">
+            <img src="https://cibul.s3.amazonaws.com/e9619f705931403093351210dc70d8ee.base.image.jpg" alt="INT" height="80">
+            <img src="https://www.engagement.fr/wp-content/uploads/2013/02/Aix-Marseille-Universit%C3%A9.png" alt=" Aix-Marseille university" height="80">
+            <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
+        <br>
+        <p>&copy; Copyright BraiNets.</p>
+        </div>
+    </footer>
+
+  </body>
+</html>

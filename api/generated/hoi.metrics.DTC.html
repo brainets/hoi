@@ -215,6 +215,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theoretical background</a></li>
 
@@ -259,7 +260,7 @@
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.prepare_for_entropy.html">hoi.core.prepare_for_entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.combinations.html">hoi.core.combinations</a></li>
 </ul>
@@ -491,7 +492,7 @@ going to be computed.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.DTC.compute_entropies" title="hoi.metrics.DTC.compute_entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code></a>([method, minsize, ...])</p></td>
 <td><p>Compute entropies for all multiplets.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.DTC.fit" title="hoi.metrics.DTC.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.DTC.fit" title="hoi.metrics.DTC.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, maxsize, method, samples])</p></td>
 <td><p>Compute the Dual total correlation.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.DTC.get_combinations" title="hoi.metrics.DTC.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(minsize[, maxsize, astype])</p></td>
@@ -508,7 +509,7 @@ going to be computed.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.DTC.compute_entropies">
-<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.DTC.compute_entropies" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.DTC.compute_entropies" title="Link to this definition">#</a></dt>
 <dd><p>Compute entropies for all multiplets.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -528,11 +529,12 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 </ul>
 </div></blockquote>
 </dd>
+<dt><strong>samples</strong><span class="classifier">np.ndarray</span></dt><dd><p>List of samples to use to compute HOI. If None, all samples are
+going to be used.</p>
+</dd>
 <dt><strong>minsize</strong><span class="classifier">int, optional</span></dt><dd><p>Minimum size of the multiplets. Default is 1.</p>
 </dd>
 <dt><strong>maxsize</strong><span class="classifier">int, optional</span></dt><dd><p>Maximum size of the multiplets. Default is None.</p>
-</dd>
-<dt><strong>fill_value</strong><span class="classifier">int, optional</span></dt><dd><p>Value to fill the multiplet indices with. Default is -1.</p>
 </dd>
 <dt><strong>kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional arguments to pass to the entropy function.</p>
 </dd>
@@ -559,7 +561,7 @@ see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.en
 
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.DTC.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/dtc.html#DTC.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.DTC.fit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/dtc.html#DTC.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.DTC.fit" title="Link to this definition">#</a></dt>
 <dd><p>Compute the Dual total correlation.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -580,6 +582,9 @@ use this estimator, the data have be to discretized. See
 see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.entropy_kernel" title="hoi.core.entropy_kernel"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_kernel()</span></code></a></p></li>
 </ul>
 </div></blockquote>
+</dd>
+<dt><strong>samples</strong><span class="classifier">np.ndarray</span></dt><dd><p>List of samples to use to compute HOI. If None, all samples are
+going to be used.</p>
 </dd>
 <dt><strong>kwargs</strong><span class="classifier">dict | {}</span></dt><dd><p>Additional arguments are sent to each entropy function</p>
 </dd>

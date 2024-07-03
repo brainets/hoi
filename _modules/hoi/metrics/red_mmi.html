@@ -213,6 +213,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../../../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../theory.html">Theoretical background</a></li>
 
@@ -257,7 +258,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.prepare_for_entropy.html">hoi.core.prepare_for_entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
 </ul>
@@ -377,7 +378,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 
 <span class="kn">from</span> <span class="nn">hoi.metrics.base_hoi</span> <span class="kn">import</span> <span class="n">HOIEstimator</span>
-<span class="kn">from</span> <span class="nn">hoi.core.entropies</span> <span class="kn">import</span> <span class="n">prepare_for_entropy</span>
+<span class="kn">from</span> <span class="nn">hoi.core.entropies</span> <span class="kn">import</span> <span class="n">prepare_for_it</span>
 <span class="kn">from</span> <span class="nn">hoi.core.mi</span> <span class="kn">import</span> <span class="n">get_mi</span><span class="p">,</span> <span class="n">compute_mi_comb</span>
 <span class="kn">from</span> <span class="nn">hoi.utils.progressbar</span> <span class="kn">import</span> <span class="n">get_pbar</span>
 
@@ -417,7 +418,9 @@ document.write(`
 
 <div class="viewcode-block" id="RedundancyMMI.fit">
 <a class="viewcode-back" href="../../../api/generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI.fit">[docs]</a>
-    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Redundancy Index.</span>
 
 <span class="sd">        Parameters</span>
@@ -437,6 +440,9 @@ document.write(`
 <span class="sd">                * &#39;kernel&#39;: kernel-based estimator of entropy</span>
 <span class="sd">                  see :func:`hoi.core.entropy_kernel`</span>
 
+<span class="sd">        samples : np.ndarray</span>
+<span class="sd">            List of samples to use to compute HOI. If None, all samples are</span>
+<span class="sd">            going to be used.</span>
 <span class="sd">        kwargs : dict | {}</span>
 <span class="sd">            Additional arguments are sent to each MI function</span>
 
@@ -451,7 +457,9 @@ document.write(`
         <span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_minmax</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">maxsize</span><span class="p">)</span>
 
         <span class="c1"># prepare the data for computing mi</span>
-        <span class="n">x</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">prepare_for_entropy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="n">prepare_for_it</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_split_xy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
         <span class="c1"># prepare mi functions</span>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>hoi.core.prepare_for_entropy &#8212; HOI 0.0.1 documentation</title>
+    <title>Statistics : bootstrapping and permutations &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -47,12 +47,12 @@
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.core.prepare_for_entropy';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/statistics/index';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="hoi.core.get_mi" href="hoi.core.get_mi.html" />
-    <link rel="prev" title="hoi.core.copnorm_nd" href="hoi.core.copnorm_nd.html" />
+    <link rel="next" title="Bootstrapping and confidence interval" href="plot_bootstrapping.html" />
+    <link rel="prev" title="O-information and its derivatives for network behavior and encoding" href="../metrics/plot_oinfo.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -206,10 +206,11 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started 🚀</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../install.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Examples</a></li>
+
 
 
 
@@ -219,48 +220,48 @@
 
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Further Resources 🔪</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../modules.html">Public API: list of functions</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api_metrics.html"><code class="docutils literal notranslate"><span class="pre">hoi.metrics</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.Oinfo.html">hoi.metrics.Oinfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.TC.html">hoi.metrics.TC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.SynergyphiID.html">hoi.metrics.SynergyphiID</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api/modules.html">Public API: list of functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_metrics.html"><code class="docutils literal notranslate"><span class="pre">hoi.metrics</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.Oinfo.html">hoi.metrics.Oinfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.InfoTopo.html">hoi.metrics.InfoTopo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.TC.html">hoi.metrics.TC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.SynergyphiID.html">hoi.metrics.SynergyphiID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api_sim.html"><code class="docutils literal notranslate"><span class="pre">hoi.simulation</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="hoi.simulation.simulate_hoi_gauss.html">hoi.simulation.simulate_hoi_gauss</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_sim.html"><code class="docutils literal notranslate"><span class="pre">hoi.simulation</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.simulation.simulate_hoi_gauss.html">hoi.simulation.simulate_hoi_gauss</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api_utils.html"><code class="docutils literal notranslate"><span class="pre">hoi.utils</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="hoi.utils.digitize.html">hoi.utils.digitize</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.utils.normalize.html">hoi.utils.normalize</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.utils.landscape.html">hoi.utils.landscape</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.utils.get_nbest_mult.html">hoi.utils.get_nbest_mult</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_utils.html"><code class="docutils literal notranslate"><span class="pre">hoi.utils</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.digitize.html">hoi.utils.digitize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.normalize.html">hoi.utils.normalize</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.landscape.html">hoi.utils.landscape</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.utils.get_nbest_mult.html">hoi.utils.get_nbest_mult</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../api_plot.html"><code class="docutils literal notranslate"><span class="pre">hoi.plot</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l3"><a class="reference internal" href="hoi.plot.plot_landscape.html">hoi.plot.plot_landscape</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_plot.html"><code class="docutils literal notranslate"><span class="pre">hoi.plot</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.plot.plot_landscape.html">hoi.plot.plot_landscape</a></li>
 </ul>
 </details></li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="../api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">hoi.core.prepare_for_entropy</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.get_mi.html">hoi.core.get_mi</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.combinations.html">hoi.core.combinations</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
 </ul>
 </details></li>
 </ul>
@@ -392,9 +393,7 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
+
 </div></div>
       
     </div>
@@ -405,19 +404,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>hoi.core.prepare_for_entropy</h1>
+    <h1>Statistics : bootstrapping and permutations</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.core.prepare_for_entropy"><code class="docutils literal notranslate"><span class="pre">prepare_for_entropy()</span></code></a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -427,15 +418,14 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="hoi-core-prepare-for-entropy">
-<h1>hoi.core.prepare_for_entropy<a class="headerlink" href="#hoi-core-prepare-for-entropy" title="Link to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="hoi.core.prepare_for_entropy">
-<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">prepare_for_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reshape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/core/entropies.html#prepare_for_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.prepare_for_entropy" title="Link to this definition">#</a></dt>
-<dd><p>Prepare the data before computing entropy.</p>
-</dd></dl>
-
-<span class="target" id="sphx-glr-backreferences-hoi-core-prepare-for-entropy"></span></section>
+  <section id="statistics-bootstrapping-and-permutations">
+<span id="sphx-glr-auto-examples-statistics"></span><h1>Statistics : bootstrapping and permutations<a class="headerlink" href="#statistics-bootstrapping-and-permutations" title="Link to this heading">#</a></h1>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to estimate the confidence interval arround Higher Order Interacti..."><img alt="" src="../../_images/sphx_glr_plot_bootstrapping_thumb.png" />
+<p><a class="reference internal" href="plot_bootstrapping.html#sphx-glr-auto-examples-statistics-plot-bootstrapping-py"><span class="std std-ref">Bootstrapping and confidence interval</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Bootstrapping and confidence interval</div>
+</div></div><div class="toctree-wrapper compound">
+</div>
+</section>
 
 
                 </article>
@@ -449,20 +439,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="hoi.core.copnorm_nd.html"
+       href="../metrics/plot_oinfo.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">hoi.core.copnorm_nd</p>
+        <p class="prev-next-title">O-information and its derivatives for network behavior and encoding</p>
       </div>
     </a>
     <a class="right-next"
-       href="hoi.core.get_mi.html"
+       href="plot_bootstrapping.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">hoi.core.get_mi</p>
+        <p class="prev-next-title">Bootstrapping and confidence interval</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -472,21 +462,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.core.prepare_for_entropy"><code class="docutils literal notranslate"><span class="pre">prepare_for_entropy()</span></code></a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

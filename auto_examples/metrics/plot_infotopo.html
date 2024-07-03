@@ -215,6 +215,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theoretical background</a></li>
 
@@ -259,7 +260,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.prepare_for_entropy.html">hoi.core.prepare_for_entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
 </ul>
@@ -462,7 +463,9 @@ triplet.</p>
 <h2>Simulate redundant and synergistic interactions<a class="headerlink" href="#simulate-redundant-and-synergistic-interactions" title="Link to this heading">#</a></h2>
 <p>Let’s start by simulating a small network of 7 nodes with 1000 samples each.
 Then we’re going to introduce redundancy between the triplet (0, 1, 2) and
-synergy between the quadruplet (3, 4, 5, 6)</p>
+synergy between the quadruplet (3, 4, 5, 6). For further information about
+how to simulate redundant and synergistic interactions, checkout the example
+<a class="reference internal" href="../tutorials/plot_sim_red_syn.html#sphx-glr-auto-examples-tutorials-plot-sim-red-syn-py"><span class="std std-ref">How to simulate redundancy and synergy</span></a></p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 7 nodes network with 1000 samples each</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 
@@ -483,11 +486,11 @@ synergy between the quadruplet (3, 4, 5, 6)</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/5 [00:00&lt;?,       ?it/s]
- 20%|██        | Oinfo (3):  1/5 [00:00&lt;00:01,    2.85it/s]
- 40%|████      | Oinfo (4):  2/5 [00:00&lt;00:00,    3.56it/s]
- 60%|██████    | Oinfo (5):  3/5 [00:01&lt;00:00,    2.92it/s]
- 80%|████████  | Oinfo (6):  4/5 [00:01&lt;00:00,    2.73it/s]
-100%|██████████| Oinfo (7):  5/5 [00:01&lt;00:00,    2.77it/s]
+ 20%|██        | Oinfo (3):  1/5 [00:00&lt;00:01,    2.91it/s]
+ 40%|████      | Oinfo (4):  2/5 [00:00&lt;00:00,    3.59it/s]
+ 60%|██████    | Oinfo (5):  3/5 [00:01&lt;00:00,    2.94it/s]
+ 80%|████████  | Oinfo (6):  4/5 [00:01&lt;00:00,    2.71it/s]
+100%|██████████| Oinfo (7):  5/5 [00:01&lt;00:00,    2.78it/s]
 </pre></div>
 </div>
 <p>Now we can plot the landscape. This landscape show the values of HOI for
@@ -540,17 +543,17 @@ definition of the Topological Information is given by :</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/7 [00:00&lt;?,       ?it/s]
- 14%|█▍        | Entropy H(1):  1/7 [00:00&lt;00:00,    8.73it/s]
- 29%|██▊       | Entropy H(2):  2/7 [00:00&lt;00:00,    8.44it/s]
- 43%|████▎     | Entropy H(3):  3/7 [00:00&lt;00:00,    8.46it/s]
- 57%|█████▋    | Entropy H(4):  4/7 [00:00&lt;00:00,    8.86it/s]
- 71%|███████▏  | Entropy H(5):  5/7 [00:00&lt;00:00,    9.23it/s]
- 86%|████████▌ | Entropy H(6):  6/7 [00:00&lt;00:00,    9.50it/s]
-100%|██████████| Entropy H(7):  7/7 [00:00&lt;00:00,    9.73it/s]
+ 14%|█▍        | Entropy H(1):  1/7 [00:00&lt;00:00,    9.09it/s]
+ 29%|██▊       | Entropy H(2):  2/7 [00:00&lt;00:00,    8.87it/s]
+ 43%|████▎     | Entropy H(3):  3/7 [00:00&lt;00:00,    8.77it/s]
+ 57%|█████▋    | Entropy H(4):  4/7 [00:00&lt;00:00,    9.24it/s]
+ 71%|███████▏  | Entropy H(5):  5/7 [00:00&lt;00:00,    9.54it/s]
+ 86%|████████▌ | Entropy H(6):  6/7 [00:00&lt;00:00,    9.76it/s]
+100%|██████████| Entropy H(7):  7/7 [00:00&lt;00:00,    9.96it/s]
 
 
   0%|          |  0/99 [00:00&lt;?,       ?it/s]
-100%|██████████| Mutual information:  99/99 [00:00&lt;00:00, 147613.26it/s]
+100%|██████████| Mutual information:  99/99 [00:00&lt;00:00, 149850.63it/s]
 </pre></div>
 </div>
 <p>Again, we can plot the landscape. This time, as we can see, there’s no more
@@ -584,7 +587,7 @@ is identified as a redundant multiplet despite being synergistic.</p>
 9     32      3 -0.118180        [3, 4, 6]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.015 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.101 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-infotopo-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/ece4d51dfdf0dbf7235e94595766e7c5/plot_infotopo.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_infotopo.ipynb</span></code></a></p>

@@ -52,7 +52,7 @@
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Miscellaneous" href="../miscellaneous/index.html" />
+    <link rel="next" title="Statistics : bootstrapping and permutations" href="../statistics/index.html" />
     <link rel="prev" title="Integrated Information Decomposition" href="plot_syn_phiID.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -215,6 +215,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theoretical background</a></li>
 
@@ -259,7 +260,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.prepare_for_entropy.html">hoi.core.prepare_for_entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
 </ul>
@@ -467,7 +468,10 @@ Rosas et al. 2019 <span id="id1">[<a class="reference internal" href="../../theo
 <h2>Data simulation<a class="headerlink" href="#data-simulation" title="Link to this heading">#</a></h2>
 <p>Let’s first simulate some data to showcase the different metrics. Here, we
 are going to simulate a network of 6 nodes, then we introduce redudancy
-between nodes (0, 1, 2) and synergy between nodes (3, 4, 5) :</p>
+between nodes (0, 1, 2) and synergy between nodes (3, 4, 5). For further
+information about how to simulate redundant and synergistic interactions,
+checkout the example
+<a class="reference internal" href="../tutorials/plot_sim_red_syn.html#sphx-glr-auto-examples-tutorials-plot-sim-red-syn-py"><span class="std std-ref">How to simulate redundancy and synergy</span></a></p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># network of 6 nodes and 1000 samples each</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
 
@@ -508,7 +512,7 @@ related to redundancy.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| TC (3):  1/1 [00:00&lt;00:00,    4.33it/s]
+100%|██████████| TC (3):  1/1 [00:00&lt;00:00,    4.37it/s]
 
    index  order       hoi  multiplet
 0      0      3  0.933548  [0, 1, 2]
@@ -546,7 +550,7 @@ is linked to the synergy.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| DTC (3):  1/1 [00:00&lt;00:00,    6.73it/s]
+100%|██████████| DTC (3):  1/1 [00:00&lt;00:00,    6.71it/s]
 
    index  order       hoi  multiplet
 0     19      3  0.928996  [3, 4, 5]
@@ -581,7 +585,7 @@ given by :</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.34it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.29it/s]
 
    index  order       hoi  multiplet
 0      0      3  0.221946  [0, 1, 2]
@@ -617,7 +621,7 @@ the smallest, negative and therefore synergistic multiplet.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Sinfo (3):  1/1 [00:00&lt;00:00,    5.36it/s]
+100%|██████████| Sinfo (3):  1/1 [00:00&lt;00:00,    5.13it/s]
 
    index  order       hoi  multiplet
 0     19      3  1.675969  [3, 4, 5]
@@ -670,11 +674,11 @@ O-information :</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.35it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.25it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    4.83it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    4.64it/s]
 
    index  order       hoi  multiplet
 0      0      3  0.382892  [0, 1, 2]
@@ -707,11 +711,11 @@ between nodes (3, 4, 5)</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.38it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.26it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.37it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.27it/s]
 
    index  order       hoi  multiplet
 0     11      3  0.001846  [1, 2, 4]
@@ -750,11 +754,11 @@ between nodes (3, 4, 5)</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.34it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    5.11it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    4.87it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    4.83it/s]
 
    index  order       hoi  multiplet
 0      0      3  0.400630  [0, 1, 2]
@@ -802,14 +806,14 @@ dynamic data</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_oinfo_001.png" srcset="../../_images/sphx_glr_plot_oinfo_001.png" alt="Dynamic gradient O-information" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.94it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.87it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    3.48it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    3.40it/s]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.843 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.898 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-oinfo-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/2d62e710e011551b615a935858a62b71/plot_oinfo.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_oinfo.ipynb</span></code></a></p>
@@ -844,11 +848,11 @@ dynamic data</p>
       </div>
     </a>
     <a class="right-next"
-       href="../miscellaneous/index.html"
+       href="../statistics/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Miscellaneous</p>
+        <p class="prev-next-title">Statistics : bootstrapping and permutations</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

@@ -215,6 +215,7 @@
 
 
 
+
 <li class="toctree-l1"><a class="reference internal" href="../../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../theory.html">Theoretical background</a></li>
 
@@ -259,7 +260,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.prepare_for_entropy.html">hoi.core.prepare_for_entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
 </ul>
@@ -459,7 +460,9 @@ synergistic relationships between <span class="math notranslate nohighlight">\(X
 redundancy between the two, each <span class="math notranslate nohighlight">\(X_{i}\)</span> is going to receive a copy of
 <span class="math notranslate nohighlight">\(Y\)</span>. To create synergy, each <span class="math notranslate nohighlight">\(X_{i}\)</span> is going to encode different
 parts of <span class="math notranslate nohighlight">\(Y\)</span> so that <span class="math notranslate nohighlight">\(Y\)</span> can only be fully known when all the
-<span class="math notranslate nohighlight">\(X_{i}\)</span> are provided.</p>
+<span class="math notranslate nohighlight">\(X_{i}\)</span> are provided. For further information about how to
+simulate redundant and synergistic interactions, checkout the example
+<a class="reference internal" href="plot_sim_red_syn.html#sphx-glr-auto-examples-tutorials-plot-sim-red-syn-py"><span class="std std-ref">How to simulate redundancy and synergy</span></a></p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">simulate_data</span><span class="p">(</span>
     <span class="n">n_samples</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
     <span class="n">n_x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
@@ -615,7 +618,7 @@ Gradient Oinfo.</p>
 <img src="../../_images/sphx_glr_plot_ml_vs_it_003.png" srcset="../../_images/sphx_glr_plot_ml_vs_it_003.png" alt="Redundant interactions, Synergistic interactions" class = "sphx-glr-single-img"/><p>We retrieve the bump of information around sample 50 however this time, the
 bump is positive in case of redundant interactions and negative in case of
 synergistic interactions.</p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 8.588 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 8.433 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-plot-ml-vs-it-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/007eb65766f3b4811d99ff5b36a7b49b/plot_ml_vs_it.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_ml_vs_it.ipynb</span></code></a></p>

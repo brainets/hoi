@@ -46,8 +46,8 @@ class GradientOinfo(HOIEstimator):
     def __init__(self, x, y, multiplets=None, base_model=Oinfo, verbose=None):
         kw_oinfo = dict(multiplets=multiplets, verbose=verbose)
         HOIEstimator.__init__(self, x=x, y=None, **kw_oinfo)
-        self._oinf_tr = base_model(x, y=y, **kw_oinfo)
-        self._oinf_tf = base_model(x, **kw_oinfo)
+        self._model_tr = base_model(x, y=y, **kw_oinfo)
+        self._model_tf = base_model(x, **kw_oinfo)
         self.__name__ = self.__name__ + "(%s)" % base_model.__name__
 
     def fit(
@@ -97,11 +97,11 @@ class GradientOinfo(HOIEstimator):
         )
 
         # ____________________________ TASK-FREE ______________________________
-        hoi_tf = self._oinf_tf.fit(**kw_oinfo)
+        hoi_tf = self._model_tf.fit(**kw_oinfo)
 
-        self._multiplets = self._oinf_tf._multiplets
+        self._multiplets = self._model_tf._multiplets
 
         # __________________________ TASK-RELATED _____________________________
-        hoi_tr = self._oinf_tr.fit(**kw_oinfo)
+        hoi_tr = self._model_tr.fit(**kw_oinfo)
 
         return hoi_tr - hoi_tf

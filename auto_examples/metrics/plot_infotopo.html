@@ -486,11 +486,11 @@ how to simulate redundant and synergistic interactions, checkout the example
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/5 [00:00&lt;?,       ?it/s]
- 20%|██        | Oinfo (3):  1/5 [00:00&lt;00:01,    2.57it/s]
- 40%|████      | Oinfo (4):  2/5 [00:00&lt;00:00,    3.22it/s]
- 60%|██████    | Oinfo (5):  3/5 [00:01&lt;00:00,    2.60it/s]
- 80%|████████  | Oinfo (6):  4/5 [00:01&lt;00:00,    2.35it/s]
-100%|██████████| Oinfo (7):  5/5 [00:02&lt;00:00,    2.42it/s]
+ 20%|██        | Oinfo (3):  1/5 [00:00&lt;00:01,    2.77it/s]
+ 40%|████      | Oinfo (4):  2/5 [00:00&lt;00:00,    3.41it/s]
+ 60%|██████    | Oinfo (5):  3/5 [00:01&lt;00:00,    2.76it/s]
+ 80%|████████  | Oinfo (6):  4/5 [00:01&lt;00:00,    2.57it/s]
+100%|██████████| Oinfo (7):  5/5 [00:01&lt;00:00,    2.63it/s]
 </pre></div>
 </div>
 <p>Now we can plot the landscape. This landscape show the values of HOI for
@@ -512,16 +512,16 @@ interactions.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>   index  order       hoi           multiplet
-0     75      5  0.196148     [0, 1, 2, 5, 6]
-1     72      5  0.195877     [0, 1, 2, 3, 6]
-2     94      6  0.195374  [0, 1, 2, 4, 5, 6]
-3     38      4  0.195364        [0, 1, 2, 6]
-4     74      5  0.194714     [0, 1, 2, 4, 6]
-5     90      5 -0.469822     [2, 3, 4, 5, 6]
-6     95      6 -0.470612  [0, 1, 3, 4, 5, 6]
-7     84      5 -0.471722     [0, 3, 4, 5, 6]
-8     69      4 -0.471918        [3, 4, 5, 6]
-9     89      5 -0.472088     [1, 3, 4, 5, 6]
+0     75      5  0.224953     [0, 1, 2, 5, 6]
+1     37      4  0.224304        [0, 1, 2, 5]
+2     94      6  0.224159  [0, 1, 2, 4, 5, 6]
+3     71      5  0.223862     [0, 1, 2, 3, 5]
+4     73      5  0.223465     [0, 1, 2, 4, 5]
+5     95      6 -0.362930  [0, 1, 3, 4, 5, 6]
+6     84      5 -0.364307     [0, 3, 4, 5, 6]
+7     90      5 -0.364475     [2, 3, 4, 5, 6]
+8     89      5 -0.364532     [1, 3, 4, 5, 6]
+9     69      4 -0.365488        [3, 4, 5, 6]
 </pre></div>
 </div>
 <p>As we can see from the landscape and the printed table, the triplet (0, 1, 2)
@@ -543,17 +543,17 @@ definition of the Topological Information is given by :</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/7 [00:00&lt;?,       ?it/s]
- 14%|█▍        | Entropy H(1):  1/7 [00:00&lt;00:00,    8.07it/s]
- 29%|██▊       | Entropy H(2):  2/7 [00:00&lt;00:00,    7.92it/s]
- 43%|████▎     | Entropy H(3):  3/7 [00:00&lt;00:00,    8.04it/s]
- 57%|█████▋    | Entropy H(4):  4/7 [00:00&lt;00:00,    8.47it/s]
- 71%|███████▏  | Entropy H(5):  5/7 [00:00&lt;00:00,    8.76it/s]
- 86%|████████▌ | Entropy H(6):  6/7 [00:00&lt;00:00,    8.98it/s]
-100%|██████████| Entropy H(7):  7/7 [00:00&lt;00:00,    9.20it/s]
+ 14%|█▍        | Entropy H(1):  1/7 [00:00&lt;00:00,    8.46it/s]
+ 29%|██▊       | Entropy H(2):  2/7 [00:00&lt;00:00,    8.30it/s]
+ 43%|████▎     | Entropy H(3):  3/7 [00:00&lt;00:00,    8.33it/s]
+ 57%|█████▋    | Entropy H(4):  4/7 [00:00&lt;00:00,    8.74it/s]
+ 71%|███████▏  | Entropy H(5):  5/7 [00:00&lt;00:00,    9.03it/s]
+ 86%|████████▌ | Entropy H(6):  6/7 [00:00&lt;00:00,    9.22it/s]
+100%|██████████| Entropy H(7):  7/7 [00:00&lt;00:00,    9.44it/s]
 
 
   0%|          |  0/99 [00:00&lt;?,       ?it/s]
-100%|██████████| Mutual information:  99/99 [00:00&lt;00:00, 149688.57it/s]
+100%|██████████| Mutual information:  99/99 [00:00&lt;00:00, 150175.80it/s]
 </pre></div>
 </div>
 <p>Again, we can plot the landscape. This time, as we can see, there’s no more
@@ -575,19 +575,19 @@ is identified as a redundant multiplet despite being synergistic.</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_infotopo_002.png" srcset="../../_images/sphx_glr_plot_infotopo_002.png" alt="plot infotopo" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>   index  order       hoi        multiplet
-0      0      3  0.193246        [0, 1, 2]
-1     69      4  0.111701     [3, 4, 5, 6]
-2     66      4  0.002426     [2, 3, 4, 6]
-3      8      3  0.002324        [0, 2, 6]
-4     81      5  0.001022  [0, 2, 3, 4, 6]
-5     67      4 -0.001797     [2, 3, 5, 6]
-6     26      3 -0.002099        [2, 3, 5]
-7     33      3 -0.064900        [3, 5, 6]
-8     31      3 -0.065413        [3, 4, 5]
-9     32      3 -0.118186        [3, 4, 6]
+0      0      3  0.222681        [0, 1, 2]
+1     69      4  0.078732     [3, 4, 5, 6]
+2      7      3  0.001418        [0, 2, 5]
+3     77      5  0.001064  [0, 1, 3, 4, 6]
+4      3      3  0.001052        [0, 1, 5]
+5     21      3 -0.001379        [1, 3, 6]
+6      2      3 -0.001621        [0, 1, 4]
+7     31      3 -0.045837        [3, 4, 5]
+8     33      3 -0.059487        [3, 5, 6]
+9     32      3 -0.102483        [3, 4, 6]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.872 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.193 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-infotopo-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/ece4d51dfdf0dbf7235e94595766e7c5/plot_infotopo.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_infotopo.ipynb</span></code></a></p>

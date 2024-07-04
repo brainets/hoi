@@ -4,17 +4,15 @@ Functions to compute entropies.
 
 from functools import partial
 
-import numpy as np
-from scipy.special import ndtri
-
 import jax
 import jax.numpy as jnp
+import numpy as np
 from jax.scipy.special import digamma as psi
-from jax.scipy.special import gamma
+from jax.scipy.special import gamma, ndtri
 from jax.scipy.stats import gaussian_kde
 
 from hoi.utils.logging import logger
-
+from hoi.utils.stats import normalize
 
 ###############################################################################
 ###############################################################################
@@ -28,8 +26,23 @@ def get_entropy(method="gc", **kwargs):
 
     Parameters
     ----------
-    method : {'gc', 'binning', 'knn', 'kernel'}
-        Name of the method to compute entropy.
+    method : {'gc', 'gauss', 'binning', 'knn', 'kernel'}
+        Name of the method to compute entropy. Use either :
+
+            * 'gc': gaussian copula entropy [default]. See
+                :func:`hoi.core.entropy_gc`
+            * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
+            * 'binning': binning-based estimator of entropy. Note that to
+                use this estimator, the data have be to discretized. See
+                :func:`hoi.core.entropy_bin`
+            * 'knn': k-nearest neighbor estimator. See
+                :func:`hoi.core.entropy_knn`
+            * 'kernel': kernel-based estimator of entropy
+                see :func:`hoi.core.entropy_kernel`
+            * A custom entropy estimator can be provided. It should be a
+                callable function written with Jax taking a single 2D input
+                of shape (n_features, n_samples) and returning a float.
+
     kwargs : dict | {}
         Additional arguments sent to the entropy function.
 
@@ -41,6 +54,8 @@ def get_entropy(method="gc", **kwargs):
     """
     if method == "gc":
         return partial(entropy_gc, **kwargs)
+    elif method == "gauss":
+        return entropy_gauss
     elif method == "binning":
         return partial(entropy_bin, **kwargs)
     elif method == "knn":
@@ -95,60 +110,53 @@ def prepare_for_it(data, method, samples=None, **kwargs):
     if isinstance(samples, (np.ndarray, jnp.ndarray, list, tuple)):
         logger.info("    Sample selection")
         data = data[..., samples]
+    data = jnp.asarray(data)
 
     # -------------------------------------------------------------------------
     # method specific preprocessing
     if method == "gc":
-        logger.info("    Copnorm data")
-        data = copnorm_nd(data, axis=2)
-        data = data - data.mean(axis=2, keepdims=True)
-        kwargs["demean"] = False
-    elif method == "kernel":
-        logger.info("    Unit circle normalization")
-        from hoi.utils import normalize
+        logger.info("    Copnorm and demean the data")
+        data = preproc_gc_3d(data)
+        kwargs["copnorm"] = False
+    # elif method == "kernel":
+    #     logger.info("    Unit circle normalization")
+    #     data = preproc_kernel_3d(data)
 
-        data = np.apply_along_axis(normalize, 2, data, to_min=-1.0, to_max=1.0)
-    elif method == "binning":
-        pass
-
-    return jnp.asarray(data), kwargs
+    return data, kwargs
 
 
 ###############################################################################
 ###############################################################################
-#                            GAUSSIAN COPULA
+#                              GAUSSIAN COPULA
 ###############################################################################
 ###############################################################################
 
 
 @partial(jax.jit, static_argnums=(1, 2))
 def entropy_gc(
-    x: jnp.array, biascorrect: bool = False, demean: bool = False
+    x: jnp.array, biascorrect: bool = True, copnorm: bool = True
 ) -> jnp.array:
-    """Entropy of a Gaussian variable in bits.
-
-    H = ent_g(x) returns the entropy of a (possibly multidimensional) Gaussian
-    variable x with bias correction.
+    """Gaussian Copula entropy.
 
     Parameters
     ----------
     x : array_like
         Array of data of shape (n_features, n_samples)
-    biascorrect : bool | False
+    biascorrect : bool | True
         Specifies whether bias correction should be applied to the estimated MI
-    demean : bool | False
-        Specifies whether the input data have to be demeaned
+    copnorm : bool | True
+        Apply gaussian copula normalization
 
     Returns
     -------
     hx : float
-        Entropy of the gaussian variable (in bits)
+        Entropy of x (in bits)
     """
     nfeat, nsamp = x.shape
 
-    # demean data
-    if demean:
-        x = x - x.mean(axis=1, keepdims=True)
+    # copula normalization
+    if copnorm:
+        x = preproc_gc_2d(x)
 
     # covariance
     c = jnp.dot(x, x.T) / float(nsamp - 1)
@@ -171,60 +179,67 @@ def entropy_gc(
     return hx / ln2
 
 
-def ctransform(x):
-    """Copula transformation (empirical CDF).
+@jax.jit
+def _preproc_gc(x: jnp.array) -> jnp.array:
+    """Preprocessing for the Gaussian copula entropy and mutual-information.
+
+    This function performs the two following steps on a vector :
+
+        * Apply the copula normalization
+        * Demean the copnormed data
 
     Parameters
     ----------
     x : array_like
-        Array of data. The trial axis should be the last one
-
-    Returns
-    -------
-    xr : array_like
-        Empirical CDF value along the last axis of x. Data is ranked and scaled
-        within [0 1] (open interval)
-    """
-    xr = np.argsort(np.argsort(x)).astype(float)
-    xr += 1.0
-    xr /= float(xr.shape[-1] + 1)
-    return xr
-
-
-def copnorm_1d(x):
-    """Copula normalization for a single vector.
-
-    Parameters
-    ----------
-    x : array_like
-        Array of data of shape (n_epochs,)
+        Array of data of shape (n_samples,)
 
     Returns
     -------
     cx : array_like
         Standard normal samples with the same empirical CDF value as the input.
     """
-    assert isinstance(x, np.ndarray) and (x.ndim == 1)
-    return ndtri(ctransform(x))
+    # compute the empirical CDF
+    cdf = jnp.argsort(jnp.argsort(x)).astype(float)
+    cdf += 1.0
+    cdf /= float(cdf.shape[-1] + 1)
+
+    # infer normal distribution giving this CDF
+    gauss = ndtri(cdf)
+
+    # demean the gaussian
+    gauss -= gauss.mean()
+
+    return gauss
 
 
-def copnorm_nd(x, axis=-1):
-    """Copula normalization for a multidimentional array.
+# preprocessing for a 2D variable (n_features, n_samples)
+preproc_gc_2d = jax.jit(jax.vmap(_preproc_gc, in_axes=0))
+
+# preprocessing for a 3D variable (n_variables, n_features, n_samples)
+preproc_gc_3d = jax.jit(jax.vmap(preproc_gc_2d, in_axes=0))
+
+
+###############################################################################
+###############################################################################
+#                                  GAUSSIAN
+###############################################################################
+###############################################################################
+
+
+def entropy_gauss(x: jnp.array) -> jnp.array:
+    """Gaussian entropy.
 
     Parameters
     ----------
     x : array_like
-        Array of data
-    axis : int | -1
-        Epoch (or trial) axis. By default, the last axis is considered
+        Array of data of shape (n_features, n_samples)
 
     Returns
     -------
-    cx : array_like
-        Standard normal samples with the same empirical CDF value as the input.
+    hx : float
+        Entropy of x (in bits)
     """
-    assert isinstance(x, np.ndarray) and (x.ndim >= 1)
-    return np.apply_along_axis(copnorm_1d, axis, x)
+    return entropy_gc(x, biascorrect=False, copnorm=False)
 
 
 ###############################################################################
@@ -249,7 +264,7 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
     Returns
     -------
     hx : float
-        Entropy of x
+        Entropy of x (in bits)
     """
     n_features, n_samples = x.shape
     # here, we count the number of possible multiplets. The worst is that each
@@ -295,7 +310,6 @@ def entropy_knn(x: jnp.array, k: int = 3) -> jnp.array:
     and references. See also Kraskov et al., Estimating mutual information,
     Phy rev, 2004
 
-
     Parameters
     ----------
     x : array_like
@@ -306,7 +320,7 @@ def entropy_knn(x: jnp.array, k: int = 3) -> jnp.array:
     Returns
     -------
     hx : float
-        Entropy of x
+        Entropy of x (in bits)
     """
     # x = jnp.atleast_2d(x)
     d, n = float(x.shape[0]), float(x.shape[1])
@@ -336,23 +350,32 @@ def entropy_knn(x: jnp.array, k: int = 3) -> jnp.array:
 ###############################################################################
 
 
-@partial(jax.jit, static_argnums=(1, 2))
-def entropy_kernel(
-    x: jnp.array, base: int = 2, bw_method: str = None
-) -> jnp.array:
+@partial(jax.jit, static_argnums=(1,))
+def entropy_kernel(x: jnp.array, bw_method: str = None) -> jnp.array:
     """Entropy using gaussian kernel density.
 
     Parameters
     ----------
     x : array_like
         Input data of shape (n_features, n_samples)
+    bw_method : str | None
+        Estimator bandwidth. See jax.scipy.stats.gaussian_kde.
 
     Returns
     -------
     hx : float
-        Entropy of x
+        Entropy of x (in bits)
     """
     model = gaussian_kde(x, bw_method=bw_method)
     return -jnp.mean(jnp.log2(model(x)))
     # p = model.pdf(x)
     # return jax.scipy.special.entr(p).sum() / np.log(base)
+
+
+# kernel preprocessing for a 2d variable (n_features, n_samples)
+preproc_kernel_2d = jax.jit(
+    jax.vmap(partial(normalize, to_min=-1.0, to_max=1.0), in_axes=0)
+)
+
+# kernel preprocessing for a 2d variable (n_variables, n_features, n_samples)
+preproc_kernel_3d = jax.jit(jax.vmap(preproc_kernel_2d, in_axes=0))

@@ -1,8 +1,8 @@
 from .combinatory import combinations  # noqa
 from .entropies import (  # noqa
     get_entropy,
-    copnorm_nd,
     entropy_gc,
+    entropy_gauss,
     entropy_bin,
     entropy_knn,
     prepare_for_it,

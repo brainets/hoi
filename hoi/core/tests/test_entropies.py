@@ -3,11 +3,11 @@ import numpy as np
 import jax
 from hoi.core.entropies import (
     entropy_gc,
+    entropy_gauss,
     entropy_bin,
     entropy_knn,
     entropy_kernel,
-    copnorm_nd,
-    ctransform,
+    get_entropy,
 )
 from hoi.utils import digitize
 
@@ -18,17 +18,25 @@ j1 = jax.random.uniform(jax.random.PRNGKey(0), shape=(1, 50))
 j2 = jax.random.uniform(jax.random.PRNGKey(0), shape=(10, 50))
 
 
+# custom estimator
+def custom_est(x):
+    return x.mean()
+
+
+# method names
+names = ["gc", "gauss", "knn", "kernel", "binning", custom_est]
+
+
 # Smoke tests
 class TestEntropy(object):
     @pytest.mark.parametrize("x", [x1, x2, j1, j2])
     @pytest.mark.parametrize("biascorrect", [True, False])
-    @pytest.mark.parametrize("demean", [True, False])
-    def test_entropy_gc(self, x, biascorrect, demean):
-        hx = entropy_gc(x, biascorrect=biascorrect, demean=demean)
+    @pytest.mark.parametrize("copnorm", [True, False])
+    def test_entropy_gc(self, x, biascorrect, copnorm):
+        hx = entropy_gc(x, biascorrect=biascorrect, copnorm=copnorm)
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
         assert hx.shape == ()
-        pass
 
     @pytest.mark.parametrize("x", [x1, x2, j1, j2])
     def test_entropy_bin(self, x):
@@ -37,14 +45,17 @@ class TestEntropy(object):
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
         assert hx.shape == ()
-        pass
 
     @pytest.mark.parametrize("x", [x1, x2, j1, j2])
-    @pytest.mark.parametrize(
-        "base", [np.random.randint(1, 100) for _ in range(10)]
-    )
-    def test_entropy_kernel(self, x, base):
-        hx = entropy_kernel(x, base=base)
+    def test_entropy_kernel(self, x):
+        hx = entropy_kernel(x)
+        hx = np.asarray(hx)
+        assert hx.dtype == np.float32
+        assert hx.shape == ()
+
+    @pytest.mark.parametrize("x", [x1, x2, j1, j2])
+    def test_entropy_gauss(self, x):
+        hx = entropy_gauss(x)
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
         assert hx.shape == ()
@@ -56,18 +67,10 @@ class TestEntropy(object):
         assert hn.dtype == np.float32
         assert hn.shape == ()
 
-    # tests core/entropies/copnorm_nd.py
-    @pytest.mark.parametrize("x", [x1, x2])
-    def test_copnorm_nd(self, x):
-        cx = copnorm_nd(x)
-        assert isinstance(cx, np.ndarray)
-        assert cx.shape == x.shape
-
-    @pytest.mark.parametrize("x", [x1, x2])
-    def test_ctransform(self, x):
-        xr = ctransform(x)
-        assert isinstance(xr, np.ndarray)
-        assert xr.shape == x.shape
-        for row in xr:
-            for cdf in row:
-                assert cdf >= 0 and cdf <= 1
+    @pytest.mark.parametrize("x", [x1, x2, j1, j2])
+    @pytest.mark.parametrize("name", names)
+    def test_get_entropy(self, name, x):
+        fcn = get_entropy(method=name)
+        hn = fcn(x)
+        assert hn.dtype == np.float32
+        assert hn.shape == ()

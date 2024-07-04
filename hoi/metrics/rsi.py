@@ -78,11 +78,12 @@ class RSI(HOIEstimator):
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gc', 'binning', 'knn', 'kernel}
+        method : {'gc', 'binning', 'knn', 'kernel', callable}
             Name of the method to compute entropy. Use either :
 
                 * 'gc': gaussian copula entropy [default]. See
                   :func:`hoi.core.entropy_gc`
+                * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
                   :func:`hoi.core.entropy_bin`
@@ -90,10 +91,9 @@ class RSI(HOIEstimator):
                   :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
-                * A custom estimator of mutual-information can be provided. It
-                  should be a callable function written with Jax taking two 2D
-                  inputs x and y of respective shapes (n_features_x, n_samples)
-                  and (n_features_y, n_samples) and returning a float.
+                * A custom entropy estimator can be provided. It should be a
+                  callable function written with Jax taking a single 2D input
+                  of shape (n_features, n_samples) and returning a float.
 
         samples : np.ndarray
             List of samples to use to compute HOI. If None, all samples are

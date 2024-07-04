@@ -1,6 +1,10 @@
 """Statistics and summary statistics on HOI.
 """
 
+from functools import partial
+
+import jax
+import jax.numpy as jnp
 import numpy as np
 
 
@@ -177,6 +181,9 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
         return np.apply_along_axis(digitize_sklearn, axis, x, **kwargs)
 
 
+partial(jax.jit, static_argnums=(1, 2))
+
+
 def normalize(x, to_min=0.0, to_max=1.0):
     """Normalize the array x between to_min and to_max.
 
@@ -194,21 +201,9 @@ def normalize(x, to_min=0.0, to_max=1.0):
     xn : array_like
         The normalized array
     """
-    # find minimum and maximum
-    if to_min is None:
-        to_min = np.nanmin(x)  # noqa
-    if to_max is None:
-        to_max = np.nanmax(x)  # noqa
-
-    # normalize
-    if x.size:
-        xm, xh = np.nanmin(x), np.nanmax(x)
-        if xm != xh:
-            x_n = to_max - (((to_max - to_min) * (xh - x)) / (xh - xm))
-        else:
-            x_n = x * to_max / xh
-    else:
-        x_n = x
+    x_min, x_max = jnp.nanmin(x), jnp.nanmax(x)
+    x_n = to_min + (x - x_min) * (to_max - to_min) / (x_max - x_min)
+    # x_n = to_max - (((to_max - to_min) * (x_max - x)) / (x_max - x_min))
 
     return x_n
 

@@ -73,7 +73,7 @@ print(f"HOI between nodes (1, 2, 3) : {hoi}")
 # for synergistic interactions.
 
 # %%
-## Simulating redundant behavior
+# Simulating redundant behavior
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 # As for the redundancy, we can generate three gaussian variables, presenting
@@ -126,8 +126,8 @@ print(f"HOI between nodes (1, 2, 3) : {hoi}")
 # dominated by synergy.
 
 # %%
-# Simulating redundant behavior
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# Simulating redundant behavior by copy operator
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 # Redundancy can emerge when nodes (1, 2, 3) in the system `x` are receiving
 # multiple copies of the same information. A simple way to simulate redundancy
@@ -150,8 +150,7 @@ print(f"HOI between nodes (1, 2, 3) : {hoi}")
 
 # %%
 # As we can see, the estimated HOI is positive which is the hallmark of
-# redundancy when using the Oinfo. Be careful because some metrics are negative
-# for redundant interactions.
+# redundancy when using the Oinfo.
 
 # %%
 # Simulating dynamic redundancy and synergy

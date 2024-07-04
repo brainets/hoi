@@ -47,6 +47,24 @@ def get_entropy(method="gc", **kwargs):
         return partial(entropy_knn, **kwargs)
     elif method == "kernel":
         return partial(entropy_kernel, **kwargs)
+    elif callable(method):
+        # test the function
+        try:
+            assert method(np.random.rand(2, 100)).shape == ()
+        except Exception:
+            import traceback
+
+            logger.error(traceback.format_exc())
+
+            raise AssertionError(
+                "A custom estimator should be a callable function written in "
+                "Jax and taking as an input a variable x of shape (n_features,"
+                " n_samples) and returning the entropy of the variable as a "
+                "float."
+            )
+
+        # jit the function
+        return jax.jit(method)
     else:
         raise ValueError(f"Method {method} doesn't exist.")
 

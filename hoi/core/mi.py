@@ -2,9 +2,11 @@ from functools import partial
 
 import jax
 import jax.numpy as jnp
+import numpy as np
 from jax.scipy.special import digamma as psi
 
-from .entropies import get_entropy
+from hoi.core.entropies import get_entropy
+from hoi.utils.logging import logger
 
 ###############################################################################
 ###############################################################################
@@ -33,6 +35,26 @@ def get_mi(method="gc", **kwargs):
         return partial(mi_gc, **kwargs)
     elif method == "knn":
         return partial(mi_knn, **kwargs)
+    elif callable(method):
+        # test the function
+        try:
+            x = np.random.rand(2, 100)
+            y = np.random.rand(4, 100)
+            assert method(x, y).shape == ()
+        except Exception:
+            import traceback
+
+            logger.error(traceback.format_exc())
+
+            raise AssertionError(
+                "A custom estimator should be a callable function written in "
+                "Jax and taking two inputs x and y of shapes (n_features_x,"
+                " n_samples) and (n_features_y, n_samples) and returning the "
+                "mutual information between variables as a float."
+            )
+
+        # jit the function
+        return jax.jit(method)
     else:
         # get the entropy function
         _entropy = get_entropy(method=method, **kwargs)

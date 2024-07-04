@@ -259,7 +259,7 @@ class HOIEstimator(object):
 
         # custom list of multiplets don't require to full list of multiplets
         if self._custom_mults is not None:
-            # for encoding or without target (for the other cases it is 
+            # for encoding or without target (for the other cases it is
             # automatic)
             if self._encoding or not self._has_target:
                 target = []

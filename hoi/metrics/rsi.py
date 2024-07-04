@@ -90,9 +90,10 @@ class RSI(HOIEstimator):
                   :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
-                * A custom estimator can be provided. It should be a callable
-                  function written with Jax taking a single 2D input of shape
-                  (n_features, n_samples) and returning a float.
+                * A custom estimator of mutual-information can be provided. It
+                  should be a callable function written with Jax taking two 2D
+                  inputs x and y of respective shapes (n_features_x, n_samples)
+                  and (n_features_y, n_samples) and returning a float.
 
         samples : np.ndarray
             List of samples to use to compute HOI. If None, all samples are

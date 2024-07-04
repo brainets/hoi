@@ -87,7 +87,7 @@ class Oinfo(HOIEstimator):
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gc', 'binning', 'knn', 'kernel}
+        method : {'gc', 'binning', 'knn', 'kernel', callable}
             Name of the method to compute entropy. Use either :
 
                 * 'gc': gaussian copula entropy [default]. See

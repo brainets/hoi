@@ -86,18 +86,18 @@ class SynergyphiID(HOIEstimator):
             Name of the method to compute entropy. Use either :
 
                 * 'gc': gaussian copula entropy [default]. See
-                    :func:`hoi.core.entropy_gc`
+                  :func:`hoi.core.entropy_gc`
                 * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
                 * 'binning': binning-based estimator of entropy. Note that to
-                    use this estimator, the data have be to discretized. See
-                    :func:`hoi.core.entropy_bin`
+                  use this estimator, the data have be to discretized. See
+                  :func:`hoi.core.entropy_bin`
                 * 'knn': k-nearest neighbor estimator. See
-                    :func:`hoi.core.entropy_knn`
+                  :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
-                    see :func:`hoi.core.entropy_kernel`
+                  see :func:`hoi.core.entropy_kernel`
                 * A custom entropy estimator can be provided. It should be a
-                    callable function written with Jax taking a single 2D input
-                    of shape (n_features, n_samples) and returning a float.
+                  callable function written with Jax taking a single 2D input
+                  of shape (n_features, n_samples) and returning a float.
 
         samples : np.ndarray
             List of samples to use to compute HOI. If None, all samples are

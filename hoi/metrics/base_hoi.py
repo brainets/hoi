@@ -275,14 +275,6 @@ class HOIEstimator(object):
                 mults = mults.at[n_m, 0 : len(m)].set(m)
             self._multiplets = mults
         else:
-            # specify whether to include target or not
-            n = self._n_features_x
-            if not self._has_target:
-                target = None
-            else:
-                target = (np.arange(self._n_features_y) + n).tolist()
-            if self._encoding:
-                target = None
 
             # get the full list of multiplets
             self._multiplets = combinations(

@@ -95,6 +95,9 @@ class Sinfo(HOIEstimator):
                   :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
+                * A custom entropy estimator can be provided. It should be a
+                  callable function written with Jax taking a single 2D input
+                  of shape (n_features, n_samples) and returning a float.
 
         samples : np.ndarray
             List of samples to use to compute HOI. If None, all samples are
@@ -113,9 +116,7 @@ class Sinfo(HOIEstimator):
         minsize, maxsize = self._check_minmax(minsize, maxsize)
 
         # prepare the x for computing entropy
-        x, kwargs = prepare_for_it(
-            self._x, method, samples=samples, **kwargs
-        )
+        x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
 
         # get entropy function
         entropy = jax.vmap(get_entropy(method=method, **kwargs))

@@ -252,16 +252,15 @@ class HOIEstimator(object):
         logger.info("Get list of multiplets")
         # specify whether to include target or not
         n = self._n_features_x
-        if not self._has_target:
+        if (not self._has_target) or self._encoding:
             target = None
         else:
             target = (np.arange(self._n_features_y) + n).tolist()
 
-        if self._encoding:
-            target = None
-
         # custom list of multiplets don't require to full list of multiplets
         if self._custom_mults is not None:
+            # for encoding or without target (for the other cases it is 
+            # automatic)
             if self._encoding or not self._has_target:
                 target = []
             logger.info("    Selecting custom multiplets")
@@ -275,7 +274,6 @@ class HOIEstimator(object):
                 mults = mults.at[n_m, 0 : len(m)].set(m)
             self._multiplets = mults
         else:
-
             # get the full list of multiplets
             self._multiplets = combinations(
                 n,

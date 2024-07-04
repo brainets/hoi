@@ -71,6 +71,9 @@ class GradientOinfo(HOIEstimator):
                   :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
+                * A custom entropy estimator can be provided. It should be a
+                  callable function written with Jax taking a single 2D input
+                  of shape (n_features, n_samples) and returning a float.
 
         samples : np.ndarray
             List of samples to use to compute HOI. If None, all samples are

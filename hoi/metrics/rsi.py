@@ -90,6 +90,10 @@ class RSI(HOIEstimator):
                   :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
+                * A custom estimator of mutual-information can be provided. It
+                  should be a callable function written with Jax taking two 2D
+                  inputs x and y of respective shapes (n_features_x, n_samples)
+                  and (n_features_y, n_samples) and returning a float.
 
         samples : np.ndarray
             List of samples to use to compute HOI. If None, all samples are
@@ -108,9 +112,7 @@ class RSI(HOIEstimator):
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the x for computing mi
-        x, kwargs = prepare_for_it(
-            self._x, method, samples=samples, **kwargs
-        )
+        x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
         x, y = self._split_xy(x)
 
         # prepare mi functions

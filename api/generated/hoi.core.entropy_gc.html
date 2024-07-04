@@ -51,7 +51,7 @@
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="hoi.core.entropy_bin" href="hoi.core.entropy_bin.html" />
+    <link rel="next" title="hoi.core.entropy_gauss" href="hoi.core.entropy_gauss.html" />
     <link rel="prev" title="hoi.core.get_entropy" href="hoi.core.get_entropy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -255,10 +255,10 @@
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">hoi.core.entropy_gc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gauss.html">hoi.core.entropy_gauss</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.combinations.html">hoi.core.combinations</a></li>
@@ -432,24 +432,22 @@ document.write(`
 <h1>hoi.core.entropy_gc<a class="headerlink" href="#hoi-core-entropy-gc" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="hoi.core.entropy_gc">
-<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">entropy_gc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biascorrect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">demean</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="reference internal" href="../../_modules/hoi/core/entropies.html#entropy_gc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.entropy_gc" title="Link to this definition">#</a></dt>
-<dd><p>Entropy of a Gaussian variable in bits.</p>
-<p>H = ent_g(x) returns the entropy of a (possibly multidimensional) Gaussian
-variable x with bias correction.</p>
+<span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">entropy_gc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biascorrect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">copnorm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="reference internal" href="../../_modules/hoi/core/entropies.html#entropy_gc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.entropy_gc" title="Link to this definition">#</a></dt>
+<dd><p>Gaussian Copula entropy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>x</strong><span class="classifier">array_like</span></dt><dd><p>Array of data of shape (n_features, n_samples)</p>
 </dd>
-<dt><strong>biascorrect</strong><span class="classifier">bool | False</span></dt><dd><p>Specifies whether bias correction should be applied to the estimated MI</p>
+<dt><strong>biascorrect</strong><span class="classifier">bool | True</span></dt><dd><p>Specifies whether bias correction should be applied to the estimated MI</p>
 </dd>
-<dt><strong>demean</strong><span class="classifier">bool | False</span></dt><dd><p>Specifies whether the input data have to be demeaned</p>
+<dt><strong>copnorm</strong><span class="classifier">bool | True</span></dt><dd><p>Apply gaussian copula normalization</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>hx</strong><span class="classifier">float</span></dt><dd><p>Entropy of the gaussian variable (in bits)</p>
+<dt><strong>hx</strong><span class="classifier">float</span></dt><dd><p>Entropy of x (in bits)</p>
 </dd>
 </dl>
 </dd>
@@ -479,11 +477,11 @@ variable x with bias correction.</p>
       </div>
     </a>
     <a class="right-next"
-       href="hoi.core.entropy_bin.html"
+       href="hoi.core.entropy_gauss.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">hoi.core.entropy_bin</p>
+        <p class="prev-next-title">hoi.core.entropy_gauss</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

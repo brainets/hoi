@@ -254,10 +254,10 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gauss.html">hoi.core.entropy_gauss</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
@@ -377,7 +377,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">jax.scipy.special</span> <span class="kn">import</span> <span class="n">digamma</span> <span class="k">as</span> <span class="n">psi</span>
 
-<span class="kn">from</span> <span class="nn">hoi.core.entropies</span> <span class="kn">import</span> <span class="n">get_entropy</span>
+<span class="kn">from</span> <span class="nn">hoi.core.entropies</span> <span class="kn">import</span> <span class="n">get_entropy</span><span class="p">,</span> <span class="n">preproc_gc_2d</span>
 <span class="kn">from</span> <span class="nn">hoi.utils.logging</span> <span class="kn">import</span> <span class="n">logger</span>
 
 <span class="c1">###############################################################################</span>
@@ -407,6 +407,8 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gc&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_gc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;gauss&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">mi_gauss</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_knn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="n">method</span><span class="p">):</span>
@@ -510,7 +512,10 @@ document.write(`
 
 <span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="k">def</span> <span class="nf">mi_gc</span><span class="p">(</span>
-    <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">biascorrect</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">demean</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span>
+    <span class="n">biascorrect</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">copnorm</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Mutual information (MI) between two Gaussian variables in bits.</span>
 
@@ -522,8 +527,8 @@ document.write(`
 <span class="sd">        (n_features_y, n_samples)</span>
 <span class="sd">    biascorrect : bool | False</span>
 <span class="sd">        Specifies whether bias correction should be applied to the estimated MI</span>
-<span class="sd">    demean : bool | False</span>
-<span class="sd">        Specifies whether the input data have to be demeaned</span>
+<span class="sd">    copnorm : bool | True</span>
+<span class="sd">        Apply gaussian copula normalization</span>
 
 
 <span class="sd">    Returns</span>
@@ -537,8 +542,8 @@ document.write(`
 
     <span class="c1"># joint variable</span>
     <span class="n">xy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">demean</span><span class="p">:</span>
-        <span class="n">xy</span> <span class="o">=</span> <span class="n">xy</span> <span class="o">-</span> <span class="n">xy</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">copnorm</span><span class="p">:</span>
+        <span class="n">xy</span> <span class="o">=</span> <span class="n">preproc_gc_2d</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span>
     <span class="n">cxy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span> <span class="n">xy</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
     <span class="c1"># submatrices of joint covariance</span>
     <span class="n">cx</span> <span class="o">=</span> <span class="n">cxy</span><span class="p">[:</span><span class="n">n_features_x</span><span class="p">,</span> <span class="p">:</span><span class="n">n_features_x</span><span class="p">]</span>
@@ -571,6 +576,31 @@ document.write(`
     <span class="c1"># MI in bits</span>
     <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">hx</span> <span class="o">+</span> <span class="n">hy</span> <span class="o">-</span> <span class="n">hxy</span><span class="p">)</span> <span class="o">/</span> <span class="n">ln2</span>
     <span class="k">return</span> <span class="n">i</span>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1">###############################################################################</span>
+<span class="c1">#                       GAUSSIAN MUTUAL INFORMATION</span>
+<span class="c1">###############################################################################</span>
+<span class="c1">###############################################################################</span>
+
+
+<span class="k">def</span> <span class="nf">mi_gauss</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mutual information (MI) between two Gaussian variables in bits.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x, y : array_like</span>
+<span class="sd">        Arrays to consider for computing the Mutual Information. The two input</span>
+<span class="sd">        variables x and y should have a shape of (n_features_x, n_samples) and</span>
+<span class="sd">        (n_features_y, n_samples)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    i : float</span>
+<span class="sd">        Information shared by x and y (in bits)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">mi_gc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">biascorrect</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">copnorm</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 
 <span class="c1">###############################################################################</span>

@@ -254,10 +254,10 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gauss.html">hoi.core.entropy_gauss</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
@@ -567,7 +567,7 @@ document.write(`
 
     <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;redundancy&quot;</span><span class="p">:</span>
         <span class="c1"># We fix theta_zs in such a way that the variables are redundant</span>
-        <span class="n">theta_zs</span> <span class="o">=</span> <span class="mf">0.25</span>
+        <span class="n">theta_zs</span> <span class="o">=</span> <span class="mf">0.4</span>
 
         <span class="c1"># Update the noise covariance matrix theta</span>
         <span class="n">theta</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">diagflat</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">theta_zs</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">diagflat</span><span class="p">(</span>
@@ -579,7 +579,7 @@ document.write(`
 
     <span class="k">elif</span> <span class="n">character</span> <span class="o">==</span> <span class="s2">&quot;synergy&quot;</span><span class="p">:</span>
         <span class="c1"># We fix theta_zs in such a way that the variables show synergy</span>
-        <span class="n">theta_zs</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.52</span>
+        <span class="n">theta_zs</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.75</span>
 
         <span class="c1"># Update the noise covariance matrix theta</span>
         <span class="n">theta</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">diagflat</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">theta_zs</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">diagflat</span><span class="p">(</span>

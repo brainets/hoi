@@ -254,10 +254,10 @@
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../api/api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_entropy.html">hoi.core.get_entropy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gauss.html">hoi.core.entropy_gauss</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.combinations.html">hoi.core.combinations</a></li>
@@ -373,6 +373,10 @@ document.write(`
 <span></span><span class="sd">&quot;&quot;&quot;Statistics and summary statistics on HOI.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+
+<span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
@@ -555,6 +559,9 @@ document.write(`
 
 
 
+<span class="n">partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+
 <div class="viewcode-block" id="normalize">
 <a class="viewcode-back" href="../../../api/generated/hoi.utils.normalize.html#hoi.utils.normalize">[docs]</a>
 <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">to_min</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">to_max</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
@@ -574,21 +581,9 @@ document.write(`
 <span class="sd">    xn : array_like</span>
 <span class="sd">        The normalized array</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># find minimum and maximum</span>
-    <span class="k">if</span> <span class="n">to_min</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">to_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># noqa</span>
-    <span class="k">if</span> <span class="n">to_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">to_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># noqa</span>
-
-    <span class="c1"># normalize</span>
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
-        <span class="n">xm</span><span class="p">,</span> <span class="n">xh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">xm</span> <span class="o">!=</span> <span class="n">xh</span><span class="p">:</span>
-            <span class="n">x_n</span> <span class="o">=</span> <span class="n">to_max</span> <span class="o">-</span> <span class="p">(((</span><span class="n">to_max</span> <span class="o">-</span> <span class="n">to_min</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">xh</span> <span class="o">-</span> <span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">xh</span> <span class="o">-</span> <span class="n">xm</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">x_n</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">to_max</span> <span class="o">/</span> <span class="n">xh</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">x_n</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">x_n</span> <span class="o">=</span> <span class="n">to_min</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">to_max</span> <span class="o">-</span> <span class="n">to_min</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">)</span>
+    <span class="c1"># x_n = to_max - (((to_max - to_min) * (x_max - x)) / (x_max - x_min))</span>
 
     <span class="k">return</span> <span class="n">x_n</span></div>
 

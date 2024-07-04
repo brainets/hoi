@@ -255,10 +255,10 @@
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="../api_core.html"><code class="docutils literal notranslate"><span class="pre">hoi.core</span></code></a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">hoi.core.get_entropy</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gauss.html">hoi.core.entropy_gauss</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.core.copnorm_nd.html">hoi.core.copnorm_nd</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.get_mi.html">hoi.core.get_mi</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.combinations.html">hoi.core.combinations</a></li>
@@ -435,10 +435,42 @@ document.write(`
 <dt class="sig sig-object py" id="hoi.core.get_entropy">
 <span class="sig-prename descclassname"><span class="pre">hoi.core.</span></span><span class="sig-name descname"><span class="pre">get_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/core/entropies.html#get_entropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.core.get_entropy" title="Link to this definition">#</a></dt>
 <dd><p>Get entropy function.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>method</strong><span class="classifier">{‘gc’, ‘binning’, ‘knn’, ‘kernel’}</span></dt><dd><p>Name of the method to compute entropy.</p>
+<dd class="field-odd"><dl>
+<dt><strong>method</strong><span class="classifier">{‘gc’, ‘gauss’, ‘binning’, ‘knn’, ‘kernel’}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
+<blockquote>
+<div><ul class="simple">
+<li><dl class="simple">
+<dt>‘gc’: gaussian copula entropy [default]. See</dt><dd><p><a class="reference internal" href="hoi.core.entropy_gc.html#hoi.core.entropy_gc" title="hoi.core.entropy_gc"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gc()</span></code></a></p>
+</dd>
+</dl>
+</li>
+<li><p>‘gauss’: gaussian entropy. See <a class="reference internal" href="hoi.core.entropy_gauss.html#hoi.core.entropy_gauss" title="hoi.core.entropy_gauss"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gauss()</span></code></a></p></li>
+<li><dl class="simple">
+<dt>‘binning’: binning-based estimator of entropy. Note that to</dt><dd><p>use this estimator, the data have be to discretized. See
+<a class="reference internal" href="hoi.core.entropy_bin.html#hoi.core.entropy_bin" title="hoi.core.entropy_bin"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_bin()</span></code></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>‘knn’: k-nearest neighbor estimator. See</dt><dd><p><a class="reference internal" href="hoi.core.entropy_knn.html#hoi.core.entropy_knn" title="hoi.core.entropy_knn"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_knn()</span></code></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>‘kernel’: kernel-based estimator of entropy</dt><dd><p>see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.entropy_kernel" title="hoi.core.entropy_kernel"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_kernel()</span></code></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>A custom entropy estimator can be provided. It should be a</dt><dd><p>callable function written with Jax taking a single 2D input
+of shape (n_features, n_samples) and returning a float.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
 </dd>
 <dt><strong>kwargs</strong><span class="classifier">dict | {}</span></dt><dd><p>Additional arguments sent to the entropy function.</p>
 </dd>

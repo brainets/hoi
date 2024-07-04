@@ -33,9 +33,9 @@ plt.style.use("ggplot")
 
 # list of estimators to compare
 metrics = {
-    "GC": get_entropy("gc", biascorrect=False),
+    "GC": get_entropy("gc"),
+    "Gaussian": get_entropy("gauss"),
     "KNN-3": get_entropy("knn", k=3),
-    "KNN-10": get_entropy("knn", k=10),
     "Kernel": get_entropy("kernel"),
 }
 

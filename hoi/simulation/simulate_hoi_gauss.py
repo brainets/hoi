@@ -192,7 +192,7 @@ def __cov_order_4(character):
 
     if character == "redundancy":
         # We fix theta_zs in such a way that the variables are redundant
-        theta_zs = 0.25
+        theta_zs = 0.4
 
         # Update the noise covariance matrix theta
         theta += np.diagflat([0, 0, theta_zs], 1) + np.diagflat(
@@ -204,7 +204,7 @@ def __cov_order_4(character):
 
     elif character == "synergy":
         # We fix theta_zs in such a way that the variables show synergy
-        theta_zs = -0.52
+        theta_zs = -0.75
 
         # Update the noise covariance matrix theta
         theta += np.diagflat([0, 0, theta_zs], 1) + np.diagflat(

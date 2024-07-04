@@ -13,6 +13,7 @@ Measures of Entropy
 
    get_entropy
    entropy_gc
+   entropy_gauss
    entropy_bin
    entropy_knn
    entropy_kernel

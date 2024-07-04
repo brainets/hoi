@@ -1,5 +1,6 @@
 """Statistics and summary statistics on HOI.
 """
+
 from functools import partial
 
 import jax
@@ -181,6 +182,8 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
 
 
 partial(jax.jit, static_argnums=(1, 2))
+
+
 def normalize(x, to_min=0.0, to_max=1.0):
     """Normalize the array x between to_min and to_max.
 

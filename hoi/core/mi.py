@@ -5,7 +5,7 @@ import jax.numpy as jnp
 import numpy as np
 from jax.scipy.special import digamma as psi
 
-from hoi.core.entropies import get_entropy
+from hoi.core.entropies import get_entropy, preproc_gc_2d
 from hoi.utils.logging import logger
 
 ###############################################################################
@@ -33,6 +33,8 @@ def get_mi(method="gc", **kwargs):
     """
     if method == "gc":
         return partial(mi_gc, **kwargs)
+    elif method == "gauss":
+        return mi_gauss
     elif method == "knn":
         return partial(mi_knn, **kwargs)
     elif callable(method):
@@ -135,7 +137,10 @@ def compute_mi(x, y, entropy_fcn=None):
 
 @partial(jax.jit, static_argnums=(2, 3))
 def mi_gc(
-    x: jnp.array, y: jnp.array, biascorrect: bool = False, demean: bool = False
+    x: jnp.array,
+    y: jnp.array,
+    biascorrect: bool = False,
+    copnorm: bool = False,
 ):
     """Mutual information (MI) between two Gaussian variables in bits.
 
@@ -147,8 +152,8 @@ def mi_gc(
         (n_features_y, n_samples)
     biascorrect : bool | False
         Specifies whether bias correction should be applied to the estimated MI
-    demean : bool | False
-        Specifies whether the input data have to be demeaned
+    copnorm : bool | True
+        Apply gaussian copula normalization
 
 
     Returns
@@ -162,8 +167,8 @@ def mi_gc(
 
     # joint variable
     xy = jnp.vstack((x, y))
-    if demean:
-        xy = xy - xy.mean(axis=1)[:, jnp.newaxis]
+    if copnorm:
+        xy = preproc_gc_2d(xy)
     cxy = jnp.dot(xy, xy.T) / float(n_samples - 1)
     # submatrices of joint covariance
     cx = cxy[:n_features_x, :n_features_x]
@@ -196,6 +201,31 @@ def mi_gc(
     # MI in bits
     i = (hx + hy - hxy) / ln2
     return i
+
+
+###############################################################################
+###############################################################################
+#                       GAUSSIAN MUTUAL INFORMATION
+###############################################################################
+###############################################################################
+
+
+def mi_gauss(x: jnp.array, y: jnp.array):
+    """Mutual information (MI) between two Gaussian variables in bits.
+
+    Parameters
+    ----------
+    x, y : array_like
+        Arrays to consider for computing the Mutual Information. The two input
+        variables x and y should have a shape of (n_features_x, n_samples) and
+        (n_features_y, n_samples)
+
+    Returns
+    -------
+    i : float
+        Information shared by x and y (in bits)
+    """
+    return mi_gc(x, y, biascorrect=False, copnorm=False)
 
 
 ###############################################################################

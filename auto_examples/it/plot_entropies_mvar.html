@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Comparison of mutual-information estimators &#8212; HOI 0.0.1 documentation</title>
+    <title>Comparison of entropy estimators for a multivariate normal &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -48,12 +48,12 @@
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/it/plot_mi';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/it/plot_entropies_mvar';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Comparison of entropy estimators for a multivariate normal" href="plot_entropies_mvar.html" />
-    <link rel="prev" title="Introduction to core information theoretical metrics" href="plot_tutorial_core.html" />
+    <link rel="next" title="Comparison of entropy estimators" href="plot_entropies.html" />
+    <link rel="prev" title="Comparison of mutual-information estimators" href="plot_mi.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -407,7 +407,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Comparison of mutual-information estimators</h1>
+    <h1>Comparison of entropy estimators for a multivariate normal</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -417,8 +417,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-mi-estimators">Definition of MI estimators</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mi-of-data-sampled-from-normal-distribution">MI of data sampled from normal distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-estimators-of-entropy">Definition of estimators of entropy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-estimators">Comparison of estimators</a></li>
 </ul>
             </nav>
         </div>
@@ -432,69 +432,55 @@ document.write(`
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-it-plot-mi-py"><span class="std std-ref">Go to the end</span></a>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-it-plot-entropies-mvar-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code.</p>
 </div>
-<section class="sphx-glr-example-title" id="comparison-of-mutual-information-estimators">
-<span id="sphx-glr-auto-examples-it-plot-mi-py"></span><h1>Comparison of mutual-information estimators<a class="headerlink" href="#comparison-of-mutual-information-estimators" title="Link to this heading">#</a></h1>
-<p>In this example, we are going to compare estimators of mutual-information (MI).
-In particular, the MI between variables sampled from a normal distribution can
-be estimated theoretically. In this this tutorial we are going
-to :</p>
-<ol class="arabic simple">
-<li><p>Simulate data sampled from a normal distribution</p></li>
-<li><p>Define several estimators of MI</p></li>
-<li><p>Compute the MI for a varying number of samples</p></li>
-<li><p>See if the computed MI converge toward the theoretical value</p></li>
-</ol>
+<section class="sphx-glr-example-title" id="comparison-of-entropy-estimators-for-a-multivariate-normal">
+<span id="sphx-glr-auto-examples-it-plot-entropies-mvar-py"></span><h1>Comparison of entropy estimators for a multivariate normal<a class="headerlink" href="#comparison-of-entropy-estimators-for-a-multivariate-normal" title="Link to this heading">#</a></h1>
+<p>When computing Higher-Order Interactions using metrics based on entropy, it
+involves estimating entropy of multivariate variables. However, as we are going
+to see in this example, some estimators of entropy do not perform so well with
+increasing dimensionality. In this example, to illustrate this effect, we are
+going to compare entropy estimators with data sampled from a multivariate
+normal with increasing dimensionality.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 
-<span class="kn">from</span> <span class="nn">hoi.core</span> <span class="kn">import</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a>
-<span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <a href="../../api/generated/hoi.utils.digitize.html#hoi.utils.digitize" title="hoi.utils.digitize" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">digitize</span></a>
+<span class="kn">from</span> <span class="nn">hoi.core</span> <span class="kn">import</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<section id="definition-of-mi-estimators">
-<h2>Definition of MI estimators<a class="headerlink" href="#definition-of-mi-estimators" title="Link to this heading">#</a></h2>
-<p>Let us define several estimators of MI. We are going to use the GC MI
-(Gaussian Copula Mutual Information), the KNN (k Nearest Neighbor) and the
-kernel-based estimator and using the a binning approach.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a special function for the binning approach as it requires binary data</span>
-<span class="n">mi_binning_fcn</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;binning&quot;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
-
-<span class="k">def</span> <span class="nf">mi_binning</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.digitize.html#hoi.utils.digitize" title="hoi.utils.digitize" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">digitize</span></a><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-    <span class="n">y</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.digitize.html#hoi.utils.digitize" title="hoi.utils.digitize" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">digitize</span></a><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-    <span class="k">return</span> <span class="n">mi_binning_fcn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-
-<span class="c1"># list of estimators to compare</span>
+<section id="definition-of-estimators-of-entropy">
+<h2>Definition of estimators of entropy<a class="headerlink" href="#definition-of-estimators-of-entropy" title="Link to this heading">#</a></h2>
+<p>Let us define several estimators of entropy. We are going to use the GC
+(Gaussian Copula), the KNN (k Nearest Neighbor), the kernel-based
+and the Gaussian estimators.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># list of estimators to compare</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;GC&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="n">biascorrect</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
-    <span class="s2">&quot;KNN-3&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
-    <span class="s2">&quot;KNN-10&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
-    <span class="s2">&quot;Kernel&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;kernel&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;Binning&quot;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_binning</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+    <span class="s2">&quot;GC&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;gc&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;Gaussian&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;gauss&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;KNN-3&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+    <span class="s2">&quot;Kernel&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;kernel&quot;</span><span class="p">),</span>
 <span class="p">}</span>
 
 <span class="c1"># number of samples to simulate data</span>
 <span class="n">n_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
 <span class="c1"># number of repetitions to estimate the percentile interval</span>
-<span class="n">n_repeat</span> <span class="o">=</span> <span class="mi">10</span>
-
-
-<span class="c1"># plotting function</span>
-<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">mi</span><span class="p">,</span> <span class="n">h_theoric</span><span class="p">):</span>
+<span class="n">n_repeat</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>Now we define the plotting function. This function plot the entropy as a
+function of sample size, for each estimator. It also plots the theoretical
+entropy with an horizontal dotted black line.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># plotting function</span>
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">h_x</span><span class="p">,</span> <span class="n">h_theoric</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Plotting function.&quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">metric_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mi</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+    <span class="k">for</span> <span class="n">n_m</span><span class="p">,</span> <span class="n">metric_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">h_x</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
         <span class="c1"># get the entropies</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">mi</span><span class="p">[</span><span class="n">metric_name</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">h_x</span><span class="p">[</span><span class="n">metric_name</span><span class="p">]</span>
 
         <span class="c1"># get the color</span>
         <span class="n">color</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">n_m</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -502,75 +488,106 @@ kernel-based estimator and using the a binning approach.</p>
         <span class="c1"># estimate lower and upper bounds of the [5, 95]th percentile interval</span>
         <span class="n">x_low</span><span class="p">,</span> <span class="n">x_high</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">95</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-        <span class="c1"># plot the MI as a function of the number of samples and interval</span>
+        <span class="c1"># plot the entropy as a function of the number of samples and interval</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">metric_name</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">x_low</span><span class="p">,</span> <span class="n">x_high</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 
     <span class="c1"># plot the theoretical value</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">h_theoric</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Theoretical MI&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span>
+        <span class="n">h_theoric</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Theoretical entropy&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span>
+    <span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Number of samples&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Mutual-information [bits]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Entropy [bits]&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">-dimensional multivariate normal&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then we create a function to generate a covariance matrix that is then going
+to be used for simulating the multivariate normal. The function below takes a
+single input describing the dimensionality of the multivariate normal.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_covariance</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a symmetric positive semi-definite covariance matrix.&quot;&quot;&quot;</span>
+    <span class="c1"># Generate a random matrix</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+
+    <span class="c1"># Compute the product of A and its transpose</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="c1"># Normalize the covariance matrix to have diagonal elements equal to one</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">cov</span><span class="p">))</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="n">cov</span> <span class="o">/</span> <span class="n">d</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="n">cov</span> <span class="o">/</span> <span class="n">d</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+
+    <span class="c1"># compute theoretic entropy</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">e</span><span class="p">)</span> <span class="o">**</span> <span class="n">n</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">cov</span><span class="p">)))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+        <span class="mi">2</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cov</span><span class="p">,</span> <span class="n">h</span>
+</pre></div>
+</div>
+<p>Finally, we also create a function to compute the entropies, using the
+defined estimators for an increasing sample size.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">compute_entropies</span><span class="p">(</span><span class="n">cov</span><span class="p">):</span>
+    <span class="c1"># compute entropies using various metrics</span>
+    <span class="n">h_x</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_repeat</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
+
+    <span class="k">for</span> <span class="n">metric</span><span class="p">,</span> <span class="n">fcn</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">n_s</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">n_r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeat</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span>
+                    <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">cov</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cov</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">T</span>
+                <span class="n">h_x</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">n_r</span><span class="p">,</span> <span class="n">n_s</span><span class="p">]</span> <span class="o">=</span> <span class="n">fcn</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">h_x</span>
 </pre></div>
 </div>
 </section>
-<section id="mi-of-data-sampled-from-normal-distribution">
-<h2>MI of data sampled from normal distribution<a class="headerlink" href="#mi-of-data-sampled-from-normal-distribution" title="Link to this heading">#</a></h2>
-<p>Given two variables <span class="math notranslate nohighlight">\(X \sim \mathcal{N}(\mu_{x}, \sigma_{x})\)</span> and
-<span class="math notranslate nohighlight">\(Y \sim \mathcal{N}(\mu_{y}, \sigma_{y})\)</span>, linked by a covariance
-<span class="math notranslate nohighlight">\(C\)</span> the theoretical MI in bits is defined by :</p>
+<section id="comparison-of-estimators">
+<h2>Comparison of estimators<a class="headerlink" href="#comparison-of-estimators" title="Link to this heading">#</a></h2>
+<p>Now we can make the final figure. Each subplot contains the comparison
+between estimators for a n-dimensional multivariate normal. For such
+distribution, the theoretical entropy is defined as :</p>
 <div class="math notranslate nohighlight">
-\[I(X; Y) = \frac{1}{2} \times log_{2}(\frac{\sigma_{x}^{2}\sigma_{y}^{2}}{ \sigma_{x}^{2}\sigma_{y}^{2} - C^{2} })\]</div>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># mean and standard error of x and y variables</span>
-<span class="n">mu_x</span> <span class="o">=</span> <span class="mf">0.0</span>
-<span class="n">mu_y</span> <span class="o">=</span> <span class="mf">0.0</span>
-<span class="n">sigma_x</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="n">sigma_y</span> <span class="o">=</span> <span class="mf">1.0</span>
+\[H(X) = \frac{1}{2} \times log((2πe)^{n} |\Sigma|) / log(2)\]</div>
+<p>with <cite>e</cite> the Euler constant, <span class="math notranslate nohighlight">\(|\Sigma|\)</span> the determinant of the
+covariance matrix and <cite>n</cite> the dimensionality of the multivariate normal.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 
-<span class="c1"># covariance between x and y</span>
-<span class="n">covariance</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">cov</span><span class="p">,</span> <span class="n">h_theoric</span> <span class="o">=</span> <span class="n">get_covariance</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">h_x</span> <span class="o">=</span> <span class="n">compute_entropies</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">h_x</span><span class="p">,</span> <span class="n">h_theoric</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 
-<span class="c1"># covariance matrix</span>
-<span class="n">cov_matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="n">sigma_x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">covariance</span><span class="p">],</span> <span class="p">[</span><span class="n">covariance</span><span class="p">,</span> <span class="n">sigma_y</span><span class="o">**</span><span class="mi">2</span><span class="p">]]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">cov</span><span class="p">,</span> <span class="n">h_theoric</span> <span class="o">=</span> <span class="n">get_covariance</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">h_x</span> <span class="o">=</span> <span class="n">compute_entropies</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">h_x</span><span class="p">,</span> <span class="n">h_theoric</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 
-<span class="c1"># define the theoretic MI</span>
-<span class="n">mi_theoric</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span>
-    <span class="n">sigma_x</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma_y</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">sigma_x</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma_y</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">covariance</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">cov</span><span class="p">,</span> <span class="n">h_theoric</span> <span class="o">=</span> <span class="n">get_covariance</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">h_x</span> <span class="o">=</span> <span class="n">compute_entropies</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">h_x</span><span class="p">,</span> <span class="n">h_theoric</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 
-<span class="c1"># compute entropies using various metrics</span>
-<span class="n">mi</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_repeat</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span>
-
-<span class="k">for</span> <span class="n">metric</span><span class="p">,</span> <span class="n">fcn</span> <span class="ow">in</span> <span class="n">metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="k">for</span> <span class="n">n_s</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">n_r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeat</span><span class="p">):</span>
-            <span class="c1"># generate samples from joint gaussian distribution</span>
-            <span class="n">fx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">([</span><span class="n">mu_x</span><span class="p">,</span> <span class="n">mu_y</span><span class="p">],</span> <span class="n">cov_matrix</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
-
-            <span class="c1"># extract x and y</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">fx</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">fx</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span>
-
-            <span class="c1"># compute mi</span>
-            <span class="n">mi</span><span class="p">[</span><span class="n">metric</span><span class="p">][</span><span class="n">n_r</span><span class="p">,</span> <span class="n">n_s</span><span class="p">]</span> <span class="o">=</span> <span class="n">fcn</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-<span class="c1"># plot the results</span>
-<span class="n">plot</span><span class="p">(</span><span class="n">mi</span><span class="p">,</span> <span class="n">mi_theoric</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span>
-    <span class="s2">&quot;Comparison of MI estimators when the</span><span class="se">\n</span><span class="s2">data are sampled from a &quot;</span>
-    <span class="s2">&quot;normal distribution&quot;</span><span class="p">,</span>
-    <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">sca</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">cov</span><span class="p">,</span> <span class="n">h_theoric</span> <span class="o">=</span> <span class="n">get_covariance</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">h_x</span> <span class="o">=</span> <span class="n">compute_entropies</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">h_x</span><span class="p">,</span> <span class="n">h_theoric</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_mi_001.png" srcset="../../_images/sphx_glr_plot_mi_001.png" alt="Comparison of MI estimators when the data are sampled from a normal distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 17.267 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-mi-py">
+<img src="../../_images/sphx_glr_plot_entropies_mvar_001.png" srcset="../../_images/sphx_glr_plot_entropies_mvar_001.png" alt="2-dimensional multivariate normal, 4-dimensional multivariate normal, 6-dimensional multivariate normal, 8-dimensional multivariate normal" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 26.046 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-entropies-mvar-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/f14e92090ebeb63084124f7809315b90/plot_mi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_mi.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/4a44859767d9a5abc2a411d84f3464c0/plot_entropies_mvar.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_entropies_mvar.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/7aa0a86e987814b09694d9eac79452ec/plot_mi.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_mi.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/8d89a09731ce61b2f3e46663c6f08e84/plot_entropies_mvar.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_entropies_mvar.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -589,20 +606,20 @@ kernel-based estimator and using the a binning approach.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="plot_tutorial_core.html"
+       href="plot_mi.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Introduction to core information theoretical metrics</p>
+        <p class="prev-next-title">Comparison of mutual-information estimators</p>
       </div>
     </a>
     <a class="right-next"
-       href="plot_entropies_mvar.html"
+       href="plot_entropies.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Comparison of entropy estimators for a multivariate normal</p>
+        <p class="prev-next-title">Comparison of entropy estimators</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -622,8 +639,8 @@ kernel-based estimator and using the a binning approach.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-mi-estimators">Definition of MI estimators</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mi-of-data-sampled-from-normal-distribution">MI of data sampled from normal distribution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-estimators-of-entropy">Definition of estimators of entropy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-of-estimators">Comparison of estimators</a></li>
 </ul>
   </nav></div>
 

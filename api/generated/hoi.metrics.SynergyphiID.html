@@ -575,6 +575,10 @@ use this estimator, the data have be to discretized. See
 <a class="reference internal" href="hoi.core.entropy_knn.html#hoi.core.entropy_knn" title="hoi.core.entropy_knn"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_knn()</span></code></a></p></li>
 <li><p>‘kernel’: kernel-based estimator of entropy
 see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.entropy_kernel" title="hoi.core.entropy_kernel"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_kernel()</span></code></a></p></li>
+<li><p>A custom estimator of mutual-information can be provided. It
+should be a callable function written with Jax taking two 2D
+inputs x and y of respective shapes (n_features_x, n_samples)
+and (n_features_y, n_samples) and returning a float.</p></li>
 </ul>
 </div></blockquote>
 </dd>

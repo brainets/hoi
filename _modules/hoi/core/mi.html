@@ -374,9 +374,11 @@ document.write(`
 
 <span class="kn">import</span> <span class="nn">jax</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="nn">jnp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">jax.scipy.special</span> <span class="kn">import</span> <span class="n">digamma</span> <span class="k">as</span> <span class="n">psi</span>
 
-<span class="kn">from</span> <span class="nn">.entropies</span> <span class="kn">import</span> <span class="n">get_entropy</span>
+<span class="kn">from</span> <span class="nn">hoi.core.entropies</span> <span class="kn">import</span> <span class="n">get_entropy</span>
+<span class="kn">from</span> <span class="nn">hoi.utils.logging</span> <span class="kn">import</span> <span class="n">logger</span>
 
 <span class="c1">###############################################################################</span>
 <span class="c1">###############################################################################</span>
@@ -407,6 +409,26 @@ document.write(`
         <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_gc</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_knn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="n">method</span><span class="p">):</span>
+        <span class="c1"># test the function</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+            <span class="k">assert</span> <span class="n">method</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">traceback</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                <span class="s2">&quot;A custom estimator should be a callable function written in &quot;</span>
+                <span class="s2">&quot;Jax and taking two inputs x and y of shapes (n_features_x,&quot;</span>
+                <span class="s2">&quot; n_samples) and (n_features_y, n_samples) and returning the &quot;</span>
+                <span class="s2">&quot;mutual information between variables as a float.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># jit the function</span>
+        <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># get the entropy function</span>
         <span class="n">_entropy</span> <span class="o">=</span> <span class="n">get_entropy</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>

@@ -470,6 +470,9 @@ document.write(`
 <span class="sd">                  :func:`hoi.core.entropy_knn`</span>
 <span class="sd">                * &#39;kernel&#39;: kernel-based estimator of entropy</span>
 <span class="sd">                  see :func:`hoi.core.entropy_kernel`</span>
+<span class="sd">                * A custom entropy estimator can be provided. It should be a</span>
+<span class="sd">                  callable function written with Jax taking a single 2D input</span>
+<span class="sd">                  of shape (n_features, n_samples) and returning a float.</span>
 
 <span class="sd">        samples : np.ndarray</span>
 <span class="sd">            List of samples to use to compute HOI. If None, all samples are</span>

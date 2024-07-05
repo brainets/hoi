@@ -6,9 +6,9 @@ How to simulate redundancy and synergy
 interacting. In this tutorial, we are going to see simple and intuitive ways
 of simulating redundancy and synergy in two different context :
 
-1. :term:`**Network behavior**` : i.e. redundant and synergistic interactions between
+1. **Network behavior :** i.e. redundant and synergistic interactions between
    elements (or nodes) of a network
-2. :term:`**Network encoding**` : i.e. nodes of a network engaged in redundant and
+2. **Network encoding :** i.e. nodes of a network engaged in redundant and
    synergistic interactions **about** a target variable.
 """
 

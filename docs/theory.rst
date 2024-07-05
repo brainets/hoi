@@ -83,6 +83,8 @@ entropy of a continuous variable, different methods are implemented in the toolb
 Note that all the functions mentioned in the following part are based on the computation of  
 entropies, hence we advise care in the choice of the estimator to use.
 
+.. minigallery:: hoi.core.get_entropy hoi.core.entropy_gc hoi.core.entropy_gauss hoi.core.entropy_bin hoi.core.entropy_knn hoi.core.entropy_kernel
+
 Measuring Mutual Information (MI)
 *********************************
 
@@ -111,6 +113,8 @@ statistical theory of copulas and is proven to provide a lower bound to the real
 this is one of its main advantages: when computing MI, Gaussian copula estimator avoids false 
 positives. Play attention to the fact that this can be mainly used to investigate relationships 
 between two variables that are monotonic.
+
+.. minigallery:: hoi.core.get_mi
 
 From pairwise to higher-order interactions 
 ++++++++++++++++++++++++++++++++++++++++++	

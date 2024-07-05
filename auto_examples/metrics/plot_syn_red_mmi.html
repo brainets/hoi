@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Redundancy-Synergy Index &#8212; HOI 0.0.1 documentation</title>
+    <title>Redundancy and Synergy MMI &#8212; HOI 0.0.1 documentation</title>
   
   
   
@@ -48,12 +48,12 @@
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/metrics/plot_rsi';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/metrics/plot_syn_red_mmi';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Integrated Information Decomposition" href="plot_syn_phiID.html" />
-    <link rel="prev" title="Topological Information : conditioning on orders" href="plot_infotopo.html" />
+    <link rel="next" title="O-information and its derivatives for network behavior and encoding" href="plot_oinfo.html" />
+    <link rel="prev" title="Integrated Information Decomposition" href="plot_syn_phiID.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -407,7 +407,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Redundancy-Synergy Index</h1>
+    <h1>Redundancy and Synergy MMI</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -435,35 +435,41 @@ document.write(`
                   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-metrics-plot-rsi-py"><span class="std std-ref">Go to the end</span></a>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-metrics-plot-syn-red-mmi-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code.</p>
 </div>
-<section class="sphx-glr-example-title" id="redundancy-synergy-index">
-<span id="sphx-glr-auto-examples-metrics-plot-rsi-py"></span><h1>Redundancy-Synergy Index<a class="headerlink" href="#redundancy-synergy-index" title="Link to this heading">#</a></h1>
-<p>This example illustrates how to use and interpret the Redundancy-Synergy
-Index (RSI).</p>
+<section class="sphx-glr-example-title" id="redundancy-and-synergy-mmi">
+<span id="sphx-glr-auto-examples-metrics-plot-syn-red-mmi-py"></span><h1>Redundancy and Synergy MMI<a class="headerlink" href="#redundancy-and-synergy-mmi" title="Link to this heading">#</a></h1>
+<p>This example illustrates how to use and interpret synergy and redundancy
+computed using the Minimum Mutual Information (MMI) approach to
+approximate the redundancy.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">hoi.metrics</span> <span class="kn">import</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a>
+<span class="kn">from</span> <span class="nn">hoi.metrics</span> <span class="kn">import</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">SynergyMMI</span></a><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI" title="hoi.metrics.RedundancyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RedundancyMMI</span></a>
 <span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a>
 <span class="kn">from</span> <span class="nn">hoi.plot</span> <span class="kn">import</span> <a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a>
 
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <section id="definition">
 <h2>Definition<a class="headerlink" href="#definition" title="Link to this heading">#</a></h2>
-<p>The RSI is a multivariate measure of information capable of disentangling
-whether a subset of a variable X carry either redundant or synergistic
-information about a variable Y. The RSI is defined as :</p>
+<p><a class="reference internal" href="../../glossary.html#term-Synergy"><span class="xref std std-term">Synergy</span></a> and <a class="reference internal" href="../../glossary.html#term-Redundancy"><span class="xref std std-term">redundancy</span></a> measures directly, respectively the ammount
+of synergy and redundancy carried by a group of variable <span class="math notranslate nohighlight">\(S\)</span>
+about a target variable <span class="math notranslate nohighlight">\(Y\)</span>. Synergy is defined as follow :</p>
 <div class="math notranslate nohighlight">
-\[RSI(S; Y) \equiv I(S; Y) - \sum_{x_{i}\in S} I(x_{i}; Y)\]</div>
-<p>with :</p>
+\[Syn(S; Y) \equiv I(S; Y) - \max_{x_{i}\in S} I(S_{-i}; Y)\]</div>
+<p>with : <span class="math notranslate nohighlight">\(S = x_{1}, ..., x_{n}\)</span> and
+<span class="math notranslate nohighlight">\(S_{-i} = x_{1}, ..., x_{i-1}, x_{1+1}, ..., x_{n}\)</span></p>
+<p>Positive values of Synergy stand for the presence of an higher information
+about <span class="math notranslate nohighlight">\(Y\)</span> when considering all the variables in <span class="math notranslate nohighlight">\(S\)</span> with
+respect to when considering only a subgroup of <span class="math notranslate nohighlight">\(n-1\)</span>.</p>
+<p>Redundancy, in the approximation based on the Minimum Mutual Information
+(MMI) framework, is computed as follow :</p>
 <div class="math notranslate nohighlight">
-\[S = x_{1}, ..., x_{n}\]</div>
-<p>Positive values of RSI stand for synergy while negative values of RSI reflect
-redundancy between the X and Y variables.</p>
+\[Red(S; Y) \equiv \min_{x_{i}\in S} I(X_{i}; Y)\]</div>
 </section>
 <section id="simulate-univariate-redundancy">
 <h2>Simulate univariate redundancy<a class="headerlink" href="#simulate-univariate-redundancy" title="Link to this heading">#</a></h2>
@@ -472,40 +478,36 @@ variables <span class="math notranslate nohighlight">\(X_{1}, X_{2}, X_{3}\)</sp
 we will observe redundancy between <span class="math notranslate nohighlight">\(X_{1}, X_{2}, X_{3}\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.
 For further information about how to simulate redundant and synergistic
 interactions, checkout the example
-<a class="reference internal" href="../tutorials/plot_sim_red_syn.html#sphx-glr-auto-examples-tutorials-plot-sim-red-syn-py"><span class="std std-ref">How to simulate redundancy and synergy</span></a></p>
+<a class="reference internal" href="../tutorials/plot_sim_red_syn.html#sphx-glr-auto-examples-tutorials-plot-sim-red-syn-py"><span class="std std-ref">How to simulate redundancy and synergy</span></a>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># lets start by simulating a variable x with 200 samples and 7 features</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 
-<span class="c1"># now we can also generate a univariate random variable y</span>
+<span class="c1"># now we can also generate a univariate random variable `Y`</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
-<span class="c1"># we now send the variable y in the column (1, 3, 5) of x</span>
+<span class="c1"># we now send the variable y in the column (1, 3, 5) of `X`</span>
 <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span>
 <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span>
 <span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span>
 
 <span class="c1"># define the RSI model and launch it</span>
-<a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI" title="hoi.metrics.RedundancyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RedundancyMMI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI.fit" title="hoi.metrics.SynergyMMI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="c1"># now we can take a look at the multiplets with the highest and lowest values</span>
 <span class="c1"># of RSI. We will only select the multiplets of size 3 here</span>
-<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.20it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.89it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    3.12it/s]
+ 33%|███▎      | RedMMI order 3:  1/3 [00:00&lt;00:00,    7.80it/s]
+100%|██████████| RedMMI order 5:  3/3 [00:00&lt;00:00,   19.95it/s]
 
    index  order       hoi  multiplet
-0      9      3  0.013044  [0, 3, 4]
-1      5      3  0.012001  [0, 2, 3]
-2     28      3  0.008469  [2, 4, 5]
-3      3      3 -0.316895  [0, 1, 5]
-4     24      3 -0.331529  [1, 5, 6]
-5     20      3 -0.619058  [1, 3, 5]
+0     20      3  0.434778  [1, 3, 5]
+1     19      3  0.000869  [1, 3, 4]
+2     31      3  0.000869  [3, 4, 5]
 </pre></div>
 </div>
 <p>as you see from the printed table, the multiplet with the lowest (i.e. the
@@ -522,7 +524,7 @@ single column). However, it’s possible to simulate a multivariate variable.</p
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
 
 <span class="c1"># we introduce redundancy between the triplet (1, 3, 5) and the first column of</span>
-<span class="c1"># Y and between (0, 2, 6) and Y</span>
+<span class="c1"># `Y` and between (0, 2, 6) and the second column of `Y`.</span>
 <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
 <span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
@@ -530,92 +532,88 @@ single column). However, it’s possible to simulate a multivariate variable.</p
 <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">x</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
 
-<span class="c1"># define the RSI, launch it and inspect the best multiplets</span>
-<a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># define the Redundancy, launch it and inspect the best multiplets</span>
+<a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI" title="hoi.metrics.RedundancyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RedundancyMMI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI.fit" title="hoi.metrics.SynergyMMI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.36it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.49it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.04it/s]
+ 33%|███▎      | RedMMI order 3:  1/3 [00:00&lt;00:00,    7.49it/s]
 
    index  order       hoi  multiplet
-0     28      3  0.019070  [2, 4, 5]
-1     12      3  0.009991  [0, 4, 5]
-2     34      3  0.006488  [4, 5, 6]
-3     19      3 -0.267578  [1, 3, 4]
-4      8      3 -0.517759  [0, 2, 6]
-5     20      3 -0.553954  [1, 3, 5]
+0      0      3  0.537189  [0, 1, 2]
+1      3      3  0.521784  [0, 1, 5]
+2      7      3  0.521784  [0, 2, 5]
+3     17      3  0.521784  [1, 2, 5]
+4     15      3  0.502616  [1, 2, 3]
 </pre></div>
 </div>
-<p>This time, as expected, the two most redundant triplets are (1, 3, 5) and
-(0, 2, 6)</p>
+<p>It is important to notice that in this case the redundancy it is not able to
+find only the two multiplets in which we generate redundancy, but instead
+all the possible combination of the six variables in which a part of <cite>Y</cite>
+was copied are resulting redundant. This follows directly by the definition
+of redundancy with the MMI approximation. It is important to remember this
+limitation when leveraging its results and eventually
+consider a double check with other metrics, as RSI or O-information gradient.</p>
 </section>
 <section id="simulate-univariate-and-multivariate-synergy">
 <h2>Simulate univariate and multivariate synergy<a class="headerlink" href="#simulate-univariate-and-multivariate-synergy" title="Link to this heading">#</a></h2>
 <p>Lets move on to the simulation of synergy that is a bit more subtle. One way
 of simulating synergy is to go the other way of redundancy, meaning we are
-going to add features of x inside y. That way, we can only retrieve the Y
-variable by knowing the subset of X.</p>
+going to add features of x inside <cite>Y</cite>. That way, we can only retrieve the <cite>Y</cite>
+variable by knowing the subset of <cite>X</cite>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 
 <span class="c1"># synergy between (0, 3, 5) and 5</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span>
 
-<span class="c1"># define the RSI, launch it and inspect the best multiplets</span>
-<a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># define the Synergy, launch it and inspect the best multiplets</span>
+<a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">SynergyMMI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI.fit" title="hoi.metrics.SynergyMMI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    4.05it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    5.28it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.89it/s]
+ 33%|███▎      | SynMMI order 3:  1/3 [00:00&lt;00:00,    3.92it/s]
+ 67%|██████▋   | SynMMI order 4:  2/3 [00:00&lt;00:00,    3.99it/s]
+100%|██████████| SynMMI order 5:  3/3 [00:00&lt;00:00,    4.01it/s]
 
    index  order       hoi  multiplet
-0     10      3  1.395759  [0, 3, 5]
-1     31      3  0.195971  [3, 4, 5]
-2      9      3  0.192181  [0, 3, 4]
-3      4      3 -0.000988  [0, 1, 6]
-4     19      3 -0.002489  [1, 3, 4]
-5     21      3 -0.002598  [1, 3, 6]
+0     10      3  1.581342  [0, 3, 5]
+1     20      3  0.014168  [1, 3, 5]
+2     15      3  0.004360  [1, 2, 3]
 </pre></div>
 </div>
 <p>as we can see here, the highest values of higher-order interactions
 (i.e. synergy) is achieved for the multiplet (0, 3, 5). Now we can do the
-same for multivariate synergy</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x</span>
+same for multivariate synergy.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable `X`</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 
-<span class="c1"># simulate y and introduce synergy between the subset (0, 3, 5) of x and the</span>
+<span class="c1"># simulate y and introduce synergy between the subset (0, 3, 5) of `X` and the</span>
 <span class="c1"># subset (1, 2, 6)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">6</span><span class="p">]]</span>
 
-<span class="c1"># define the RSI, launch it and inspect the best multiplets</span>
-<a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># define the Synergy, launch it and inspect the best multiplets</span>
+<a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">SynergyMMI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI.fit" title="hoi.metrics.SynergyMMI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.64it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.81it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.39it/s]
+ 33%|███▎      | SynMMI order 3:  1/3 [00:00&lt;00:00,    3.62it/s]
+ 67%|██████▋   | SynMMI order 4:  2/3 [00:00&lt;00:00,    3.61it/s]
+100%|██████████| SynMMI order 5:  3/3 [00:00&lt;00:00,    3.60it/s]
 
    index  order       hoi  multiplet
-0     18      3  1.447171  [1, 2, 6]
-1     10      3  1.426608  [0, 3, 5]
-2     17      3  0.206347  [1, 2, 5]
-3     34      3 -0.004315  [4, 5, 6]
-4     13      3 -0.006644  [0, 4, 6]
-5     19      3 -0.018336  [1, 3, 4]
+0     10      3  1.719081  [0, 3, 5]
+1     18      3  1.379442  [1, 2, 6]
+2     33      3  0.305434  [3, 5, 6]
 </pre></div>
 </div>
 </section>
@@ -625,53 +623,91 @@ same for multivariate synergy</p>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># synergy between (0, 1, 2) and the first column of y</span>
+<span class="c1"># synergy between (0, 1, 2) and the first column of `Y`</span>
 <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
 
-<span class="c1"># redundancy between (3, 4, 5) and the second column of x</span>
-<span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">x</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="c1"># redundancy between (3, 4, 5) and the second column of `X`</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
 
-<span class="c1"># define the RSI, launch it and inspect the best multiplets</span>
-<a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RSI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI.fit" title="hoi.metrics.RSI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="c1"># define the Synergy, launch it and inspect the best multiplets</span>
+<a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_syn</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">SynergyMMI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi_syn</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI.fit" title="hoi.metrics.SynergyMMI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model_syn</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi_syn</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Synergy results&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
-<span class="c1"># plot the result at each order to observe the spreading at orders higher than</span>
-<span class="c1"># 3</span>
-<a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a><span class="p">(</span>
-    <span class="n">hoi</span><span class="p">,</span>
-    <a href="../../api/generated/hoi.metrics.RSI.html#hoi.metrics.RSI" title="hoi.metrics.RSI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span>
+<span class="c1"># define the Synergy, launch it and inspect the best multiplets</span>
+<a href="../../api/generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI" title="hoi.metrics.RedundancyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_red</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI" title="hoi.metrics.RedundancyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RedundancyMMI</span></a><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">hoi_red</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI.fit" title="hoi.metrics.RedundancyMMI.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model_red</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi_red</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Redundancy results&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
+ 33%|███▎      | SynMMI order 3:  1/3 [00:00&lt;00:00,    3.83it/s]
+ 67%|██████▋   | SynMMI order 4:  2/3 [00:00&lt;00:00,    3.72it/s]
+100%|██████████| SynMMI order 5:  3/3 [00:00&lt;00:00,    3.67it/s]
+
+
+Synergy results
+
+   index  order       hoi  multiplet
+0      0      3  1.655447  [0, 1, 2]
+1     18      3  0.015304  [1, 2, 6]
+2      8      3  0.007355  [0, 2, 6]
+
+  0%|          |  0/3 [00:00&lt;?,       ?it/s]
+ 33%|███▎      | RedMMI order 3:  1/3 [00:00&lt;00:00,    7.24it/s]
+
+
+Redundancy results
+
+   index  order       hoi  multiplet
+0      0      3  0.184372  [0, 1, 2]
+1      4      3  0.007696  [0, 1, 6]
+2      8      3  0.007696  [0, 2, 6]
+</pre></div>
+</div>
+<p>Plotting redundancy</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a><span class="p">(</span>
+    <span class="n">hoi_red</span><span class="p">,</span>
+    <a href="../../api/generated/hoi.metrics.RedundancyMMI.html#hoi.metrics.RedundancyMMI" title="hoi.metrics.RedundancyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_red</span></a><span class="p">,</span>
     <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span>
     <span class="n">undersampling</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">plt_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;turbo&quot;</span><span class="p">),</span>
 <span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_rsi_001.png" srcset="../../_images/sphx_glr_plot_rsi_001.png" alt="plot rsi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.61it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.80it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.40it/s]
-
-   index  order       hoi  multiplet
-0      0      3  1.593827  [0, 1, 2]
-1     16      3  0.201247  [1, 2, 4]
-2      8      3  0.192218  [0, 2, 6]
-3     32      3 -0.333318  [3, 4, 6]
-4     19      3 -0.333767  [1, 3, 4]
-5     31      3 -0.667031  [3, 4, 5]
+<img src="../../_images/sphx_glr_plot_syn_red_mmi_001.png" srcset="../../_images/sphx_glr_plot_syn_red_mmi_001.png" alt="plot syn red mmi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Order&#39;, ylabel=&#39;Redundancy MMI [Bits]&#39;&gt;
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.921 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-rsi-py">
+<p>Plotting synergy</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape" class="sphx-glr-backref-module-hoi-plot sphx-glr-backref-type-py-function"><span class="n">plot_landscape</span></a><span class="p">(</span>
+    <span class="n">hoi_syn</span><span class="p">,</span>
+    <a href="../../api/generated/hoi.metrics.SynergyMMI.html#hoi.metrics.SynergyMMI" title="hoi.metrics.SynergyMMI" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model_syn</span></a><span class="p">,</span>
+    <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;scatter&quot;</span><span class="p">,</span>
+    <span class="n">undersampling</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">plt_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;turbo&quot;</span><span class="p">),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<img src="../../_images/sphx_glr_plot_syn_red_mmi_002.png" srcset="../../_images/sphx_glr_plot_syn_red_mmi_002.png" alt="plot syn red mmi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Order&#39;, ylabel=&#39;Synergy MMI [Bits]&#39;&gt;
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.002 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-syn-red-mmi-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/4e89a3c451ce8407889de983108afa1c/plot_rsi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_rsi.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/506e66570f568588cfe575362572604a/plot_syn_red_mmi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syn_red_mmi.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/34173e117578c11af63525b86b946924/plot_rsi.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_rsi.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/016f1536d53dbce8b636f675e40ae7f4/plot_syn_red_mmi.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_syn_red_mmi.py</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -690,20 +726,20 @@ same for multivariate synergy</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="plot_infotopo.html"
+       href="plot_syn_phiID.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Topological Information : conditioning on orders</p>
+        <p class="prev-next-title">Integrated Information Decomposition</p>
       </div>
     </a>
     <a class="right-next"
-       href="plot_syn_phiID.html"
+       href="plot_oinfo.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Integrated Information Decomposition</p>
+        <p class="prev-next-title">O-information and its derivatives for network behavior and encoding</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

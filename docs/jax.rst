@@ -128,5 +128,4 @@ Let's plot the results :
 
 .. image:: _static/jax_cgpu_oinfo.png
 
-On this toy example, we can see that computing the O-information is ~3x faster
-on GPU than on CPU.
+On this toy example, computing the O-information on CPU takes ~13 seconds for each order while on GPU it takes ~3 seconds. GPU computations are ~4 times faster than CPU !

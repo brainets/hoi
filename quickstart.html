@@ -393,7 +393,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -409,6 +411,18 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-data">Simulate data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-higher-order-interactions">Compute Higher-Order Interactions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-results">Inspect the results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-recommendations">Practical recommendations</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -420,10 +434,65 @@ document.write(`
                   
   <section id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading">#</a></h1>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a comment</span>
-<span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<p>HOI is a Python package to estimate <a class="reference internal" href="glossary.html#term-Higher-Order-Interactions"><span class="xref std std-term">Higher Order Interactions</span></a>. A network is composed of nodes (e.g. users in social network, brain areas in neuroscience, musicians in an orchestra etc.) and nodes are interacting together. Traditionally we measure pairwise interactions. HOI allows to go beyond the pairwise interactions by quantifying the interactions between 3, 4, …, N nodes of the system. As we are using measures from the <a class="reference internal" href="glossary.html#term-Information-Theory"><span class="xref std std-term">Information Theory</span></a>, we can further describe the type of interactions, i.e. whether nodes of the network tend to have redundant or synergistic interactions (see the definition of <a class="reference internal" href="glossary.html#term-Redundancy"><span class="xref std std-term">Redundancy</span></a>, <a class="reference internal" href="glossary.html#term-Synergy"><span class="xref std std-term">Synergy</span></a>).</p>
+<ul class="simple">
+<li><p><strong>Installation :</strong> to install HOI with its dependencies, see <a class="reference internal" href="install.html#installation"><span class="std std-ref">Installation</span></a>. If you are a developer or if you want to contribute to HOI, checkout the <a class="reference internal" href="contributor_guide.html#contribute"><span class="std std-ref">Developer Documentation</span></a>.</p></li>
+<li><p><strong>Theoretical background :</strong> For a detailed introduction to information theory and HOI, see <a class="reference internal" href="theory.html#theory"><span class="std std-ref">Theoretical background</span></a>. You can also have a look to our <a class="reference internal" href="glossary.html#glossary"><span class="std std-ref">Glossary</span></a> to see the definition of the terms we are using here.</p></li>
+<li><p><strong>API and examples :</strong> the list of functions and classes can be found in the section <a class="reference internal" href="api/modules.html#hoi-modules"><span class="std std-ref">List of classes and functions</span></a>. For practical examples on how to use those functions, see <a class="reference internal" href="auto_examples/index.html"><span class="doc">Examples</span></a>. For faster computations, HOI is built on top of Jax. Checkout the page <a class="reference internal" href="jax.html"><span class="doc">Jax: linear algebra backend</span></a> for the performance claims.</p></li>
+</ul>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p>To install or update HOI, run the following command in your terminal :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>hoi
 </pre></div>
 </div>
+</section>
+<section id="simulate-data">
+<h2>Simulate data<a class="headerlink" href="#simulate-data" title="Link to this heading">#</a></h2>
+<p>We provide functions to simulate data and toy example. In a notebook or in a python script, you can run the following lines to simulate synergistic interactions between three variables :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hoi.simulation</span> <span class="kn">import</span> <span class="n">simulate_hoi_gauss</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">simulate_hoi_gauss</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">triplet_character</span><span class="o">=</span><span class="s1">&#39;synergy&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="compute-higher-order-interactions">
+<h2>Compute Higher-Order Interactions<a class="headerlink" href="#compute-higher-order-interactions" title="Link to this heading">#</a></h2>
+<p>We provide a list of metrics of HOI (see <a class="reference internal" href="api/api_metrics.html#metrics"><span class="std std-ref">hoi.metrics</span></a>). Here, we are going to use the O-information (<a class="reference internal" href="api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Oinfo</span></code></a>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># import the O-information</span>
+<span class="kn">from</span> <span class="nn">hoi.metrics</span> <span class="kn">import</span> <span class="n">Oinfo</span>
+
+<span class="c1"># define the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">Oinfo</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># compute hoi for multiplets with a minimum size of 3 and maximum size of 3</span>
+<span class="c1"># using the Gaussian Copula entropy</span>
+<span class="n">hoi</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="inspect-the-results">
+<h2>Inspect the results<a class="headerlink" href="#inspect-the-results" title="Link to this heading">#</a></h2>
+<p>To inspect your results, we provide a plotting function called <a class="reference internal" href="api/generated/hoi.plot.plot_landscape.html#hoi.plot.plot_landscape" title="hoi.plot.plot_landscape"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.plot.plot_landscape()</span></code></a> to see how the information is spreading across orders together with <a class="reference internal" href="api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.utils.get_nbest_mult()</span></code></a> to get a table of the multiplets with the strongest synergy or redundancy :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">hoi.plot</span> <span class="kn">import</span> <span class="n">plot_landscape</span>
+<span class="kn">from</span> <span class="nn">hoi.utils</span> <span class="kn">import</span> <span class="n">get_nbest_mult</span>
+
+<span class="c1"># plot the landscape</span>
+<span class="n">plot_landscape</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+
+<span class="c1"># print the summary table</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">get_nbest_mult</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="practical-recommendations">
+<h2>Practical recommendations<a class="headerlink" href="#practical-recommendations" title="Link to this heading">#</a></h2>
+<p>Robust estimations of HOI strongly rely on the accuity of measuring entropy/mutual information on/between (potentially highly) multivariate data. In the <a class="reference internal" href="auto_examples/index.html"><span class="doc">Examples</span></a> section you can find benchmarks of our entropy estimators. Here we recommend :</p>
+<ul class="simple">
+<li><p><strong>Measuring entropy and mutual information :</strong> we recommend the Gaussian Copula method (<cite>method=”gc”</cite>). Although this measure is not accurate for capturing relationships beyond the gaussian assumption (see <a class="reference internal" href="auto_examples/it/plot_entropies.html#sphx-glr-auto-examples-it-plot-entropies-py"><span class="std std-ref">Comparison of entropy estimators for various distributions</span></a>), this method performs relatively well for multivariate data (see <a class="reference internal" href="auto_examples/it/plot_entropies_mvar.html#sphx-glr-auto-examples-it-plot-entropies-mvar-py"><span class="std std-ref">Comparison of entropy estimators for a multivariate normal</span></a>)</p></li>
+<li><p><strong>Measuring Higher-Order Interactions for network behavior and network encoding :</strong> for network behavior and ncoding, we recommend respectively the O-information <a class="reference internal" href="api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Oinfo</span></code></a> and the <a class="reference internal" href="api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo" title="hoi.metrics.GradientOinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.GradientOinfo</span></code></a>. Although both metrics suffer from the same limitations, like the spreading to higher orders, this can be mitigated using a boostrap approach (see <a class="reference internal" href="auto_examples/statistics/plot_bootstrapping.html#sphx-glr-auto-examples-statistics-plot-bootstrapping-py"><span class="std std-ref">Bootstrapping and confidence interval</span></a>). Otherwise, both metrics are usually pretty accurate to retrieve the type of interactions between variables, especially once combined with the Gaussian Copula.</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -462,6 +531,25 @@ document.write(`
             
             
               
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulate-data">Simulate data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-higher-order-interactions">Compute Higher-Order Interactions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-results">Inspect the results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-recommendations">Practical recommendations</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
             
           </div>
           <footer class="bd-footer-content">
@@ -470,21 +558,10 @@ document.write(`
   
   <div class="footer-item">
     
-<p class="component-author">
-By BraiNets
-</p>
-
   </div>
   
   <div class="footer-item">
     
-
-  <p class="copyright">
-    
-      © Copyright BraiNets.
-      <br/>
-    
-  </p>
 
   </div>
   
@@ -512,10 +589,11 @@ By BraiNets
     <footer>
         <div class="foot">
             <img src="https://cibul.s3.amazonaws.com/e9619f705931403093351210dc70d8ee.base.image.jpg" alt="INT" height="80">
-            <img src="https://www.engagement.fr/wp-content/uploads/2013/02/Aix-Marseille-Universit%C3%A9.png" alt=" Aix-Marseille university" height="80">
+            <img src="https://www.univ-amu.fr/system/files/2021-05/AMU%20logo.png" alt=" Aix-Marseille university" height="80">
             <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
+            <img src="https://enlight-eu.org/images/logos/Logo_Gent.png" alt="Ghent" height="80">
         <br>
-        <p>&copy; Copyright BraiNets.</p>
+        <!-- <p>&copy; Copyright .</p> -->
         </div>
     </footer>
 

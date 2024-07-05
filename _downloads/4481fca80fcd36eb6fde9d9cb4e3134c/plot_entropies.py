@@ -1,6 +1,6 @@
 """
-Comparison of entropy estimators
-================================
+Comparison of entropy estimators for various distributions
+==========================================================
 
 In this example, we are going to compare entropy estimators. In particular,
 some distributions, such as normal, uniform or exponential distributions lead

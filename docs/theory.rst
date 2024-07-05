@@ -83,6 +83,8 @@ entropy of a continuous variable, different methods are implemented in the toolb
 Note that all the functions mentioned in the following part are based on the computation of  
 entropies, hence we advise care in the choice of the estimator to use.
 
+.. minigallery:: hoi.core.get_entropy hoi.core.entropy_gc hoi.core.entropy_gauss hoi.core.entropy_bin hoi.core.entropy_knn hoi.core.entropy_kernel
+
 Measuring Mutual Information (MI)
 *********************************
 
@@ -111,6 +113,8 @@ statistical theory of copulas and is proven to provide a lower bound to the real
 this is one of its main advantages: when computing MI, Gaussian copula estimator avoids false 
 positives. Play attention to the fact that this can be mainly used to investigate relationships 
 between two variables that are monotonic.
+
+.. minigallery:: hoi.core.get_mi
 
 From pairwise to higher-order interactions 
 ++++++++++++++++++++++++++++++++++++++++++	
@@ -146,6 +150,7 @@ The total correlation quantifies the strength of collective constraints ruling t
 it is sentive to information shared between single variables and it can be associated with 
 redundancy.
 
+.. minigallery:: hoi.metrics.TC
 
 Dual Total correlation
 ----------------------
@@ -164,6 +169,8 @@ where :math:`\sum_{j=1}^{n} H(X_j|X_{-j}^{n})` is the entropy of :math:`X_j` not
 by any other variable. This measure is higher in systems in which lower order 
 constraints prevails.
 
+.. minigallery:: hoi.metrics.DTC
+
 S information
 -------------
 
@@ -179,6 +186,8 @@ correlation (DTC), :cite:`james2011anatomy`:
 
 It is sensitive to both redundancy and synergy, quantifying the total ammount of constraints 
 ruling the system under study.
+
+.. minigallery:: hoi.metrics.Sinfo
 
 O-information
 -------------
@@ -201,6 +210,8 @@ difference between redundancy and synergy: when the O-information of a set of va
 is positive this indicates redundancy, when it is negative, synergy. In particular when 
 working with big data sets it can become complicated 
 
+.. minigallery:: hoi.metrics.Oinfo
+
 Topological information
 -----------------------
 
@@ -217,6 +228,8 @@ Note that :math:`I_2(X,Y) = MI(X,Y)` and that :math:`I_3(X,Y,Z)=\Omega(X,Y,Z)`. 
 O-information this function can be interpreted in terms of redundancy and synergy, more 
 into details when it is positive it indicates that the system is dominated by redundancy, 
 when it is negative, synergy.
+
+.. minigallery:: hoi.metrics.InfoTopo
 
 Network encoding 
 ****************
@@ -243,6 +256,8 @@ the variables of the group, the gradient of O-information is 0, when it is great
 than 0, the relation between variables and target is characterized by redundancy, 
 when negative, synergy.
 
+.. minigallery:: hoi.metrics.GradientOinfo
+
 Redundancy-Synergy index (RSI)
 ------------------------------
 
@@ -262,6 +277,8 @@ provided by the whole group. When RSI is positive, the whole group is more infor
 than the sum of its parts separately, so the interaction between the variables and the 
 target is dominated by synergy. A negative RSI should instead suggest redundancy among 
 the variables with respect to the target.
+
+.. minigallery:: hoi.metrics.RSI
 
 Synergy and redundancy (MMI)
 ----------------------------
@@ -285,6 +302,8 @@ defined as:
 
 	redundancy (Y, X^n) = min_{i<n} I \left( Y, X_i \right)
     
+.. minigallery:: hoi.metrics.RedundancyMMI
+
 When computing the redundancy in this way the definition 
 of synergy, :class:`hoi.metrics.SynergyMMI`, follows:
 
@@ -298,6 +317,8 @@ working with gaussian systems; we advise care when interpreting the
 results of the redundant interactions, since the definition of 
 redundancy reflects simply the minimum information provided by the 
 source variables.
+
+.. minigallery:: hoi.metrics.SynergyMMI
 
 Synergy and redundancy integraed Information Decomposition (MMI)
 ----------------------------------------------------------------
@@ -327,6 +348,8 @@ defined as:
         Red(X,Y) =   min \{ I(X_{t- \tau};X_t), I(X_{t-\tau};Y_t),
                             I(Y_{t-\tau}; X_t), I(Y_{t-\tau};Y_t) \}
 
+.. minigallery:: hoi.metrics.RedundancyphiID
+
 Within the MMI approximation the computation of the synergy, :class:`hoi.metrics.SynergyphiID`, 
 reduces to the
 following formula: 
@@ -339,6 +362,8 @@ following formula:
 
 These two metrics are always positive and have as upper bound the value of temporal delayed
 mutual information (TDMI), :math:`I(X(t-\tau),Y(t-\tau);X(t),Y(t))`.
+
+.. minigallery:: hoi.metrics.SynergyphiID
 
 Bibliography
 ============

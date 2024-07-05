@@ -145,7 +145,7 @@ print(get_nbest_mult(hoi, model))
 # S-information
 # ^^^^^^^^^^^^^
 # Finally, the S-information is defined as the sum of the TC and DTC :
-
+#
 # .. math::
 #     \Omega(X^{n})  &=  TC(X^{n}) + DTC(X^{n}) \\
 #                    &=  nH(X^{n}) + \sum_{j=1}^{n} [H(X_{j}) + H(

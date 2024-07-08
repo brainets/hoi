@@ -31,11 +31,18 @@ class TestStats(object):
     @pytest.mark.parametrize("bins", [n + 2 for n in range(5)])
     @pytest.mark.parametrize("sklearn", [True, False])
     def test_digitize(self, arr, bins, sklearn):
-        x_binned = digitize(x=arr, n_bins=bins, axis=0, use_sklearn=sklearn)
-        assert arr.shape == x_binned.shape
-        for row in x_binned:
-            for val in row:
-                assert isinstance(val, np.int64)
+        if sklearn:
+            x_binned = digitize(x=arr, n_bins=bins, axis=0, use_sklearn=sklearn)
+            assert arr.shape == x_binned.shape
+            for row in x_binned:
+                for val in row:
+                    assert isinstance(val, np.int64)
+        else:
+            x_binned, _ = digitize(x=arr, n_bins=bins, axis=0, use_sklearn=sklearn)
+            assert arr.shape == x_binned.shape
+            for row in x_binned:
+                for val in row:
+                    assert isinstance(val, np.int64)
 
     @pytest.mark.parametrize("x", [x1, x2, j2])
     @pytest.mark.parametrize("minmax", [(-10.0, 10.0), (-1.0, 1.0)])

@@ -281,8 +281,8 @@ def entropy_bin(x: jnp.array, base: int = 2, bin_siz: float = None) -> jnp.array
     )[1]
     probs = counts / n_samples
 
-    bins = jnp.where(probs !=0, bin_siz, 0)
     if bin_siz is not None:
+        bins = jnp.where(probs !=0, bin_siz, 0)
         return -jax.scipy.special.rel_entr(probs, bins).sum() / jnp.log(base)        
     else:
         return (jax.scipy.special.entr(probs)).sum() / jnp.log(base)

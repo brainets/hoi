@@ -39,8 +39,13 @@ mi_binning_fcn = get_mi("binning", base=2)
 
 
 def mi_binning(x, y, **kwargs):
-    x = digitize(x.T, **kwargs).T
-    y = digitize(y.T, **kwargs).T
+    
+    bin_x, _ = digitize(x.T, **kwargs)
+    bin_y, _ = digitize(y.T, **kwargs)
+
+    x = bin_x.T
+    y = bin_y.T
+
     return mi_binning_fcn(x, y)
 
 

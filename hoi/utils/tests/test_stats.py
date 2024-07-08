@@ -32,13 +32,17 @@ class TestStats(object):
     @pytest.mark.parametrize("sklearn", [True, False])
     def test_digitize(self, arr, bins, sklearn):
         if sklearn:
-            x_binned = digitize(x=arr, n_bins=bins, axis=0, use_sklearn=sklearn)
+            x_binned = digitize(
+                x=arr, n_bins=bins, axis=0, use_sklearn=sklearn
+            )
             assert arr.shape == x_binned.shape
             for row in x_binned:
                 for val in row:
                     assert isinstance(val, np.int64)
         else:
-            x_binned, _ = digitize(x=arr, n_bins=bins, axis=0, use_sklearn=sklearn)
+            x_binned, _ = digitize(
+                x=arr, n_bins=bins, axis=0, use_sklearn=sklearn
+            )
             assert arr.shape == x_binned.shape
             for row in x_binned:
                 for val in row:

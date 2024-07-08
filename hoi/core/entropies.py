@@ -250,7 +250,7 @@ def entropy_gauss(x: jnp.array) -> jnp.array:
 
 
 @partial(jax.jit, static_argnums=(1,))
-def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
+def entropy_bin(x: jnp.array, base: int = 2, bin_siz: float = None) -> jnp.array:
     """Entropy using binning.
 
     Parameters
@@ -260,13 +260,18 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
         be discretize
     base : int | 2
         The logarithmic base to use. Default is base 2.
+    bin_siz : float | None
+        The size of all the bins. Will be taken in consideration only if all 
+        bins have the same size, for histogram estimator. 
 
     Returns
     -------
     hx : float
         Entropy of x (in bits)
     """
+
     n_features, n_samples = x.shape
+    print(n_features, n_samples)
     # here, we count the number of possible multiplets. The worst is that each
     # trial is unique. So we can prepare the output to be at most (n_samples,)
     # and if trials are repeated, just set to zero it's going to be compensated
@@ -275,7 +280,12 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
         x, return_counts=True, size=n_samples, axis=1, fill_value=0
     )[1]
     probs = counts / n_samples
-    return jax.scipy.special.entr(probs).sum() / jnp.log(base)
+
+    bins = jnp.where(probs !=0, bin_siz, 0)
+    if bin_siz is not None:
+        return -jax.scipy.special.rel_entr(probs, bins).sum() / jnp.log(base)        
+    else:
+        return (jax.scipy.special.entr(probs)).sum() / jnp.log(base)
 
 
 ###############################################################################

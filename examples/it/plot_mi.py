@@ -13,6 +13,8 @@ to :
 4. See if the computed MI converge toward the theoretical value
 """
 
+# %%
+
 import numpy as np
 from functools import partial
 

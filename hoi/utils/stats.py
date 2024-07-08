@@ -172,8 +172,13 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
     x_binned : array_like
         Digitized array with the same shape as x
     """
+    bins_arr = (x.max(axis=axis)-x.min(axis=axis))/n_bins
+
+    # In case use_sklearn = False, all bins have the same size. In this case, 
+    # in order to allow the histogram estimator, also the size of the bins is 
+    # returned. 
     if not use_sklearn:
-        return np.apply_along_axis(digitize_1d, axis, x, n_bins)
+        return np.apply_along_axis(digitize_1d, axis, x, n_bins), jnp.prod(bins_arr)
     else:
         kwargs["n_bins"] = n_bins
         kwargs["encode"] = "ordinal"

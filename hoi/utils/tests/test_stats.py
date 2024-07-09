@@ -7,6 +7,7 @@ import math
 import xarray as xr
 from hoi.metrics import Oinfo
 
+np.random.seed(42)
 x1 = np.random.rand(1, 50)
 x2 = np.random.rand(10, 50)
 j1 = jax.random.uniform(jax.random.PRNGKey(0), shape=(1, 50))
@@ -37,16 +38,13 @@ class TestStats(object):
                 assert isinstance(val, np.int64)
 
     @pytest.mark.parametrize("x", [x1, x2, j2])
-    @pytest.mark.parametrize(
-        "to_min", [np.random.uniform(0, 1) for n in range(5)]
-    )
-    def test_normalize(self, x, to_min):
-        to_max = to_min + np.random.uniform(0, 1)
-        to_max = to_min + np.random.uniform(0, 1)
+    @pytest.mark.parametrize("minmax", [(-10.0, 10.0), (-1.0, 1.0)])
+    def test_normalize(self, x, minmax):
+        to_min, to_max = minmax
         xn = normalize(x, to_min, to_max)
         assert xn.shape == x.shape
-        assert np.min(xn) >= truncate_decimal(to_min, 3)
-        assert np.max(xn) <= to_max
+        np.testing.assert_allclose(np.min(xn), np.array([to_min]), rtol=1e-3)
+        np.testing.assert_allclose(np.max(xn), np.array([to_max]), rtol=1e-3)
 
     @pytest.mark.parametrize("x", x)
     @pytest.mark.parametrize("multi", multi)
@@ -75,4 +73,3 @@ class TestStats(object):
         df = get_nbest_mult(hoi, model=model, n_best=n_best)
         assert isinstance(df, pd.DataFrame)
         assert len(df) <= 2 * n_best
-        pass

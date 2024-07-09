@@ -6,7 +6,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.core.entropies import get_entropy, prepare_for_entropy
+from hoi.core.entropies import get_entropy, prepare_for_it
 from hoi.utils.progressbar import get_pbar
 
 
@@ -32,18 +32,17 @@ def _tc_no_ent(inputs, index, entropy_3d=None, entropy_4d=None):
 class TC(HOIEstimator):
     r"""Total correlation.
 
-    Total correlation is the oldest exstension of mutual information to
+    Total correlation is the oldest extension of mutual information to
     an arbitrary number of variables. It is defined as:
 
     .. math::
 
         TC(X^{n})  &=  \sum_{j=1}^{n} H(X_{j}) - H(X^{n}) \\
 
-    The total correlation is equivalent to the Kullback-Liebler
-    vergence between the joint distribution :math: `P(X)` and the product
-    of the marginals. The total correlation is largely a measure
-    of redundancy, sensitive to information shared between single
-    elements.
+    The total correlation is equivalent to the Kullback-Liebler divergence
+    between the joint distribution :math: `P(X)` and the product of the
+    marginals. The total correlation is largely a measure of redundancy,
+    sensitive to information shared between single elements.
 
     Parameters
     ----------
@@ -73,18 +72,21 @@ class TC(HOIEstimator):
             self, x=x, y=y, multiplets=multiplets, verbose=verbose
         )
 
-    def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
+    def fit(
+        self, minsize=2, maxsize=None, method="gc", samples=None, **kwargs
+    ):
         """Compute the Total correlation.
 
         Parameters
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi', 'binning', 'knn', 'kernel}
+        method : {'gc', 'binning', 'knn', 'kernel', callable}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See
-                  :func:`hoi.core.entropy_gcmi`
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
+                * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
                   :func:`hoi.core.entropy_bin`
@@ -92,7 +94,13 @@ class TC(HOIEstimator):
                   :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
+                * A custom entropy estimator can be provided. It should be a
+                  callable function written with Jax taking a single 2D input
+                  of shape (n_features, n_samples) and returning a float.
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
 
@@ -107,7 +115,7 @@ class TC(HOIEstimator):
         minsize, maxsize = self._check_minmax(minsize, maxsize)
 
         # prepare the x for computing entropy
-        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
+        x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
 
         # get entropy function
         entropy = jax.vmap(get_entropy(method=method, **kwargs))

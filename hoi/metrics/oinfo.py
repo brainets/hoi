@@ -6,7 +6,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.core.entropies import get_entropy, prepare_for_entropy
+from hoi.core.entropies import get_entropy, prepare_for_it
 from hoi.utils.progressbar import get_pbar
 
 
@@ -78,18 +78,21 @@ class Oinfo(HOIEstimator):
             self, x=x, y=y, multiplets=multiplets, verbose=verbose
         )
 
-    def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
+    def fit(
+        self, minsize=2, maxsize=None, method="gc", samples=None, **kwargs
+    ):
         """Compute the O-information.
 
         Parameters
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi', 'binning', 'knn', 'kernel}
+        method : {'gc', 'binning', 'knn', 'kernel', callable}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See
-                  :func:`hoi.core.entropy_gcmi`
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
+                * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
                   :func:`hoi.core.entropy_bin`
@@ -97,7 +100,13 @@ class Oinfo(HOIEstimator):
                   :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
+                * A custom entropy estimator can be provided. It should be a
+                  callable function written with Jax taking a single 2D input
+                  of shape (n_features, n_samples) and returning a float.
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
 
@@ -112,7 +121,7 @@ class Oinfo(HOIEstimator):
         minsize, maxsize = self._check_minmax(minsize, maxsize)
 
         # prepare the x for computing entropy
-        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
+        x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
 
         # get entropy function
         entropy = jax.vmap(get_entropy(method=method, **kwargs))

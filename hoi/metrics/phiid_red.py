@@ -3,7 +3,7 @@ import numpy as np
 import jax
 import jax.numpy as jnp
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.core.entropies import prepare_for_entropy
+from hoi.core.entropies import prepare_for_it
 from hoi.core.mi import get_mi, compute_mi_comb_phi
 from hoi.utils.progressbar import get_pbar
 
@@ -51,14 +51,11 @@ class RedundancyphiID(HOIEstimator):
     _encoding = False
     _positive = "redundancy"
     _negative = "null"
-    _symmetric = True
+    _symmetric = False
 
     def __init__(self, x, multiplets=None, verbose=None):
         HOIEstimator.__init__(
-            self,
-            x=x,
-            multiplets=multiplets,
-            verbose=verbose,
+            self, x=x, multiplets=multiplets, verbose=verbose
         )
 
     def fit(
@@ -67,7 +64,8 @@ class RedundancyphiID(HOIEstimator):
         tau=1,
         direction_axis=0,
         maxsize=None,
-        method="gcmi",
+        method="gc",
+        samples=None,
         **kwargs,
     ):
         """Redundancy (phiID).
@@ -76,11 +74,12 @@ class RedundancyphiID(HOIEstimator):
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi'}
-            Name of the method to compute mutual-information. Use either :
+        method : {'gc', 'binning', 'knn', 'kernel', callable}
+            Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See
-                  :func:`hoi.core.entropy_gcmi`
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
+                * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
                   :func:`hoi.core.entropy_bin`
@@ -88,7 +87,13 @@ class RedundancyphiID(HOIEstimator):
                   :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
+                * A custom entropy estimator can be provided. It should be a
+                  callable function written with Jax taking a single 2D input
+                  of shape (n_features, n_samples) and returning a float.
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         tau : int | 1
             The length of the delay to use to compute the redundancy as
             defined in the phiID.
@@ -111,7 +116,7 @@ class RedundancyphiID(HOIEstimator):
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the data for computing mi
-        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
+        x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
 
         # prepare mi functions
         mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
@@ -146,7 +151,9 @@ class RedundancyphiID(HOIEstimator):
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
         for msize in pbar:
-            pbar.set_description(desc="RedMMI order %s" % msize, refresh=False)
+            pbar.set_description(
+                desc="RedPhiIDMMI order %s" % msize, refresh=False
+            )
 
             # combinations of features
             _h_idx = h_idx[order == msize, 0:msize]

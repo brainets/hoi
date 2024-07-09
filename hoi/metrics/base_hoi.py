@@ -5,7 +5,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.core.combinatory import combinations
-from hoi.core.entropies import get_entropy, prepare_for_entropy
+from hoi.core.entropies import get_entropy, prepare_for_it
 from hoi.utils.progressbar import get_pbar
 from hoi.utils.logging import logger, set_log_level
 
@@ -134,27 +134,23 @@ class HOIEstimator(object):
 
         return minsize, maxsize
 
-    def _postprocessing(self, hoi):
-        """Post-processing of computed hoi."""
-        pass
-
     ###########################################################################
     ###########################################################################
     #                         INFORMATION THEORY
     ###########################################################################
     ###########################################################################
     def compute_entropies(
-        self, method="gcmi", minsize=1, maxsize=None, fill_value=-1, **kwargs
+        self, method="gc", minsize=1, maxsize=None, samples=None, **kwargs
     ):
         """Compute entropies for all multiplets.
 
         Parameters
         ----------
-        method : {'gcmi', 'binning', 'knn', 'kernel}
+        method : {'gc', 'binning', 'knn', 'kernel}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See
-                  :func:`hoi.core.entropy_gcmi`
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
                   :func:`hoi.core.entropy_bin`
@@ -163,12 +159,13 @@ class HOIEstimator(object):
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         minsize : int, optional
             Minimum size of the multiplets. Default is 1.
         maxsize : int, optional
             Maximum size of the multiplets. Default is None.
-        fill_value : int, optional
-            Value to fill the multiplet indices with. Default is -1.
         kwargs : dict, optional
             Additional arguments to pass to the entropy function.
 
@@ -186,7 +183,7 @@ class HOIEstimator(object):
 
         # ________________________________ I/O ________________________________
         # prepare the data for computing entropy
-        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
+        x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
 
         # get entropy function
         entropy = partial(
@@ -253,25 +250,30 @@ class HOIEstimator(object):
             Combinations of features.
         """
         logger.info("Get list of multiplets")
+        # specify whether to include target or not
+        n = self._n_features_x
+        if (not self._has_target) or self._encoding:
+            target = None
+        else:
+            target = (np.arange(self._n_features_y) + n).tolist()
 
         # custom list of multiplets don't require to full list of multiplets
         if self._custom_mults is not None:
+            # for encoding or without target (for the other cases it is
+            # automatic)
+            if self._encoding or not self._has_target:
+                target = []
             logger.info("    Selecting custom multiplets")
             _orders = [len(m) for m in self._custom_mults]
-            mults = jnp.full((len(self._custom_mults), max(_orders)), -1)
-            for n_m, m in enumerate(self._custom_mults):
+            # adding target for not encoding metrics
+            mults_ = [list(c) + target for c in self._custom_mults]
+            mults = jnp.full(
+                (len(self._custom_mults), max(_orders) + len(target)), -1
+            )
+            for n_m, m in enumerate(mults_):
                 mults = mults.at[n_m, 0 : len(m)].set(m)
             self._multiplets = mults
         else:
-            # specify whether to include target or not
-            n = self._n_features_x
-            if not self._has_target:
-                target = None
-            else:
-                target = (np.arange(self._n_features_y) + n).tolist()
-            if self._encoding:
-                target = None
-
             # get the full list of multiplets
             self._multiplets = combinations(
                 n,

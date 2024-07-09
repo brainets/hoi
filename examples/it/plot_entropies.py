@@ -1,6 +1,6 @@
 """
-Comparison of entropy estimators
-================================
+Comparison of entropy estimators for various distributions
+==========================================================
 
 In this example, we are going to compare entropy estimators. In particular,
 some distributions, such as normal, uniform or exponential distributions lead
@@ -27,15 +27,15 @@ plt.style.use("ggplot")
 # Definition of estimators of entropy
 # -----------------------------------
 #
-# Let us define several estimators of entropy. We are going to use the GCMI
-# (Gaussian Copula Mutual Information), the KNN (k Nearest Neighbor) and the
-# kernel-based estimator.
+# Let us define several estimators of entropy. We are going to use the GC
+# (Gaussian Copula), the KNN (k Nearest Neighbor) and the kernel-based
+# estimator.
 
 # list of estimators to compare
 metrics = {
-    "GCMI": get_entropy("gcmi", biascorrect=False),
+    "GC": get_entropy("gc"),
+    "Gaussian": get_entropy("gauss"),
     "KNN-3": get_entropy("knn", k=3),
-    "KNN-10": get_entropy("knn", k=10),
     "Kernel": get_entropy("kernel"),
 }
 

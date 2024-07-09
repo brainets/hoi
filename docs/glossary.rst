@@ -1,3 +1,5 @@
+.. _glossary:
+
 Glossary
 ========
 
@@ -25,7 +27,14 @@ Glossary
       Partial Information Decomposition (PID) :cite:`williams2010nonnegative` is a framework for quantifying the unique, shared, and synergistic information that multiple variables provide about a target variable. It aims to decompose the mutual information between a set of predictor variables and a target variable into non-negative components, representing the unique information contributed by each predictor variable, the redundant information shared among predictor variables, and the synergistic information that can only be obtained by considering multiple predictor variables together. PID provides a more nuanced understanding of the relationships between variables in complex systems, beyond traditional pairwise measures of association.
     
     Network behavior
-      Higher Order Interactions between a set of variables.
+      Higher Order Interactions between a set of variables. Metrics of intrinsic
+      information  :cite:`luppi2024information`, i.e. information carried by a group of variables about their 
+      future, are part of this category. `Undirected` metrics :cite:`rosas2024characterising` as the 
+      O-information, fall as well in this category. 
     
     Network encoding
-      Higher Order Interactions between a set of variables about a target variable.
+      Higher Order Interactions between a set of variables modulated by a target variable.
+      Measures of exstrinsic information  :cite:`luppi2024information`, i.e. information carried by a group of 
+      variables about an external target are part of this group.
+      `Directed` metrics :cite:`rosas2024characterising`, as the 
+      Redundancy-synergy index (RSI), are also part of this group. 

@@ -6,7 +6,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.core.entropies import prepare_for_entropy
+from hoi.core.entropies import prepare_for_it
 from hoi.core.mi import get_mi, compute_mi_comb
 from hoi.utils.progressbar import get_pbar
 
@@ -58,18 +58,35 @@ class SynergyMMI(HOIEstimator):
             verbose=verbose,
         )
 
-    def fit(self, minsize=2, maxsize=None, method="gcmi", **kwargs):
+    def fit(
+        self, minsize=2, maxsize=None, method="gc", samples=None, **kwargs
+    ):
         """Synergy Index.
 
         Parameters
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi'}
-            Name of the method to compute mutual-information. Use either :
+        method : {'gc', 'binning', 'knn', 'kernel', callable}
+            Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula MI [default].
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
+                * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
+                * 'binning': binning-based estimator of entropy. Note that to
+                  use this estimator, the data have be to discretized. See
+                  :func:`hoi.core.entropy_bin`
+                * 'knn': k-nearest neighbor estimator. See
+                  :func:`hoi.core.entropy_knn`
+                * 'kernel': kernel-based estimator of entropy
+                  see :func:`hoi.core.entropy_kernel`
+                * A custom entropy estimator can be provided. It should be a
+                  callable function written with Jax taking a single 2D input
+                  of shape (n_features, n_samples) and returning a float.
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         kwargs : dict | {}
             Additional arguments are sent to each MI function
 
@@ -84,7 +101,7 @@ class SynergyMMI(HOIEstimator):
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the x for computing mi
-        x, kwargs = prepare_for_entropy(self._x, method, **kwargs)
+        x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
         x, y = self._split_xy(x)
 
         # prepare mi functions

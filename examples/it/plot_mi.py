@@ -27,7 +27,7 @@ plt.style.use("ggplot")
 # Definition of MI estimators
 # ---------------------------
 #
-# Let us define several estimators of MI. We are going to use the GCMI
+# Let us define several estimators of MI. We are going to use the GC MI
 # (Gaussian Copula Mutual Information), the KNN (k Nearest Neighbor) and the
 # kernel-based estimator and using the a binning approach.
 
@@ -44,7 +44,7 @@ def mi_binning(x, y, **kwargs):
 
 # list of estimators to compare
 metrics = {
-    "GCMI": get_mi("gcmi", biascorrect=False),
+    "GC": get_mi("gc", biascorrect=False),
     "KNN-3": get_mi("knn", k=3),
     "KNN-10": get_mi("knn", k=10),
     "Kernel": get_mi("kernel"),

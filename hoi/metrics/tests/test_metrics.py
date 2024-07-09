@@ -13,6 +13,8 @@ from hoi.metrics import (
     RedundancyMMI,
     SynergyMMI,
     RSI,
+    RedundancyphiID,
+    SynergyphiID,
 )
 from hoi.utils import get_nbest_mult
 
@@ -27,7 +29,7 @@ N_FEATURES_Y = 3
 N_VARIABLES = 5
 
 # metrics settings
-METRICS_NET = [Oinfo, InfoTopo, TC, DTC, Sinfo]
+METRICS_NET = [Oinfo, InfoTopo, TC, DTC, Sinfo, RedundancyphiID, SynergyphiID]
 METRICS_ENC = [RedundancyMMI, SynergyMMI, GradientOinfo, RSI, InfoTot]
 METRICS_ALL = METRICS_NET + METRICS_ENC
 
@@ -52,6 +54,23 @@ x_3d[:, 0, 0] += y_1d.squeeze()
 x_3d[:, 1, 0] += y_1d.squeeze()
 x_3d[:, 3, 0] = x_3d[:, 4, 0] + y_1d.squeeze()
 
+# ----------------------------------- PHIID -----------------------------------
+# simulate the variable x
+n_features = 4
+x_phiid = np.random.rand(200, 4)
+
+# synergy between (0, 1)
+for i in range(190):
+    x_phiid[i, 0] = np.sum(x_phiid[i : i + 20, 1]) + 0.1 * np.sum(
+        x_phiid[i : i + 20, 0]
+    )
+    x_phiid[i, 1] = np.sum(x_phiid[i : i + 20, 0]) + 0.1 * np.sum(
+        x_phiid[i : i + 20, 1]
+    )
+
+# redundancy between (0, 2)
+x_phiid[:, 2] = x_phiid[:, 0] + np.random.rand(200) * 0.05
+
 
 class TestMetricsSmoke(object):
     @staticmethod
@@ -73,11 +92,17 @@ class TestMetricsSmoke(object):
         if (y is None) and (metric in METRICS_ENC):
             return None
 
+        # skip phiid when there's a target
+        if (y is not None) and (metric in [RedundancyphiID, SynergyphiID]):
+            return None
+
         # skip infotopo if multiplets or y
         if metric == InfoTopo:
             kw_def = dict()
             if (y is not None) or (multiplets is not None):
                 return None
+        elif metric in [RedundancyphiID, SynergyphiID]:
+            kw_def = dict(multiplets=multiplets)
         else:
             kw_def = dict(y=y, multiplets=multiplets)
 
@@ -143,7 +168,7 @@ class TestMetricsSmoke(object):
         # ------------------------------ BEHAVIOR -----------------------------
         if metric in METRICS_NET:
             # special case of InfoTopo
-            if metric in [InfoTopo]:
+            if metric in [InfoTopo, RedundancyphiID, SynergyphiID]:
                 model = metric(x.copy())
                 model.fit(minsize=2, maxsize=5)
                 np.testing.assert_array_equal(model.order.min(), 2)
@@ -176,6 +201,29 @@ class TestMetricsSmoke(object):
             # check orders
             np.testing.assert_array_equal(model.order.min(), 2)
             np.testing.assert_array_equal(model.order.max(), 5)
+
+    @pytest.mark.parametrize("y", [y_1d, y_2d, y_3d])
+    @pytest.mark.parametrize("x", [x_2d, x_3d])
+    @pytest.mark.parametrize("samples", [None, 20])
+    @pytest.mark.parametrize("metric", METRICS_ALL)
+    def test_samples(self, metric, x, y, samples):
+        """Test sample selection."""
+        # ------------------------------- CHECK -------------------------------
+        # x_2d & y_3d can't exist
+        if isinstance(y, np.ndarray) and (x.ndim < y.ndim):
+            return None
+
+        # y == None and target-related impossible
+        if (y is None) and (metric in METRICS_ENC):
+            return None
+
+        # -------------------------------- HOI --------------------------------
+        if metric in METRICS_NET:
+            model = metric(x.copy(), verbose=False)
+        elif metric in METRICS_ENC:
+            model = metric(x.copy(), y=y.copy(), verbose=False)
+
+        model.fit(minsize=3, maxsize=3, samples=samples)
 
 
 class TestMetricsFunc(object):
@@ -274,9 +322,17 @@ class TestMetricsFunc(object):
         )
         np.testing.assert_array_equal(df["multiplet"].values[0], [3, 4])
 
+    @pytest.mark.parametrize("xy", [(x_phiid, None)])
+    @pytest.mark.parametrize("metric", [RedundancyphiID, SynergyphiID])
+    def test_phiid(self, metric, xy):
+        x, y = xy
+        model = metric(x.copy())
+        hoi = model.fit(minsize=2, maxsize=2)
 
-if __name__ == "__main__":
-    # TestMetricsSmoke().test_definition(InfoTopo, x_2d, y_1d, None)
-    # TestMetricsSmoke().test_multiplets(InfoTopo, x_2d, [(0, 1)])
-    TestMetricsSmoke().test_order(InfoTopo, x_2d, y_1d)
-    # TestMetricsFunc().test_infotot(InfoTot, (x_3d, y_1d))
+        df = get_nbest_mult(hoi, model=model, minsize=2, maxsize=2, n_best=1)
+
+        if metric == SynergyphiID:
+            mult = [0, 1]
+        elif metric == RedundancyphiID:
+            mult = [0, 2]
+        np.testing.assert_array_equal(df["multiplet"].values[0], mult)

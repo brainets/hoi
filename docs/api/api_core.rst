@@ -12,12 +12,12 @@ Measures of Entropy
    :toctree: generated/
 
    get_entropy
-   entropy_gcmi
+   entropy_gc
+   entropy_gauss
    entropy_bin
    entropy_knn
    entropy_kernel
-   copnorm_nd
-   prepare_for_entropy
+   prepare_for_it
 
 Measures of Mutual Information
 ++++++++++++++++++++++++++++++++

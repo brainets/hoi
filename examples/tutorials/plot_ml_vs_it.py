@@ -27,7 +27,9 @@ plt.style.use('ggplot')
 # redundancy between the two, each :math:`X_{i}` is going to receive a copy of
 # :math:`Y`. To create synergy, each :math:`X_{i}` is going to encode different
 # parts of :math:`Y` so that :math:`Y` can only be fully known when all the
-# :math:`X_{i}` are provided.
+# :math:`X_{i}` are provided. For further information about how to
+# simulate redundant and synergistic interactions, checkout the example
+# :ref:`sphx_glr_auto_examples_tutorials_plot_sim_red_syn.py`
 
 
 def simulate_data(

@@ -88,18 +88,21 @@ class InfoTopo(HOIEstimator):
             self, x=x, y=None, multiplets=None, verbose=verbose
         )
 
-    def fit(self, minsize=1, maxsize=None, method="gcmi", **kwargs):
+    def fit(
+        self, minsize=1, maxsize=None, method="gc", samples=None, **kwargs
+    ):
         """Compute Topological Information.
 
         Parameters
         ----------
         minsize, maxsize : int | 2, None
             Minimum and maximum size of the multiplets
-        method : {'gcmi', 'binning', 'knn', 'kernel}
+        method : {'gc', 'binning', 'knn', 'kernel', callable}
             Name of the method to compute entropy. Use either :
 
-                * 'gcmi': gaussian copula entropy [default]. See
-                  :func:`hoi.core.entropy_gcmi`
+                * 'gc': gaussian copula entropy [default]. See
+                  :func:`hoi.core.entropy_gc`
+                * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
                 * 'binning': binning-based estimator of entropy. Note that to
                   use this estimator, the data have be to discretized. See
                   :func:`hoi.core.entropy_bin`
@@ -107,7 +110,13 @@ class InfoTopo(HOIEstimator):
                   :func:`hoi.core.entropy_knn`
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
+                * A custom entropy estimator can be provided. It should be a
+                  callable function written with Jax taking a single 2D input
+                  of shape (n_features, n_samples) and returning a float.
 
+        samples : np.ndarray
+            List of samples to use to compute HOI. If None, all samples are
+            going to be used.
         kwargs : dict | {}
             Additional arguments are sent to each entropy function
 
@@ -121,7 +130,11 @@ class InfoTopo(HOIEstimator):
 
         minsize, maxsize = self._check_minmax(minsize, maxsize)
         h_x, h_idx, order = self.compute_entropies(
-            minsize=1, maxsize=maxsize, method=method, **kwargs
+            minsize=1,
+            maxsize=maxsize,
+            method=method,
+            samples=samples,
+            **kwargs,
         )
 
         # _______________________________ HOI _________________________________

@@ -251,7 +251,7 @@ def entropy_gauss(x: jnp.array) -> jnp.array:
 
 @partial(jax.jit, static_argnums=(1,))
 def entropy_bin(
-    x: jnp.array, base: int = 2, bin_siz: float = None
+    x: jnp.array, base: int = 2, bin_size: float = None
 ) -> jnp.array:
     """Entropy using binning.
 
@@ -262,7 +262,7 @@ def entropy_bin(
         be discretize
     base : int | 2
         The logarithmic base to use. Default is base 2.
-    bin_siz : float | None
+    bin_size : float | None
         The size of all the bins. Will be taken in consideration only if all
         bins have the same size, for histogram estimator.
 
@@ -283,8 +283,8 @@ def entropy_bin(
     )[1]
     probs = counts / n_samples
 
-    if bin_siz is not None:
-        bins = jnp.where(probs != 0, bin_siz, 0)
+    if bin_size is not None:
+        bins = jnp.where(probs != 0, bin_size, 0)
         return -jax.scipy.special.rel_entr(probs, bins).sum() / jnp.log(base)
     else:
         return (jax.scipy.special.entr(probs)).sum() / jnp.log(base)

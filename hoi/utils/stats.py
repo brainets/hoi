@@ -176,9 +176,9 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
     # in order to allow the histogram estimator, also the size of the bins is
     # returned.
     bins_arr = (x.max(axis=axis) - x.min(axis=axis)) / n_bins
-    b_siz = jnp.prod(bins_arr)
+    b_size = jnp.prod(bins_arr)
     if not use_sklearn:
-        return np.apply_along_axis(digitize_1d, axis, x, n_bins), b_siz
+        return np.apply_along_axis(digitize_1d, axis, x, n_bins), b_size
     else:
         kwargs["n_bins"] = n_bins
         kwargs["encode"] = "ordinal"

@@ -251,7 +251,7 @@ def entropy_gauss(x: jnp.array) -> jnp.array:
 
 @partial(jax.jit, static_argnums=(1,))
 def entropy_bin(
-    x: jnp.array, base: int = 2, bin_size: float = None
+    x: jnp.array, base: float = 2
 ) -> jnp.array:
     """Entropy using binning.
 
@@ -260,7 +260,7 @@ def entropy_bin(
     x : array_like
         Input data of shape (n_features, n_samples). The data should already
         be discretize
-    base : int | 2
+    base : float | 2
         The logarithmic base to use. Default is base 2.
     bin_size : float | None
         The size of all the bins. Will be taken in consideration only if all
@@ -273,7 +273,7 @@ def entropy_bin(
     """
 
     n_features, n_samples = x.shape
-    print(n_features, n_samples)
+
     # here, we count the number of possible multiplets. The worst is that each
     # trial is unique. So we can prepare the output to be at most (n_samples,)
     # and if trials are repeated, just set to zero it's going to be compensated
@@ -283,11 +283,53 @@ def entropy_bin(
     )[1]
     probs = counts / n_samples
 
-    if bin_size is not None:
-        bins = jnp.where(probs != 0, bin_size, 0)
-        return -jax.scipy.special.rel_entr(probs, bins).sum() / jnp.log(base)
-    else:
-        return (jax.scipy.special.entr(probs)).sum() / jnp.log(base)
+    return (jax.scipy.special.entr(probs)).sum() / jnp.log(base)
+
+@partial(jax.jit, static_argnums=(1,))
+def entropy_hist(
+    x: jnp.array, base: float = 2, n_bins: int = 5
+) -> jnp.array:
+    """Entropy using binning.
+
+    Parameters
+    ----------
+    x : array_like
+        Input data of shape (n_features, n_samples). The data should already
+        be discretize
+    base : float | 2
+        The logarithmic base to use. Default is base 2.
+    n_bins : int | 5
+        The number of bin to be considered in the binarization process
+
+    Returns
+    -------
+    hx : float
+        Entropy of x (in bits)
+    """
+
+    x_binned, bin_size = digitize(x, 
+                                n_bins, 
+                                axis=0, 
+                                use_sklearn=False, 
+                                bin_size=True, 
+                                **kwargs)
+
+    n_features, n_samples = x_binned.shape
+    print(n_features, n_samples)
+    # here, we count the number of possible multiplets. The worst is that each
+    # trial is unique. So we can prepare the output to be at most (n_samples,)
+    # and if trials are repeated, just set to zero it's going to be compensated
+    # by the entr() function
+
+    counts = jnp.unique(
+        x, return_counts=True, size=n_samples, axis=1, fill_value=0
+    )[1]
+
+    probs = counts / n_samples
+
+    bins = jnp.where(probs != 0, bin_size, 0)
+    
+    return -jax.scipy.special.rel_entr(probs, bins).sum() / jnp.log(base)
 
 
 ###############################################################################

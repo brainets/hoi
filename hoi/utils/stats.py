@@ -147,7 +147,7 @@ def digitize_sklearn(x, **kwargs):
     )
 
 
-def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
+def digitize(x, n_bins, axis=0, use_sklearn=False, bin_size=False, **kwargs):
     """Discretize a continuous variable.
 
     Parameters
@@ -166,6 +166,9 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
         Additional arguments are passed to
         sklearn.preprocessing.KBinsDiscretizer. For example, use
         `strategy='quantile'` for equal population binning.
+    bin_size : bool | False
+        When true returns also the bin_sizes, note only in when
+        use_sklearn=False
 
     Returns
     -------
@@ -177,8 +180,10 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
     # returned.
     bins_arr = (x.max(axis=axis) - x.min(axis=axis)) / n_bins
     b_size = jnp.prod(bins_arr)
-    if not use_sklearn:
+    if not use_sklearn and bin_size:
         return np.apply_along_axis(digitize_1d, axis, x, n_bins), b_size
+    elif not use_sklearn and not bin_size:
+        return np.apply_along_axis(digitize_1d, axis, x, n_bins)
     else:
         kwargs["n_bins"] = n_bins
         kwargs["encode"] = "ordinal"

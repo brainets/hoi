@@ -34,8 +34,8 @@ def get_entropy(method="gc", **kwargs):
             * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
             * 'binning': estimator to use for discrete variables. See
                 :func:`hoi.core.entropy_bin`
-            * 'histogram' : estimator based on binning the data, to estimate 
-                the probability distribution of the variables and then  
+            * 'histogram' : estimator based on binning the data, to estimate
+                the probability distribution of the variables and then
                 compute the differential entropy. For more details see
                 :func:`hoi.core.entropy_hist`
             * 'knn': k-nearest neighbor estimator. See
@@ -107,7 +107,9 @@ def prepare_for_it(data, method, samples=None, **kwargs):
             "data dtype should be integer. Check that you discretized your"
             " data. If so, use `data.astype(int)`"
         )
-    elif (method in ["kernel", "gc", "knn", "histogram"]) and (data.dtype != float):
+    elif (method in ["kernel", "gc", "knn", "histogram"]) and (
+        data.dtype != float
+    ):
         raise ValueError(f"data dtype should be float, not {data.dtype}")
 
     # -------------------------------------------------------------------------
@@ -255,9 +257,7 @@ def entropy_gauss(x: jnp.array) -> jnp.array:
 
 
 @partial(jax.jit, static_argnums=(1,))
-def entropy_bin(
-    x: jnp.array, base: float = 2
-) -> jnp.array:
+def entropy_bin(x: jnp.array, base: float = 2) -> jnp.array:
     """Entropy using binning.
 
     Parameters
@@ -299,9 +299,7 @@ def entropy_bin(
 
 
 @partial(jax.jit, static_argnums=(1,))
-def entropy_hist(
-    x: jnp.array, base: float = 2, n_bins: int = 5
-) -> jnp.array:
+def entropy_hist(x: jnp.array, base: float = 2, n_bins: int = 5) -> jnp.array:
     """Entropy using binning.
 
     Parameters
@@ -320,14 +318,12 @@ def entropy_hist(
         Entropy of x (in bits)
     """
 
-    x_binned, bin_size = digitize(x, 
-                                n_bins, 
-                                axis=1, 
-                                use_sklearn=False, 
-                                bin_size=True)
+    x_binned, bin_size = digitize(
+        x, n_bins, axis=1, use_sklearn=False, bin_size=True
+    )
 
     n_features, n_samples = x_binned.shape
-    print(n_features, n_samples)
+
     # here, we count the number of possible multiplets. The worst is that each
     # trial is unique. So we can prepare the output to be at most (n_samples,)
     # and if trials are repeated, just set to zero it's going to be compensated
@@ -340,7 +336,7 @@ def entropy_hist(
     probs = counts / n_samples
 
     bin_s = jnp.where(probs != 0, bin_size, 0)
-    
+
     return -jax.scipy.special.rel_entr(probs, bin_s).sum() / jnp.log(base)
 
 

@@ -41,12 +41,12 @@ class TestEntropy(object):
 
     @pytest.mark.parametrize("x", [x1, x2, j1, j2])
     def test_entropy_bin(self, x):
-        x_bin, _ = digitize(x, n_bins=3)
+        x_bin = digitize(x, n_bins=3)
         hx = entropy_bin(x_bin)
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
         assert hx.shape == ()
-    
+
     @pytest.mark.parametrize("x", [x1, x2, j1, j2])
     def test_entropy_hist(self, x):
         hx = entropy_hist(x)

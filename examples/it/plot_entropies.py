@@ -14,6 +14,7 @@ to specific values of entropies. In this this tutorial we are going to :
 """
 
 # %%
+
 import numpy as np
 
 from hoi.core import get_entropy
@@ -34,8 +35,8 @@ plt.style.use("ggplot")
 # list of estimators to compare
 metrics = {
     "GC": get_entropy("gc"),
-    "Gaussian": get_entropy("gauss"),
     "KNN-3": get_entropy("knn", k=3),
+    "Gaussian": get_entropy(method="gauss"),
     "Kernel": get_entropy("kernel"),
 }
 

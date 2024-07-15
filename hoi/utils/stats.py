@@ -130,7 +130,7 @@ def digitize_1d(x, n_bins):
     x_min, x_max = x.min(), x.max()
     dx = (x_max - x_min) / n_bins
     x_binned = ((x - x_min) / dx).astype(int)
-    x_binned = np.minimum(x_binned, n_bins - 1)
+    x_binned = jnp.minimum(x_binned, n_bins - 1)
     return x_binned.astype(int)
 
 
@@ -147,7 +147,7 @@ def digitize_sklearn(x, **kwargs):
     )
 
 
-def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
+def digitize(x, n_bins, axis=0, use_sklearn=False, bin_size=False, **kwargs):
     """Discretize a continuous variable.
 
     Parameters
@@ -166,14 +166,24 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
         Additional arguments are passed to
         sklearn.preprocessing.KBinsDiscretizer. For example, use
         `strategy='quantile'` for equal population binning.
+    bin_size : bool | False
+        When true returns also the bin_sizes, note only in when
+        use_sklearn=False
 
     Returns
     -------
     x_binned : array_like
         Digitized array with the same shape as x
     """
-    if not use_sklearn:
-        return np.apply_along_axis(digitize_1d, axis, x, n_bins)
+    # In case use_sklearn = False, all bins have the same size. In this case,
+    # in order to allow the histogram estimator, also the size of the bins is
+    # returned.
+    bins_arr = (x.max(axis=axis) - x.min(axis=axis)) / n_bins
+    b_size = jnp.prod(bins_arr)
+    if not use_sklearn and bin_size:
+        return jnp.apply_along_axis(digitize_1d, axis, x, n_bins), b_size
+    elif not use_sklearn and not bin_size:
+        return jnp.apply_along_axis(digitize_1d, axis, x, n_bins)
     else:
         kwargs["n_bins"] = n_bins
         kwargs["encode"] = "ordinal"

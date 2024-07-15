@@ -130,7 +130,7 @@ def digitize_1d(x, n_bins):
     x_min, x_max = x.min(), x.max()
     dx = (x_max - x_min) / n_bins
     x_binned = ((x - x_min) / dx).astype(int)
-    x_binned = np.minimum(x_binned, n_bins - 1)
+    x_binned = jnp.minimum(x_binned, n_bins - 1)
     return x_binned.astype(int)
 
 
@@ -181,9 +181,9 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, bin_size=False, **kwargs):
     bins_arr = (x.max(axis=axis) - x.min(axis=axis)) / n_bins
     b_size = jnp.prod(bins_arr)
     if not use_sklearn and bin_size:
-        return np.apply_along_axis(digitize_1d, axis, x, n_bins), b_size
+        return jnp.apply_along_axis(digitize_1d, axis, x, n_bins), b_size
     elif not use_sklearn and not bin_size:
-        return np.apply_along_axis(digitize_1d, axis, x, n_bins)
+        return jnp.apply_along_axis(digitize_1d, axis, x, n_bins)
     else:
         kwargs["n_bins"] = n_bins
         kwargs["encode"] = "ordinal"

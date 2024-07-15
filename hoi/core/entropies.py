@@ -12,7 +12,7 @@ from jax.scipy.special import gamma, ndtri
 from jax.scipy.stats import gaussian_kde
 
 from hoi.utils.logging import logger
-from hoi.utils.stats import normalize
+from hoi.utils.stats import normalize, digitize
 
 ###############################################################################
 ###############################################################################
@@ -26,15 +26,18 @@ def get_entropy(method="gc", **kwargs):
 
     Parameters
     ----------
-    method : {'gc', 'gauss', 'binning', 'knn', 'kernel'}
+    method : {'gc', 'gauss', 'binning', 'histogram', 'knn', 'kernel'}
         Name of the method to compute entropy. Use either :
 
             * 'gc': gaussian copula entropy [default]. See
                 :func:`hoi.core.entropy_gc`
             * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
-            * 'binning': binning-based estimator of entropy. Note that to
-                use this estimator, the data have be to discretized. See
+            * 'binning': estimator to use for discrete variables. See
                 :func:`hoi.core.entropy_bin`
+            * 'histogram' : estimator based on binning the data, to estimate 
+                the probability distribution of the variables and then  
+                compute the differential entropy. For more details see
+                :func:`hoi.core.entropy_hist`
             * 'knn': k-nearest neighbor estimator. See
                 :func:`hoi.core.entropy_knn`
             * 'kernel': kernel-based estimator of entropy
@@ -58,6 +61,8 @@ def get_entropy(method="gc", **kwargs):
         return entropy_gauss
     elif method == "binning":
         return partial(entropy_bin, **kwargs)
+    elif method == "histogram":
+        return partial(entropy_hist, **kwargs)
     elif method == "knn":
         return partial(entropy_knn, **kwargs)
     elif method == "kernel":
@@ -102,7 +107,7 @@ def prepare_for_it(data, method, samples=None, **kwargs):
             "data dtype should be integer. Check that you discretized your"
             " data. If so, use `data.astype(int)`"
         )
-    elif (method in ["kernel", "gc", "knn"]) and (data.dtype != float):
+    elif (method in ["kernel", "gc", "knn", "histogram"]) and (data.dtype != float):
         raise ValueError(f"data dtype should be float, not {data.dtype}")
 
     # -------------------------------------------------------------------------
@@ -285,6 +290,14 @@ def entropy_bin(
 
     return (jax.scipy.special.entr(probs)).sum() / jnp.log(base)
 
+
+###############################################################################
+###############################################################################
+#                               HISTOGRAM
+###############################################################################
+###############################################################################
+
+
 @partial(jax.jit, static_argnums=(1,))
 def entropy_hist(
     x: jnp.array, base: float = 2, n_bins: int = 5
@@ -309,10 +322,9 @@ def entropy_hist(
 
     x_binned, bin_size = digitize(x, 
                                 n_bins, 
-                                axis=0, 
+                                axis=1, 
                                 use_sklearn=False, 
-                                bin_size=True, 
-                                **kwargs)
+                                bin_size=True)
 
     n_features, n_samples = x_binned.shape
     print(n_features, n_samples)
@@ -322,14 +334,14 @@ def entropy_hist(
     # by the entr() function
 
     counts = jnp.unique(
-        x, return_counts=True, size=n_samples, axis=1, fill_value=0
+        x_binned, return_counts=True, size=n_samples, axis=1, fill_value=0
     )[1]
 
     probs = counts / n_samples
 
-    bins = jnp.where(probs != 0, bin_size, 0)
+    bin_s = jnp.where(probs != 0, bin_size, 0)
     
-    return -jax.scipy.special.rel_entr(probs, bins).sum() / jnp.log(base)
+    return -jax.scipy.special.rel_entr(probs, bin_s).sum() / jnp.log(base)
 
 
 ###############################################################################

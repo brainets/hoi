@@ -29,14 +29,14 @@ plt.style.use("ggplot")
 
 # list of estimators to compare
 metrics = {
-    "GCMI": get_entropy("gcmi", biascorrect=False),
+    "GCMI": get_entropy("gc", biascorrect=False),
     "KNN-3": get_entropy("knn", k=3),
     "KNN-10": get_entropy("knn", k=10),
     "Kernel": get_entropy("kernel"),
 }
 
 # number of samples to simulate data
-n_samples = np.geomspace(20, 1000, 10).astype(int)
+n_samples = np.geomspace(100, 10000, 10).astype(int)
 
 # number of repetitions to estimate the percentile interval
 n_repeat = 10
@@ -152,4 +152,3 @@ fig.suptitle(
 )
 fig.tight_layout()
 plt.show()
-print("Done")

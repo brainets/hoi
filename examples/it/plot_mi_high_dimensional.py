@@ -33,13 +33,13 @@ plt.style.use("ggplot")
 
 # list of estimators to compare
 metrics = {
-    "GCMI": get_mi("gcmi", biascorrect=False),
+    "GCMI": get_mi("gc", biascorrect=False),
     "KNN-3": get_mi("knn", k=3),
     "KNN-10": get_mi("knn", k=10),
 }
 
 # number of samples to simulate data
-n_samples = np.geomspace(20, 1000, 10).astype(int)
+n_samples = np.geomspace(1000, 10000, 10).astype(int)
 
 # number of repetitions to estimate the percentile interval
 n_repeat = 10

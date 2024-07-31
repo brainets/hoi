@@ -285,25 +285,8 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
 ###############################################################################
 
 
-@partial(jax.jit, static_argnums=(2,))
-def cdistk(xx, idx, k=3):
-    """K-th minimum euclidian distance."""
-    x, y = xx[:, [idx]], xx
-
-    # compute euclidian distance
-    eucl = jnp.sqrt(jnp.sum((x - y) ** 2, axis=0))
-
-    # remove distance from itself
-    eucl = eucl.at[idx].set(jnp.inf)
-
-    # distance from xi to its kth neighbor
-    eucl = jnp.sort(eucl)[k - 1]
-
-    return xx, eucl
-
-
 @partial(jax.jit, static_argnums=(1,))
-def entropy_knn(x: jnp.array, k: int = 3) -> jnp.array:
+def entropy_knn(x, k: int = 3) -> jnp.array:
     """Entropy using the k-nearest neighbor.
 
     Original code: https://github.com/blakeaw/Python-knn-entropy/
@@ -324,19 +307,20 @@ def entropy_knn(x: jnp.array, k: int = 3) -> jnp.array:
     """
     # x = jnp.atleast_2d(x)
     d, n = float(x.shape[0]), float(x.shape[1])
-
-    # wrap with knn
-    cdist = partial(cdistk, k=k)
-
     # compute euclidian distance
-    _, r_k = jax.lax.scan(cdist, x, jnp.arange(int(n)).astype(int))
+    x = x.T[None]
+    diff = x.transpose(1, 0, 2) - x
+    _dist = jnp.einsum("ijc->ij", diff**2)
+    eucl_xi = jnp.sqrt(_dist)
+    # dist to kth neighbor
+    dist_k = jnp.sort(eucl_xi, axis=-1)[:, k]
 
     # volume of unit ball in d^n
     c_d = (jnp.pi ** (d * 0.5)) / gamma(1.0 + d * 0.5) / (2**d)
     log_c_d = jnp.log(c_d)
 
     # sum log of distances
-    sum_log_dist = jnp.sum(jnp.log(2 * r_k))
+    sum_log_dist = jnp.sum(jnp.log(2 * dist_k))
 
     h = -psi(k) + psi(n) + log_c_d + (d / n) * sum_log_dist
 

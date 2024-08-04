@@ -310,8 +310,7 @@ def entropy_knn(x, k: int = 3) -> jnp.array:
     # compute euclidian distance
     x = x.T[None]
     diff = x.transpose(1, 0, 2) - x
-    _dist = jnp.einsum("ijc->ij", diff**2)
-    eucl_xi = jnp.sqrt(_dist)
+    eucl_xi = jnp.sqrt(jnp.sum(diff**2, axis=-1))
     # dist to kth neighbor
     dist_k = jnp.sort(eucl_xi, axis=-1)[:, k]
 

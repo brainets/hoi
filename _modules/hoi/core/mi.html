@@ -29,11 +29,11 @@
 
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../../_static/style.css?v=b7615940" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -610,28 +610,12 @@ document.write(`
 <span class="c1">###############################################################################</span>
 
 
-<span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
-<span class="k">def</span> <span class="nf">n_neighbours</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span> <span class="n">idx</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return number of neighbours for each point based on kth neighbour.&quot;&quot;&quot;</span>
-    <span class="n">xi</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span> <span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">yi</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">][:,</span> <span class="p">[</span><span class="n">idx</span><span class="p">]],</span> <span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-
-    <span class="c1"># compute euclidian distance from xi to all points in x (same y)</span>
-    <span class="n">eucl_xi</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">xi</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-    <span class="n">eucl_yi</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">yi</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-
-    <span class="c1"># distance in space (XxY) is the maximum distance.</span>
-    <span class="n">max_dist_xy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">eucl_xi</span><span class="p">,</span> <span class="n">eucl_yi</span><span class="p">)</span>
-    <span class="c1"># indices to the closest points in the (XxY) space.</span>
-    <span class="n">closest_points</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">max_dist_xy</span><span class="p">)</span>
-    <span class="c1"># the kth neighbour is at index k (ignoring the point itself)</span>
-    <span class="c1"># distance to the k-th neighbor for each point</span>
-    <span class="n">dist_k</span> <span class="o">=</span> <span class="n">max_dist_xy</span><span class="p">[</span><span class="n">closest_points</span><span class="p">[</span><span class="n">k</span><span class="p">]]</span>
-    <span class="c1"># don&#39;t include the `i`th point itself in nx and ny</span>
-    <span class="n">nx</span> <span class="o">=</span> <span class="p">(</span><span class="n">eucl_xi</span> <span class="o">&lt;</span> <span class="n">dist_k</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="n">ny</span> <span class="o">=</span> <span class="p">(</span><span class="n">eucl_yi</span> <span class="o">&lt;</span> <span class="n">dist_k</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
-
-    <span class="k">return</span> <span class="n">xy</span><span class="p">,</span> <span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">)</span>
+<span class="nd">@jax</span><span class="o">.</span><span class="n">jit</span>
+<span class="k">def</span> <span class="nf">_cdist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jnp</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pairwise squared distances between all samples of x and y.&quot;&quot;&quot;</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">y</span><span class="o">.</span><span class="n">T</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+    <span class="n">_dist</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">diff</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_dist</span>
 
 
 <span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
@@ -657,14 +641,21 @@ document.write(`
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># n_samples</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="c1"># for each xi and yi, get the distance to neighbors</span>
+    <span class="n">eucl_xi</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">_cdist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+    <span class="n">eucl_yi</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">_cdist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
 
-    <span class="n">_n_neighbours</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">n_neighbours</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
-    <span class="c1"># get number of neighbors for each point in XxY space</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">n_neighbors</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span>
-        <span class="n">_n_neighbours</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">nx</span> <span class="o">=</span> <span class="n">n_neighbors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">ny</span> <span class="o">=</span> <span class="n">n_neighbors</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># distance in space (XxY) is the maximum distance.</span>
+    <span class="n">max_dist_xy</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">eucl_xi</span><span class="p">,</span> <span class="n">eucl_yi</span><span class="p">)</span>
+    <span class="c1"># indices to the closest points in the (XxY) space.</span>
+    <span class="n">closest_points</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">max_dist_xy</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># the kth neighbour is at index k (ignoring the point itself)</span>
+    <span class="c1"># distance to the k-th neighbor for each point</span>
+    <span class="n">k_neighbours</span> <span class="o">=</span> <span class="n">closest_points</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span>
+    <span class="n">dist_k</span> <span class="o">=</span> <span class="n">max_dist_xy</span><span class="p">[</span><span class="n">jnp</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">k_neighbours</span><span class="p">)),</span> <span class="n">k_neighbours</span><span class="p">]</span>
+    <span class="c1"># don&#39;t include the `i`th point itself in nx and ny</span>
+    <span class="n">nx</span> <span class="o">=</span> <span class="p">(</span><span class="n">eucl_xi</span> <span class="o">&lt;</span> <span class="n">dist_k</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">ny</span> <span class="o">=</span> <span class="p">(</span><span class="n">eucl_yi</span> <span class="o">&lt;</span> <span class="n">dist_k</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
 
     <span class="n">psi_mean</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">psi</span><span class="p">(</span><span class="n">nx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">psi</span><span class="p">(</span><span class="n">ny</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span>
 
@@ -697,6 +688,10 @@ document.write(`
   
   <div class="footer-item">
     
+<p class="component-author">
+By Author name not set
+</p>
+
   </div>
   
   <div class="footer-item">

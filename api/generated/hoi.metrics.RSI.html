@@ -30,11 +30,11 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=b7615940" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -456,10 +456,10 @@ information provided by individual elements of S:</p>
 <p>with :</p>
 <div class="math notranslate nohighlight">
 \[S = x_{1}, ..., x_{n}\]</div>
-<p>The RSI has been referred to as the SynSum <span id="id1">[<a class="reference internal" href="../../theory.html#id39" title="Amir Globerson, Eran Stark, Eilon Vaadia, and Naftali Tishby. The minimum information principle and its application to neural code analysis. Proceedings of the National Academy of Sciences, 106(9):3490–3495, 2009.">9</a>]</span>,
-the WholeMinusSum synergy <span id="id2">[<a class="reference internal" href="../../theory.html#id41" title="Virgil Griffith and Christof Koch. Quantifying synergistic mutual information. In Guided self-organization: inception, pages 159–190. Springer, 2014.">11</a>]</span>, and
+<p>The RSI has been referred to as the SynSum <span id="id1">[<a class="reference internal" href="../../theory.html#id39" title="Amir Globerson, Eran Stark, Eilon Vaadia, and Naftali Tishby. The minimum information principle and its application to neural code analysis. Proceedings of the National Academy of Sciences, 106(9):3490–3495, 2009.">10</a>]</span>,
+the WholeMinusSum synergy <span id="id2">[<a class="reference internal" href="../../theory.html#id41" title="Virgil Griffith and Christof Koch. Quantifying synergistic mutual information. In Guided self-organization: inception, pages 159–190. Springer, 2014.">12</a>]</span>, and
 the negative of the redundancy-synergy index has also been
-referred to as the redundancy <span id="id3">[<a class="reference internal" href="../../theory.html#id42" title="Elad Schneidman, Susanne Still, Michael J Berry, William Bialek, and others. Network information and connected correlations. Physical review letters, 91(23):238701, 2003.">25</a>]</span>.</p>
+referred to as the redundancy <span id="id3">[<a class="reference internal" href="../../theory.html#id42" title="Elad Schneidman, Susanne Still, Michael J Berry, William Bialek, and others. Network information and connected correlations. Physical review letters, 91(23):238701, 2003.">26</a>]</span>.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <ul class="simple">
@@ -481,13 +481,8 @@ going to be computed.</p>
 </dd>
 </dl>
 </dd>
-</dl>
-<p class="rubric">References</p>
-<p>Chechik et al. 2001 <span id="id4">[<a class="reference internal" href="../../theory.html#id35" title="Gal Chechik, Amir Globerson, M Anderson, E Young, Israel Nelken, and Naftali Tishby. Group redundancy measures reveal redundancy reduction in the auditory pathway. Advances in neural information processing systems, 2001.">5</a>]</span>; Timme et al., 2014
-<span id="id5">[<a class="reference internal" href="../../theory.html#id38" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">31</a>]</span></p>
-<dl class="field-list simple">
-<dt class="field-odd">Attributes<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
+<dt class="field-even">Attributes<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
 <dt><a class="reference internal" href="#hoi.metrics.RSI.entropies" title="hoi.metrics.RSI.entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropies</span></code></a></dt><dd><p>Entropies of shape (n_mult,)</p>
 </dd>
 <dt><a class="reference internal" href="#hoi.metrics.RSI.multiplets" title="hoi.metrics.RSI.multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiplets</span></code></a></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
@@ -514,6 +509,9 @@ going to be computed.</p>
 </tbody>
 </table>
 </div>
+<p class="rubric">References</p>
+<p>Chechik et al. 2001 <span id="id4">[<a class="reference internal" href="../../theory.html#id35" title="Gal Chechik, Amir Globerson, M Anderson, E Young, Israel Nelken, and Naftali Tishby. Group redundancy measures reveal redundancy reduction in the auditory pathway. Advances in neural information processing systems, 2001.">5</a>]</span>; Timme et al., 2014
+<span id="id5">[<a class="reference internal" href="../../theory.html#id38" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">32</a>]</span></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="hoi.metrics.RSI.__iter__">
 <span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.RSI.__iter__" title="Link to this definition">#</a></dt>
@@ -741,6 +739,10 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
   
   <div class="footer-item">
     
+<p class="component-author">
+By Author name not set
+</p>
+
   </div>
   
   <div class="footer-item">

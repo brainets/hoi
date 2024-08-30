@@ -30,11 +30,11 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=61a4c737" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/style.css?v=b7615940" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -458,10 +458,10 @@ document.write(`
                   
   <section id="theoretical-background">
 <span id="theory"></span><h1>Theoretical background<a class="headerlink" href="#theoretical-background" title="Link to this heading">#</a></h1>
-<p>Since the seminal work of Claude Shannon <span id="id1">[<a class="reference internal" href="#id49" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">26</a>]</span>, in the
+<p>Since the seminal work of Claude Shannon <span id="id1">[<a class="reference internal" href="#id49" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">27</a>]</span>, in the
 second half of the 20th century, <a class="reference internal" href="glossary.html#term-Information-Theory"><span class="xref std std-term">Information Theory</span></a> (IT) has been proven
 to be an invaluable framework to decipher the intricate web of interactions
-underlying a broad range of different complex systems <span id="id2">[<a class="reference internal" href="#id43" title="Satosi Watanabe. Information theoretical analysis of multivariate correlation. IBM Journal of research and development, 4(1):66–82, 1960.">35</a>]</span>.
+underlying a broad range of different complex systems <span id="id2">[<a class="reference internal" href="#id43" title="Satosi Watanabe. Information theoretical analysis of multivariate correlation. IBM Journal of research and development, 4(1):66–82, 1960.">36</a>]</span>.
 In this line of research, a plethora of approaches has been developed to
 investigate relationships between pairs of variables, shedding light on many
 properties of complex systems in a vast range of different fields.
@@ -474,9 +474,9 @@ In this context, new approaches based on IT emerged to investigate HOI in
 terms of information content; more into details, different metrics have been developed
 to estimate from the activity patterns of a set of variables, whether or not they were
 interacting and which kind of interaction they presented
-<span id="id5">[<a class="reference internal" href="#id38" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">31</a>, <a class="reference internal" href="#id31" title="Thomas F Varley. Information theory for complex systems scientists. arXiv preprint arXiv:2304.12482, 2023.">34</a>]</span>. Most of these metrics are based on
+<span id="id5">[<a class="reference internal" href="#id38" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">32</a>, <a class="reference internal" href="#id31" title="Thomas F Varley. Information theory for complex systems scientists. arXiv preprint arXiv:2304.12482, 2023.">35</a>]</span>. Most of these metrics are based on
 the concepts of <a class="reference internal" href="glossary.html#term-Synergy"><span class="xref std std-term">Synergy</span></a> and <a class="reference internal" href="glossary.html#term-Redundancy"><span class="xref std std-term">Redundancy</span></a>, formalized in terms of IT by
-the <a class="reference internal" href="glossary.html#term-Partial-Information-Decomposition"><span class="xref std std-term">Partial Information Decomposition</span></a> (PID) framework <span id="id6">[<a class="reference internal" href="#id36" title="Paul L Williams and Randall D Beer. Nonnegative decomposition of multivariate information. arXiv preprint arXiv:1004.2515, 2010.">36</a>]</span>.
+the <a class="reference internal" href="glossary.html#term-Partial-Information-Decomposition"><span class="xref std std-term">Partial Information Decomposition</span></a> (PID) framework <span id="id6">[<a class="reference internal" href="#id36" title="Paul L Williams and Randall D Beer. Nonnegative decomposition of multivariate information. arXiv preprint arXiv:1004.2515, 2010.">37</a>]</span>.
 Even though these metrics are theoretically well defined and fascinating, when concretely using
 them to study and computing the higher-order structure of a system, two main problems come into
 play: how to estimate entropies and information from limited data set, with different
@@ -499,7 +499,7 @@ interactions between variables at higher-orders.</p>
 <section id="measuring-entropy">
 <h3>Measuring Entropy<a class="headerlink" href="#measuring-entropy" title="Link to this heading">#</a></h3>
 <p>Shannon entropy is a fundamental concept in IT, representing the amount of uncertainty
-or disorder in a random variable <span id="id7">[<a class="reference internal" href="#id49" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">26</a>]</span>. Its standard definition
+or disorder in a random variable <span id="id7">[<a class="reference internal" href="#id49" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">27</a>]</span>. Its standard definition
 for a discrete random variable <span class="math notranslate nohighlight">\(X\)</span>, with probability mass function <span class="math notranslate nohighlight">\(P(X)\)</span>, is given by:</p>
 <div class="math notranslate nohighlight">
 \[H(X) = −\sum P(x) log_{2}(P(x))\]</div>
@@ -516,31 +516,34 @@ entropy of a continuous variable, different methods are implemented in the toolb
 <li><p>Binning method, that consists in binning the continuous data in a discrete set of bins.
 In this way, variables are discretized and the entropy can be computed as described above.
 This procedure can be performed in many different
-ways <span id="id8">[<a class="reference internal" href="#id52" title="Georges A Darbellay and Igor Vajda. Estimation of the information by an adaptive partitioning of the observation space. IEEE Transactions on Information Theory, 45(4):1315–1321, 1999.">6</a>, <a class="reference internal" href="#id51" title="Dominik Endres and Peter Foldiak. Bayesian bin distribution inference and mutual information. IEEE Transactions on Information Theory, 51(11):3766–3779, 2005.">7</a>, <a class="reference internal" href="#id53" title="Andrew M Fraser and Harry L Swinney. Independent coordinates for strange attractors from mutual information. Physical review A, 33(2):1134, 1986.">8</a>]</span>.</p></li>
+ways <span id="id8">[<a class="reference internal" href="#id52" title="Georges A Darbellay and Igor Vajda. Estimation of the information by an adaptive partitioning of the observation space. IEEE Transactions on Information Theory, 45(4):1315–1321, 1999.">7</a>, <a class="reference internal" href="#id51" title="Dominik Endres and Peter Foldiak. Bayesian bin distribution inference and mutual information. IEEE Transactions on Information Theory, 51(11):3766–3779, 2005.">8</a>, <a class="reference internal" href="#id53" title="Andrew M Fraser and Harry L Swinney. Independent coordinates for strange attractors from mutual information. Physical review A, 33(2):1134, 1986.">9</a>]</span>.</p></li>
 <li><p>K-Nearest Neighbors (KNN), that estimates the probability distribution by considering the
-K-nearest neighbors of each data point <span id="id9">[<a class="reference internal" href="#id57" title="Alexander Kraskov, Harald Stögbauer, and Peter Grassberger. Estimating mutual information. Physical review E, 69(6):066138, 2004.">14</a>]</span>.</p></li>
+K-nearest neighbors of each data point <span id="id9">[<a class="reference internal" href="#id57" title="Alexander Kraskov, Harald Stögbauer, and Peter Grassberger. Estimating mutual information. Physical review E, 69(6):066138, 2004.">15</a>]</span>.</p></li>
 <li><p>Kernel Density Estimation that uses kernel functions to estimate the probability
-density function, offering a smooth approximation <span id="id10">[<a class="reference internal" href="#id55" title="Young-Il Moon, Balaji Rajagopalan, and Upmanu Lall. Estimation of mutual information using kernel density estimators. Physical Review E, 52(3):2318, 1995.">20</a>]</span>.</p></li>
+density function, offering a smooth approximation <span id="id10">[<a class="reference internal" href="#id55" title="Young-Il Moon, Balaji Rajagopalan, and Upmanu Lall. Estimation of mutual information using kernel density estimators. Physical Review E, 52(3):2318, 1995.">21</a>]</span>.</p></li>
 <li><p>The parametric estimation, that is used when the data is gaussian and allows
-to compute the entropy as a function of the variance <span id="id11">[<a class="reference internal" href="#id54" title="Nathaniel R Goodman. Statistical analysis based on a certain multivariate complex gaussian distribution (an introduction). The Annals of mathematical statistics, 34(1):152–177, 1963.">10</a>]</span>.</p></li>
+to compute the entropy as a function of the variance <span id="id11">[<a class="reference internal" href="#id54" title="Nathaniel R Goodman. Statistical analysis based on a certain multivariate complex gaussian distribution (an introduction). The Annals of mathematical statistics, 34(1):152–177, 1963.">11</a>]</span>.</p></li>
 </ul>
 <p>Note that all the functions mentioned in the following part are based on the computation of
 entropies, hence we advise care in the choice of the estimator to use.</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This introduction guides you through the core information theoretical metrics available. These ..."><img alt="" src="_images/sphx_glr_plot_tutorial_core_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This introduction guides you through the core information theoretical metrics available. These metrics are the entropy and the mutual information."><img alt="" src="_images/sphx_glr_plot_tutorial_core_thumb.png" />
 <p><a class="reference internal" href="auto_examples/it/plot_tutorial_core.html#sphx-glr-auto-examples-it-plot-tutorial-core-py"><span class="std std-ref">Introduction to core information theoretical metrics</span></a></p>
   <div class="sphx-glr-thumbnail-title">Introduction to core information theoretical metrics</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="When computing Higher-Order Interactions using metrics based on entropy, it involves estimating..."><img alt="" src="_images/sphx_glr_plot_entropies_mvar_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="When computing Higher-Order Interactions using metrics based on entropy, it involves estimating entropy of multivariate variables. However, as we are going to see in this example, some estimators of entropy do not perform so well with increasing dimensionality. In this example, to illustrate this effect, we are going to compare entropy estimators with data sampled from a multivariate normal with increasing dimensionality."><img alt="" src="_images/sphx_glr_plot_entropies_mvar_thumb.png" />
 <p><a class="reference internal" href="auto_examples/it/plot_entropies_mvar.html#sphx-glr-auto-examples-it-plot-entropies-mvar-py"><span class="std std-ref">Comparison of entropy estimators for a multivariate normal</span></a></p>
   <div class="sphx-glr-thumbnail-title">Comparison of entropy estimators for a multivariate normal</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are going to compare entropy estimators. In particular, some distributions,..."><img alt="" src="_images/sphx_glr_plot_entropies_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are going to compare entropy estimators. In particular, some distributions, such as normal, uniform or exponential distributions lead to specific values of entropies. In this this tutorial we are going to :"><img alt="" src="_images/sphx_glr_plot_entropies_thumb.png" />
 <p><a class="reference internal" href="auto_examples/it/plot_entropies.html#sphx-glr-auto-examples-it-plot-entropies-py"><span class="std std-ref">Comparison of entropy estimators for various distributions</span></a></p>
   <div class="sphx-glr-thumbnail-title">Comparison of entropy estimators for various distributions</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are going to compare estimators of entropy with high-dimensional data."><img alt="" src="_images/sphx_glr_plot_entropy_high_dimensional_thumb.png" />
+<p><a class="reference internal" href="auto_examples/it/plot_entropy_high_dimensional.html#sphx-glr-auto-examples-it-plot-entropy-high-dimensional-py"><span class="std std-ref">Comparison of entropy estimators with high-dimensional data</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Comparison of entropy estimators with high-dimensional data</div>
 </div></div></section>
 <section id="measuring-mutual-information-mi">
 <h3>Measuring Mutual Information (MI)<a class="headerlink" href="#measuring-mutual-information-mi" title="Link to this heading">#</a></h3>
 <p>One of the most used functions in the study of pairwise interaction is the Mutual Information (MI)
 that quantifies the statistical dependence or information shared between two random
-variables <span id="id12">[<a class="reference internal" href="#id49" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">26</a>, <a class="reference internal" href="#id43" title="Satosi Watanabe. Information theoretical analysis of multivariate correlation. IBM Journal of research and development, 4(1):66–82, 1960.">35</a>]</span>. It is defined
+variables <span id="id12">[<a class="reference internal" href="#id49" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">27</a>, <a class="reference internal" href="#id43" title="Satosi Watanabe. Information theoretical analysis of multivariate correlation. IBM Journal of research and development, 4(1):66–82, 1960.">36</a>]</span>. It is defined
 mathematically using the concept of entropies. For two random variables X and Y,
 MI is given by:</p>
 <div class="math notranslate nohighlight">
@@ -554,17 +557,20 @@ we have <span class="math notranslate nohighlight">\(H(X,Y)=H(X)+H(Y)\)</span>, 
 signed sum of entropies, the problem of how to estimate MI from continuous data can be
 reconducted to the problem, discussed above, of how to estimate entropies. An estimator
 that has been recently developed and presents interesting properties when computing the MI
-is the Gaussian Copula estimator <span id="id13">[<a class="reference internal" href="#id56" title="Robin AA Ince, Bruno L Giordano, Christoph Kayser, Guillaume A Rousselet, Joachim Gross, and Philippe G Schyns. A statistical framework for neuroimaging data analysis based on mutual information estimated via a gaussian copula. Human brain mapping, 38(3):1541–1573, 2017.">12</a>]</span>. This estimator is based on the
+is the Gaussian Copula estimator <span id="id13">[<a class="reference internal" href="#id56" title="Robin AA Ince, Bruno L Giordano, Christoph Kayser, Guillaume A Rousselet, Joachim Gross, and Philippe G Schyns. A statistical framework for neuroimaging data analysis based on mutual information estimated via a gaussian copula. Human brain mapping, 38(3):1541–1573, 2017.">13</a>]</span>. This estimator is based on the
 statistical theory of copulas and is proven to provide a lower bound to the real value of MI,
 this is one of its main advantages: when computing MI, Gaussian copula estimator avoids false
 positives. Play attention to the fact that this can be mainly used to investigate relationships
 between two variables that are monotonic.</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This introduction guides you through the core information theoretical metrics available. These ..."><img alt="" src="_images/sphx_glr_plot_tutorial_core_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This introduction guides you through the core information theoretical metrics available. These metrics are the entropy and the mutual information."><img alt="" src="_images/sphx_glr_plot_tutorial_core_thumb.png" />
 <p><a class="reference internal" href="auto_examples/it/plot_tutorial_core.html#sphx-glr-auto-examples-it-plot-tutorial-core-py"><span class="std std-ref">Introduction to core information theoretical metrics</span></a></p>
   <div class="sphx-glr-thumbnail-title">Introduction to core information theoretical metrics</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are going to compare estimators of mutual-information (MI). In particular, ..."><img alt="" src="_images/sphx_glr_plot_mi_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are going to compare estimators of mutual-information (MI). In particular, the MI between variables sampled from a normal distribution can be estimated theoretically. In this this tutorial we are going to :"><img alt="" src="_images/sphx_glr_plot_mi_thumb.png" />
 <p><a class="reference internal" href="auto_examples/it/plot_mi.html#sphx-glr-auto-examples-it-plot-mi-py"><span class="std std-ref">Comparison of mutual-information estimators</span></a></p>
   <div class="sphx-glr-thumbnail-title">Comparison of mutual-information estimators</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are going to compare estimators of mutual-information (MI) with high-dimensional data. In particular, the MI between variables sampled from a multinormal distribution can be estimated theoretically. In this this tutorial we are going to:"><img alt="" src="_images/sphx_glr_plot_mi_high_dimensional_thumb.png" />
+<p><a class="reference internal" href="auto_examples/it/plot_mi_high_dimensional.html#sphx-glr-auto-examples-it-plot-mi-high-dimensional-py"><span class="std std-ref">Comparison of MI estimators with high-dimensional data</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Comparison of MI estimators with high-dimensional data</div>
 </div></div></section>
 </section>
 <section id="from-pairwise-to-higher-order-interactions">
@@ -574,7 +580,7 @@ concept of Shannon entropy and mutual information. Given a set of variables, a c
 approach to investigate their interaction is by comparing the entropy and the information
 of the joint probability distribution of the whole set with the entropy and information
 of different subsets. This can be done in many different ways, unveiling different aspects
-of HOI <span id="id14">[<a class="reference internal" href="#id38" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">31</a>, <a class="reference internal" href="#id31" title="Thomas F Varley. Information theory for complex systems scientists. arXiv preprint arXiv:2304.12482, 2023.">34</a>]</span>. The metrics implemented in the
+of HOI <span id="id14">[<a class="reference internal" href="#id38" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">32</a>, <a class="reference internal" href="#id31" title="Thomas F Varley. Information theory for complex systems scientists. arXiv preprint arXiv:2304.12482, 2023.">35</a>]</span>. The metrics implemented in the
 toolbox can be divided in two main categories: a group of metrics measures the interaction
 behavior prevailing within a set of variable, <a class="reference internal" href="glossary.html#term-Network-behavior"><span class="xref std std-term">Network behavior</span></a>, another group of
 metrics instead focuses on the relationship between a set of source variables and a target
@@ -586,14 +592,14 @@ foundation and possible interpretations.</p>
 <section id="total-correlation">
 <h4>Total correlation<a class="headerlink" href="#total-correlation" title="Link to this heading">#</a></h4>
 <p>Total correlation, <a class="reference internal" href="api/generated/hoi.metrics.TC.html#hoi.metrics.TC" title="hoi.metrics.TC"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.TC</span></code></a>, is the oldest exstension of mutual information to
-an arbitrary number of variables <span id="id15">[<a class="reference internal" href="#id47" title="Milan Studen\`y and Jirina Vejnarová. The multiinformation function as a tool for measuring stochastic dependence. Learning in graphical models, pages 261–297, 1998.">27</a>, <a class="reference internal" href="#id43" title="Satosi Watanabe. Information theoretical analysis of multivariate correlation. IBM Journal of research and development, 4(1):66–82, 1960.">35</a>]</span>.
+an arbitrary number of variables <span id="id15">[<a class="reference internal" href="#id47" title="Milan Studen\`y and Jirina Vejnarová. The multiinformation function as a tool for measuring stochastic dependence. Learning in graphical models, pages 261–297, 1998.">28</a>, <a class="reference internal" href="#id43" title="Satosi Watanabe. Information theoretical analysis of multivariate correlation. IBM Journal of research and development, 4(1):66–82, 1960.">36</a>]</span>.
 It is defined as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}TC(X^{n})  &amp;=  \sum_{j=1}^{n} H(X_{j}) - H(X^{n}) \\\end{split}\]</div>
 <p>The total correlation quantifies the strength of collective constraints ruling the systems,
 it is sentive to information shared between single variables and it can be associated with
 redundancy.</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such..."><img alt="" src="_images/sphx_glr_plot_oinfo_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such as the Total Correlation (TC), the Dual Total Correlation (DTC), the S-Information and the gradient O-information. We recommend reading Rosas et al. 2019 rosas2019oinfo."><img alt="" src="_images/sphx_glr_plot_oinfo_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_oinfo.html#sphx-glr-auto-examples-metrics-plot-oinfo-py"><span class="std std-ref">O-information and its derivatives for network behavior and encoding</span></a></p>
   <div class="sphx-glr-thumbnail-title">O-information and its derivatives for network behavior and encoding</div>
 </div></div></section>
@@ -601,7 +607,7 @@ redundancy.</p>
 <h4>Dual Total correlation<a class="headerlink" href="#dual-total-correlation" title="Link to this heading">#</a></h4>
 <p>Dual total correlation, <a class="reference internal" href="api/generated/hoi.metrics.DTC.html#hoi.metrics.DTC" title="hoi.metrics.DTC"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.DTC</span></code></a>, is another extension of mutual information to
 an arbitrary number of variables, also known as binding information and excess
-entropy, <span id="id16">[<a class="reference internal" href="#id46" title="TH Sun. Linear dependence structure of the entropy space. Inf Control, 29(4):337–68, 1975.">28</a>]</span>. It quatifies the part of the joint entropy that
+entropy, <span id="id16">[<a class="reference internal" href="#id46" title="TH Sun. Linear dependence structure of the entropy space. Inf Control, 29(4):337–68, 1975.">29</a>]</span>. It quatifies the part of the joint entropy that
 is shared by at least two or more variables in the following way:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}DTC(X^{n})  &amp;=  H(X^{n}) - \sum_{j=1}^{n} H(X_j|X_{-j}^{n}) \\
@@ -609,7 +615,7 @@ is shared by at least two or more variables in the following way:</p>
 <p>where <span class="math notranslate nohighlight">\(\sum_{j=1}^{n} H(X_j|X_{-j}^{n})\)</span> is the entropy of <span class="math notranslate nohighlight">\(X_j\)</span> not shared
 by any other variable. This measure is higher in systems in which lower order
 constraints prevails.</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such..."><img alt="" src="_images/sphx_glr_plot_oinfo_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such as the Total Correlation (TC), the Dual Total Correlation (DTC), the S-Information and the gradient O-information. We recommend reading Rosas et al. 2019 rosas2019oinfo."><img alt="" src="_images/sphx_glr_plot_oinfo_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_oinfo.html#sphx-glr-auto-examples-metrics-plot-oinfo-py"><span class="std std-ref">O-information and its derivatives for network behavior and encoding</span></a></p>
   <div class="sphx-glr-thumbnail-title">O-information and its derivatives for network behavior and encoding</div>
 </div></div></section>
@@ -617,21 +623,21 @@ constraints prevails.</p>
 <h4>S information<a class="headerlink" href="#s-information" title="Link to this heading">#</a></h4>
 <p>The S-information (also called exogenous information), <a class="reference internal" href="api/generated/hoi.metrics.Sinfo.html#hoi.metrics.Sinfo" title="hoi.metrics.Sinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Sinfo</span></code></a>, is defined
 as the sum between the total correlation (TC) plus the dual total
-correlation (DTC), <span id="id17">[<a class="reference internal" href="#id45" title="Ryan G James, Christopher J Ellison, and James P Crutchfield. Anatomy of a bit: information in a time series observation. Chaos: An Interdisciplinary Journal of Nonlinear Science, 2011.">13</a>]</span>:</p>
+correlation (DTC), <span id="id17">[<a class="reference internal" href="#id45" title="Ryan G James, Christopher J Ellison, and James P Crutchfield. Anatomy of a bit: information in a time series observation. Chaos: An Interdisciplinary Journal of Nonlinear Science, 2011.">14</a>]</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\Omega(X^{n})  &amp;=  TC(X^{n}) + DTC(X^{n}) \\
                                 &amp;=  nH(X^{n}) + \sum_{j=1}^{n} [H(X_{j}) + H(
                                 X_{-j}^{n})]\end{split}\]</div>
 <p>It is sensitive to both redundancy and synergy, quantifying the total ammount of constraints
 ruling the system under study.</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such..."><img alt="" src="_images/sphx_glr_plot_oinfo_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such as the Total Correlation (TC), the Dual Total Correlation (DTC), the S-Information and the gradient O-information. We recommend reading Rosas et al. 2019 rosas2019oinfo."><img alt="" src="_images/sphx_glr_plot_oinfo_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_oinfo.html#sphx-glr-auto-examples-metrics-plot-oinfo-py"><span class="std std-ref">O-information and its derivatives for network behavior and encoding</span></a></p>
   <div class="sphx-glr-thumbnail-title">O-information and its derivatives for network behavior and encoding</div>
 </div></div></section>
 <section id="o-information">
 <h4>O-information<a class="headerlink" href="#o-information" title="Link to this heading">#</a></h4>
 <p>One prominent metric that has emerged in the pursuit of higher-order understanding is the
-O-information, <a class="reference internal" href="api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Oinfo</span></code></a>. Introduced by Rosas in 2019 <span id="id18">[<a class="reference internal" href="#id29" title="Fernando E. Rosas, Pedro A. M. Mediano, Michael Gastpar, and Henrik J. Jensen. Quantifying high-order interdependencies via multivariate extensions of the mutual information. Physical Review E, 100(3):032305, September 2019. Publisher: American Physical Society. URL: https://link.aps.org/doi/10.1103/PhysRevE.100.032305 (visited on 2022-12-17), doi:10.1103/PhysRevE.100.032305.">23</a>]</span>,
+O-information, <a class="reference internal" href="api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Oinfo</span></code></a>. Introduced by Rosas in 2019 <span id="id18">[<a class="reference internal" href="#id29" title="Fernando E. Rosas, Pedro A. M. Mediano, Michael Gastpar, and Henrik J. Jensen. Quantifying high-order interdependencies via multivariate extensions of the mutual information. Physical Review E, 100(3):032305, September 2019. Publisher: American Physical Society. URL: https://link.aps.org/doi/10.1103/PhysRevE.100.032305 (visited on 2022-12-17), doi:10.1103/PhysRevE.100.032305.">24</a>]</span>,
 O-information elegantly addresses the challenge of quantifying higher-order dependencies by
 extending the concept of mutual information. Given a multiplet of <span class="math notranslate nohighlight">\(n\)</span> variables,
 <span class="math notranslate nohighlight">\(X^n = \{ X_0, X_1, …, X_n \}\)</span>, its formal definition is the following:</p>
@@ -644,16 +650,16 @@ constraints among the set of variables of interest. It is shown to be a proxy of
 difference between redundancy and synergy: when the O-information of a set of variables
 is positive this indicates redundancy, when it is negative, synergy. In particular when
 working with big data sets it can become complicated</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Redundancy and Synergy are terms defining how variables are interacting. In this tutorial, we a..."><img alt="" src="_images/sphx_glr_plot_sim_red_syn_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Redundancy and Synergy are terms defining how variables are interacting. In this tutorial, we are going to see simple and intuitive ways of simulating redundancy and synergy in two different context :"><img alt="" src="_images/sphx_glr_plot_sim_red_syn_thumb.png" />
 <p><a class="reference internal" href="auto_examples/tutorials/plot_sim_red_syn.html#sphx-glr-auto-examples-tutorials-plot-sim-red-syn-py"><span class="std std-ref">How to simulate redundancy and synergy</span></a></p>
   <div class="sphx-glr-thumbnail-title">How to simulate redundancy and synergy</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates a metric called Topological Information published by Baudot et al., 20..."><img alt="" src="_images/sphx_glr_plot_infotopo_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates a metric called Topological Information published by Baudot et al., 2019 baudot2019infotopo. This metric is based on differences of entropies and can be used to estimate Higher Order Interactions. One important feature of this metric relies on its ability to isolate an order. To be clear, we are going to see in this example that if we simulate a redundancy at order 3, a metric as the O-information ( hoi.metrics.Oinfo) is going to return reduandancy for all of the quadruplets that are going to include the redundant triplet. However, the hoi.metrics.InfoTopo is capable of isolating only the redundant triplet."><img alt="" src="_images/sphx_glr_plot_infotopo_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_infotopo.html#sphx-glr-auto-examples-metrics-plot-infotopo-py"><span class="std std-ref">Topological Information : conditioning on orders</span></a></p>
   <div class="sphx-glr-thumbnail-title">Topological Information : conditioning on orders</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such..."><img alt="" src="_images/sphx_glr_plot_oinfo_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such as the Total Correlation (TC), the Dual Total Correlation (DTC), the S-Information and the gradient O-information. We recommend reading Rosas et al. 2019 rosas2019oinfo."><img alt="" src="_images/sphx_glr_plot_oinfo_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_oinfo.html#sphx-glr-auto-examples-metrics-plot-oinfo-py"><span class="std std-ref">O-information and its derivatives for network behavior and encoding</span></a></p>
   <div class="sphx-glr-thumbnail-title">O-information and its derivatives for network behavior and encoding</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to estimate the confidence interval arround Higher Order Interacti..."><img alt="" src="_images/sphx_glr_plot_bootstrapping_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to estimate the confidence interval arround Higher Order Interactions. In addition, it also shows how the boostrapping can be used to fix the spatial spreading limitation of the O-information. For further information, checkout the example sphx_glr_auto_examples_metrics_plot_infotopo.py"><img alt="" src="_images/sphx_glr_plot_bootstrapping_thumb.png" />
 <p><a class="reference internal" href="auto_examples/statistics/plot_bootstrapping.html#sphx-glr-auto-examples-statistics-plot-bootstrapping-py"><span class="std std-ref">Bootstrapping and confidence interval</span></a></p>
   <div class="sphx-glr-thumbnail-title">Bootstrapping and confidence interval</div>
 </div></div></section>
@@ -669,10 +675,10 @@ definition is the following:</p>
 O-information this function can be interpreted in terms of redundancy and synergy, more
 into details when it is positive it indicates that the system is dominated by redundancy,
 when it is negative, synergy.</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates a metric called Topological Information published by Baudot et al., 20..."><img alt="" src="_images/sphx_glr_plot_infotopo_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates a metric called Topological Information published by Baudot et al., 2019 baudot2019infotopo. This metric is based on differences of entropies and can be used to estimate Higher Order Interactions. One important feature of this metric relies on its ability to isolate an order. To be clear, we are going to see in this example that if we simulate a redundancy at order 3, a metric as the O-information ( hoi.metrics.Oinfo) is going to return reduandancy for all of the quadruplets that are going to include the redundant triplet. However, the hoi.metrics.InfoTopo is capable of isolating only the redundant triplet."><img alt="" src="_images/sphx_glr_plot_infotopo_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_infotopo.html#sphx-glr-auto-examples-metrics-plot-infotopo-py"><span class="std std-ref">Topological Information : conditioning on orders</span></a></p>
   <div class="sphx-glr-thumbnail-title">Topological Information : conditioning on orders</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to : 1. Inspect and analyse metric&#x27;s output 2. Plot Higher-Order I..."><img alt="" src="_images/sphx_glr_plot_inspect_results_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to : 1. Inspect and analyse metric&#x27;s output 2. Plot Higher-Order Interactions"><img alt="" src="_images/sphx_glr_plot_inspect_results_thumb.png" />
 <p><a class="reference internal" href="auto_examples/miscellaneous/plot_inspect_results.html#sphx-glr-auto-examples-miscellaneous-plot-inspect-results-py"><span class="std std-ref">Inspect and plot Higher-Order Interactions</span></a></p>
   <div class="sphx-glr-thumbnail-title">Inspect and plot Higher-Order Interactions</div>
 </div></div></section>
@@ -683,7 +689,7 @@ when it is negative, synergy.</p>
 <h4>Gradient of O-information<a class="headerlink" href="#gradient-of-o-information" title="Link to this heading">#</a></h4>
 <p>The O-information gradient, <a class="reference internal" href="api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo" title="hoi.metrics.GradientOinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.GradientOinfo</span></code></a>, has been developed to
 study the contribution of one or a set of variables to the O-information of the whole
-system <span id="id20">[<a class="reference internal" href="#id37" title="Tomas Scagliarini, Davide Nuzzi, Yuri Antonacci, Luca Faes, Fernando E Rosas, Daniele Marinazzo, and Sebastiano Stramaglia. Gradients of o-information: low-order descriptors of high-order dependencies. Physical Review Research, 5(1):013025, 2023.">24</a>]</span>. In this work we proposed to use this metric
+system <span id="id20">[<a class="reference internal" href="#id37" title="Tomas Scagliarini, Davide Nuzzi, Yuri Antonacci, Luca Faes, Fernando E Rosas, Daniele Marinazzo, and Sebastiano Stramaglia. Gradients of o-information: low-order descriptors of high-order dependencies. Physical Review Research, 5(1):013025, 2023.">25</a>]</span>. In this work we proposed to use this metric
 to investigate the relationship between multiplets of source variables and a target
 variable. Following the definition of the O-information gradient of order 1 we have:</p>
 <div class="math notranslate nohighlight">
@@ -696,13 +702,13 @@ group of variables. Note that, when the target is statistically  independent fro
 the variables of the group, the gradient of O-information is 0, when it is greater
 than 0, the relation between variables and target is characterized by redundancy,
 when negative, synergy.</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Redundancy and Synergy are terms defining how variables are interacting. In this tutorial, we a..."><img alt="" src="_images/sphx_glr_plot_sim_red_syn_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Redundancy and Synergy are terms defining how variables are interacting. In this tutorial, we are going to see simple and intuitive ways of simulating redundancy and synergy in two different context :"><img alt="" src="_images/sphx_glr_plot_sim_red_syn_thumb.png" />
 <p><a class="reference internal" href="auto_examples/tutorials/plot_sim_red_syn.html#sphx-glr-auto-examples-tutorials-plot-sim-red-syn-py"><span class="std std-ref">How to simulate redundancy and synergy</span></a></p>
   <div class="sphx-glr-thumbnail-title">How to simulate redundancy and synergy</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example compares Machine-learning and Information theoretic approaches to investigate High..."><img alt="" src="_images/sphx_glr_plot_ml_vs_it_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example compares Machine-learning and Information theoretic approaches to investigate Higher Order Interactions."><img alt="" src="_images/sphx_glr_plot_ml_vs_it_thumb.png" />
 <p><a class="reference internal" href="auto_examples/tutorials/plot_ml_vs_it.html#sphx-glr-auto-examples-tutorials-plot-ml-vs-it-py"><span class="std std-ref">Machine-learning vs. Information theoretic approaches for HOI</span></a></p>
   <div class="sphx-glr-thumbnail-title">Machine-learning vs. Information theoretic approaches for HOI</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such..."><img alt="" src="_images/sphx_glr_plot_oinfo_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use the O-information and how it&#x27;s linked to other metrics such as the Total Correlation (TC), the Dual Total Correlation (DTC), the S-Information and the gradient O-information. We recommend reading Rosas et al. 2019 rosas2019oinfo."><img alt="" src="_images/sphx_glr_plot_oinfo_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_oinfo.html#sphx-glr-auto-examples-metrics-plot-oinfo-py"><span class="std std-ref">O-information and its derivatives for network behavior and encoding</span></a></p>
   <div class="sphx-glr-thumbnail-title">O-information and its derivatives for network behavior and encoding</div>
 </div></div></section>
@@ -743,7 +749,7 @@ of <span class="math notranslate nohighlight">\(n\)</span> variables <span class
 defined as:</p>
 <div class="math notranslate nohighlight">
 \[redundancy (Y, X^n) = min_{i&lt;n} I \left( Y, X_i \right)\]</div>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret synergy and redundancy computed using the Min..."><img alt="" src="_images/sphx_glr_plot_syn_red_mmi_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret synergy and redundancy computed using the Minimum Mutual Information (MMI) approach to  approximate the redundancy."><img alt="" src="_images/sphx_glr_plot_syn_red_mmi_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_syn_red_mmi.html#sphx-glr-auto-examples-metrics-plot-syn-red-mmi-py"><span class="std std-ref">Redundancy and Synergy MMI</span></a></p>
   <div class="sphx-glr-thumbnail-title">Redundancy and Synergy MMI</div>
 </div></div><p>When computing the redundancy in this way the definition
@@ -756,7 +762,7 @@ working with gaussian systems; we advise care when interpreting the
 results of the redundant interactions, since the definition of
 redundancy reflects simply the minimum information provided by the
 source variables.</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret synergy and redundancy computed using the Min..."><img alt="" src="_images/sphx_glr_plot_syn_red_mmi_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret synergy and redundancy computed using the Minimum Mutual Information (MMI) approach to  approximate the redundancy."><img alt="" src="_images/sphx_glr_plot_syn_red_mmi_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_syn_red_mmi.html#sphx-glr-auto-examples-metrics-plot-syn-red-mmi-py"><span class="std std-ref">Redundancy and Synergy MMI</span></a></p>
   <div class="sphx-glr-thumbnail-title">Redundancy and Synergy MMI</div>
 </div></div></section>
@@ -764,17 +770,17 @@ source variables.</p>
 <h4>Synergy and redundancy integraed Information Decomposition (MMI)<a class="headerlink" href="#synergy-and-redundancy-integraed-information-decomposition-mmi" title="Link to this heading">#</a></h4>
 <p>A great deal of success has been recently obtained by different metrics focusing
 on decomposing the information that two variables carry about their own
-future <span id="id23">[<a class="reference internal" href="#id32" title="Pedro AM Mediano, Fernando E Rosas, Andrea I Luppi, Robin L Carhart-Harris, Daniel Bor, Anil K Seth, and Adam B Barrett. Towards an extended taxonomy of information dynamics via integrated information decomposition. arXiv preprint arXiv:2109.13186, 2021.">18</a>]</span>.
+future <span id="id23">[<a class="reference internal" href="#id32" title="Pedro AM Mediano, Fernando E Rosas, Andrea I Luppi, Robin L Carhart-Harris, Daniel Bor, Anil K Seth, and Adam B Barrett. Towards an extended taxonomy of information dynamics via integrated information decomposition. arXiv preprint arXiv:2109.13186, 2021.">19</a>]</span>.
 In particular, the synergy that is carried by two variables about their
 joint future, has been associated with the concept of emergence and
-integration of information <span id="id24">[<a class="reference internal" href="#id60" title="Andrea I Luppi, Fernando E Rosas, Pedro AM Mediano, David K Menon, and Emmanuel A Stamatakis. Information decomposition and the informational architecture of the brain. Trends in Cognitive Sciences, 2024.">17</a>, <a class="reference internal" href="#id61" title="Pedro AM Mediano, Fernando E Rosas, Andrea I Luppi, Henrik J Jensen, Anil K Seth, Adam B Barrett, Robin L Carhart-Harris, and Daniel Bor. Greater than the parts: a review of the information decomposition approach to causal emergence. Philosophical Transactions of the Royal Society A, 380(2227):20210246, 2022.">19</a>, <a class="reference internal" href="#id59" title="Fernando E Rosas, Pedro AM Mediano, Henrik J Jensen, Anil K Seth, Adam B Barrett, Robin L Carhart-Harris, and Daniel Bor. Reconciling emergences: an information-theoretic approach to identify causal emergence in multivariate data. PLoS computational biology, 16(12):e1008289, 2020.">22</a>]</span>.
+integration of information <span id="id24">[<a class="reference internal" href="#id60" title="Andrea I Luppi, Fernando E Rosas, Pedro AM Mediano, David K Menon, and Emmanuel A Stamatakis. Information decomposition and the informational architecture of the brain. Trends in Cognitive Sciences, 2024.">18</a>, <a class="reference internal" href="#id61" title="Pedro AM Mediano, Fernando E Rosas, Andrea I Luppi, Henrik J Jensen, Anil K Seth, Adam B Barrett, Robin L Carhart-Harris, and Daniel Bor. Greater than the parts: a review of the information decomposition approach to causal emergence. Philosophical Transactions of the Royal Society A, 380(2227):20210246, 2022.">20</a>, <a class="reference internal" href="#id59" title="Fernando E Rosas, Pedro AM Mediano, Henrik J Jensen, Anil K Seth, Adam B Barrett, Robin L Carhart-Harris, and Daniel Bor. Reconciling emergences: an information-theoretic approach to identify causal emergence in multivariate data. PLoS computational biology, 16(12):e1008289, 2020.">23</a>]</span>.
 Instead the redundancy as been associated with the concept of robustness,
 in the sense that it refers to situation in which information
 is available in different sources, making the evolution process
-less vulnerable by the lost of elements  <span id="id25">[<a class="reference internal" href="#id60" title="Andrea I Luppi, Fernando E Rosas, Pedro AM Mediano, David K Menon, and Emmanuel A Stamatakis. Information decomposition and the informational architecture of the brain. Trends in Cognitive Sciences, 2024.">17</a>]</span>.
+less vulnerable by the lost of elements  <span id="id25">[<a class="reference internal" href="#id60" title="Andrea I Luppi, Fernando E Rosas, Pedro AM Mediano, David K Menon, and Emmanuel A Stamatakis. Information decomposition and the informational architecture of the brain. Trends in Cognitive Sciences, 2024.">18</a>]</span>.
 It provides already many results in simulated complex systems or in different
 studies within the field of
-neuroscience <span id="id26">[<a class="reference internal" href="#id62" title="Andrea I Luppi, Pedro AM Mediano, Fernando E Rosas, Judith Allanson, John D Pickard, Robin L Carhart-Harris, Guy B Williams, Michael M Craig, Paola Finoia, Adrian M Owen, and others. A synergistic workspace for human consciousness revealed by integrated information decomposition. BioRxiv, pages 2020–11, 2020.">15</a>, <a class="reference internal" href="#id59" title="Fernando E Rosas, Pedro AM Mediano, Henrik J Jensen, Anil K Seth, Adam B Barrett, Robin L Carhart-Harris, and Daniel Bor. Reconciling emergences: an information-theoretic approach to identify causal emergence in multivariate data. PLoS computational biology, 16(12):e1008289, 2020.">22</a>]</span>.
+neuroscience <span id="id26">[<a class="reference internal" href="#id62" title="Andrea I Luppi, Pedro AM Mediano, Fernando E Rosas, Judith Allanson, John D Pickard, Robin L Carhart-Harris, Guy B Williams, Michael M Craig, Paola Finoia, Adrian M Owen, and others. A synergistic workspace for human consciousness revealed by integrated information decomposition. BioRxiv, pages 2020–11, 2020.">16</a>, <a class="reference internal" href="#id59" title="Fernando E Rosas, Pedro AM Mediano, Henrik J Jensen, Anil K Seth, Adam B Barrett, Robin L Carhart-Harris, and Daniel Bor. Reconciling emergences: an information-theoretic approach to identify causal emergence in multivariate data. PLoS computational biology, 16(12):e1008289, 2020.">23</a>]</span>.
 These functions allow to compute redundancy
 and synergy using the approximatio of
 Minimum Mutual Information (MMI) <span id="id27">[<a class="reference internal" href="#id40" title="Adam B Barrett. Exploration of synergistic and redundant information sharing in static and dynamical gaussian systems. Physical Review E, 91(5):052802, 2015.">1</a>]</span>,
@@ -784,7 +790,7 @@ defined as:</p>
 <div class="math notranslate nohighlight">
 \[Red(X,Y) =   min \{ I(X_{t- \tau};X_t), I(X_{t-\tau};Y_t),
                     I(Y_{t-\tau}; X_t), I(Y_{t-\tau};Y_t) \}\]</div>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret synergy and redundancy as defined in the Inte..."><img alt="" src="_images/sphx_glr_plot_syn_phiID_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret synergy and redundancy as defined in the Integrated Information Decomposition framework"><img alt="" src="_images/sphx_glr_plot_syn_phiID_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_syn_phiID.html#sphx-glr-auto-examples-metrics-plot-syn-phiid-py"><span class="std std-ref">Integrated Information Decomposition</span></a></p>
   <div class="sphx-glr-thumbnail-title">Integrated Information Decomposition</div>
 </div></div><p>Within the MMI approximation the computation of the synergy, <a class="reference internal" href="api/generated/hoi.metrics.SynergyphiID.html#hoi.metrics.SynergyphiID" title="hoi.metrics.SynergyphiID"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.SynergyphiID</span></code></a>,
@@ -796,7 +802,7 @@ following formula:</p>
                     I(Y_{t-\tau};X_t,Y_t) \}\]</div>
 <p>These two metrics are always positive and have as upper bound the value of temporal delayed
 mutual information (TDMI), <span class="math notranslate nohighlight">\(I(X(t-\tau),Y(t-\tau);X(t),Y(t))\)</span>.</p>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret synergy and redundancy as defined in the Inte..."><img alt="" src="_images/sphx_glr_plot_syn_phiID_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret synergy and redundancy as defined in the Integrated Information Decomposition framework"><img alt="" src="_images/sphx_glr_plot_syn_phiID_thumb.png" />
 <p><a class="reference internal" href="auto_examples/metrics/plot_syn_phiID.html#sphx-glr-auto-examples-metrics-plot-syn-phiid-py"><span class="std std-ref">Integrated Information Decomposition</span></a></p>
   <div class="sphx-glr-thumbnail-title">Integrated Information Decomposition</div>
 </div></div></section>
@@ -828,134 +834,138 @@ mutual information (TDMI), <span class="math notranslate nohighlight">\(I(X(t-\t
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">5</a><span class="fn-bracket">]</span></span>
 <p>Gal Chechik, Amir Globerson, M Anderson, E Young, Israel Nelken, and Naftali Tishby. Group redundancy measures reveal redundancy reduction in the auditory pathway. <em>Advances in neural information processing systems</em>, 2001.</p>
 </div>
+<div class="citation" id="id65" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></span>
+<p>Paweł Czyż, Frederic Grabowski, Julia Vogt, Niko Beerenwinkel, and Alexander Marx. Beyond normal: on the evaluation of mutual information estimators. <em>Advances in Neural Information Processing Systems</em>, 2024.</p>
+</div>
 <div class="citation" id="id52" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">6</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">7</a><span class="fn-bracket">]</span></span>
 <p>Georges A Darbellay and Igor Vajda. Estimation of the information by an adaptive partitioning of the observation space. <em>IEEE Transactions on Information Theory</em>, 45(4):1315–1321, 1999.</p>
 </div>
 <div class="citation" id="id51" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">7</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">8</a><span class="fn-bracket">]</span></span>
 <p>Dominik Endres and Peter Foldiak. Bayesian bin distribution inference and mutual information. <em>IEEE Transactions on Information Theory</em>, 51(11):3766–3779, 2005.</p>
 </div>
 <div class="citation" id="id53" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">8</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">9</a><span class="fn-bracket">]</span></span>
 <p>Andrew M Fraser and Harry L Swinney. Independent coordinates for strange attractors from mutual information. <em>Physical review A</em>, 33(2):1134, 1986.</p>
 </div>
 <div class="citation" id="id39" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></span>
 <p>Amir Globerson, Eran Stark, Eilon Vaadia, and Naftali Tishby. The minimum information principle and its application to neural code analysis. <em>Proceedings of the National Academy of Sciences</em>, 106(9):3490–3495, 2009.</p>
 </div>
 <div class="citation" id="id54" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">10</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">11</a><span class="fn-bracket">]</span></span>
 <p>Nathaniel R Goodman. Statistical analysis based on a certain multivariate complex gaussian distribution (an introduction). <em>The Annals of mathematical statistics</em>, 34(1):152–177, 1963.</p>
 </div>
 <div class="citation" id="id41" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></span>
 <p>Virgil Griffith and Christof Koch. Quantifying synergistic mutual information. In <em>Guided self-organization: inception</em>, pages 159–190. Springer, 2014.</p>
 </div>
 <div class="citation" id="id56" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">12</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id13">13</a><span class="fn-bracket">]</span></span>
 <p>Robin AA Ince, Bruno L Giordano, Christoph Kayser, Guillaume A Rousselet, Joachim Gross, and Philippe G Schyns. A statistical framework for neuroimaging data analysis based on mutual information estimated via a gaussian copula. <em>Human brain mapping</em>, 38(3):1541–1573, 2017.</p>
 </div>
 <div class="citation" id="id45" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">13</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id17">14</a><span class="fn-bracket">]</span></span>
 <p>Ryan G James, Christopher J Ellison, and James P Crutchfield. Anatomy of a bit: information in a time series observation. <em>Chaos: An Interdisciplinary Journal of Nonlinear Science</em>, 2011.</p>
 </div>
 <div class="citation" id="id57" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">14</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">15</a><span class="fn-bracket">]</span></span>
 <p>Alexander Kraskov, Harald Stögbauer, and Peter Grassberger. Estimating mutual information. <em>Physical review E</em>, 69(6):066138, 2004.</p>
 </div>
 <div class="citation" id="id62" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id26">15</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id26">16</a><span class="fn-bracket">]</span></span>
 <p>Andrea I Luppi, Pedro AM Mediano, Fernando E Rosas, Judith Allanson, John D Pickard, Robin L Carhart-Harris, Guy B Williams, Michael M Craig, Paola Finoia, Adrian M Owen, and others. A synergistic workspace for human consciousness revealed by integrated information decomposition. <em>BioRxiv</em>, pages 2020–11, 2020.</p>
 </div>
 <div class="citation" id="id30" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>16<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>17<span class="fn-bracket">]</span></span>
 <p>Andrea I Luppi, Pedro AM Mediano, Fernando E Rosas, Negin Holland, Tim D Fryer, John T O’Brien, James B Rowe, David K Menon, Daniel Bor, and Emmanuel A Stamatakis. A synergistic core for human brain evolution and cognition. <em>Nature Neuroscience</em>, 25(6):771–782, 2022.</p>
 </div>
 <div class="citation" id="id60" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>17<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id24">1</a>,<a role="doc-backlink" href="#id25">2</a>)</span>
 <p>Andrea I Luppi, Fernando E Rosas, Pedro AM Mediano, David K Menon, and Emmanuel A Stamatakis. Information decomposition and the informational architecture of the brain. <em>Trends in Cognitive Sciences</em>, 2024.</p>
 </div>
 <div class="citation" id="id32" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id23">18</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id23">19</a><span class="fn-bracket">]</span></span>
 <p>Pedro AM Mediano, Fernando E Rosas, Andrea I Luppi, Robin L Carhart-Harris, Daniel Bor, Anil K Seth, and Adam B Barrett. Towards an extended taxonomy of information dynamics via integrated information decomposition. <em>arXiv preprint arXiv:2109.13186</em>, 2021.</p>
 </div>
 <div class="citation" id="id61" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">19</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">20</a><span class="fn-bracket">]</span></span>
 <p>Pedro AM Mediano, Fernando E Rosas, Andrea I Luppi, Henrik J Jensen, Anil K Seth, Adam B Barrett, Robin L Carhart-Harris, and Daniel Bor. Greater than the parts: a review of the information decomposition approach to causal emergence. <em>Philosophical Transactions of the Royal Society A</em>, 380(2227):20210246, 2022.</p>
 </div>
 <div class="citation" id="id55" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">20</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">21</a><span class="fn-bracket">]</span></span>
 <p>Young-Il Moon, Balaji Rajagopalan, and Upmanu Lall. Estimation of mutual information using kernel density estimators. <em>Physical Review E</em>, 52(3):2318, 1995.</p>
 </div>
 <div class="citation" id="id58" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>21<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></span>
 <p>Fernando E Rosas, Pedro AM Mediano, and Michael Gastpar. Characterising directed and undirected metrics of high-order interdependence. <em>arXiv preprint arXiv:2404.07140</em>, 2024.</p>
 </div>
 <div class="citation" id="id59" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id24">1</a>,<a role="doc-backlink" href="#id26">2</a>)</span>
 <p>Fernando E Rosas, Pedro AM Mediano, Henrik J Jensen, Anil K Seth, Adam B Barrett, Robin L Carhart-Harris, and Daniel Bor. Reconciling emergences: an information-theoretic approach to identify causal emergence in multivariate data. <em>PLoS computational biology</em>, 16(12):e1008289, 2020.</p>
 </div>
 <div class="citation" id="id29" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">23</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">24</a><span class="fn-bracket">]</span></span>
 <p>Fernando E. Rosas, Pedro A. M. Mediano, Michael Gastpar, and Henrik J. Jensen. Quantifying high-order interdependencies via multivariate extensions of the mutual information. <em>Physical Review E</em>, 100(3):032305, September 2019. Publisher: American Physical Society. URL: <a class="reference external" href="https://link.aps.org/doi/10.1103/PhysRevE.100.032305">https://link.aps.org/doi/10.1103/PhysRevE.100.032305</a> (visited on 2022-12-17), <a class="reference external" href="https://doi.org/10.1103/PhysRevE.100.032305">doi:10.1103/PhysRevE.100.032305</a>.</p>
 </div>
 <div class="citation" id="id37" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">24</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">25</a><span class="fn-bracket">]</span></span>
 <p>Tomas Scagliarini, Davide Nuzzi, Yuri Antonacci, Luca Faes, Fernando E Rosas, Daniele Marinazzo, and Sebastiano Stramaglia. Gradients of o-information: low-order descriptors of high-order dependencies. <em>Physical Review Research</em>, 5(1):013025, 2023.</p>
 </div>
 <div class="citation" id="id42" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></span>
 <p>Elad Schneidman, Susanne Still, Michael J Berry, William Bialek, and others. Network information and connected correlations. <em>Physical review letters</em>, 91(23):238701, 2003.</p>
 </div>
 <div class="citation" id="id49" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id7">2</a>,<a role="doc-backlink" href="#id12">3</a>)</span>
 <p>Claude Elwood Shannon. A mathematical theory of communication. <em>The Bell system technical journal</em>, 27(3):379–423, 1948.</p>
 </div>
 <div class="citation" id="id47" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">27</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id15">28</a><span class="fn-bracket">]</span></span>
 <p>Milan Studen\`y and Jirina Vejnarová. The multiinformation function as a tool for measuring stochastic dependence. <em>Learning in graphical models</em>, pages 261–297, 1998.</p>
 </div>
 <div class="citation" id="id46" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">28</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id16">29</a><span class="fn-bracket">]</span></span>
 <p>TH Sun. Linear dependence structure of the entropy space. <em>Inf Control</em>, 29(4):337–68, 1975.</p>
 </div>
 <div class="citation" id="id34" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>29<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>30<span class="fn-bracket">]</span></span>
 <p>Mónica Tapia, Pierre Baudot, Christine Formisano-Tréziny, Martial A Dufour, Simone Temporal, Manon Lasserre, Béatrice Marquèze-Pouey, Jean Gabert, Kazuto Kobayashi, and Jean-Marc Goaillard. Neurotransmitter identity and electrophysiological phenotype are genetically coupled in midbrain dopaminergic neurons. <em>Scientific reports</em>, 8(1):13637, 2018.</p>
 </div>
 <div class="citation" id="id50" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>30<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></span>
 <p>Han Te Sun. Nonnegative entropy measures of multivariate symmetric correlations. <em>Information and Control</em>, 36:133–156, 1978.</p>
 </div>
 <div class="citation" id="id38" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id5">1</a>,<a role="doc-backlink" href="#id14">2</a>)</span>
 <p>Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. <em>Journal of computational neuroscience</em>, 36:119–140, 2014.</p>
 </div>
 <div class="citation" id="id63" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></span>
 <p>Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M. Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. <em>Journal of computational neuroscience</em>, 36:119–140, 2014.</p>
 </div>
 <div class="citation" id="id64" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></span>
 <p>Nicholas M. Timme and Christopher Lapish. A tutorial for information theory in neuroscience. <em>eNeuro</em>, 2018.</p>
 </div>
 <div class="citation" id="id31" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>35<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id5">1</a>,<a role="doc-backlink" href="#id14">2</a>)</span>
 <p>Thomas F Varley. Information theory for complex systems scientists. <em>arXiv preprint arXiv:2304.12482</em>, 2023.</p>
 </div>
 <div class="citation" id="id43" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>35<span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span>36<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id2">1</a>,<a role="doc-backlink" href="#id12">2</a>,<a role="doc-backlink" href="#id15">3</a>)</span>
 <p>Satosi Watanabe. Information theoretical analysis of multivariate correlation. <em>IBM Journal of research and development</em>, 4(1):66–82, 1960.</p>
 </div>
 <div class="citation" id="id36" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">36</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id6">37</a><span class="fn-bracket">]</span></span>
 <p>Paul L Williams and Randall D Beer. Nonnegative decomposition of multivariate information. <em>arXiv preprint arXiv:1004.2515</em>, 2010.</p>
 </div>
 </div>
@@ -1048,6 +1058,10 @@ mutual information (TDMI), <span class="math notranslate nohighlight">\(I(X(t-\t
   
   <div class="footer-item">
     
+<p class="component-author">
+By Author name not set
+</p>
+
   </div>
   
   <div class="footer-item">

@@ -114,6 +114,9 @@ venv.bak/
 Pipfile
 Pipfile.lock
 
+# Vscode
+.vscode/
+
 # Spyder project settings
 .spyderproject
 .spyproject

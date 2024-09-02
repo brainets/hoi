@@ -87,7 +87,7 @@ Documentation
 +++++++++++++
 
 - Link to the documentation: https://brainets.github.io/hoi/
-- Overview of the mathematical background : https://brainets.github.io/hoi/overview/ovw_theory.html
+- Overview of the mathematical background : https://brainets.github.io/hoi/theory.html
 - List of implemented HOI metrics : https://brainets.github.io/hoi/api/modules.html
 - Examples : https://brainets.github.io/hoi/auto_examples/index.html
 

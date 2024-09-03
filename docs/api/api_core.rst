@@ -15,6 +15,7 @@ Measures of Entropy
    entropy_gc
    entropy_gauss
    entropy_bin
+   entropy_hist
    entropy_knn
    entropy_kernel
    prepare_for_it

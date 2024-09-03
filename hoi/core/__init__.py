@@ -4,6 +4,7 @@ from .entropies import (  # noqa
     entropy_gc,
     entropy_gauss,
     entropy_bin,
+    entropy_hist,
     entropy_knn,
     prepare_for_it,
     entropy_kernel,

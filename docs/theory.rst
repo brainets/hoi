@@ -66,10 +66,15 @@ problems due to size effects when using a small data set and variables exploring
 A more complicated and common scenario is the one of continuous variables. To estimate the 
 entropy of a continuous variable, different methods are implemented in the toolbox:
 
-* Binning method, that consists in binning the continuous data in a discrete set of bins. 
-  In this way, variables are discretized and the entropy can be computed as described above. 
-  This procedure can be performed in many different 
-  ways :cite:`endres2005bayesian, darbellay1999estimation, fraser1986independent`. 
+* Histogram estimator, that consists in binning the continuous data in a 
+  discrete set of bins. In this way, variables are discretized and the entropy 
+  can be computed as described above, correcting for the bin size .
+
+* Binning method, that allow to extimate the entropy of a discrete variable 
+  estimating the probability of each possible values in a frequentist approach.
+  Note that this procedure can be performed also on continuous variables after 
+  binarization in many different ways 
+  :cite:`endres2005bayesian, darbellay1999estimation, fraser1986independent`.  
 
 * K-Nearest Neighbors (KNN), that estimates the probability distribution by considering the 
   K-nearest neighbors of each data point :cite:`kraskov2004estimating`. 

@@ -12,7 +12,7 @@ from jax.scipy.special import gamma, ndtri
 from jax.scipy.stats import gaussian_kde
 
 from hoi.utils.logging import logger
-from hoi.utils.stats import normalize, digitize
+from hoi.utils.stats import normalize, digitize_hist
 
 ###############################################################################
 ###############################################################################
@@ -299,7 +299,7 @@ def entropy_bin(x: jnp.array, base: float = 2) -> jnp.array:
 
 
 @partial(jax.jit, static_argnums=(1,))
-def entropy_hist(x: jnp.array, base: float = 2, n_bins: int = 5) -> jnp.array:
+def entropy_hist(x: jnp.array, base: float = 2, n_bins: int = 8) -> jnp.array:
     """Entropy using binning.
 
     Parameters
@@ -309,7 +309,7 @@ def entropy_hist(x: jnp.array, base: float = 2, n_bins: int = 5) -> jnp.array:
         be discretize
     base : float | 2
         The logarithmic base to use. Default is base 2.
-    n_bins : int | 5
+    n_bins : int | 8
         The number of bin to be considered in the binarization process
 
     Returns
@@ -318,8 +318,8 @@ def entropy_hist(x: jnp.array, base: float = 2, n_bins: int = 5) -> jnp.array:
         Entropy of x (in bits)
     """
 
-    x_binned, bin_size = digitize(
-        x, n_bins, axis=1, use_sklearn=False, bin_size=True
+    x_binned, bin_size = digitize_hist(
+        x, n_bins, axis=1
     )
 
     n_features, n_samples = x_binned.shape
@@ -338,7 +338,6 @@ def entropy_hist(x: jnp.array, base: float = 2, n_bins: int = 5) -> jnp.array:
     bin_s = jnp.where(probs != 0, bin_size, 0)
 
     return -jax.scipy.special.rel_entr(probs, bin_s).sum() / jnp.log(base)
-
 
 ###############################################################################
 ###############################################################################

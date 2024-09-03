@@ -13,6 +13,8 @@ to :
 4. See if the computed MI converge toward the theoretical value
 """
 
+# %%
+
 import numpy as np
 from functools import partial
 
@@ -35,10 +37,10 @@ plt.style.use("ggplot")
 # create a special function for the binning approach as it requires binary data
 mi_binning_fcn = get_mi("binning", base=2)
 
-
 def mi_binning(x, y, **kwargs):
     x = digitize(x.T, **kwargs).T
     y = digitize(y.T, **kwargs).T
+
     return mi_binning_fcn(x, y)
 
 

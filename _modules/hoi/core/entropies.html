@@ -256,6 +256,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_gauss.html">hoi.core.entropy_gauss</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_hist.html">hoi.core.entropy_hist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
@@ -400,15 +401,18 @@ document.write(`
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    method : {&#39;gc&#39;, &#39;gauss&#39;, &#39;binning&#39;, &#39;knn&#39;, &#39;kernel&#39;}</span>
+<span class="sd">    method : {&#39;gc&#39;, &#39;gauss&#39;, &#39;binning&#39;, &#39;histogram&#39;, &#39;knn&#39;, &#39;kernel&#39;}</span>
 <span class="sd">        Name of the method to compute entropy. Use either :</span>
 
 <span class="sd">            * &#39;gc&#39;: gaussian copula entropy [default]. See</span>
 <span class="sd">                :func:`hoi.core.entropy_gc`</span>
 <span class="sd">            * &#39;gauss&#39;: gaussian entropy. See :func:`hoi.core.entropy_gauss`</span>
-<span class="sd">            * &#39;binning&#39;: binning-based estimator of entropy. Note that to</span>
-<span class="sd">                use this estimator, the data have be to discretized. See</span>
+<span class="sd">            * &#39;binning&#39;: estimator to use for discrete variables. See</span>
 <span class="sd">                :func:`hoi.core.entropy_bin`</span>
+<span class="sd">            * &#39;histogram&#39; : estimator based on binning the data, to estimate</span>
+<span class="sd">                the probability distribution of the variables and then</span>
+<span class="sd">                compute the differential entropy. For more details see</span>
+<span class="sd">                :func:`hoi.core.entropy_hist`</span>
 <span class="sd">            * &#39;knn&#39;: k-nearest neighbor estimator. See</span>
 <span class="sd">                :func:`hoi.core.entropy_knn`</span>
 <span class="sd">            * &#39;kernel&#39;: kernel-based estimator of entropy</span>
@@ -432,6 +436,8 @@ document.write(`
         <span class="k">return</span> <span class="n">entropy_gauss</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;binning&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">entropy_bin</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;histogram&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">entropy_hist</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;knn&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">entropy_knn</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;kernel&quot;</span><span class="p">:</span>
@@ -479,7 +485,9 @@ document.write(`
             <span class="s2">&quot;data dtype should be integer. Check that you discretized your&quot;</span>
             <span class="s2">&quot; data. If so, use `data.astype(int)`&quot;</span>
         <span class="p">)</span>
-    <span class="k">elif</span> <span class="p">(</span><span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;kernel&quot;</span><span class="p">,</span> <span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="s2">&quot;knn&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;kernel&quot;</span><span class="p">,</span> <span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="s2">&quot;histogram&quot;</span><span class="p">])</span> <span class="ow">and</span> <span class="p">(</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">float</span>
+    <span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data dtype should be float, not </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="c1"># -------------------------------------------------------------------------</span>
@@ -652,7 +660,9 @@ document.write(`
 <span class="sd">    hx : float</span>
 <span class="sd">        Entropy of x (in bits)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="n">n_features</span><span class="p">,</span> <span class="n">n_samples</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+
     <span class="c1"># here, we count the number of possible multiplets. The worst is that each</span>
     <span class="c1"># trial is unique. So we can prepare the output to be at most (n_samples,)</span>
     <span class="c1"># and if trials are repeated, just set to zero it&#39;s going to be compensated</span>
@@ -661,7 +671,64 @@ document.write(`
         <span class="n">x</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span>
     <span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">probs</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">n_samples</span>
+
     <span class="k">return</span> <span class="n">jax</span><span class="o">.</span><span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">entr</span><span class="p">(</span><span class="n">probs</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">base</span><span class="p">)</span></div>
+
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1">###############################################################################</span>
+<span class="c1">#                               HISTOGRAM</span>
+<span class="c1">###############################################################################</span>
+<span class="c1">###############################################################################</span>
+
+
+<div class="viewcode-block" id="entropy_hist">
+<a class="viewcode-back" href="../../../api/generated/hoi.core.entropy_hist.html#hoi.core.entropy_hist">[docs]</a>
+<span class="nd">@partial</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">jit</span><span class="p">,</span> <span class="n">static_argnums</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">entropy_hist</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">base</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Entropy using binning.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : array_like</span>
+<span class="sd">        Input data of shape (n_features, n_samples). The data should already</span>
+<span class="sd">        be discretize</span>
+<span class="sd">    base : float | 2</span>
+<span class="sd">        The logarithmic base to use. Default is base 2.</span>
+<span class="sd">    n_bins : int | 8</span>
+<span class="sd">        The number of bin to be considered in the binarization process</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    hx : float</span>
+<span class="sd">        Entropy of x (in bits)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># bin size computation</span>
+    <span class="n">bins_arr</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">n_bins</span>
+    <span class="n">bin_s</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">bins_arr</span><span class="p">)</span>
+
+    <span class="c1"># binning of the data</span>
+    <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_bins</span>
+    <span class="n">x_binned</span> <span class="o">=</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">dx</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">x_binned</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">x_binned</span><span class="p">,</span> <span class="n">n_bins</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="n">n_features</span><span class="p">,</span> <span class="n">n_samples</span> <span class="o">=</span> <span class="n">x_binned</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="c1"># here, we count the number of possible multiplets. The worst is that each</span>
+    <span class="c1"># trial is unique. So we can prepare the output to be at most (n_samples,)</span>
+    <span class="c1"># and if trials are repeated, just set to zero it&#39;s going to be compensated</span>
+    <span class="c1"># by the entr() function</span>
+
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+        <span class="n">x_binned</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">probs</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">n_samples</span>
+
+    <span class="k">return</span> <span class="n">bin_s</span> <span class="o">*</span> <span class="n">jax</span><span class="o">.</span><span class="n">scipy</span><span class="o">.</span><span class="n">special</span><span class="o">.</span><span class="n">entr</span><span class="p">(</span><span class="n">probs</span> <span class="o">/</span> <span class="n">bin_s</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">jnp</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">base</span><span class="p">)</span></div>
 
 
 

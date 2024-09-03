@@ -257,6 +257,7 @@
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_gauss.html">hoi.core.entropy_gauss</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_hist.html">hoi.core.entropy_hist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
@@ -438,7 +439,7 @@ document.write(`
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>method</strong><span class="classifier">{‘gc’, ‘gauss’, ‘binning’, ‘knn’, ‘kernel’}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
+<dt><strong>method</strong><span class="classifier">{‘gc’, ‘gauss’, ‘binning’, ‘histogram’, ‘knn’, ‘kernel’}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
 <blockquote>
 <div><ul class="simple">
 <li><dl class="simple">
@@ -448,8 +449,14 @@ document.write(`
 </li>
 <li><p>‘gauss’: gaussian entropy. See <a class="reference internal" href="hoi.core.entropy_gauss.html#hoi.core.entropy_gauss" title="hoi.core.entropy_gauss"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_gauss()</span></code></a></p></li>
 <li><dl class="simple">
-<dt>‘binning’: binning-based estimator of entropy. Note that to</dt><dd><p>use this estimator, the data have be to discretized. See
-<a class="reference internal" href="hoi.core.entropy_bin.html#hoi.core.entropy_bin" title="hoi.core.entropy_bin"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_bin()</span></code></a></p>
+<dt>‘binning’: estimator to use for discrete variables. See</dt><dd><p><a class="reference internal" href="hoi.core.entropy_bin.html#hoi.core.entropy_bin" title="hoi.core.entropy_bin"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_bin()</span></code></a></p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>‘histogram’<span class="classifier">estimator based on binning the data, to estimate</span></dt><dd><p>the probability distribution of the variables and then
+compute the differential entropy. For more details see
+<a class="reference internal" href="hoi.core.entropy_hist.html#hoi.core.entropy_hist" title="hoi.core.entropy_hist"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_hist()</span></code></a></p>
 </dd>
 </dl>
 </li>

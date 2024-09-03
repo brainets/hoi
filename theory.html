@@ -258,6 +258,7 @@
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.core.entropy_gc.html">hoi.core.entropy_gc</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.core.entropy_gauss.html">hoi.core.entropy_gauss</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.core.entropy_bin.html">hoi.core.entropy_bin</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.core.entropy_hist.html">hoi.core.entropy_hist</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.core.entropy_knn.html">hoi.core.entropy_knn</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.core.entropy_kernel.html">hoi.core.entropy_kernel</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.core.prepare_for_it.html">hoi.core.prepare_for_it</a></li>
@@ -513,10 +514,14 @@ problems due to size effects when using a small data set and variables exploring
 <p>A more complicated and common scenario is the one of continuous variables. To estimate the
 entropy of a continuous variable, different methods are implemented in the toolbox:</p>
 <ul class="simple">
-<li><p>Binning method, that consists in binning the continuous data in a discrete set of bins.
-In this way, variables are discretized and the entropy can be computed as described above.
-This procedure can be performed in many different
-ways <span id="id8">[<a class="reference internal" href="#id52" title="Georges A Darbellay and Igor Vajda. Estimation of the information by an adaptive partitioning of the observation space. IEEE Transactions on Information Theory, 45(4):1315–1321, 1999.">7</a>, <a class="reference internal" href="#id51" title="Dominik Endres and Peter Foldiak. Bayesian bin distribution inference and mutual information. IEEE Transactions on Information Theory, 51(11):3766–3779, 2005.">8</a>, <a class="reference internal" href="#id53" title="Andrew M Fraser and Harry L Swinney. Independent coordinates for strange attractors from mutual information. Physical review A, 33(2):1134, 1986.">9</a>]</span>.</p></li>
+<li><p>Histogram estimator, that consists in binning the continuous data in a
+discrete set of bins. In this way, variables are discretized and the entropy
+can be computed as described above, correcting for the bin size .</p></li>
+<li><p>Binning method, that allow to extimate the entropy of a discrete variable
+estimating the probability of each possible values in a frequentist approach.
+Note that this procedure can be performed also on continuous variables after
+binarization in many different ways
+<span id="id8">[<a class="reference internal" href="#id52" title="Georges A Darbellay and Igor Vajda. Estimation of the information by an adaptive partitioning of the observation space. IEEE Transactions on Information Theory, 45(4):1315–1321, 1999.">7</a>, <a class="reference internal" href="#id51" title="Dominik Endres and Peter Foldiak. Bayesian bin distribution inference and mutual information. IEEE Transactions on Information Theory, 51(11):3766–3779, 2005.">8</a>, <a class="reference internal" href="#id53" title="Andrew M Fraser and Harry L Swinney. Independent coordinates for strange attractors from mutual information. Physical review A, 33(2):1134, 1986.">9</a>]</span>.</p></li>
 <li><p>K-Nearest Neighbors (KNN), that estimates the probability distribution by considering the
 K-nearest neighbors of each data point <span id="id9">[<a class="reference internal" href="#id57" title="Alexander Kraskov, Harald Stögbauer, and Peter Grassberger. Estimating mutual information. Physical review E, 69(6):066138, 2004.">15</a>]</span>.</p></li>
 <li><p>Kernel Density Estimation that uses kernel functions to estimate the probability

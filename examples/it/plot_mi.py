@@ -37,7 +37,6 @@ plt.style.use("ggplot")
 # create a special function for the binning approach as it requires binary data
 mi_binning_fcn = get_mi("binning", base=2)
 
-
 def mi_binning(x, y, **kwargs):
     x = digitize(x.T, **kwargs).T
     y = digitize(y.T, **kwargs).T

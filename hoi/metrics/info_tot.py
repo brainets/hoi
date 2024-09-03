@@ -46,14 +46,15 @@ class InfoTot(HOIEstimator):
         )
 
     def fit(
-        self, minsize=2, maxsize=None, method="gc", samples=None, **kwargs
+        self, minsize=1, maxsize=None, method="gc", samples=None, **kwargs
     ):
         """Compute RSI.
 
         Parameters
         ----------
-        minsize, maxsize : int | 2, None
-            Minimum and maximum size of the multiplets
+        minsize, maxsize : int | 1, None
+            Minimum and maximum size of the multiplets. If minsize is 1,
+            pairwise mutual information will be computed.
         method : {'gc', 'binning', 'knn', 'kernel', callable}
             Name of the method to compute entropy. Use either :
 
@@ -85,7 +86,7 @@ class InfoTot(HOIEstimator):
         """
         # ________________________________ I/O ________________________________
         # check minsize and maxsize
-        minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
+        minsize, maxsize = self._check_minmax(max(minsize, 1), maxsize)
 
         # prepare the x for computing mi
         x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)

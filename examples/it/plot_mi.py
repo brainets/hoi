@@ -52,7 +52,7 @@ def mi_binning(x, y, **kwargs):
 # list of estimators to compare
 metrics = {
     "GC": get_mi("gc", biascorrect=False),
-    "KNN-3": get_mi("knn", k=1),
+    "KNN-3": get_mi("knn", k=3),
     "KNN-10": get_mi("knn", k=10),
     "Kernel": get_mi("kernel"),
     "Binning": partial(mi_binning, n_bins=4),
@@ -66,7 +66,7 @@ n_repeat = 10
 
 
 # plotting function
-def plot(mi, h_theoric):
+def plot(mi, mi_theoric):
     """Plotting function."""
     for n_m, metric_name in enumerate(mi.keys()):
         # get the entropies
@@ -83,7 +83,7 @@ def plot(mi, h_theoric):
         plt.fill_between(n_samples, x_low, x_high, color=color, alpha=0.2)
 
     # plot the theoretical value
-    plt.axhline(h_theoric, linestyle="--", color="k", label="Theoretical MI")
+    plt.axhline(mi_theoric, linestyle="--", color="k", label="Theoretical MI")
     plt.legend()
     plt.xlabel("Number of samples")
     plt.ylabel("Mutual-information [bits]")
@@ -108,7 +108,7 @@ sigma_x = 1.0
 sigma_y = 1.0
 
 # covariance between x and y
-covariance = 0.3
+covariance = 0.5
 
 # covariance matrix
 cov_matrix = [[sigma_x**2, covariance], [covariance, sigma_y**2]]
@@ -118,12 +118,12 @@ mi_theoric = 0.5 * np.log2(
     sigma_x**2 * sigma_y**2 / (sigma_x**2 * sigma_y**2 - covariance**2)
 )
 
-# compute entropies using various metrics
+# compute mi using various metrics
 mi = {k: np.zeros((n_repeat, len(n_samples))) for k in metrics.keys()}
 
-for metric, fcn in metrics.items():
-    for n_s, s in enumerate(n_samples):
-        for n_r in range(n_repeat):
+for n_s, s in enumerate(n_samples):
+    for n_r in range(n_repeat):
+        for metric, fcn in metrics.items():
             # generate samples from joint gaussian distribution
             fx = np.random.multivariate_normal([mu_x, mu_y], cov_matrix, s)
 

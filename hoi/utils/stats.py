@@ -123,6 +123,7 @@ def landscape(
 
     return lscp
 
+
 def digitize_1d(x, n_bins):
     """One dimensional digitization."""
     assert x.ndim == 1
@@ -182,6 +183,7 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
 
 partial(jax.jit, static_argnums=(1, 2))
 
+
 def digitize_1d_hist(x, n_bins):
     """One dimensional digitization."""
     assert x.ndim == 1
@@ -214,7 +216,7 @@ def digitize_hist(x, n_bins, axis=0, **kwargs):
     x_binned : array_like
         Digitized array with the same shape as x
     b_size : float
-        Size of the bin used 
+        Size of the bin used
     """
     # In case use_sklearn = False, all bins have the same size. In this case,
     # in order to allow the histogram estimator, also the size of the bins is

@@ -318,9 +318,7 @@ def entropy_hist(x: jnp.array, base: float = 2, n_bins: int = 8) -> jnp.array:
         Entropy of x (in bits)
     """
 
-    x_binned, bin_size = digitize_hist(
-        x, n_bins, axis=1
-    )
+    x_binned, bin_size = digitize_hist(x, n_bins, axis=1)
 
     n_features, n_samples = x_binned.shape
 
@@ -338,6 +336,7 @@ def entropy_hist(x: jnp.array, base: float = 2, n_bins: int = 8) -> jnp.array:
     bin_s = jnp.where(probs != 0, bin_size, 0)
 
     return -jax.scipy.special.rel_entr(probs, bin_s).sum() / jnp.log(base)
+
 
 ###############################################################################
 ###############################################################################

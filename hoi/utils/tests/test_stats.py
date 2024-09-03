@@ -31,7 +31,6 @@ class TestStats(object):
     @pytest.mark.parametrize("bins", [n + 2 for n in range(5)])
     @pytest.mark.parametrize("sklearn", [True, False])
     def test_digitize(self, arr, bins, sklearn):
-
         x_binned = digitize(x=arr, n_bins=bins, axis=0, use_sklearn=sklearn)
         assert arr.shape == x_binned.shape
         for row in x_binned:

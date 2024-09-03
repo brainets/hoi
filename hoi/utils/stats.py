@@ -181,48 +181,6 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
         return np.apply_along_axis(digitize_sklearn, axis, x, **kwargs)
 
 
-def digitize_1d_hist(x, n_bins):
-    """One dimensional digitization."""
-    assert x.ndim == 1
-    x_min, x_max = x.min(), x.max()
-    dx = (x_max - x_min) / n_bins
-    x_binned = ((x - x_min) / dx).astype(int)
-    x_binned = jnp.minimum(x_binned, n_bins - 1)
-    return x_binned.astype(int)
-
-
-def digitize_hist(x, n_bins, axis=0, **kwargs):
-    """Discretize a continuous variable.
-
-    Parameters
-    ----------
-    x : array_like
-        Array to discretize
-    n_bins : int
-        Number of bins
-    axis : int | 0
-        Axis along which to perform the discretization. By default,
-        discretization is performed along the first axis (n_samples,)
-    kwargs : dict | {}
-        Additional arguments are passed to
-        sklearn.preprocessing.KBinsDiscretizer. For example, use
-        `strategy='quantile'` for equal population binning.
-
-    Returns
-    -------
-    x_binned : array_like
-        Digitized array with the same shape as x
-    b_size : float
-        Size of the bin used
-    """
-    # In case use_sklearn = False, all bins have the same size. In this case,
-    # in order to allow the histogram estimator, also the size of the bins is
-    # returned.
-    bins_arr = (x.max(axis=axis) - x.min(axis=axis)) / n_bins
-    b_size = jnp.prod(bins_arr)
-    return jnp.apply_along_axis(digitize_1d_hist, axis, x, n_bins), b_size
-
-
 partial(jax.jit, static_argnums=(1, 2))
 
 

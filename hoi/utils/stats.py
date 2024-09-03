@@ -181,9 +181,6 @@ def digitize(x, n_bins, axis=0, use_sklearn=False, **kwargs):
         return np.apply_along_axis(digitize_sklearn, axis, x, **kwargs)
 
 
-partial(jax.jit, static_argnums=(1, 2))
-
-
 def digitize_1d_hist(x, n_bins):
     """One dimensional digitization."""
     assert x.ndim == 1

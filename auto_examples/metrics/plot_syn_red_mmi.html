@@ -502,13 +502,13 @@ interactions, checkout the example
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RedMMI order 3:  1/3 [00:00&lt;00:00,    7.74it/s]
-100%|██████████| RedMMI order 5:  3/3 [00:00&lt;00:00,   19.48it/s]
+ 33%|███▎      | RedMMI order 3:  1/3 [00:00&lt;00:00,    7.75it/s]
+100%|██████████| RedMMI order 5:  3/3 [00:00&lt;00:00,   19.57it/s]
 
    index  order       hoi  multiplet
-0     20      3  0.377251  [1, 3, 5]
-1      3      3  0.002257  [0, 1, 5]
-2      1      3  0.002257  [0, 1, 3]
+0     20      3  0.481202  [1, 3, 5]
+1      3      3  0.003222  [0, 1, 5]
+2      1      3  0.003222  [0, 1, 3]
 </pre></div>
 </div>
 <p>as you see from the printed table, the multiplet with the lowest (i.e. the
@@ -541,14 +541,14 @@ single column). However, it’s possible to simulate a multivariate variable.</p
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RedMMI order 3:  1/3 [00:00&lt;00:00,    7.41it/s]
+ 33%|███▎      | RedMMI order 3:  1/3 [00:00&lt;00:00,    7.40it/s]
 
    index  order       hoi  multiplet
-0     26      3  0.488635  [2, 3, 5]
-1     27      3  0.416784  [2, 3, 6]
-2     33      3  0.416784  [3, 5, 6]
-3     30      3  0.416784  [2, 5, 6]
-4     20      3  0.401570  [1, 3, 5]
+0      8      3  0.496495  [0, 2, 6]
+1      7      3  0.467382  [0, 2, 5]
+2     14      3  0.467382  [0, 5, 6]
+3     30      3  0.467382  [2, 5, 6]
+4     33      3  0.431834  [3, 5, 6]
 </pre></div>
 </div>
 <p>It is important to notice that in this case the redundancy it is not able to
@@ -580,13 +580,13 @@ variable by knowing the subset of <cite>X</cite>.</p>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
  33%|███▎      | SynMMI order 3:  1/3 [00:00&lt;00:00,    3.91it/s]
- 67%|██████▋   | SynMMI order 4:  2/3 [00:00&lt;00:00,    3.94it/s]
-100%|██████████| SynMMI order 5:  3/3 [00:00&lt;00:00,    3.98it/s]
+ 67%|██████▋   | SynMMI order 4:  2/3 [00:00&lt;00:00,    3.97it/s]
+100%|██████████| SynMMI order 5:  3/3 [00:00&lt;00:00,    3.99it/s]
 
    index  order       hoi  multiplet
-0     10      3  1.401695  [0, 3, 5]
-1     11      3  0.012916  [0, 3, 6]
-2     14      3  0.008682  [0, 5, 6]
+0     10      3  1.547464  [0, 3, 5]
+1     11      3  0.013919  [0, 3, 6]
+2     20      3  0.007735  [1, 3, 5]
 </pre></div>
 </div>
 <p>as we can see here, the highest values of higher-order interactions
@@ -607,14 +607,14 @@ same for multivariate synergy.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | SynMMI order 3:  1/3 [00:00&lt;00:00,    3.73it/s]
- 67%|██████▋   | SynMMI order 4:  2/3 [00:00&lt;00:00,    3.67it/s]
-100%|██████████| SynMMI order 5:  3/3 [00:00&lt;00:00,    3.64it/s]
+ 33%|███▎      | SynMMI order 3:  1/3 [00:00&lt;00:00,    3.68it/s]
+ 67%|██████▋   | SynMMI order 4:  2/3 [00:00&lt;00:00,    3.55it/s]
+100%|██████████| SynMMI order 5:  3/3 [00:00&lt;00:00,    3.54it/s]
 
    index  order       hoi  multiplet
-0     10      3  1.476156  [0, 3, 5]
-1     18      3  1.462532  [1, 2, 6]
-2      4      3  0.335781  [0, 1, 6]
+0     10      3  1.574387  [0, 3, 5]
+1     18      3  1.523736  [1, 2, 6]
+2      8      3  0.344840  [0, 2, 6]
 </pre></div>
 </div>
 </section>
@@ -652,28 +652,28 @@ same for multivariate synergy.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | SynMMI order 3:  1/3 [00:00&lt;00:00,    3.86it/s]
- 67%|██████▋   | SynMMI order 4:  2/3 [00:00&lt;00:00,    3.73it/s]
-100%|██████████| SynMMI order 5:  3/3 [00:00&lt;00:00,    3.68it/s]
+ 33%|███▎      | SynMMI order 3:  1/3 [00:00&lt;00:00,    3.82it/s]
+ 67%|██████▋   | SynMMI order 4:  2/3 [00:00&lt;00:00,    3.70it/s]
+100%|██████████| SynMMI order 5:  3/3 [00:00&lt;00:00,    3.64it/s]
 
 
 Synergy results
 
    index  order       hoi  multiplet
-0      0      3  1.550452  [0, 1, 2]
-1     18      3  0.000514  [1, 2, 6]
-2      8      3  0.000437  [0, 2, 6]
+0      0      3  1.589320  [0, 1, 2]
+1      4      3  0.016878  [0, 1, 6]
+2      8      3  0.009982  [0, 2, 6]
 
   0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RedMMI order 3:  1/3 [00:00&lt;00:00,    7.36it/s]
+ 33%|███▎      | RedMMI order 3:  1/3 [00:00&lt;00:00,    7.33it/s]
 
 
 Redundancy results
 
    index  order       hoi  multiplet
-0      0      3  0.172979  [0, 1, 2]
-1      4      3  0.000553  [0, 1, 6]
-2      8      3  0.000553  [0, 2, 6]
+0      0      3  0.196370  [0, 1, 2]
+1      4      3  0.018767  [0, 1, 6]
+2      8      3  0.018767  [0, 2, 6]
 </pre></div>
 </div>
 <p>Plotting redundancy</p>
@@ -702,7 +702,7 @@ Redundancy results
 <img src="../../_images/sphx_glr_plot_syn_red_mmi_002.png" srcset="../../_images/sphx_glr_plot_syn_red_mmi_002.png" alt="plot syn red mmi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Order&#39;, ylabel=&#39;Synergy MMI [Bits]&#39;&gt;
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.999 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.031 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-syn-red-mmi-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/506e66570f568588cfe575362572604a/plot_syn_red_mmi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syn_red_mmi.ipynb</span></code></a></p>

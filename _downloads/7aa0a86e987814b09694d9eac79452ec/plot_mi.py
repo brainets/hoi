@@ -31,11 +31,18 @@ plt.style.use("ggplot")
 #
 # Let us define several estimators of MI. We are going to use the GC MI
 # (Gaussian Copula Mutual Information), the KNN (k Nearest Neighbor) and the
-# kernel-based estimator and using the a binning approach.
+# kernel-based estimator, using the a binning approach and the histogram
+# estimator. Please note that the histogram estimator is equivalent to the
+# binning, with a correction that relate to the difference between the Shannon
+# entropy of discrete variables and the differential entropy of continuous
+# variables. This correction in the case of mutual information (MI) is not
+# needed, because in the operation to compute the MI, the difference between
+# discrete and differential entropy cancel out.
 
 
 # create a special function for the binning approach as it requires binary data
 mi_binning_fcn = get_mi("binning", base=2)
+
 
 def mi_binning(x, y, **kwargs):
     x = digitize(x.T, **kwargs).T
@@ -51,6 +58,7 @@ metrics = {
     "KNN-10": get_mi("knn", k=10),
     "Kernel": get_mi("kernel"),
     "Binning": partial(mi_binning, n_bins=4),
+    "Histogram": get_mi("histogram", n_bins=4),
 }
 
 # number of samples to simulate data

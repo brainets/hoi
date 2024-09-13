@@ -419,7 +419,6 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-entropy-estimators">Definition of entropy estimators</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-of-data-sampled-from-multinormal-distribution">Entropy of data sampled from multinormal distribution</a></li>
 </ul>
             </nav>
         </div>
@@ -458,17 +457,19 @@ high-dimensional data.</p>
 <section id="definition-of-entropy-estimators">
 <h2>Definition of entropy estimators<a class="headerlink" href="#definition-of-entropy-estimators" title="Link to this heading">#</a></h2>
 <p>We are going to use the GCMI (Gaussian Copula Mutual Information), KNN
-(k Nearest Neighbor) and a Gaussian kernel-based estimator.</p>
+(k Nearest Neighbor), a Gaussian kernel-based estimator and the histogram
+estimator.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># list of estimators to compare</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;GCMI&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;gc&quot;</span><span class="p">,</span> <span class="n">biascorrect</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
     <span class="s2">&quot;KNN-3&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
     <span class="s2">&quot;KNN-10&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
     <span class="s2">&quot;Kernel&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;kernel&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;Histogram&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;histogram&quot;</span><span class="p">),</span>
 <span class="p">}</span>
 
 <span class="c1"># number of samples to simulate data</span>
-<span class="n">n_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
 <span class="c1"># number of repetitions to estimate the percentile interval</span>
 <span class="n">n_repeat</span> <span class="o">=</span> <span class="mi">10</span>
@@ -500,14 +501,13 @@ high-dimensional data.</p>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Entropy [bits]&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="entropy-of-data-sampled-from-multinormal-distribution">
-<h2>Entropy of data sampled from multinormal distribution<a class="headerlink" href="#entropy-of-data-sampled-from-multinormal-distribution" title="Link to this heading">#</a></h2>
-<p>Let variables <span class="math notranslate nohighlight">\(X_1,X_2,...,X_n\)</span> have a multivariate normal distribution
+<blockquote>
+<div><p>Let variables <span class="math notranslate nohighlight">\(X_1,X_2,...,X_n\)</span> have a multivariate normal distribution
 <span class="math notranslate nohighlight">\(\mathcal{N}(\vec{\mu}, \Sigma)\)</span> the theoretical entropy in bits is
 defined by :</p>
 <div class="math notranslate nohighlight">
 \[H(X) = \frac{1}{2} \times log_{2}({|\Sigma|}(2\pi e)^{n})\]</div>
+</div></blockquote>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># function for creating the covariance matrix with differnt modes</span>
 <span class="k">def</span> <span class="nf">create_cov_matrix</span><span class="p">(</span><span class="n">n_dims</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;dense&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a covariance matrix.&quot;&quot;&quot;</span>
@@ -581,7 +581,7 @@ defined by :</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_entropy_high_dimensional_001.png" srcset="../../_images/sphx_glr_plot_entropy_high_dimensional_001.png" alt="Comparison of entropy estimators when the data is high-dimensional, Mode: dense, Mode: sparse" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (22 minutes 53.991 seconds)</p>
+<img src="../../_images/sphx_glr_plot_entropy_high_dimensional_001.png" srcset="../../_images/sphx_glr_plot_entropy_high_dimensional_001.png" alt="Comparison of entropy estimators when the data is high-dimensional, Mode: dense, Mode: sparse" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 24.136 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-entropy-high-dimensional-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5643cba16e58fee7f03fd86cb1cd9854/plot_entropy_high_dimensional.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_entropy_high_dimensional.ipynb</span></code></a></p>
@@ -643,7 +643,6 @@ defined by :</p>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-of-entropy-estimators">Definition of entropy estimators</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-of-data-sampled-from-multinormal-distribution">Entropy of data sampled from multinormal distribution</a></li>
 </ul>
   </nav></div>
 

@@ -462,13 +462,12 @@ distributions</p></li>
 <section id="definition-of-estimators-of-entropy">
 <h2>Definition of estimators of entropy<a class="headerlink" href="#definition-of-estimators-of-entropy" title="Link to this heading">#</a></h2>
 <p>Let us define several estimators of entropy. We are going to use the GC
-(Gaussian Copula), the KNN (k Nearest Neighbor), the kernel-based
-estimator and the histogram estimator.</p>
+(Gaussian Copula), the KNN (k Nearest Neighbor) and the kernel-based
+estimator.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># list of estimators to compare</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;GC&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;gc&quot;</span><span class="p">),</span>
     <span class="s2">&quot;Gaussian&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gauss&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;Histogram&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;histogram&quot;</span><span class="p">),</span>
     <span class="s2">&quot;KNN-3&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
     <span class="s2">&quot;Kernel&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;kernel&quot;</span><span class="p">),</span>
 <span class="p">}</span>
@@ -608,7 +607,7 @@ defined by :</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_entropies_003.png" srcset="../../_images/sphx_glr_plot_entropies_003.png" alt="Comparison of entropy estimators when the data are sampled from a exponential distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 20.368 seconds)</p>
+<img src="../../_images/sphx_glr_plot_entropies_003.png" srcset="../../_images/sphx_glr_plot_entropies_003.png" alt="Comparison of entropy estimators when the data are sampled from a exponential distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 17.515 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-entropies-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/a1ef8dbbc19c785bec2a5cc12335798e/plot_entropies.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_entropies.ipynb</span></code></a></p>

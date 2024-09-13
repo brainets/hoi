@@ -463,16 +463,9 @@ to :</p>
 <h2>Definition of MI estimators<a class="headerlink" href="#definition-of-mi-estimators" title="Link to this heading">#</a></h2>
 <p>Let us define several estimators of MI. We are going to use the GC MI
 (Gaussian Copula Mutual Information), the KNN (k Nearest Neighbor) and the
-kernel-based estimator, using the a binning approach and the histogram
-estimator. Please note that the histogram estimator is equivalent to the
-binning, with a correction that relate to the difference between the Shannon
-entropy of discrete variables and the differential entropy of continuous
-variables. This correction in the case of mutual information (MI) is not
-needed, because in the operation to compute the MI, the difference between
-discrete and differential entropy cancel out.</p>
+kernel-based estimator and using the a binning approach.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a special function for the binning approach as it requires binary data</span>
 <span class="n">mi_binning_fcn</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;binning&quot;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
 
 <span class="k">def</span> <span class="nf">mi_binning</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.digitize.html#hoi.utils.digitize" title="hoi.utils.digitize" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">digitize</span></a><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
@@ -488,7 +481,6 @@ discrete and differential entropy cancel out.</p>
     <span class="s2">&quot;KNN-10&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
     <span class="s2">&quot;Kernel&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;kernel&quot;</span><span class="p">),</span>
     <span class="s2">&quot;Binning&quot;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_binning</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
-    <span class="s2">&quot;Histogram&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;histogram&quot;</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
 <span class="p">}</span>
 
 <span class="c1"># number of samples to simulate data</span>
@@ -573,7 +565,7 @@ discrete and differential entropy cancel out.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_mi_001.png" srcset="../../_images/sphx_glr_plot_mi_001.png" alt="Comparison of MI estimators when the data are sampled from a normal distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 20.639 seconds)</p>
+<img src="../../_images/sphx_glr_plot_mi_001.png" srcset="../../_images/sphx_glr_plot_mi_001.png" alt="Comparison of MI estimators when the data are sampled from a normal distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 16.762 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-mi-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/f14e92090ebeb63084124f7809315b90/plot_mi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_mi.ipynb</span></code></a></p>

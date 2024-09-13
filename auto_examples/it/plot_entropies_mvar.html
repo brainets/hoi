@@ -456,13 +456,12 @@ normal with increasing dimensionality.</p>
 <section id="definition-of-estimators-of-entropy">
 <h2>Definition of estimators of entropy<a class="headerlink" href="#definition-of-estimators-of-entropy" title="Link to this heading">#</a></h2>
 <p>Let us define several estimators of entropy. We are going to use the GC
-(Gaussian Copula), the KNN (k Nearest Neighbor), the kernel-based, the
-Gaussian estimators and the histogram estimator.</p>
+(Gaussian Copula), the KNN (k Nearest Neighbor), the kernel-based
+and the Gaussian estimators.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># list of estimators to compare</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;GC&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;gc&quot;</span><span class="p">),</span>
     <span class="s2">&quot;Gaussian&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;gauss&quot;</span><span class="p">),</span>
-    <span class="s2">&quot;Histogram&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;histogram&quot;</span><span class="p">),</span>
     <span class="s2">&quot;KNN-3&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
     <span class="s2">&quot;Kernel&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;kernel&quot;</span><span class="p">),</span>
 <span class="p">}</span>
@@ -583,7 +582,7 @@ covariance matrix and <cite>n</cite> the dimensionality of the multivariate norm
 <span class="n">plot</span><span class="p">(</span><span class="n">h_x</span><span class="p">,</span> <span class="n">h_theoric</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_entropies_mvar_001.png" srcset="../../_images/sphx_glr_plot_entropies_mvar_001.png" alt="2-dimensional multivariate normal, 4-dimensional multivariate normal, 6-dimensional multivariate normal, 8-dimensional multivariate normal" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 32.217 seconds)</p>
+<img src="../../_images/sphx_glr_plot_entropies_mvar_001.png" srcset="../../_images/sphx_glr_plot_entropies_mvar_001.png" alt="2-dimensional multivariate normal, 4-dimensional multivariate normal, 6-dimensional multivariate normal, 8-dimensional multivariate normal" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 24.928 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-entropies-mvar-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/4a44859767d9a5abc2a411d84f3464c0/plot_entropies_mvar.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_entropies_mvar.ipynb</span></code></a></p>

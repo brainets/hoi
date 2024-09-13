@@ -16,8 +16,6 @@ This example is inspired from a similar simulation done by
 Czyz et al., NeurIPS 2023 :cite:`czyz2024beyond`.
 """
 
-# %%
-
 import numpy as np
 
 from hoi.core import get_mi
@@ -30,19 +28,18 @@ plt.style.use("ggplot")
 # Definition of MI estimators
 # ---------------------------
 #
-# We are going to use the GCMI (Gaussian Copula Mutual Information), KNN
-# (k Nearest Neighbor) and histogram estimator.
+# We are going to use the GCMI (Gaussian Copula Mutual Information) and KNN
+# (k Nearest Neighbor)
 
 # list of estimators to compare
 metrics = {
     "GCMI": get_mi("gc", biascorrect=False),
     "KNN-3": get_mi("knn", k=3),
     "KNN-10": get_mi("knn", k=10),
-    "Histogram": get_mi("histogram", n_bins=3),
 }
 
 # number of samples to simulate data
-n_samples = np.geomspace(20, 1000, 15).astype(int)
+n_samples = np.geomspace(1000, 10000, 10).astype(int)
 
 # number of repetitions to estimate the percentile interval
 n_repeat = 10
@@ -71,8 +68,6 @@ def plot(mi, mi_theoric, ax):
     ax.set_xlabel("Number of samples")
     ax.set_ylabel("Mutual-information [bits]")
 
-
-# %%
 
 ###############################################################################
 # MI of data sampled from splitted multinormal distribution

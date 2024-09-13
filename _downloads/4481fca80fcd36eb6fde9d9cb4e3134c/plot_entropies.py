@@ -29,14 +29,13 @@ plt.style.use("ggplot")
 # -----------------------------------
 #
 # Let us define several estimators of entropy. We are going to use the GC
-# (Gaussian Copula), the KNN (k Nearest Neighbor), the kernel-based
-# estimator and the histogram estimator.
+# (Gaussian Copula), the KNN (k Nearest Neighbor) and the kernel-based
+# estimator.
 
 # list of estimators to compare
 metrics = {
     "GC": get_entropy("gc"),
     "Gaussian": get_entropy(method="gauss"),
-    "Histogram": get_entropy(method="histogram"),
     "KNN-3": get_entropy("knn", k=3),
     "Kernel": get_entropy("kernel"),
 }

@@ -1,7 +1,7 @@
 Quickstart
 ==========
 
-HOI is a Python package to estimate :term:`Higher Order Interactions`. A network is composed of nodes (e.g. users in social network, brain areas in neuroscience, musicians in an orchestra etc.) and nodes are interacting together. Traditionally we measure pairwise interactions. HOI allows to go beyond the pairwise interactions by quantifying the interactions between 3, 4, ..., N nodes of the system. As we are using measures from the :term:`Information Theory`, we can further describe the type of interactions, i.e. whether nodes of the network tend to have redundant or synergistic interactions (see the definition of :term:`Redundancy`, :term:`Synergy`).
+HOI is a Python package to estimate :term:`Higher Order Interactions` from multivariate data. A network is composed of nodes (e.g. users in social network, brain areas in neuroscience, musicians in an orchestra etc.) and nodes are interacting together. Traditionally we measure pairwise interactions. HOI allows to go beyond the pairwise interactions by quantifying the interactions between 3, 4, ..., N nodes of the system. As we are using measures from the :term:`Information Theory`, we can further describe the type of interactions, i.e. whether nodes of the network tend to have redundant or synergistic interactions (see the definition of :term:`Redundancy`, :term:`Synergy`).
 
 * **Installation :** to install HOI with its dependencies, see :ref:`installation`. If you are a developer or if you want to contribute to HOI, checkout the :ref:`contribute`.
 * **Theoretical background :** For a detailed introduction to information theory and HOI, see :ref:`theory`. You can also have a look to our :ref:`glossary` to see the definition of the terms we are using here.

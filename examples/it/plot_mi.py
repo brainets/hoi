@@ -98,10 +98,10 @@ def plot(mi, mi_theoric):
 #
 # Given two variables :math:`X \sim \mathcal{N}(\mu_{x}, \sigma_{x})` and
 # :math:`Y \sim \mathcal{N}(\mu_{y}, \sigma_{y})`, linked by a covariance
-# :math:`C` the theoretical MI in bits is defined by :
+# :math:`\sigma_{xy}` the theoretical MI in bits is defined by :
 #
 # .. math::
-#     I(X; Y) = \frac{1}{2} \times log_{2}(\frac{\sigma_{x}^{2}\sigma_{y}^{2}}{ \sigma_{x}^{2}\sigma_{y}^{2} - C^{2} })
+#     I(X; Y) = \frac{1}{2} \times log_{2}(\frac{\sigma_{x}^{2}\sigma_{y}^{2}}{ \sigma_{x}^{2}\sigma_{y}^{2} - \sigma_{xy}^{2} })
 #
 
 # mean and standard error of x and y variables

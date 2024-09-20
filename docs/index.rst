@@ -105,3 +105,4 @@ This project is licensed under the `BSD 3-Clause License <https://github.com/bra
    Public API: list of functions <api/modules>
    Jax <jax>
    Developer Documentation <contributor_guide>
+   List of contributors <contributors>

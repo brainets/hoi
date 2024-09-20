@@ -40,6 +40,7 @@ extensions = [
     "sphinxcontrib.bibtex",
     "sphinx_gallery.gen_gallery",
     "sphinx_design",
+    "sphinx_contributors",
     # "sphinx_panels",
     # "sphinx_copybutton",
 ]

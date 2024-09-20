@@ -5,6 +5,7 @@ from hoi.core.entropies import (
     entropy_gc,
     entropy_gauss,
     entropy_bin,
+    entropy_hist,
     entropy_knn,
     entropy_kernel,
     get_entropy,
@@ -24,7 +25,7 @@ def custom_est(x):
 
 
 # method names
-names = ["gc", "gauss", "knn", "kernel", "binning", custom_est]
+names = ["gc", "gauss", "knn", "kernel", "binning", "histogram", custom_est]
 
 
 # Smoke tests
@@ -42,6 +43,13 @@ class TestEntropy(object):
     def test_entropy_bin(self, x):
         x_bin = digitize(x, n_bins=3)
         hx = entropy_bin(x_bin)
+        hx = np.asarray(hx)
+        assert hx.dtype == np.float32
+        assert hx.shape == ()
+
+    @pytest.mark.parametrize("x", [x1, x2, j1, j2])
+    def test_entropy_hist(self, x):
+        hx = entropy_hist(x)
         hx = np.asarray(hx)
         assert hx.dtype == np.float32
         assert hx.shape == ()

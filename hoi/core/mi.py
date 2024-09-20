@@ -20,7 +20,7 @@ def get_mi(method="gc", **kwargs):
 
     Parameters
     ----------
-    method : {'gc', 'binning', 'knn', 'kernel'}
+    method : {'gc', 'gauss', 'binning', 'knn', 'kernel'}
         Name of the method to compute mutual-information.
     kwargs : dict | {}
         Additional arguments sent to the mutual-information function.

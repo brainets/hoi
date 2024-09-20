@@ -26,15 +26,18 @@ def get_entropy(method="gc", **kwargs):
 
     Parameters
     ----------
-    method : {'gc', 'gauss', 'binning', 'knn', 'kernel'}
+    method : {'gc', 'gauss', 'binning', 'histogram', 'knn', 'kernel'}
         Name of the method to compute entropy. Use either :
 
             * 'gc': gaussian copula entropy [default]. See
                 :func:`hoi.core.entropy_gc`
             * 'gauss': gaussian entropy. See :func:`hoi.core.entropy_gauss`
-            * 'binning': binning-based estimator of entropy. Note that to
-                use this estimator, the data have be to discretized. See
+            * 'binning': estimator to use for discrete variables. See
                 :func:`hoi.core.entropy_bin`
+            * 'histogram' : estimator based on binning the data, to estimate
+                the probability distribution of the variables and then
+                compute the differential entropy. For more details see
+                :func:`hoi.core.entropy_hist`
             * 'knn': k-nearest neighbor estimator. See
                 :func:`hoi.core.entropy_knn`
             * 'kernel': kernel-based estimator of entropy
@@ -58,6 +61,8 @@ def get_entropy(method="gc", **kwargs):
         return entropy_gauss
     elif method == "binning":
         return partial(entropy_bin, **kwargs)
+    elif method == "histogram":
+        return partial(entropy_hist, **kwargs)
     elif method == "knn":
         return partial(entropy_knn, **kwargs)
     elif method == "kernel":
@@ -102,7 +107,9 @@ def prepare_for_it(data, method, samples=None, **kwargs):
             "data dtype should be integer. Check that you discretized your"
             " data. If so, use `data.astype(int)`"
         )
-    elif (method in ["kernel", "gc", "knn"]) and (data.dtype != float):
+    elif (method in ["kernel", "gc", "knn", "histogram"]) and (
+        data.dtype != float
+    ):
         raise ValueError(f"data dtype should be float, not {data.dtype}")
 
     # -------------------------------------------------------------------------
@@ -266,7 +273,9 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
     hx : float
         Entropy of x (in bits)
     """
+
     n_features, n_samples = x.shape
+
     # here, we count the number of possible multiplets. The worst is that each
     # trial is unique. So we can prepare the output to be at most (n_samples,)
     # and if trials are repeated, just set to zero it's going to be compensated
@@ -275,7 +284,61 @@ def entropy_bin(x: jnp.array, base: int = 2) -> jnp.array:
         x, return_counts=True, size=n_samples, axis=1, fill_value=0
     )[1]
     probs = counts / n_samples
+
     return jax.scipy.special.entr(probs).sum() / jnp.log(base)
+
+
+###############################################################################
+###############################################################################
+#                               HISTOGRAM
+###############################################################################
+###############################################################################
+
+
+@partial(jax.jit, static_argnums=(1, 2))
+def entropy_hist(x: jnp.array, base: float = 2, n_bins: int = 8) -> jnp.array:
+    """Entropy using binning.
+
+    Parameters
+    ----------
+    x : array_like
+        Input data of shape (n_features, n_samples). The data should already
+        be discretize
+    base : float | 2
+        The logarithmic base to use. Default is base 2.
+    n_bins : int | 8
+        The number of bin to be considered in the binarization process
+
+    Returns
+    -------
+    hx : float
+        Entropy of x (in bits)
+    """
+
+    # bin size computation
+    bins_arr = (x.max(axis=1) - x.min(axis=1)) / n_bins
+    bin_s = jnp.prod(bins_arr)
+
+    # binning of the data
+    x_min, x_max = x.min(axis=1, keepdims=True), x.max(axis=1, keepdims=True)
+    dx = (x_max - x_min) / n_bins
+    x_binned = ((x - x_min) / dx).astype(int)
+    x_binned = jnp.minimum(x_binned, n_bins - 1).astype(int)
+
+    n_features, n_samples = x_binned.shape
+
+    # here, we count the number of possible multiplets. The worst is that each
+    # trial is unique. So we can prepare the output to be at most (n_samples,)
+    # and if trials are repeated, just set to zero it's going to be compensated
+    # by the entr() function
+
+    counts = jnp.unique(
+        x_binned, return_counts=True, size=n_samples, axis=1, fill_value=0
+    )[1]
+
+    probs = counts / n_samples
+
+    return bin_s * jax.scipy.special.entr(probs / bin_s).sum() / jnp.log(base)
 
 
 ###############################################################################

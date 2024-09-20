@@ -20,22 +20,22 @@ from hoi.core import get_mi
 # In HOI there are 4 different methods to compute the entropy, in this tutorial
 # we will use the estimation based on the Gaussian Copula estimation.
 #
-# Let's start by extracting a sample `x` from a multivariate Gaussian
+# Let's start by extracting a sample `X` from a multivariate Gaussian
 # distribution with zero mean and unit variance:
 
 D = 3
 x = np.random.normal(size=(D, 1000))
 
 ###############################################################################
-# Now we can compute the entropy of `x`. We use the function `get_entropy` to
+# Now we can compute the entropy of `X`. We use the function `get_entropy` to
 # build a callable function to compute the entropy. The function `get_entropy`
 # takes as input the method to use to compute the entropy. In this case we use
-# the Gaussian Copula estimation, so we set the method to `"gc":
+# the Gaussian Copula estimation, so we set the method to `"gc"`:
 
 entropy = get_entropy(method="gc")
 
 ###############################################################################
-# Now we can compute the entropy of `x` by calling the function `entropy`. This
+# Now we can compute the entropy of `X` by calling the function `entropy`. This
 # function takes as input an array of data of shape `(n_features, n_samples)`.
 # For the Gaussian Copula estimation, the entropy is computed in bits. We have:
 
@@ -46,7 +46,7 @@ print("Entropy of x: %.2f" % entropy(x))
 # the analytical formula, which is:
 #
 # .. math::
-#   H(X) = \frac{1}{2} \log \left( (2 \pi e)^D \det(\Sigma) \right)
+#   H(X) = \frac{1}{2} \log \left( (2 \pi e)^D \det(\Sigma) \right)  / log(2)
 #
 # where :math:`D` is the dimensionality of the Gaussian and :math:`\Sigma` is
 # the covariance matrix of the Gaussian. We have:
@@ -65,10 +65,10 @@ print("Analytical entropy of x: %.2f" % entropy_analytical)
 #
 # The mutual information is another fundamental information theoretical metric.
 # In this tutorial we will compute the mutual information between two variables
-# `x` and `y`. `x` is a multivariate Gaussian with zero mean and unit variance,
-# while `y` is a multivariate uniform distribution in the interval :math:`[0,1]`.
-# Since the two variables are independent, the mutual information between them
-# is expected to be zero.
+# `X` and `Y`. `X` is a multivariate Gaussian with zero mean and unit variance,
+# while `Y` is a multivariate uniform distribution in the interval
+# :math:`[0,1]`. Since the two variables are independent, the mutual
+# information between them is expected to be zero.
 
 D = 3
 x = np.random.normal(size=(D, 1000))

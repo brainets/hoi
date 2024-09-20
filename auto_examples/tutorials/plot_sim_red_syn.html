@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -270,6 +271,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jax.html">Jax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">List of contributors</a></li>
 </ul>
 
     </div>
@@ -418,7 +420,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#redundant-and-synergistic-behavior">Redundant and synergistic behavior</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#redundant-and-synergistic-network-behavior">Redundant and synergistic network behavior</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-synergistic-behavior">Simulating synergistic behavior</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-redundant-behavior">Simulating redundant behavior</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-synergistic-behavior-by-sum-operation">Simulating synergistic behavior by sum operation</a></li>
@@ -426,7 +428,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-dynamic-redundancy-and-synergy">Simulating dynamic redundancy and synergy</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#redundant-and-synergistic-encoding">Redundant and synergistic encoding</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#redundant-and-synergistic-network-encoding">Redundant and synergistic network encoding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-redundant-encoding">Simulating redundant encoding</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-synergistic-encoding">Simulating synergistic encoding</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-redundant-encoding-by-copy-operation">Simulating redundant encoding by copy operation</a></li>
@@ -472,13 +474,13 @@ synergistic interactions <strong>about</strong> a target variable.</p></li>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<section id="redundant-and-synergistic-behavior">
-<h2>Redundant and synergistic behavior<a class="headerlink" href="#redundant-and-synergistic-behavior" title="Link to this heading">#</a></h2>
+<section id="redundant-and-synergistic-network-behavior">
+<h2>Redundant and synergistic network behavior<a class="headerlink" href="#redundant-and-synergistic-network-behavior" title="Link to this heading">#</a></h2>
 <p>In this first part, we are going to create a multivariate gaussian variable
-<cite>x</cite> with specific information patterns. Then we need a function to estimate
+<cite>X</cite> with specific information patterns. Then we need a function to estimate
 whether the interactions between the three nodes are more redundant or more
 synergistic. To estimate whether the interactions between the three nodes are
-redundant or synergistic, we are gonig to use the
+redundant or synergistic, we are going to use the
 <a class="reference internal" href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Oinfo</span></code></a>. When the Oinfo is positive, it means that the
 interactions are redundant and if the Oinfo is negative, the interactions are
 synergistic.</p>
@@ -493,9 +495,9 @@ synergistic.</p>
 <section id="simulating-synergistic-behavior">
 <h3>Simulating synergistic behavior<a class="headerlink" href="#simulating-synergistic-behavior" title="Link to this heading">#</a></h3>
 <p>In gaussian multivariate data, it is possible to generate synergy and
-redundancy by setting the parameters of the covariance matrix. This is
-what can be done using the function
-<a class="reference internal" href="../../api/generated/hoi.simulation.simulate_hoi_gauss.html#hoi.simulation.simulate_hoi_gauss" title="hoi.simulation.simulate_hoi_gauss"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.simulation.simulate_hoi_gauss</span></code></a>, in the following way:</p>
+redundancy by setting the parameters of the covariance matrix. This can be
+done using the function <a class="reference internal" href="../../api/generated/hoi.simulation.simulate_hoi_gauss.html#hoi.simulation.simulate_hoi_gauss" title="hoi.simulation.simulate_hoi_gauss"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.simulation.simulate_hoi_gauss</span></code></a>, in the
+following way:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># x = (n_samples, n_nodes)</span>
 <span class="n">x</span> <span class="o">=</span> <a href="../../api/generated/hoi.simulation.simulate_hoi_gauss.html#hoi.simulation.simulate_hoi_gauss" title="hoi.simulation.simulate_hoi_gauss" class="sphx-glr-backref-module-hoi-simulation sphx-glr-backref-type-py-function"><span class="n">simulate_hoi_gauss</span></a><span class="p">(</span>
     <span class="n">target</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">triplet_character</span><span class="o">=</span><span class="s2">&quot;synergy&quot;</span>
@@ -507,7 +509,7 @@ what can be done using the function
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    1.34it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    1.61it/s]
 </pre></div>
 </div>
 <p>Print HOI value</p>
@@ -524,7 +526,7 @@ for synergistic interactions.</p>
 <section id="simulating-redundant-behavior">
 <h3>Simulating redundant behavior<a class="headerlink" href="#simulating-redundant-behavior" title="Link to this heading">#</a></h3>
 <p>As for the redundancy, we can generate three gaussian variables, presenting
-synergistic behavior, using the funciton,
+redundant behavior, using the function,
 <a class="reference internal" href="../../api/generated/hoi.simulation.simulate_hoi_gauss.html#hoi.simulation.simulate_hoi_gauss" title="hoi.simulation.simulate_hoi_gauss"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.simulation.simulate_hoi_gauss</span></code></a>, in the following way:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># x = (n_samples, n_nodes)</span>
 <span class="n">x</span> <span class="o">=</span> <a href="../../api/generated/hoi.simulation.simulate_hoi_gauss.html#hoi.simulation.simulate_hoi_gauss" title="hoi.simulation.simulate_hoi_gauss" class="sphx-glr-backref-module-hoi-simulation sphx-glr-backref-type-py-function"><span class="n">simulate_hoi_gauss</span></a><span class="p">(</span>
@@ -537,7 +539,7 @@ synergistic behavior, using the funciton,
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.21it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.10it/s]
 </pre></div>
 </div>
 <p>Print HOI value</p>
@@ -569,7 +571,7 @@ That’s what we are going to use here to simulate synergy.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.22it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.12it/s]
 </pre></div>
 </div>
 <p>Print HOI value</p>
@@ -584,15 +586,15 @@ dominated by synergy.</p>
 </section>
 <section id="simulating-redundant-behavior-by-copy-operator">
 <h3>Simulating redundant behavior by copy operator<a class="headerlink" href="#simulating-redundant-behavior-by-copy-operator" title="Link to this heading">#</a></h3>
-<p>Redundancy can emerge when nodes (1, 2, 3) in the system <cite>x</cite> are receiving
+<p>Redundancy can emerge when nodes (1, 2, 3) in the system <cite>X</cite> are receiving
 multiple copies of the same information. A simple way to simulate redundancy
 consists in taking the signal of one node, let’s say the first one, and copy
 this signal to the two other nodes.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># x = (n_samples, n_nodes)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 
-<span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># 1 = 1 &amp; 0</span>
-<span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># 2 = 2 &amp; 0</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># 1 = 1 + 0</span>
+<span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># 2 = 2 + 0</span>
 </pre></div>
 </div>
 <p>compute hoi using the Oinfo</p>
@@ -600,7 +602,7 @@ this signal to the two other nodes.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.26it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.07it/s]
 </pre></div>
 </div>
 <p>Print HOI value</p>
@@ -615,11 +617,10 @@ redundancy when using the Oinfo.</p>
 </section>
 <section id="simulating-dynamic-redundancy-and-synergy">
 <h3>Simulating dynamic redundancy and synergy<a class="headerlink" href="#simulating-dynamic-redundancy-and-synergy" title="Link to this heading">#</a></h3>
-<p>A synergy is obtained when elements of a system work together to produce an
-effect that is greater than the sum of their individual contributions. A
-simple example is the sum. When a variable <cite>A</cite> is defined as the sum of two
-other variables <span class="math notranslate nohighlight">\(A = B + C\)</span> then we need both <cite>B</cite> and <cite>C</cite> to know <cite>A</cite>.
-That’s what we are going to use here to simulate synergy.</p>
+<p>In the same way, we can simulate dynamic redundancy and synergy (i.e. the
+relationship between variables evolves over time). Here, we are going to use
+the same trick as above to simulate redundancy and synergy except that the
+relationship is going to be modulated by a temporal hanning window.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate a dynamic network</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 
@@ -648,19 +649,19 @@ That’s what we are going to use here to simulate synergy.</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_sim_red_syn_001.png" srcset="../../_images/sphx_glr_plot_sim_red_syn_001.png" alt="Dynamic HOI" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.39it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.34it/s]
 
 Text(0.5, 1.0, &#39;Dynamic HOI&#39;)
 </pre></div>
 </div>
 </section>
 </section>
-<section id="redundant-and-synergistic-encoding">
-<h2>Redundant and synergistic encoding<a class="headerlink" href="#redundant-and-synergistic-encoding" title="Link to this heading">#</a></h2>
+<section id="redundant-and-synergistic-network-encoding">
+<h2>Redundant and synergistic network encoding<a class="headerlink" href="#redundant-and-synergistic-network-encoding" title="Link to this heading">#</a></h2>
 <p>In this second part, we are going to switch for encoding measure, in the sens
 that elements of a network areg going to carry redundant or synergistic
-information about an external variable. To estimate HOI about a target
-variable <cite>y</cite>, we’re going to use the <a class="reference internal" href="../../api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo" title="hoi.metrics.GradientOinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.GradientOinfo</span></code></a>. To
+information <strong>about</strong> an external variable. To estimate HOI about a target
+variable <cite>Y</cite>, we’re going to use the <a class="reference internal" href="../../api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo" title="hoi.metrics.GradientOinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.GradientOinfo</span></code></a>. To
 simulate redundancy and synergy, we’re going to use the same methods as
 before.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># function to estimate the nature of the interactions</span>
@@ -673,8 +674,10 @@ before.</p>
 </div>
 <section id="simulating-redundant-encoding">
 <h3>Simulating redundant encoding<a class="headerlink" href="#simulating-redundant-encoding" title="Link to this heading">#</a></h3>
-<p>To simulate redundancy, between a triplet of variable <cite>x</cite> and a target
-variable <cite>y</cite></p>
+<p>To simulate redundancy between a triplet of variable <cite>X</cite> and a target
+variable <cite>Y</cite>, we are going to use the same function as before
+<a class="reference internal" href="../../api/generated/hoi.simulation.simulate_hoi_gauss.html#hoi.simulation.simulate_hoi_gauss" title="hoi.simulation.simulate_hoi_gauss"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.simulation.simulate_hoi_gauss</span></code></a> but this time, we are going to
+precise that we want a target by setting <cite>target=True</cite>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># x = (n_samples, n_nodes)</span>
 <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <a href="../../api/generated/hoi.simulation.simulate_hoi_gauss.html#hoi.simulation.simulate_hoi_gauss" title="hoi.simulation.simulate_hoi_gauss" class="sphx-glr-backref-module-hoi-simulation sphx-glr-backref-type-py-function"><span class="n">simulate_hoi_gauss</span></a><span class="p">(</span>
     <span class="n">target</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">triplet_character</span><span class="o">=</span><span class="s2">&quot;redundancy&quot;</span>
@@ -686,11 +689,11 @@ variable <cite>y</cite></p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.28it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.10it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    3.07it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    2.92it/s]
 </pre></div>
 </div>
 <p>Print HOI value</p>
@@ -701,12 +704,12 @@ variable <cite>y</cite></p>
 </pre></div>
 </div>
 <p>the estimated HOI is positive which represents redundant interactions between
-the three nodes about y.</p>
+the three nodes about <cite>Y</cite>.</p>
 </section>
 <section id="simulating-synergistic-encoding">
 <h3>Simulating synergistic encoding<a class="headerlink" href="#simulating-synergistic-encoding" title="Link to this heading">#</a></h3>
-<p>To simulate synergy, between a triplet of variable <cite>x</cite> and a target
-variable <cite>y</cite></p>
+<p>Similarly, we can simulate a synergistic network encoding behavior by
+setting <cite>target=True</cite> and a synergistic behavior.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># x = (n_samples, n_nodes)</span>
 <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <a href="../../api/generated/hoi.simulation.simulate_hoi_gauss.html#hoi.simulation.simulate_hoi_gauss" title="hoi.simulation.simulate_hoi_gauss" class="sphx-glr-backref-module-hoi-simulation sphx-glr-backref-type-py-function"><span class="n">simulate_hoi_gauss</span></a><span class="p">(</span>
     <span class="n">target</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">triplet_character</span><span class="o">=</span><span class="s2">&quot;synergy&quot;</span>
@@ -718,11 +721,11 @@ variable <cite>y</cite></p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.25it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.09it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.36it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.24it/s]
 </pre></div>
 </div>
 <p>Print HOI value</p>
@@ -733,11 +736,11 @@ variable <cite>y</cite></p>
 </pre></div>
 </div>
 <p>the estimated HOI is negative which represents synergistic interactions
-between the three nodes about y.</p>
+between the three nodes about <cite>Y</cite>.</p>
 </section>
 <section id="simulating-redundant-encoding-by-copy-operation">
 <h3>Simulating redundant encoding by copy operation<a class="headerlink" href="#simulating-redundant-encoding-by-copy-operation" title="Link to this heading">#</a></h3>
-<p>To simulate redundancy, we copy the y variable into each node of x</p>
+<p>To simulate redundancy, we copy the <cite>Y</cite> variable into each node of <cite>X</cite></p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># x = (n_samples, n_nodes)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
@@ -753,11 +756,11 @@ between the three nodes about y.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.23it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.07it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.45it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.19it/s]
 </pre></div>
 </div>
 <p>Print HOI value</p>
@@ -768,11 +771,11 @@ between the three nodes about y.</p>
 </pre></div>
 </div>
 <p>the estimated HOI is positive which represents redundant interactions between
-the three nodes about y.</p>
+the three nodes about <cite>Y</cite>.</p>
 </section>
 <section id="simulating-synergistic-encoding-by-sum-operation">
 <h3>Simulating synergistic encoding by sum operation<a class="headerlink" href="#simulating-synergistic-encoding-by-sum-operation" title="Link to this heading">#</a></h3>
-<p>To simulate synergy, we define the y variable as the sum of the three nodes</p>
+<p>To simulate synergy, we define the <cite>Y</cite> variable as the sum of the three nodes</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># x = (n_samples, n_nodes)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
@@ -783,11 +786,11 @@ the three nodes about y.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.24it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.00it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.32it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    6.04it/s]
 </pre></div>
 </div>
 <p>Print HOI value</p>
@@ -798,13 +801,13 @@ the three nodes about y.</p>
 </pre></div>
 </div>
 <p>the estimated HOI is negative which represents synergistic interactions
-between the three nodes about y.</p>
+between the three nodes about <cite>Y</cite>.</p>
 </section>
 <section id="simulating-dynamic-redundant-and-synergistic-encoding">
 <h3>Simulating dynamic redundant and synergistic encoding<a class="headerlink" href="#simulating-dynamic-redundant-and-synergistic-encoding" title="Link to this heading">#</a></h3>
-<p>Finally, in the previous example, we used a static <cite>x</cite> and <cite>y</cite>. We can define
+<p>Finally, in the previous example, we used a static <cite>X</cite> and <cite>X</cite>. We can define
 a dynamic network and a dynamic target to simulate time-varying redundant
-and synergistic interactions about y.</p>
+and synergistic interactions about <cite>Y</cite>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate a dynamic network</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
@@ -837,16 +840,16 @@ and synergistic interactions about y.</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_sim_red_syn_002.png" srcset="../../_images/sphx_glr_plot_sim_red_syn_002.png" alt="Dynamic HOI" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    4.65it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    4.53it/s]
 
 
   0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    3.71it/s]
+100%|██████████| Oinfo (3):  1/1 [00:00&lt;00:00,    3.59it/s]
 
 Text(0.5, 1.0, &#39;Dynamic HOI&#39;)
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.912 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.889 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-plot-sim-red-syn-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/2a4afa62d27b153aa605e093f9600e6b/plot_sim_red_syn.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_sim_red_syn.ipynb</span></code></a></p>
@@ -908,7 +911,7 @@ Text(0.5, 1.0, &#39;Dynamic HOI&#39;)
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#redundant-and-synergistic-behavior">Redundant and synergistic behavior</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#redundant-and-synergistic-network-behavior">Redundant and synergistic network behavior</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-synergistic-behavior">Simulating synergistic behavior</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-redundant-behavior">Simulating redundant behavior</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-synergistic-behavior-by-sum-operation">Simulating synergistic behavior by sum operation</a></li>
@@ -916,7 +919,7 @@ Text(0.5, 1.0, &#39;Dynamic HOI&#39;)
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-dynamic-redundancy-and-synergy">Simulating dynamic redundancy and synergy</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#redundant-and-synergistic-encoding">Redundant and synergistic encoding</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#redundant-and-synergistic-network-encoding">Redundant and synergistic network encoding</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-redundant-encoding">Simulating redundant encoding</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-synergistic-encoding">Simulating synergistic encoding</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-redundant-encoding-by-copy-operation">Simulating redundant encoding by copy operation</a></li>
@@ -938,13 +941,20 @@ Text(0.5, 1.0, &#39;Dynamic HOI&#39;)
   <div class="footer-item">
     
 <p class="component-author">
-By Author name not set
+By BraiNets
 </p>
 
   </div>
   
   <div class="footer-item">
     
+
+  <p class="copyright">
+    
+      © Copyright BraiNets.
+      <br/>
+    
+  </p>
 
   </div>
   
@@ -976,7 +986,7 @@ By Author name not set
             <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
             <img src="https://enlight-eu.org/images/logos/Logo_Gent.png" alt="Ghent" height="80">
         <br>
-        <!-- <p>&copy; Copyright .</p> -->
+        <!-- <p>&copy; Copyright BraiNets.</p> -->
         </div>
     </footer>
 

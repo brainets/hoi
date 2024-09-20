@@ -20,8 +20,8 @@ plt.style.use('ggplot')
 # ----------
 #
 # The RSI is a multivariate measure of information capable of disentangling
-# whether a subset of a variable X carry either redundant or synergistic
-# information about a variable Y. The RSI is defined as :
+# whether a subset of a variable `X`` carry either redundant or synergistic
+# information about a variable `Y`. The RSI is defined as :
 
 # %%
 # .. math::
@@ -33,7 +33,7 @@ plt.style.use('ggplot')
 #     S = x_{1}, ..., x_{n}
 #
 # Positive values of RSI stand for synergy while negative values of RSI reflect
-# redundancy between the X and Y variables.
+# redundancy between the `X` and `Y` variables.
 
 ###############################################################################
 # Simulate univariate redundancy
@@ -108,8 +108,8 @@ print(df)
 #
 # Lets move on to the simulation of synergy that is a bit more subtle. One way
 # of simulating synergy is to go the other way of redundancy, meaning we are
-# going to add features of x inside y. That way, we can only retrieve the Y
-# variable by knowing the subset of X.
+# going to add features of `X` inside `Y`. That way, we can only retrieve the
+# `Y` variable by knowing the subset of `X`.
 
 # simulate the variable x
 x = np.random.rand(200, 7)

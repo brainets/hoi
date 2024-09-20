@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_contributors.css?v=f079e67e" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -269,6 +270,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="jax.html">Jax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributor_guide.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributors.html">List of contributors</a></li>
 </ul>
 
     </div>
@@ -422,6 +424,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-higher-order-interactions">Compute Higher-Order Interactions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-results">Inspect the results</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-recommendations">Practical recommendations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-softwares-for-the-analysis-of-higher-order-interactions">Other softwares for the analysis of higher-order interactions</a></li>
 </ul>
             </nav>
         </div>
@@ -435,7 +438,7 @@ document.write(`
                   
   <section id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Link to this heading">#</a></h1>
-<p>HOI is a Python package to estimate <a class="reference internal" href="glossary.html#term-Higher-Order-Interactions"><span class="xref std std-term">Higher Order Interactions</span></a>. A network is composed of nodes (e.g. users in social network, brain areas in neuroscience, musicians in an orchestra etc.) and nodes are interacting together. Traditionally we measure pairwise interactions. HOI allows to go beyond the pairwise interactions by quantifying the interactions between 3, 4, …, N nodes of the system. As we are using measures from the <a class="reference internal" href="glossary.html#term-Information-Theory"><span class="xref std std-term">Information Theory</span></a>, we can further describe the type of interactions, i.e. whether nodes of the network tend to have redundant or synergistic interactions (see the definition of <a class="reference internal" href="glossary.html#term-Redundancy"><span class="xref std std-term">Redundancy</span></a>, <a class="reference internal" href="glossary.html#term-Synergy"><span class="xref std std-term">Synergy</span></a>).</p>
+<p>HOI is a Python package to estimate <a class="reference internal" href="glossary.html#term-Higher-Order-Interactions"><span class="xref std std-term">Higher Order Interactions</span></a> from multivariate data. A network is composed of nodes (e.g. users in social network, brain areas in neuroscience, musicians in an orchestra etc.) and nodes are interacting together. Traditionally we measure pairwise interactions. HOI allows to go beyond the pairwise interactions by quantifying the interactions between 3, 4, …, N nodes of the system. As we are using measures from the <a class="reference internal" href="glossary.html#term-Information-Theory"><span class="xref std std-term">Information Theory</span></a>, we can further describe the type of interactions, i.e. whether nodes of the network tend to have redundant or synergistic interactions (see the definition of <a class="reference internal" href="glossary.html#term-Redundancy"><span class="xref std std-term">Redundancy</span></a>, <a class="reference internal" href="glossary.html#term-Synergy"><span class="xref std std-term">Synergy</span></a>).</p>
 <ul class="simple">
 <li><p><strong>Installation :</strong> to install HOI with its dependencies, see <a class="reference internal" href="install.html#installation"><span class="std std-ref">Installation</span></a>. If you are a developer or if you want to contribute to HOI, checkout the <a class="reference internal" href="contributor_guide.html#contribute"><span class="std std-ref">Developer Documentation</span></a>.</p></li>
 <li><p><strong>Theoretical background :</strong> For a detailed introduction to information theory and HOI, see <a class="reference internal" href="theory.html#theory"><span class="std std-ref">Theoretical background</span></a>. You can also have a look to our <a class="reference internal" href="glossary.html#glossary"><span class="std std-ref">Glossary</span></a> to see the definition of the terms we are using here.</p></li>
@@ -494,6 +497,21 @@ document.write(`
 <li><p><strong>Measuring Higher-Order Interactions for network behavior and network encoding :</strong> for network behavior and ncoding, we recommend respectively the O-information <a class="reference internal" href="api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Oinfo</span></code></a> and the <a class="reference internal" href="api/generated/hoi.metrics.GradientOinfo.html#hoi.metrics.GradientOinfo" title="hoi.metrics.GradientOinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.GradientOinfo</span></code></a>. Although both metrics suffer from the same limitations, like the spreading to higher orders, this can be mitigated using a boostrap approach (see <a class="reference internal" href="auto_examples/statistics/plot_bootstrapping.html#sphx-glr-auto-examples-statistics-plot-bootstrapping-py"><span class="std std-ref">Bootstrapping and confidence interval</span></a>). Otherwise, both metrics are usually pretty accurate to retrieve the type of interactions between variables, especially once combined with the Gaussian Copula.</p></li>
 </ul>
 </section>
+<section id="other-softwares-for-the-analysis-of-higher-order-interactions">
+<h2>Other softwares for the analysis of higher-order interactions<a class="headerlink" href="#other-softwares-for-the-analysis-of-higher-order-interactions" title="Link to this heading">#</a></h2>
+<p>Please find bellow a list of additional softwares for the analysis of higher-order interactions :</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://xgi.readthedocs.io/">XGI</a> : Python software for modeling, analyzing, and visualizing higher-order interactions</p></li>
+<li><p><a class="reference external" href="https://networkx.org/">NetworkX</a> : Python package for the creation, manipulation, and study of the structure, dynamics, and functions of complex networks</p></li>
+<li><p><a class="reference external" href="https://pyt-team.github.io/toponetx/">TopoNetX</a> : Python package for computing on topological domains</p></li>
+<li><p><a class="reference external" href="https://hypergraphx.readthedocs.io">HGX</a> : Python library for higher-order network analysis</p></li>
+<li><p><a class="reference external" href="https://infotopo.readthedocs.io/">InfoTopo</a> : original Python implementation of the <a class="reference internal" href="api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.InfoTopo</span></code></a> estimator</p></li>
+<li><p><a class="reference external" href="http://mcandadai.com/infotheory/">infotheory</a> : C++, and usable in Python as well, Infotheory is a software to perform information theoretic analysis on multivariate data</p></li>
+<li><p><a class="reference external" href="https://dit.readthedocs.io">dit</a> : Python package for discrete information theory</p></li>
+<li><p><a class="reference external" href="https://pwollstadt.github.io/IDTxl/html/index.html">IDTxl</a> : Python software for efficient inference of networks and their node dynamics from multivariate time series data using information theory</p></li>
+<li><p><a class="reference external" href="https://github.com/wmayner/pyphi">pyphi</a> : Python library for computing integrated information</p></li>
+</ul>
+</section>
 </section>
 
 
@@ -546,6 +564,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-higher-order-interactions">Compute Higher-Order Interactions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inspect-the-results">Inspect the results</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-recommendations">Practical recommendations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-softwares-for-the-analysis-of-higher-order-interactions">Other softwares for the analysis of higher-order interactions</a></li>
 </ul>
   </nav></div>
 
@@ -560,13 +579,20 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By Author name not set
+By BraiNets
 </p>
 
   </div>
   
   <div class="footer-item">
     
+
+  <p class="copyright">
+    
+      © Copyright BraiNets.
+      <br/>
+    
+  </p>
 
   </div>
   
@@ -598,7 +624,7 @@ By Author name not set
             <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
             <img src="https://enlight-eu.org/images/logos/Logo_Gent.png" alt="Ghent" height="80">
         <br>
-        <!-- <p>&copy; Copyright .</p> -->
+        <!-- <p>&copy; Copyright BraiNets.</p> -->
         </div>
     </footer>
 

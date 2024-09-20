@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -270,6 +271,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jax.html">Jax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">List of contributors</a></li>
 </ul>
 
     </div>
@@ -439,16 +441,17 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="topological-information-conditioning-on-orders">
 <span id="sphx-glr-auto-examples-metrics-plot-infotopo-py"></span><h1>Topological Information : conditioning on orders<a class="headerlink" href="#topological-information-conditioning-on-orders" title="Link to this heading">#</a></h1>
-<p>This example illustrates a metric called Topological Information published by
-Baudot et al., 2019 <span id="id1">[<a class="reference internal" href="../../theory.html#id33" title="Pierre Baudot, Monica Tapia, Daniel Bennequin, and Jean-Marc Goaillard. Topological information data analysis. Entropy. An International and Interdisciplinary Journal of Entropy and Information Studies, 2019. Number: 869. URL: https://www.mdpi.com/1099-4300/21/9/869, doi:10.3390/e21090869.">4</a>]</span>. This metric is based on
-differences of entropies and can be used to estimate Higher Order Interactions.
-One important feature of this metric relies on its ability to isolate an order.
-To be clear, we are going to see in this example that if we simulate a
-redundancy at order 3, a metric as the O-information (
-<a class="reference internal" href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Oinfo</span></code></a>) is going to return reduandancy for all of the
-quadruplets that are going to include the redundant triplet. However, the
-<a class="reference internal" href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.InfoTopo</span></code></a> is capable of isolating only the redundant
-triplet.</p>
+<p>The following example highlights a metric known as “Topological Information”
+which was introduced by Baudot et al., 2019 <span id="id1">[<a class="reference internal" href="../../theory.html#id33" title="Pierre Baudot, Monica Tapia, Daniel Bennequin, and Jean-Marc Goaillard. Topological information data analysis. Entropy. An International and Interdisciplinary Journal of Entropy and Information Studies, 2019. Number: 869. URL: https://www.mdpi.com/1099-4300/21/9/869, doi:10.3390/e21090869.">4</a>]</span>. This
+metric, founded on disparities in entropies, enables estimation of Higher Order
+Interactions while possessing the notable characteristic of being able to
+segregate specific orders. Specifically, when simulating redundancies at the
+third order utilizing the O-information metric (<a class="reference internal" href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.Oinfo</span></code></a>),
+any quadruplets containing the superfluous triplet will yield redundancy.
+Conversely, the InfoTopo metric (<a class="reference internal" href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.InfoTopo</span></code></a>) has the
+capability of pinpointing exclusively the redundant triplet. You can also check
+the original implementation of this estimator :
+<a class="reference external" href="https://infotopo.readthedocs.io/">https://infotopo.readthedocs.io/</a></p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">hoi.metrics</span> <span class="kn">import</span> <a href="../../api/generated/hoi.metrics.InfoTopo.html#hoi.metrics.InfoTopo" title="hoi.metrics.InfoTopo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">InfoTopo</span></a><span class="p">,</span> <a href="../../api/generated/hoi.metrics.Oinfo.html#hoi.metrics.Oinfo" title="hoi.metrics.Oinfo" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">Oinfo</span></a>
@@ -487,11 +490,11 @@ how to simulate redundant and synergistic interactions, checkout the example
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/5 [00:00&lt;?,       ?it/s]
- 20%|██        | Oinfo (3):  1/5 [00:00&lt;00:01,    2.88it/s]
- 40%|████      | Oinfo (4):  2/5 [00:00&lt;00:00,    3.54it/s]
- 60%|██████    | Oinfo (5):  3/5 [00:01&lt;00:00,    2.85it/s]
- 80%|████████  | Oinfo (6):  4/5 [00:01&lt;00:00,    2.62it/s]
-100%|██████████| Oinfo (7):  5/5 [00:01&lt;00:00,    2.67it/s]
+ 20%|██        | Oinfo (3):  1/5 [00:00&lt;00:01,    2.76it/s]
+ 40%|████      | Oinfo (4):  2/5 [00:00&lt;00:00,    3.43it/s]
+ 60%|██████    | Oinfo (5):  3/5 [00:01&lt;00:00,    2.80it/s]
+ 80%|████████  | Oinfo (6):  4/5 [00:01&lt;00:00,    2.59it/s]
+100%|██████████| Oinfo (7):  5/5 [00:01&lt;00:00,    2.65it/s]
 </pre></div>
 </div>
 <p>Now we can plot the landscape. This landscape show the values of HOI for
@@ -513,16 +516,16 @@ interactions.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>   index  order       hoi           multiplet
-0     75      5  0.180660     [0, 1, 2, 5, 6]
-1     94      6  0.180534  [0, 1, 2, 4, 5, 6]
-2     71      5  0.179893     [0, 1, 2, 3, 5]
-3     38      4  0.179876        [0, 1, 2, 6]
-4     74      5  0.179585     [0, 1, 2, 4, 6]
-5     97      6 -0.362484  [1, 2, 3, 4, 5, 6]
-6     95      6 -0.362663  [0, 1, 3, 4, 5, 6]
-7     84      5 -0.362667     [0, 3, 4, 5, 6]
-8     89      5 -0.363335     [1, 3, 4, 5, 6]
-9     69      4 -0.363861        [3, 4, 5, 6]
+0     70      5  0.205925     [0, 1, 2, 3, 4]
+1     36      4  0.203808        [0, 1, 2, 4]
+2     35      4  0.203772        [0, 1, 2, 3]
+3     73      5  0.203644     [0, 1, 2, 4, 5]
+4     72      5  0.203503     [0, 1, 2, 3, 6]
+5     90      5 -0.390869     [2, 3, 4, 5, 6]
+6     84      5 -0.392231     [0, 3, 4, 5, 6]
+7     89      5 -0.392670     [1, 3, 4, 5, 6]
+8     95      6 -0.392677  [0, 1, 3, 4, 5, 6]
+9     69      4 -0.392874        [3, 4, 5, 6]
 </pre></div>
 </div>
 <p>As we can see from the landscape and the printed table, the triplet (0, 1, 2)
@@ -544,17 +547,17 @@ definition of the Topological Information is given by :</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/7 [00:00&lt;?,       ?it/s]
- 14%|█▍        | Entropy H(1):  1/7 [00:00&lt;00:00,    8.81it/s]
- 29%|██▊       | Entropy H(2):  2/7 [00:00&lt;00:00,    8.39it/s]
- 43%|████▎     | Entropy H(3):  3/7 [00:00&lt;00:00,    8.35it/s]
- 57%|█████▋    | Entropy H(4):  4/7 [00:00&lt;00:00,    8.78it/s]
- 71%|███████▏  | Entropy H(5):  5/7 [00:00&lt;00:00,    9.02it/s]
- 86%|████████▌ | Entropy H(6):  6/7 [00:00&lt;00:00,    9.21it/s]
-100%|██████████| Entropy H(7):  7/7 [00:00&lt;00:00,    9.40it/s]
+ 14%|█▍        | Entropy H(1):  1/7 [00:00&lt;00:00,    8.54it/s]
+ 29%|██▊       | Entropy H(2):  2/7 [00:00&lt;00:00,    7.85it/s]
+ 43%|████▎     | Entropy H(3):  3/7 [00:00&lt;00:00,    8.00it/s]
+ 57%|█████▋    | Entropy H(4):  4/7 [00:00&lt;00:00,    8.46it/s]
+ 71%|███████▏  | Entropy H(5):  5/7 [00:00&lt;00:00,    8.78it/s]
+ 86%|████████▌ | Entropy H(6):  6/7 [00:00&lt;00:00,    9.00it/s]
+100%|██████████| Entropy H(7):  7/7 [00:00&lt;00:00,    9.22it/s]
 
 
   0%|          |  0/99 [00:00&lt;?,       ?it/s]
-100%|██████████| Mutual information:  99/99 [00:00&lt;00:00, 134642.05it/s]
+100%|██████████| Mutual information:  99/99 [00:00&lt;00:00, 140282.46it/s]
 </pre></div>
 </div>
 <p>Again, we can plot the landscape. This time, as we can see, there’s no more
@@ -576,19 +579,19 @@ is identified as a redundant multiplet despite being synergistic.</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_infotopo_002.png" srcset="../../_images/sphx_glr_plot_infotopo_002.png" alt="plot infotopo" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>   index  order       hoi     multiplet
-0      0      3  0.178324     [0, 1, 2]
-1     69      4  0.079220  [3, 4, 5, 6]
-2      8      3  0.001470     [0, 2, 6]
-3     41      4  0.001097  [0, 1, 3, 6]
-4      7      3  0.000798     [0, 2, 5]
-5     37      4 -0.001798  [0, 1, 2, 5]
-6      3      3 -0.001949     [0, 1, 5]
-7     32      3 -0.051622     [3, 4, 6]
-8     31      3 -0.055452     [3, 4, 5]
-9     33      3 -0.098192     [3, 5, 6]
+0      0      3  0.203173     [0, 1, 2]
+1     69      4  0.087830  [3, 4, 5, 6]
+2     25      3  0.001332     [2, 3, 4]
+3      6      3  0.000945     [0, 2, 4]
+4     26      3  0.000795     [2, 3, 5]
+5     36      4 -0.000955  [0, 1, 2, 4]
+6      2      3 -0.001291     [0, 1, 4]
+7     33      3 -0.055869     [3, 5, 6]
+8     31      3 -0.070711     [3, 4, 5]
+9     32      3 -0.090620     [3, 4, 6]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.327 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.370 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-infotopo-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/ece4d51dfdf0dbf7235e94595766e7c5/plot_infotopo.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_infotopo.ipynb</span></code></a></p>
@@ -666,13 +669,20 @@ is identified as a redundant multiplet despite being synergistic.</p>
   <div class="footer-item">
     
 <p class="component-author">
-By Author name not set
+By BraiNets
 </p>
 
   </div>
   
   <div class="footer-item">
     
+
+  <p class="copyright">
+    
+      © Copyright BraiNets.
+      <br/>
+    
+  </p>
 
   </div>
   
@@ -704,7 +714,7 @@ By Author name not set
             <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
             <img src="https://enlight-eu.org/images/logos/Logo_Gent.png" alt="Ghent" height="80">
         <br>
-        <!-- <p>&copy; Copyright .</p> -->
+        <!-- <p>&copy; Copyright BraiNets.</p> -->
         </div>
     </footer>
 

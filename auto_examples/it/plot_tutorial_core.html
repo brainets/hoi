@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -270,6 +271,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jax.html">Jax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">List of contributors</a></li>
 </ul>
 
     </div>
@@ -452,20 +454,20 @@ other higher-order metrics of information theory defined in HOI are based on
 the entropy.</p>
 <p>In HOI there are 4 different methods to compute the entropy, in this tutorial
 we will use the estimation based on the Gaussian Copula estimation.</p>
-<p>Let’s start by extracting a sample <cite>x</cite> from a multivariate Gaussian
+<p>Let’s start by extracting a sample <cite>X</cite> from a multivariate Gaussian
 distribution with zero mean and unit variance:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>Now we can compute the entropy of <cite>x</cite>. We use the function <cite>get_entropy</cite> to
+<p>Now we can compute the entropy of <cite>X</cite>. We use the function <cite>get_entropy</cite> to
 build a callable function to compute the entropy. The function <cite>get_entropy</cite>
 takes as input the method to use to compute the entropy. In this case we use
-the Gaussian Copula estimation, so we set the method to <a href="#id1"><span class="problematic" id="id2">`</span></a>”gc”:</p>
+the Gaussian Copula estimation, so we set the method to <cite>“gc”</cite>:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">entropy</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Now we can compute the entropy of <cite>x</cite> by calling the function <cite>entropy</cite>. This
+<p>Now we can compute the entropy of <cite>X</cite> by calling the function <cite>entropy</cite>. This
 function takes as input an array of data of shape <cite>(n_features, n_samples)</cite>.
 For the Gaussian Copula estimation, the entropy is computed in bits. We have:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Entropy of x: </span><span class="si">%.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">entropy</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -477,7 +479,7 @@ For the Gaussian Copula estimation, the entropy is computed in bits. We have:</p
 <p>For comparison, we can compute the entropy of a multivariate Gaussian with
 the analytical formula, which is:</p>
 <div class="math notranslate nohighlight">
-\[H(X) = \frac{1}{2} \log \left( (2 \pi e)^D \det(\Sigma) \right)\]</div>
+\[H(X) = \frac{1}{2} \log \left( (2 \pi e)^D \det(\Sigma) \right)  / log(2)\]</div>
 <p>where <span class="math notranslate nohighlight">\(D\)</span> is the dimensionality of the Gaussian and <span class="math notranslate nohighlight">\(\Sigma\)</span> is
 the covariance matrix of the Gaussian. We have:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -496,10 +498,10 @@ the covariance matrix of the Gaussian. We have:</p>
 <h2>Mutual information<a class="headerlink" href="#mutual-information" title="Link to this heading">#</a></h2>
 <p>The mutual information is another fundamental information theoretical metric.
 In this tutorial we will compute the mutual information between two variables
-<cite>x</cite> and <cite>y</cite>. <cite>x</cite> is a multivariate Gaussian with zero mean and unit variance,
-while <cite>y</cite> is a multivariate uniform distribution in the interval <span class="math notranslate nohighlight">\([0,1]\)</span>.
-Since the two variables are independent, the mutual information between them
-is expected to be zero.</p>
+<cite>X</cite> and <cite>Y</cite>. <cite>X</cite> is a multivariate Gaussian with zero mean and unit variance,
+while <cite>Y</cite> is a multivariate uniform distribution in the interval
+<span class="math notranslate nohighlight">\([0,1]\)</span>. Since the two variables are independent, the mutual
+information between them is expected to be zero.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">D</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
@@ -511,7 +513,7 @@ is expected to be zero.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Mutual information between x and y: 0.00
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.233 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.262 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-tutorial-core-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5b339cefcfab9a7df160c5f43bed58df/plot_tutorial_core.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_tutorial_core.ipynb</span></code></a></p>
@@ -588,13 +590,20 @@ is expected to be zero.</p>
   <div class="footer-item">
     
 <p class="component-author">
-By Author name not set
+By BraiNets
 </p>
 
   </div>
   
   <div class="footer-item">
     
+
+  <p class="copyright">
+    
+      © Copyright BraiNets.
+      <br/>
+    
+  </p>
 
   </div>
   
@@ -626,7 +635,7 @@ By Author name not set
             <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
             <img src="https://enlight-eu.org/images/logos/Logo_Gent.png" alt="Ghent" height="80">
         <br>
-        <!-- <p>&copy; Copyright .</p> -->
+        <!-- <p>&copy; Copyright BraiNets.</p> -->
         </div>
     </footer>
 

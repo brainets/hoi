@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -270,6 +271,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jax.html">Jax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">List of contributors</a></li>
 </ul>
 
     </div>
@@ -503,12 +505,12 @@ we will observe redundancy between <span class="math notranslate nohighlight">\(
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| SynPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    2.31it/s]
+100%|██████████| SynPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    2.30it/s]
 
    index  order       hoi multiplet
-0      0      2  1.032673    [0, 1]
-1      6      2  0.017516    [1, 2]
-2      1      2  0.016348    [0, 2]
+0      0      2  0.545935    [0, 1]
+1     10      2  0.030847    [1, 6]
+2      7      2  0.014264    [1, 3]
 </pre></div>
 </div>
 <p>as you see from the printed table, the couple of variables with the highest
@@ -540,12 +542,12 @@ synergy is [0,1]</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| RedPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    4.37it/s]
+100%|██████████| RedPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    4.12it/s]
 
    index  order       hoi multiplet
-0      0      2  1.926982    [0, 1]
-1      4      2  0.010041    [0, 5]
-2      9      2  0.010041    [1, 5]
+0      0      2  1.698441    [0, 1]
+1      1      2  0.002837    [0, 2]
+2      6      2  0.002837    [1, 2]
 </pre></div>
 </div>
 <p>This time, as expected, the two most redundant couple of variable is [0,1]</p>
@@ -591,12 +593,12 @@ variables</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_syn_phiID_001.png" srcset="../../_images/sphx_glr_plot_syn_phiID_001.png" alt="plot syn phiID" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| SynPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    3.82it/s]
+100%|██████████| SynPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    3.75it/s]
 
    index  order       hoi multiplet
-0      0      2  1.926982    [0, 1]
-1      4      2  0.010041    [0, 5]
-2      9      2  0.010041    [1, 5]
+0      0      2  1.698441    [0, 1]
+1      1      2  0.002837    [0, 2]
+2      6      2  0.002837    [1, 2]
 </pre></div>
 </div>
 <p>define the Synergy_phiID, launch it and inspect the best couples of
@@ -623,15 +625,15 @@ variables</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_syn_phiID_002.png" srcset="../../_images/sphx_glr_plot_syn_phiID_002.png" alt="plot syn phiID" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| RedPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    5.91it/s]
+100%|██████████| RedPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    5.79it/s]
 
    index  order       hoi multiplet
-0      1      2  1.418695    [0, 2]
-1      6      2  0.849980    [1, 2]
-2      0      2  0.844169    [0, 1]
+0      1      2  1.134994    [0, 2]
+1      0      2  0.603431    [0, 1]
+2      6      2  0.597383    [1, 2]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.577 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.569 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-syn-phiid-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/fc28b610171f69bef0470c1f4ae19f0c/plot_syn_phiID.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syn_phiID.ipynb</span></code></a></p>
@@ -710,13 +712,20 @@ variables</p>
   <div class="footer-item">
     
 <p class="component-author">
-By Author name not set
+By BraiNets
 </p>
 
   </div>
   
   <div class="footer-item">
     
+
+  <p class="copyright">
+    
+      © Copyright BraiNets.
+      <br/>
+    
+  </p>
 
   </div>
   
@@ -748,7 +757,7 @@ By Author name not set
             <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
             <img src="https://enlight-eu.org/images/logos/Logo_Gent.png" alt="Ghent" height="80">
         <br>
-        <!-- <p>&copy; Copyright .</p> -->
+        <!-- <p>&copy; Copyright BraiNets.</p> -->
         </div>
     </footer>
 

@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -270,6 +271,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jax.html">Jax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">List of contributors</a></li>
 </ul>
 
     </div>
@@ -422,7 +424,7 @@ document.write(`
                   
   <section id="metrics-of-hoi">
 <span id="sphx-glr-auto-examples-metrics"></span><h1>Metrics of HOI<a class="headerlink" href="#metrics-of-hoi" title="Link to this heading">#</a></h1>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates a metric called Topological Information published by Baudot et al., 2019 baudot2019infotopo. This metric is based on differences of entropies and can be used to estimate Higher Order Interactions. One important feature of this metric relies on its ability to isolate an order. To be clear, we are going to see in this example that if we simulate a redundancy at order 3, a metric as the O-information ( hoi.metrics.Oinfo) is going to return reduandancy for all of the quadruplets that are going to include the redundant triplet. However, the hoi.metrics.InfoTopo is capable of isolating only the redundant triplet."><img alt="" src="../../_images/sphx_glr_plot_infotopo_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="The following example highlights a metric known as &quot;Topological Information&quot; which was introduced by Baudot et al., 2019 baudot2019infotopo. This metric, founded on disparities in entropies, enables estimation of Higher Order Interactions while possessing the notable characteristic of being able to segregate specific orders. Specifically, when simulating redundancies at the third order utilizing the O-information metric (hoi.metrics.Oinfo), any quadruplets containing the superfluous triplet will yield redundancy. Conversely, the InfoTopo metric (hoi.metrics.InfoTopo) has the capability of pinpointing exclusively the redundant triplet. You can also check the original implementation of this estimator : https://infotopo.readthedocs.io/"><img alt="" src="../../_images/sphx_glr_plot_infotopo_thumb.png" />
 <p><a class="reference internal" href="plot_infotopo.html#sphx-glr-auto-examples-metrics-plot-infotopo-py"><span class="std std-ref">Topological Information : conditioning on orders</span></a></p>
   <div class="sphx-glr-thumbnail-title">Topological Information : conditioning on orders</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret the Redundancy-Synergy Index (RSI)."><img alt="" src="../../_images/sphx_glr_plot_rsi_thumb.png" />
@@ -486,13 +488,20 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By Author name not set
+By BraiNets
 </p>
 
   </div>
   
   <div class="footer-item">
     
+
+  <p class="copyright">
+    
+      © Copyright BraiNets.
+      <br/>
+    
+  </p>
 
   </div>
   
@@ -524,7 +533,7 @@ By Author name not set
             <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
             <img src="https://enlight-eu.org/images/logos/Logo_Gent.png" alt="Ghent" height="80">
         <br>
-        <!-- <p>&copy; Copyright .</p> -->
+        <!-- <p>&copy; Copyright BraiNets.</p> -->
         </div>
     </footer>
 

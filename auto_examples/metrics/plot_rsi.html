@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -270,6 +271,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jax.html">Jax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">List of contributors</a></li>
 </ul>
 
     </div>
@@ -456,15 +458,15 @@ Index (RSI).</p>
 <section id="definition">
 <h2>Definition<a class="headerlink" href="#definition" title="Link to this heading">#</a></h2>
 <p>The RSI is a multivariate measure of information capable of disentangling
-whether a subset of a variable X carry either redundant or synergistic
-information about a variable Y. The RSI is defined as :</p>
+whether a subset of a variable <cite>X`</cite> carry either redundant or synergistic
+information about a variable <cite>Y</cite>. The RSI is defined as :</p>
 <div class="math notranslate nohighlight">
 \[RSI(S; Y) \equiv I(S; Y) - \sum_{x_{i}\in S} I(x_{i}; Y)\]</div>
 <p>with :</p>
 <div class="math notranslate nohighlight">
 \[S = x_{1}, ..., x_{n}\]</div>
 <p>Positive values of RSI stand for synergy while negative values of RSI reflect
-redundancy between the X and Y variables.</p>
+redundancy between the <cite>X</cite> and <cite>Y</cite> variables.</p>
 </section>
 <section id="simulate-univariate-redundancy">
 <h2>Simulate univariate redundancy<a class="headerlink" href="#simulate-univariate-redundancy" title="Link to this heading">#</a></h2>
@@ -496,17 +498,17 @@ interactions, checkout the example
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.24it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.87it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    3.06it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    2.15it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    2.84it/s]
+100%|██████████| RSI order 5:  3/3 [00:01&lt;00:00,    3.03it/s]
 
    index  order       hoi  multiplet
-0      5      3  0.014083  [0, 2, 3]
-1     27      3  0.008269  [2, 3, 6]
-2     25      3  0.002733  [2, 3, 4]
-3     17      3 -0.279959  [1, 2, 5]
-4     22      3 -0.280932  [1, 4, 5]
-5     20      3 -0.502848  [1, 3, 5]
+0      5      3  0.010098  [0, 2, 3]
+1     27      3  0.009364  [2, 3, 6]
+2     11      3  0.008568  [0, 3, 6]
+3     26      3 -0.189541  [2, 3, 5]
+4     31      3 -0.193685  [3, 4, 5]
+5     20      3 -0.379484  [1, 3, 5]
 </pre></div>
 </div>
 <p>as you see from the printed table, the multiplet with the lowest (i.e. the
@@ -539,17 +541,14 @@ single column). However, it’s possible to simulate a multivariate variable.</p
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.29it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.39it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.92it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.20it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.30it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    4.86it/s]
 
    index  order       hoi  multiplet
-0     28      3  0.010094  [2, 4, 5]
-1     23      3  0.008041  [1, 4, 6]
-2     34      3  0.006850  [4, 5, 6]
-3     27      3 -0.289336  [2, 3, 6]
-4     20      3 -0.461864  [1, 3, 5]
-5      8      3 -0.590573  [0, 2, 6]
+0     11      3 -0.305800  [0, 3, 6]
+1      8      3 -0.569149  [0, 2, 6]
+2     20      3 -0.573858  [1, 3, 5]
 </pre></div>
 </div>
 <p>This time, as expected, the two most redundant triplets are (1, 3, 5) and
@@ -559,8 +558,8 @@ single column). However, it’s possible to simulate a multivariate variable.</p
 <h2>Simulate univariate and multivariate synergy<a class="headerlink" href="#simulate-univariate-and-multivariate-synergy" title="Link to this heading">#</a></h2>
 <p>Lets move on to the simulation of synergy that is a bit more subtle. One way
 of simulating synergy is to go the other way of redundancy, meaning we are
-going to add features of x inside y. That way, we can only retrieve the Y
-variable by knowing the subset of X.</p>
+going to add features of <cite>X</cite> inside <cite>Y</cite>. That way, we can only retrieve the
+<cite>Y</cite> variable by knowing the subset of <cite>X</cite>.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># simulate the variable x</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
 
@@ -575,17 +574,17 @@ variable by knowing the subset of X.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    4.00it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    5.20it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.81it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.84it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    5.07it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.70it/s]
 
    index  order       hoi  multiplet
-0     10      3  1.453753  [0, 3, 5]
-1     14      3  0.232957  [0, 5, 6]
-2      3      3  0.231269  [0, 1, 5]
-3      6      3 -0.002877  [0, 2, 4]
-4      2      3 -0.003223  [0, 1, 4]
-5     13      3 -0.003272  [0, 4, 6]
+0     10      3  1.273890  [0, 3, 5]
+1     12      3  0.315670  [0, 4, 5]
+2     14      3  0.314976  [0, 5, 6]
+3     17      3 -0.001248  [1, 2, 5]
+4     25      3 -0.001624  [2, 3, 4]
+5     15      3 -0.001651  [1, 2, 3]
 </pre></div>
 </div>
 <p>as we can see here, the highest values of higher-order interactions
@@ -606,17 +605,15 @@ same for multivariate synergy</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.59it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.79it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.37it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.38it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.55it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.15it/s]
 
    index  order       hoi  multiplet
-0     10      3  1.513817  [0, 3, 5]
-1     18      3  1.391648  [1, 2, 6]
-2     21      3  0.238000  [1, 3, 6]
-3      6      3 -0.002183  [0, 2, 4]
-4     34      3 -0.008015  [4, 5, 6]
-5     22      3 -0.017187  [1, 4, 5]
+0     18      3  1.559214  [1, 2, 6]
+1     10      3  1.381920  [0, 3, 5]
+2     23      3  0.225347  [1, 4, 6]
+3     32      3 -0.001482  [3, 4, 6]
 </pre></div>
 </div>
 </section>
@@ -653,20 +650,20 @@ same for multivariate synergy</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_rsi_001.png" srcset="../../_images/sphx_glr_plot_rsi_001.png" alt="plot rsi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/3 [00:00&lt;?,       ?it/s]
- 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.62it/s]
- 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.80it/s]
-100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.34it/s]
+ 33%|███▎      | RSI order 3:  1/3 [00:00&lt;00:00,    3.58it/s]
+ 67%|██████▋   | RSI order 4:  2/3 [00:00&lt;00:00,    4.74it/s]
+100%|██████████| RSI order 5:  3/3 [00:00&lt;00:00,    5.20it/s]
 
    index  order       hoi  multiplet
-0      0      3  1.488034  [0, 1, 2]
-1     16      3  0.247822  [1, 2, 4]
-2     15      3  0.246747  [1, 2, 3]
-3     12      3 -0.195410  [0, 4, 5]
-4     10      3 -0.195496  [0, 3, 5]
-5     31      3 -0.461383  [3, 4, 5]
+0      0      3  1.312485  [0, 1, 2]
+1     16      3  0.211186  [1, 2, 4]
+2     15      3  0.197775  [1, 2, 3]
+3     10      3 -0.232792  [0, 3, 5]
+4     20      3 -0.233146  [1, 3, 5]
+5     31      3 -0.498634  [3, 4, 5]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.963 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.036 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-rsi-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/4e89a3c451ce8407889de983108afa1c/plot_rsi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_rsi.ipynb</span></code></a></p>
@@ -746,13 +743,20 @@ same for multivariate synergy</p>
   <div class="footer-item">
     
 <p class="component-author">
-By Author name not set
+By BraiNets
 </p>
 
   </div>
   
   <div class="footer-item">
     
+
+  <p class="copyright">
+    
+      © Copyright BraiNets.
+      <br/>
+    
+  </p>
 
   </div>
   
@@ -784,7 +788,7 @@ By Author name not set
             <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
             <img src="https://enlight-eu.org/images/logos/Logo_Gent.png" alt="Ghent" height="80">
         <br>
-        <!-- <p>&copy; Copyright .</p> -->
+        <!-- <p>&copy; Copyright BraiNets.</p> -->
         </div>
     </footer>
 

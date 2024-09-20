@@ -24,14 +24,14 @@ np.random.seed(42)
 plt.style.use("ggplot")
 
 ###############################################################################
-# Redundant and synergistic behavior
-# ----------------------------------
+# Redundant and synergistic network behavior
+# ------------------------------------------
 #
 # In this first part, we are going to create a multivariate gaussian variable
-# `x` with specific information patterns. Then we need a function to estimate
+# `X` with specific information patterns. Then we need a function to estimate
 # whether the interactions between the three nodes are more redundant or more
 # synergistic. To estimate whether the interactions between the three nodes are
-# redundant or synergistic, we are gonig to use the
+# redundant or synergistic, we are going to use the
 # :class:`hoi.metrics.Oinfo`. When the Oinfo is positive, it means that the
 # interactions are redundant and if the Oinfo is negative, the interactions are
 # synergistic.
@@ -50,9 +50,9 @@ def compute_hoi_beh(x):
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 # In gaussian multivariate data, it is possible to generate synergy and
-# redundancy by setting the parameters of the covariance matrix. This is
-# what can be done using the function
-# :class:`hoi.simulation.simulate_hoi_gauss`, in the following way:
+# redundancy by setting the parameters of the covariance matrix. This can be
+# done using the function :class:`hoi.simulation.simulate_hoi_gauss`, in the
+# following way:
 
 # x = (n_samples, n_nodes)
 x = simulate_hoi_gauss(
@@ -77,7 +77,7 @@ print(f"HOI between nodes (1, 2, 3) : {hoi}")
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 # As for the redundancy, we can generate three gaussian variables, presenting
-# synergistic behavior, using the funciton,
+# redundant behavior, using the function,
 # :class:`hoi.simulation.simulate_hoi_gauss`, in the following way:
 
 # x = (n_samples, n_nodes)
@@ -129,7 +129,7 @@ print(f"HOI between nodes (1, 2, 3) : {hoi}")
 # Simulating redundant behavior by copy operator
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
-# Redundancy can emerge when nodes (1, 2, 3) in the system `x` are receiving
+# Redundancy can emerge when nodes (1, 2, 3) in the system `X` are receiving
 # multiple copies of the same information. A simple way to simulate redundancy
 # consists in taking the signal of one node, let's say the first one, and copy
 # this signal to the two other nodes.
@@ -137,8 +137,8 @@ print(f"HOI between nodes (1, 2, 3) : {hoi}")
 # x = (n_samples, n_nodes)
 x = np.random.rand(1000, 3)
 
-x[:, 1] = x[:, 1] + x[:, 0]  # 1 = 1 & 0
-x[:, 2] = x[:, 2] + x[:, 0]  # 2 = 2 & 0
+x[:, 1] = x[:, 1] + x[:, 0]  # 1 = 1 + 0
+x[:, 2] = x[:, 2] + x[:, 0]  # 2 = 2 + 0
 
 # %%
 # compute hoi using the Oinfo
@@ -156,11 +156,10 @@ print(f"HOI between nodes (1, 2, 3) : {hoi}")
 # Simulating dynamic redundancy and synergy
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
-# A synergy is obtained when elements of a system work together to produce an
-# effect that is greater than the sum of their individual contributions. A
-# simple example is the sum. When a variable `A` is defined as the sum of two
-# other variables :math:`A = B + C` then we need both `B` and `C` to know `A`.
-# That's what we are going to use here to simulate synergy.
+# In the same way, we can simulate dynamic redundancy and synergy (i.e. the
+# relationship between variables evolves over time). Here, we are going to use
+# the same trick as above to simulate redundancy and synergy except that the
+# relationship is going to be modulated by a temporal hanning window.
 
 # simulate a dynamic network
 x = np.random.rand(1000, 3, 100)
@@ -189,13 +188,13 @@ plt.ylabel("Oinfo [bits]")
 plt.title("Dynamic HOI", fontweight="bold")
 
 ###############################################################################
-# Redundant and synergistic encoding
-# ----------------------------------
+# Redundant and synergistic network encoding
+# ------------------------------------------
 #
 # In this second part, we are going to switch for encoding measure, in the sens
 # that elements of a network areg going to carry redundant or synergistic
-# information about an external variable. To estimate HOI about a target
-# variable `y`, we're going to use the :class:`hoi.metrics.GradientOinfo`. To
+# information **about** an external variable. To estimate HOI about a target
+# variable `Y`, we're going to use the :class:`hoi.metrics.GradientOinfo`. To
 # simulate redundancy and synergy, we're going to use the same methods as
 # before.
 
@@ -212,8 +211,10 @@ def compute_hoi_enc(x, y):
 # Simulating redundant encoding
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
-# To simulate redundancy, between a triplet of variable `x` and a target
-# variable `y`
+# To simulate redundancy between a triplet of variable `X` and a target
+# variable `Y`, we are going to use the same function as before
+# :class:`hoi.simulation.simulate_hoi_gauss` but this time, we are going to
+# precise that we want a target by setting `target=True`.
 
 # x = (n_samples, n_nodes)
 x, y = simulate_hoi_gauss(
@@ -230,14 +231,14 @@ print(f"HOI between nodes (1, 2, 3) about y : {hoi}")
 
 # %%
 # the estimated HOI is positive which represents redundant interactions between
-# the three nodes about y.
+# the three nodes about `Y`.
 
 # %%
 # Simulating synergistic encoding
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
-# To simulate synergy, between a triplet of variable `x` and a target
-# variable `y`
+# Similarly, we can simulate a synergistic network encoding behavior by
+# setting `target=True` and a synergistic behavior.
 
 # x = (n_samples, n_nodes)
 x, y = simulate_hoi_gauss(
@@ -254,13 +255,13 @@ print(f"HOI between nodes (1, 2, 3) about y : {hoi}")
 
 # %%
 # the estimated HOI is negative which represents synergistic interactions
-# between the three nodes about y.
+# between the three nodes about `Y`.
 
 # %%
 # Simulating redundant encoding by copy operation
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
-# To simulate redundancy, we copy the y variable into each node of x
+# To simulate redundancy, we copy the `Y` variable into each node of `X`
 
 # x = (n_samples, n_nodes)
 x = np.random.rand(1000, 3)
@@ -281,13 +282,13 @@ print(f"HOI between nodes (1, 2, 3) about y : {hoi}")
 
 # %%
 # the estimated HOI is positive which represents redundant interactions between
-# the three nodes about y.
+# the three nodes about `Y`.
 
 # %%
 # Simulating synergistic encoding by sum operation
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
-# To simulate synergy, we define the y variable as the sum of the three nodes
+# To simulate synergy, we define the `Y` variable as the sum of the three nodes
 
 # x = (n_samples, n_nodes)
 x = np.random.rand(1000, 3)
@@ -303,15 +304,15 @@ print(f"HOI between nodes (1, 2, 3) about y : {hoi}")
 
 # %%
 # the estimated HOI is negative which represents synergistic interactions
-# between the three nodes about y.
+# between the three nodes about `Y`.
 
 # %%
 # Simulating dynamic redundant and synergistic encoding
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
-# Finally, in the previous example, we used a static `x` and `y`. We can define
+# Finally, in the previous example, we used a static `X` and `X`. We can define
 # a dynamic network and a dynamic target to simulate time-varying redundant
-# and synergistic interactions about y.
+# and synergistic interactions about `Y`.
 
 # simulate a dynamic network
 x = np.random.rand(1000, 3, 100)

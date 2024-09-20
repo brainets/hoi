@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -270,6 +271,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jax.html">Jax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">List of contributors</a></li>
 </ul>
 
     </div>
@@ -438,13 +440,15 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="comparison-of-entropy-estimators-for-a-multivariate-normal">
 <span id="sphx-glr-auto-examples-it-plot-entropies-mvar-py"></span><h1>Comparison of entropy estimators for a multivariate normal<a class="headerlink" href="#comparison-of-entropy-estimators-for-a-multivariate-normal" title="Link to this heading">#</a></h1>
-<p>When computing Higher-Order Interactions using metrics based on entropy, it
-involves estimating entropy of multivariate variables. However, as we are going
-to see in this example, some estimators of entropy do not perform so well with
-increasing dimensionality. In this example, to illustrate this effect, we are
-going to compare entropy estimators with data sampled from a multivariate
-normal with increasing dimensionality.</p>
+<p>When calculating Higher-Order Interactions using entropy-based metrics, the
+process includes estimating the entropy of multivariate variables.
+Nevertheless, certain entropy estimators may not function optimally as the
+number of dimensions increases. This can be demonstrated through an example
+where various entropy estimators are compared using data sampled from a
+multivariate normal distribution with increasing dimensionality.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_spd_matrix</span>
 
 <span class="kn">from</span> <span class="nn">hoi.core</span> <span class="kn">import</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a>
 
@@ -456,12 +460,13 @@ normal with increasing dimensionality.</p>
 <section id="definition-of-estimators-of-entropy">
 <h2>Definition of estimators of entropy<a class="headerlink" href="#definition-of-estimators-of-entropy" title="Link to this heading">#</a></h2>
 <p>Let us define several estimators of entropy. We are going to use the GC
-(Gaussian Copula), the KNN (k Nearest Neighbor), the kernel-based
-and the Gaussian estimators.</p>
+(Gaussian Copula), the KNN (k Nearest Neighbor), the kernel-based, the
+Gaussian estimators and the histogram estimator.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># list of estimators to compare</span>
 <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;GC&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;gc&quot;</span><span class="p">),</span>
     <span class="s2">&quot;Gaussian&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;gauss&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;Histogram&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;histogram&quot;</span><span class="p">),</span>
     <span class="s2">&quot;KNN-3&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
     <span class="s2">&quot;Kernel&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_entropy.html#hoi.core.get_entropy" title="hoi.core.get_entropy" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_entropy</span></a><span class="p">(</span><span class="s2">&quot;kernel&quot;</span><span class="p">),</span>
 <span class="p">}</span>
@@ -509,11 +514,8 @@ to be used for simulating the multivariate normal. The function below takes a
 single input describing the dimensionality of the multivariate normal.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_covariance</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a symmetric positive semi-definite covariance matrix.&quot;&quot;&quot;</span>
-    <span class="c1"># Generate a random matrix</span>
-    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
-
-    <span class="c1"># Compute the product of A and its transpose</span>
-    <span class="n">cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="c1"># random covariance matrix</span>
+    <span class="n">cov</span> <span class="o">=</span> <span class="n">make_spd_matrix</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
     <span class="c1"># Normalize the covariance matrix to have diagonal elements equal to one</span>
     <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">cov</span><span class="p">))</span>
@@ -580,9 +582,11 @@ covariance matrix and <cite>n</cite> the dimensionality of the multivariate norm
 <span class="n">cov</span><span class="p">,</span> <span class="n">h_theoric</span> <span class="o">=</span> <span class="n">get_covariance</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 <span class="n">h_x</span> <span class="o">=</span> <span class="n">compute_entropies</span><span class="p">(</span><span class="n">cov</span><span class="p">)</span>
 <span class="n">plot</span><span class="p">(</span><span class="n">h_x</span><span class="p">,</span> <span class="n">h_theoric</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_entropies_mvar_001.png" srcset="../../_images/sphx_glr_plot_entropies_mvar_001.png" alt="2-dimensional multivariate normal, 4-dimensional multivariate normal, 6-dimensional multivariate normal, 8-dimensional multivariate normal" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 24.928 seconds)</p>
+<img src="../../_images/sphx_glr_plot_entropies_mvar_001.png" srcset="../../_images/sphx_glr_plot_entropies_mvar_001.png" alt="2-dimensional multivariate normal, 4-dimensional multivariate normal, 6-dimensional multivariate normal, 8-dimensional multivariate normal" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 32.658 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-entropies-mvar-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/4a44859767d9a5abc2a411d84f3464c0/plot_entropies_mvar.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_entropies_mvar.ipynb</span></code></a></p>
@@ -659,13 +663,20 @@ covariance matrix and <cite>n</cite> the dimensionality of the multivariate norm
   <div class="footer-item">
     
 <p class="component-author">
-By Author name not set
+By BraiNets
 </p>
 
   </div>
   
   <div class="footer-item">
     
+
+  <p class="copyright">
+    
+      © Copyright BraiNets.
+      <br/>
+    
+  </p>
 
   </div>
   
@@ -697,7 +708,7 @@ By Author name not set
             <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
             <img src="https://enlight-eu.org/images/logos/Logo_Gent.png" alt="Ghent" height="80">
         <br>
-        <!-- <p>&copy; Copyright .</p> -->
+        <!-- <p>&copy; Copyright BraiNets.</p> -->
         </div>
     </footer>
 

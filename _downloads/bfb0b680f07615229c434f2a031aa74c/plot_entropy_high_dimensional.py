@@ -12,6 +12,7 @@ high-dimensional data.
 
 """
 
+# %%
 import numpy as np
 
 from hoi.core import get_entropy
@@ -25,7 +26,8 @@ plt.style.use("ggplot")
 # ---------------------------
 #
 # We are going to use the GCMI (Gaussian Copula Mutual Information), KNN
-# (k Nearest Neighbor) and a Gaussian kernel-based estimator.
+# (k Nearest Neighbor), a Gaussian kernel-based estimator and the histogram
+# estimator.
 
 # list of estimators to compare
 metrics = {
@@ -33,10 +35,11 @@ metrics = {
     "KNN-3": get_entropy("knn", k=3),
     "KNN-10": get_entropy("knn", k=10),
     "Kernel": get_entropy("kernel"),
+    "Histogram": get_entropy("histogram"),
 }
 
 # number of samples to simulate data
-n_samples = np.geomspace(100, 10000, 10).astype(int)
+n_samples = np.geomspace(20, 1000, 15).astype(int)
 
 # number of repetitions to estimate the percentile interval
 n_repeat = 10
@@ -68,6 +71,7 @@ def plot(ent, ent_theoric, ax):
     ax.set_ylabel("Entropy [bits]")
 
 
+# %%
 ###############################################################################
 # Entropy of data sampled from multinormal distribution
 # -------------------------------------------

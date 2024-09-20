@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx_contributors.css?v=f079e67e" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
@@ -270,6 +271,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../jax.html">Jax</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contributor_guide.html">Developer Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributors.html">List of contributors</a></li>
 </ul>
 
     </div>
@@ -463,9 +465,16 @@ to :</p>
 <h2>Definition of MI estimators<a class="headerlink" href="#definition-of-mi-estimators" title="Link to this heading">#</a></h2>
 <p>Let us define several estimators of MI. We are going to use the GC MI
 (Gaussian Copula Mutual Information), the KNN (k Nearest Neighbor) and the
-kernel-based estimator and using the a binning approach.</p>
+kernel-based estimator, using the a binning approach and the histogram
+estimator. Please note that the histogram estimator is equivalent to the
+binning, with a correction that relate to the difference between the Shannon
+entropy of discrete variables and the differential entropy of continuous
+variables. This correction in the case of mutual information (MI) is not
+needed, because in the operation to compute the MI, the difference between
+discrete and differential entropy cancel out.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a special function for the binning approach as it requires binary data</span>
 <span class="n">mi_binning_fcn</span> <span class="o">=</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;binning&quot;</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
 
 <span class="k">def</span> <span class="nf">mi_binning</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="n">x</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.digitize.html#hoi.utils.digitize" title="hoi.utils.digitize" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">digitize</span></a><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
@@ -481,6 +490,7 @@ kernel-based estimator and using the a binning approach.</p>
     <span class="s2">&quot;KNN-10&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;knn&quot;</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
     <span class="s2">&quot;Kernel&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;kernel&quot;</span><span class="p">),</span>
     <span class="s2">&quot;Binning&quot;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">mi_binning</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
+    <span class="s2">&quot;Histogram&quot;</span><span class="p">:</span> <a href="../../api/generated/hoi.core.get_mi.html#hoi.core.get_mi" title="hoi.core.get_mi" class="sphx-glr-backref-module-hoi-core sphx-glr-backref-type-py-function"><span class="n">get_mi</span></a><span class="p">(</span><span class="s2">&quot;histogram&quot;</span><span class="p">,</span> <span class="n">n_bins</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>
 <span class="p">}</span>
 
 <span class="c1"># number of samples to simulate data</span>
@@ -519,9 +529,9 @@ kernel-based estimator and using the a binning approach.</p>
 <h2>MI of data sampled from normal distribution<a class="headerlink" href="#mi-of-data-sampled-from-normal-distribution" title="Link to this heading">#</a></h2>
 <p>Given two variables <span class="math notranslate nohighlight">\(X \sim \mathcal{N}(\mu_{x}, \sigma_{x})\)</span> and
 <span class="math notranslate nohighlight">\(Y \sim \mathcal{N}(\mu_{y}, \sigma_{y})\)</span>, linked by a covariance
-<span class="math notranslate nohighlight">\(C\)</span> the theoretical MI in bits is defined by :</p>
+<span class="math notranslate nohighlight">\(\sigma_{xy}\)</span> the theoretical MI in bits is defined by :</p>
 <div class="math notranslate nohighlight">
-\[I(X; Y) = \frac{1}{2} \times log_{2}(\frac{\sigma_{x}^{2}\sigma_{y}^{2}}{ \sigma_{x}^{2}\sigma_{y}^{2} - C^{2} })\]</div>
+\[I(X; Y) = \frac{1}{2} \times log_{2}(\frac{\sigma_{x}^{2}\sigma_{y}^{2}}{ \sigma_{x}^{2}\sigma_{y}^{2} - \sigma_{xy}^{2} })\]</div>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># mean and standard error of x and y variables</span>
 <span class="n">mu_x</span> <span class="o">=</span> <span class="mf">0.0</span>
 <span class="n">mu_y</span> <span class="o">=</span> <span class="mf">0.0</span>
@@ -565,7 +575,7 @@ kernel-based estimator and using the a binning approach.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_mi_001.png" srcset="../../_images/sphx_glr_plot_mi_001.png" alt="Comparison of MI estimators when the data are sampled from a normal distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 16.762 seconds)</p>
+<img src="../../_images/sphx_glr_plot_mi_001.png" srcset="../../_images/sphx_glr_plot_mi_001.png" alt="Comparison of MI estimators when the data are sampled from a normal distribution" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 20.992 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-it-plot-mi-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/f14e92090ebeb63084124f7809315b90/plot_mi.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_mi.ipynb</span></code></a></p>
@@ -642,13 +652,20 @@ kernel-based estimator and using the a binning approach.</p>
   <div class="footer-item">
     
 <p class="component-author">
-By Author name not set
+By BraiNets
 </p>
 
   </div>
   
   <div class="footer-item">
     
+
+  <p class="copyright">
+    
+      © Copyright BraiNets.
+      <br/>
+    
+  </p>
 
   </div>
   
@@ -680,7 +697,7 @@ By Author name not set
             <img src="https://developers.google.com/open-source/gsoc/resources/downloads/GSoC-Vertical.png" alt="Gsoc" height="80">
             <img src="https://enlight-eu.org/images/logos/Logo_Gent.png" alt="Ghent" height="80">
         <br>
-        <!-- <p>&copy; Copyright .</p> -->
+        <!-- <p>&copy; Copyright BraiNets.</p> -->
         </div>
     </footer>
 

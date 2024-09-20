@@ -46,7 +46,7 @@ print("Entropy of x: %.2f" % entropy(x))
 # the analytical formula, which is:
 #
 # .. math::
-#   H(X) = \frac{1}{2} \log \left( (2 \pi e)^D \det(\Sigma) \right)
+#   H(X) = \frac{1}{2} \log \left( (2 \pi e)^D \det(\Sigma) \right)  / log(2)
 #
 # where :math:`D` is the dimensionality of the Gaussian and :math:`\Sigma` is
 # the covariance matrix of the Gaussian. We have:

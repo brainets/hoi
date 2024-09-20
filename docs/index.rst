@@ -77,7 +77,7 @@ If you want to contribute to HOI, please checkout the :ref:`contribute`
 Funding
 +++++++
 
-The XGI package has been supported by the `Google Summer of Code 2023 <https://summerofcode.withgoogle.com/archive/2023/projects/z6hGpvLS>`_. We also acknowledge `EBRAINS <https://www.ebrains.eu/>`_, `Amidex <https://www.univ-amu.fr/fr/public/la-fondation-amidex>`_ and the `ANR <https://anr.fr/>`_ for their support.
+The HOI package has been supported by the `Google Summer of Code 2023 <https://summerofcode.withgoogle.com/archive/2023/projects/z6hGpvLS>`_. We also acknowledge `EBRAINS <https://www.ebrains.eu/>`_, `Amidex <https://www.univ-amu.fr/fr/public/la-fondation-amidex>`_ and the `ANR <https://anr.fr/>`_ for their support.
 
 License
 +++++++

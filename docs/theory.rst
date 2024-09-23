@@ -152,7 +152,7 @@ behaviors from multivariate data.
 These information theoretical measures quantify the degree of higher-order
 functional interactions between different variables.
 
-* :term:`Network encoding` category contains measures that quantify the information carried 
+* :term:`Network encoding` category containing measures that quantify the information carried 
 by higher-order functional interactions about a set of external target variables.
 
 In the following parts we are going through all the metrics 
@@ -162,14 +162,15 @@ foundation and possible interpretations.
 Network behavior 
 *****************
 
-The metrics that are contained in this section quantify collective 
+The metrics that are listed in this section quantify collective 
 higher-order behaviors from multivariate data. 
-These information-theoretic measures, such as Total Correlation and O-information, 
+Information-theoretic measures, such as Total Correlation and O-information, 
 are useful for studying the collective behavior of three or more components 
-in complex systems, such as brain regions or economic indicators. Once data is gathered 
-from the activity of this components, these measures can be applied to unveil 
-new insights about the functional interactions of those components. In this section, we 
-list all the metrics of this kind that are implemented in the toolbox, providing a 
+in complex systems, such as brain regions, economic indicators or psychological 
+variables. Once data is gathered, these network behavior measures can be applied to unveil 
+new insights about the functional interactions characterizing the system under study.
+In this section, we list all the metrics of network behavior, 
+that are implemented in the toolbox, providing a 
 concise explanation and relevant references. 
 
 Total correlation 
@@ -202,7 +203,7 @@ is shared by at least two or more variables in the following way:
 	DTC(X^{n})  &=  H(X^{n}) - \sum_{j=1}^{n} H(X_j|X_{-j}^{n}) \\
 				&= \sum_{j=1}^{n} H(X_j) - (n-1)H(X^{n})
 
-where Where :math:`X_{-j}^n` is the set of all the variables in :math:`X^n` apart from :math:`X_j`, 
+Where :math:`X_{-j}^n` is the set of all the variables in :math:`X^n` apart from :math:`X_j`, 
 :math:`X_{-j}^{n}=  \{ X_1, X_2, ..., X_{j-1}, X_{j+1}, ..., X_n  \}`, so that :math:`H(X_j|X_{-j}^{n})` 
 is the entropy of :math:`X_j` not shared by any other variable. 
 This measure is higher in systems in which lower order constraints prevails.
@@ -259,7 +260,7 @@ definition for a set of variables :math:`X^n`, is the following:
 
 .. math::
 
-    TI(X^n) = \sum_{i=1}^{n} (-1)^{i - 1} \sum_{S\subset[X^n];card(S)=i} H(S)
+    TI(X^n) = \sum_{i=1}^{n} (-1)^{i - 1} i \sum_{S\subset[X^n];card(S)=i} H(S)
 
 Note that for a set of two variables, :math:`TI(X,Y) = MI(X,Y)` and that for a set of three variables,
  :math:`TI(X,Y,Z)=\Omega(X,Y,Z)`. As the 
@@ -274,11 +275,15 @@ Synergy and redundancy integrated Information Decomposition (MMI)
 
 Recently it has been drawn a lot of attention by different metrics focusing 
 on decomposing the information that two variables carry about their own 
-future :cite:`mediano2021towards`. 
-In particular, the synergy that is carried by two variables about their 
+future :cite:`mediano2021towards`. A new decomposition of the information dynamics
+have been developed to achieve a more nuanced description of the temporal evolution
+of the synergy and the redundancy between different variables.
+The synergy that is carried by two variables about their 
 joint future, has been associated with the concept of emergence and 
 integration of information :cite:`mediano2022greater, rosas2020reconciling, luppi2024information`.
-Instead the redundancy as been associated with the concept of robustness, 
+Instead the redundancy that is preserved, often refered too as 
+"double redundancy" :cite:`mediano2021towards`, 
+has been associated with the concept of robustness, 
 in the sense that it refers to situation in which information 
 is available in different sources, making the evolution process 
 less vulnerable by the lost of elements  :cite:`luppi2024information`. 
@@ -317,6 +322,16 @@ mutual information (TDMI), :math:`I(X(t-\tau),Y(t-\tau);X(t),Y(t))`.
 Network encoding 
 ****************
 
+The metrics that are listed in this section focus on measuring the informaiton 
+content that a set of variables carry about an external target of interest. 
+Information-theoretic measures, such as Redundacy-Synergy index and the gradient O-information, 
+are useful for studying the behavior of different variables in relationship with an 
+external target. Once data is gathered, these measures of network encoding can be applied to unveil 
+new insights about the functional interaction modulated by external variables of interest.
+In this section, we list all the metrics of network encoding, 
+that are implemented in the toolbox, providing a 
+concise explanation and relevant references. 
+
 Gradient of O-information
 -------------------------
 
@@ -324,11 +339,12 @@ The O-information gradient, :class:`hoi.metrics.GradientOinfo`, has been develop
 study the contribution of one or a set of variables to the O-information of the whole 
 system :cite:`scagliarini2023gradients`. In this work we proposed to use this metric 
 to investigate the relationship between multiplets of source variables and a target 
-variable. Following the definition of the O-information gradient of order 1 we have:
+variable. Following the definition of the O-information gradient of order 1, between 
+the set of variables :math:`X^n` and an external target :math:`Y` we have:
 
 .. math::
 
-    \partial_{target}\Omega(X^n) = \Omega(X^n, target) - \Omega(X^n)
+    \partial_{target}\Omega(X^n) = \Omega(X^n, Y) - \Omega(X^n)
 
 This metric does not focus on the O-information of a group of variables, instead 
 it reflects the variation of O-information when the target variable is added to the group. 
@@ -383,7 +399,7 @@ defined as:
 
 .. math::
 
-	redundancy (Y, X^n) = min_{i<n} I \left( Y, X_i \right)
+	redundancy (Y, X^n) = min_{i} I \left( Y, X_i \right)
     
 .. minigallery:: hoi.metrics.RedundancyMMI
 
@@ -392,7 +408,7 @@ of synergy, :class:`hoi.metrics.SynergyMMI`, follows:
 
 .. math::
 
-	synergy (Y, X^n) =  I \left( Y, X^n \right) - max_{i<n} I \left( Y, X^n_{ -i } \right)
+	synergy (Y, X^n) =  I \left( Y, X^n \right) - max_{j} I \left( Y, X^n_{ -j } \right)
 
 Where :math:`X^n_{-i}` is the set of variables :math:`X^n`, excluding 
 the variable :math:`i`. This metric has been proven to be accurate when 

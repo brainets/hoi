@@ -34,6 +34,7 @@ doc_deps = [
     "sphinx_design",
     "sphinx-book-theme",
     "sphinxcontrib-bibtex",
+    "sphinx_contributors",
     "numpydoc",
     "matplotlib",
     "xgi",

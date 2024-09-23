@@ -2,16 +2,17 @@
 Topological Information : conditioning on orders
 ================================================
 
-This example illustrates a metric called Topological Information published by
-Baudot et al., 2019 :cite:`baudot2019infotopo`. This metric is based on
-differences of entropies and can be used to estimate Higher Order Interactions.
-One important feature of this metric relies on its ability to isolate an order.
-To be clear, we are going to see in this example that if we simulate a
-redundancy at order 3, a metric as the O-information (
-:class:`hoi.metrics.Oinfo`) is going to return reduandancy for all of the
-quadruplets that are going to include the redundant triplet. However, the
-:class:`hoi.metrics.InfoTopo` is capable of isolating only the redundant
-triplet.
+The following example highlights a metric known as "Topological Information"
+which was introduced by Baudot et al., 2019 :cite:`baudot2019infotopo`. This
+metric, founded on disparities in entropies, enables estimation of Higher Order
+Interactions while possessing the notable characteristic of being able to
+segregate specific orders. Specifically, when simulating redundancies at the
+third order utilizing the O-information metric (:class:`hoi.metrics.Oinfo`),
+any quadruplets containing the superfluous triplet will yield redundancy.
+Conversely, the InfoTopo metric (:class:`hoi.metrics.InfoTopo`) has the
+capability of pinpointing exclusively the redundant triplet. You can also check
+the original implementation of this estimator :
+https://infotopo.readthedocs.io/
 """
 
 # %%

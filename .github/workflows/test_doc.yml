@@ -73,7 +73,7 @@ jobs:
           touch _build/html/.nojekyll
 
       - name: Deploy Github Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.6.3
+        uses: JamesIves/github-pages-deploy-action@v4.6.4
         with:
           branch: gh-pages
           folder: docs/_build/html/

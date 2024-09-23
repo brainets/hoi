@@ -2,16 +2,18 @@
 Comparison of entropy estimators for a multivariate normal
 ==========================================================
 
-When computing Higher-Order Interactions using metrics based on entropy, it
-involves estimating entropy of multivariate variables. However, as we are going
-to see in this example, some estimators of entropy do not perform so well with
-increasing dimensionality. In this example, to illustrate this effect, we are
-going to compare entropy estimators with data sampled from a multivariate
-normal with increasing dimensionality.
+When calculating Higher-Order Interactions using entropy-based metrics, the
+process includes estimating the entropy of multivariate variables.
+Nevertheless, certain entropy estimators may not function optimally as the
+number of dimensions increases. This can be demonstrated through an example
+where various entropy estimators are compared using data sampled from a
+multivariate normal distribution with increasing dimensionality.
 """
 
 # %%
 import numpy as np
+
+from sklearn.datasets import make_spd_matrix
 
 from hoi.core import get_entropy
 
@@ -84,11 +86,8 @@ def plot(h_x, h_theoric, n):
 
 def get_covariance(n):
     """Get a symmetric positive semi-definite covariance matrix."""
-    # Generate a random matrix
-    A = np.random.uniform(-1.0, 1.0, size=(n, n))
-
-    # Compute the product of A and its transpose
-    cov = np.dot(A, A.T)
+    # random covariance matrix
+    cov = make_spd_matrix(n)
 
     # Normalize the covariance matrix to have diagonal elements equal to one
     d = np.sqrt(np.diag(cov))
@@ -163,3 +162,5 @@ n = 8
 cov, h_theoric = get_covariance(n)
 h_x = compute_entropies(cov)
 plot(h_x, h_theoric, n)
+
+plt.show()

@@ -16,8 +16,8 @@ from sphinx_gallery.sorting import ExplicitOrder
 sys.path.insert(0, os.path.abspath(".."))
 
 project = "HOI"
-# copyright = "BraiNets"
-# author = "BraiNets"
+copyright = "BraiNets"
+author = "BraiNets"
 release = hoi.__version__
 release = hoi.__version__
 
@@ -40,6 +40,7 @@ extensions = [
     "sphinxcontrib.bibtex",
     "sphinx_gallery.gen_gallery",
     "sphinx_design",
+    "sphinx_contributors",
     # "sphinx_panels",
     # "sphinx_copybutton",
 ]

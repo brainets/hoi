@@ -60,6 +60,31 @@ HOI : High-Performance Estimation of Higher-Order Interactions
       :link-type: doc
       :class-card: box3
 
+Get involved
+++++++++++++
+
+If you want to contribute to HOI, please checkout the :ref:`contribute`
+
+.. How to Cite
+.. +++++++++++
+
+.. If you use HOI in your data analysis, please use the following citations in your publications :
+
+.. .. code-block:: latex
+
+..    bibtex entry
+
+Funding
++++++++
+
+The HOI package has been supported by the `Google Summer of Code 2023 <https://summerofcode.withgoogle.com/archive/2023/projects/z6hGpvLS>`_. We also acknowledge `EBRAINS <https://www.ebrains.eu/>`_, `Amidex <https://www.univ-amu.fr/fr/public/la-fondation-amidex>`_ and the `ANR <https://anr.fr/>`_ for their support.
+
+License
++++++++
+
+This project is licensed under the `BSD 3-Clause License <https://github.com/brainets/hoi/blob/main/LICENSE>`_.
+
+
 .. toctree::
    :hidden:
    :maxdepth: 1
@@ -80,3 +105,4 @@ HOI : High-Performance Estimation of Higher-Order Interactions
    Public API: list of functions <api/modules>
    Jax <jax>
    Developer Documentation <contributor_guide>
+   List of contributors <contributors>

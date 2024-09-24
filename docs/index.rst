@@ -77,7 +77,7 @@ If you want to contribute to HOI, please checkout the :ref:`contribute`
 Funding
 +++++++
 
-The HOI package has been supported by the `Google Summer of Code 2023 <https://summerofcode.withgoogle.com/archive/2023/projects/z6hGpvLS>`_. We also acknowledge `EBRAINS <https://www.ebrains.eu/>`_, `Amidex <https://www.univ-amu.fr/fr/public/la-fondation-amidex>`_ and the `ANR <https://anr.fr/>`_ for their support.
+The HOI package has been supported by the `Google Summer of Code 2023 <https://summerofcode.withgoogle.com/archive/2023/projects/z6hGpvLS>`_. We also acknowledge the A*Midex Foundation of Aix-Marseille University project “Hinteract” (AMX-22-RE-AB-071) and the EU’s Horizon 2020 Framework Programme for Research and Innovation under the Specific Grant Agreements No. 101147319 (EBRAINS 2.0 Project).
 
 License
 +++++++

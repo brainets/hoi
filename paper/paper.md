@@ -14,7 +14,7 @@ authors:
     affiliation: 3
     equal-contrib: true
   - name: Christian Ferreyra
-    affiliation: 1,5
+    affiliation: [1, 5]
   - name: Thomas Robiglio
     affiliation: 4
   - name: Onur Ates

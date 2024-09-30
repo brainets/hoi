@@ -1,5 +1,5 @@
 ---
-title:  'High-performance estimation of Higher-Order Interactions from multivariate data'
+title:  'HOI: A Python toolbox for high-performance estimation of Higher-Order Interactions from multivariate data'
 tags:
   - python
   - higher-order interactions
@@ -19,12 +19,12 @@ authors:
     affiliation: 4
   - name: Onur Ates
     affiliation: 1
-  - name: Andrea Brovelli
-    orcid: 0000-0002-5342-1330
-    affiliation: 1
   - name: Marlis Ontivero-Ortega
     orcid: 0000-0003-0084-8274
     affiliation: 2
+  - name: Andrea Brovelli
+    orcid: 0000-0002-5342-1330
+    affiliation: 1
   - name: Daniele Marinazzo
     orcid: 0000-0002-9803-0122
     affiliation: 2

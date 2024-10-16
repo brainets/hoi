@@ -23,7 +23,7 @@ plt.style.use("ggplot")
 # ---------------
 #
 # Let's first simulate some data to showcase the different metrics. Here, we
-# are going to simulate a network of 6 nodes, then we introduce redudancy
+# are going to simulate a network of 6 nodes, then we introduce redundancy
 # between nodes (0, 1, 2) and synergy between nodes (3, 4, 5). For further
 # information about how to simulate redundant and synergistic interactions,
 # checkout the example

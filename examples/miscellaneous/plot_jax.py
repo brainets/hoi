@@ -42,12 +42,12 @@ print(f"Unique elements : {jnp.unique(x)}")
 print(f"Dot product :\n{jnp.dot(x.reshape(-1, 1), x.reshape(1, -1))}")
 
 # %%
-# One noticable difference is how to change values in an array :
+# One noticeable difference is how to change values in an array :
 
 print(f"Updating value : {x.at[0].set(33)}")
 
 # %%
-# Further ressources :
+# Further resources :
 #
 #     * https://jax.readthedocs.io/en/latest/jax.numpy.html : NumPy
 #        functions implemented in jax
@@ -101,7 +101,7 @@ def fcn(x, exponent=3):
 print(fcn(x, exponent=3))
 
 # %%
-# Further ressources :
+# Further resources :
 #
 #     * https://jax.readthedocs.io/en/latest/jit-compilation.html : jax
 #       tutorial on how to use jit
@@ -140,7 +140,7 @@ minmax_2d = jax.vmap(minmax, in_axes=1)
 print(minmax_2d(x).shape)
 
 # %%
-# Now imagin that you have a 3d array x and you want to apply the function over
+# Now imagine that you have a 3d array x and you want to apply the function over
 # the first and second axes. You can wrap your function twice with vmap.
 
 # define a 3d array
@@ -156,7 +156,7 @@ minmax_3d_jit = jax.jit(minmax_3d)
 print(minmax_3d(x).shape)
 
 # %%
-# Further ressources :
+# Further resources :
 #
 #     * https://jax.readthedocs.io/en/latest/automatic-vectorization.html : jax
 #       tutorial on how to use vmap

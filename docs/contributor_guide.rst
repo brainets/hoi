@@ -35,7 +35,7 @@ The full installation of HOI includes additional packages to test the software a
 Contributing to HOI
 -------------------
 
-- For questions, please use the `discusssions page <https://github.com/brainets/hoi/discussions>`_
+- For questions, please use the `discussions page <https://github.com/brainets/hoi/discussions>`_
 - You can signal a bug or suggests improvements to the code base or the documentation by `opening an issue <https://github.com/brainets/hoi/issues>`_
 
 Contributing code using pull requests
@@ -45,7 +45,7 @@ We do all of our development using git, so basic knowledge is assumed.
 
 Follow these steps to contribute code:
 
-1. Fork the hoi repository by cliking the **Fork** button on the `repository page <https://github.com/brainets/hoi>`_
+1. Fork the hoi repository by clicking the **Fork** button on the `repository page <https://github.com/brainets/hoi>`_
 2. Install Python >= 3.8
 3. Clone the hoi repository to your computer and install hoi :
 
@@ -79,7 +79,7 @@ Follow these steps to contribute code:
 
     pytest -v
 
-Each python file inside HOI is tested to ensure that fonctionalities of HOI are maintained with each commit. If you modify a file, or example `hoi/core/entropies.py`, you can run the tests for this specific file only located in `hoi/core/tests/tests_entropies.py` If you want to only test the files you modified you can use :
+Each python file inside HOI is tested to ensure that functionalities of HOI are maintained with each commit. If you modify a file, or example `hoi/core/entropies.py`, you can run the tests for this specific file only located in `hoi/core/tests/tests_entropies.py` If you want to only test the files you modified you can use :
 
 .. code-block:: shell
 

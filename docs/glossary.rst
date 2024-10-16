@@ -34,7 +34,7 @@ Glossary
     
     Network encoding
       Higher Order Interactions between a set of variables modulated by a target variable.
-      Measures of exstrinsic information  :cite:`luppi2024information`, i.e. information carried by a group of 
+      Measures of extrinsic information  :cite:`luppi2024information`, i.e. information carried by a group of 
       variables about an external target are part of this group.
       `Directed` metrics :cite:`rosas2024characterising`, as the 
       Redundancy-synergy index (RSI), are also part of this group. 

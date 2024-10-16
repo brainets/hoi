@@ -1,7 +1,7 @@
 ``hoi.core`` 
 ------------
 
-Core information-theoretical measures and combinatory.
+Core information-theoretical measures and combinatorics.
 
 .. currentmodule:: hoi.core
 
@@ -29,7 +29,7 @@ Measures of Mutual Information
    get_mi
 
 
-Combinatory
+Combinatorics
 +++++++++++
 .. autosummary::
    :toctree: generated/

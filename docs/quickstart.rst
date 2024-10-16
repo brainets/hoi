@@ -65,10 +65,10 @@ To inspect your results, we provide a plotting function called :func:`hoi.plot.p
 Practical recommendations
 +++++++++++++++++++++++++
 
-Robust estimations of HOI strongly rely on the accuity of measuring entropy/mutual information on/between (potentially highly) multivariate data. In the :doc:`auto_examples/index` section you can find benchmarks of our entropy estimators. Here we recommend :
+Robust estimations of HOI strongly rely on the acuity of measuring entropy/mutual information on/between (potentially highly) multivariate data. In the :doc:`auto_examples/index` section you can find benchmarks of our entropy estimators. Here we recommend :
 
 * **Measuring entropy and mutual information :** we recommend the Gaussian Copula method (`method="gc"`). Although this measure is not accurate for capturing relationships beyond the gaussian assumption (see :ref:`sphx_glr_auto_examples_it_plot_entropies.py`), this method performs relatively well for multivariate data (see :ref:`sphx_glr_auto_examples_it_plot_entropies_mvar.py`)
-* **Measuring Higher-Order Interactions for network behavior and network encoding :** for network behavior and ncoding, we recommend respectively the O-information :class:`hoi.metrics.Oinfo` and the :class:`hoi.metrics.GradientOinfo`. Although both metrics suffer from the same limitations, like the spreading to higher orders, this can be mitigated using a boostrap approach (see :ref:`sphx_glr_auto_examples_statistics_plot_bootstrapping.py`). Otherwise, both metrics are usually pretty accurate to retrieve the type of interactions between variables, especially once combined with the Gaussian Copula.
+* **Measuring Higher-Order Interactions for network behavior and network encoding :** for network behavior and encoding, we recommend respectively the O-information :class:`hoi.metrics.Oinfo` and the :class:`hoi.metrics.GradientOinfo`. Although both metrics suffer from the same limitations, like the spreading to higher orders, this can be mitigated using a bootstrap approach (see :ref:`sphx_glr_auto_examples_statistics_plot_bootstrapping.py`). Otherwise, both metrics are usually pretty accurate to retrieve the type of interactions between variables, especially once combined with the Gaussian Copula.
 
 
 Other softwares for the analysis of higher-order interactions

@@ -84,7 +84,7 @@ entropy of a continuous variable, different methods are implemented in the toolb
   discrete set of bins. In this way, variables are discretized and the entropy 
   can be computed as described above, correcting for the bin size .
 
-* Binning method, that allow to extimate the entropy of a discrete variable 
+* Binning method, that allow to estimate the entropy of a discrete variable 
   estimating the probability of each possible values in a frequentist approach.
   Note that this procedure can be performed also on continuous variables after 
   binarization in many different ways 
@@ -126,7 +126,7 @@ MI between two variables, quantifies how much knowing one variable reduces the u
 the other and measures the interdependency between the two variables. If they are independent, 
 we have :math:`H(X,Y)=H(X)+H(Y)`, hence :math:`MI(X,Y)=0`. Since the MI can be reduced to a 
 signed sum of entropies, the problem of how to estimate MI from continuous data can be 
-reconducted to the problem, discussed above, of how to estimate entropies. An estimator 
+reduced to the problem, discussed above, of how to estimate entropies. An estimator 
 that has been recently developed and presents interesting properties when computing the MI 
 is the Gaussian Copula estimator :cite:`ince2017statistical`. This estimator is based on the 
 statistical theory of copulas and is proven to provide a lower bound to the real value of MI, 
@@ -176,7 +176,7 @@ concise explanation and relevant references.
 Total correlation 
 -----------------
 
-Total correlation, :class:`hoi.metrics.TC`, is the oldest exstension of mutual information to
+Total correlation, :class:`hoi.metrics.TC`, is the oldest extension of mutual information to
 an arbitrary number of variables :cite:`watanabe1960information, studeny1998multiinformation`. 
 For a group of variables :math:`X^n =  \{ X_1, X_2, ..., X_n  \}`, it is defined in the following way:
 
@@ -185,7 +185,7 @@ For a group of variables :math:`X^n =  \{ X_1, X_2, ..., X_n  \}`, it is defined
 	TC(X^{n})  &=  \sum_{j=1}^{n} H(X_{j}) - H(X^{n}) \\
 
 The total correlation quantifies the strength of collective constraints ruling the systems, 
-it is sentive to information shared between single variables and it can be associated with 
+it is sensitive to information shared between single variables and it can be associated with 
 redundancy.
 
 .. minigallery:: hoi.metrics.TC
@@ -195,7 +195,7 @@ Dual Total correlation
 
 Dual total correlation, :class:`hoi.metrics.DTC`, is another extension of mutual information to
 an arbitrary number of variables, also known as binding information and excess 
-entropy, :cite:`sun1975linear`. It quatifies the part of the joint entropy that 
+entropy, :cite:`sun1975linear`. It quantifies the part of the joint entropy that 
 is shared by at least two or more variables in the following way:
 
 .. math::
@@ -223,7 +223,7 @@ correlation (DTC), :cite:`james2011anatomy`:
 					&=  nH(X^{n}) + \sum_{j=1}^{n} [H(X_{j}) + H(
 					X_{-j}^{n})]
 
-It is sensitive to both redundancy and synergy, quantifying the total ammount of constraints 
+It is sensitive to both redundancy and synergy, quantifying the total amount of constraints 
 ruling the system under study.
 
 .. minigallery:: hoi.metrics.Sinfo
@@ -322,9 +322,9 @@ mutual information (TDMI), :math:`I(X(t-\tau),Y(t-\tau);X(t),Y(t))`.
 Network encoding 
 ****************
 
-The metrics that are listed in this section focus on measuring the informaiton 
+The metrics that are listed in this section focus on measuring the information 
 content that a set of variables carry about an external target of interest. 
-Information-theoretic measures, such as Redundacy-Synergy index and the gradient O-information, 
+Information-theoretic measures, such as Redundancy-Synergy index and the gradient O-information, 
 are useful for studying the behavior of different variables in relationship with an 
 external target. Once data is gathered, these measures of network encoding can be applied to unveil 
 new insights about the functional interaction modulated by external variables of interest.

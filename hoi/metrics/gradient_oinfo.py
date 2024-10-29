@@ -85,7 +85,7 @@ class GradientOinfo(HOIEstimator):
         Returns
         -------
         hoi : array_like
-            The NumPy array containing values of higher-rder interactions of
+            The NumPy array containing values of higher-order interactions of
             shape (n_multiplets, n_variables)
         """
         kw_oinfo = dict(

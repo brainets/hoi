@@ -22,7 +22,7 @@ plt.style.use("ggplot")
 #
 # The synergy as defined in the Integrated Information decomposition framework
 # is a pairwise measure of the synergistic information that two variables
-# carry about their own future. For a couple of varible,
+# carry about their own future. For a couple of variables,
 # :math:`X` and  :math:`Y`, when using the minimum mutual information (MMI)
 # approximation for the redundancy, it is defined in the following way:
 
@@ -43,9 +43,9 @@ plt.style.use("ggplot")
 #     Red(X,Y) =  min (I(X_{t-\tau}; Y_{t}), I(X_{t-\tau}; X_t),
 #                      I(Y_{t-\tau}; X_t), I(Y_{t-\tau}; Y_t))
 #
-# Redundancy relates to the ammount of information the two variables share
-# about their own future. An high presence of redundancy can be associated with
-# robustness, while an stroger presence of synergy to emergence.
+# Redundancy relates to the amount of information the two variables share
+# about their own future. A high presence of redundancy can be associated with
+# robustness, while a stronger presence of synergy to emergence.
 
 ###############################################################################
 # Simulate synergy
@@ -60,7 +60,7 @@ plt.style.use("ggplot")
 x = np.random.rand(200, 7)
 
 # now to create synergy between the two first features, we do the following:
-# to create interdependencies betzeen past and future we use a uniform
+# to create interdependencies between past and future we use a uniform
 # kernel in the following way
 
 for i in range(190):
@@ -96,7 +96,7 @@ for i in range(190):
     x[i, 0] = np.sum(x[i : i + 20, 1])
 
 # Redundancy emerges when the two variables carry the same information about
-# Their future. This can be acheived by copy operation between the two
+# Their future. This can be achieved by copy operation between the two
 # variables plus some noise.
 
 x[:, 1] = x[:, 0] + np.random.rand(200) * 0.05

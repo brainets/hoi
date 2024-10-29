@@ -250,6 +250,8 @@ def get_nbest_mult(
     import pandas as pd
 
     hoi = np.asarray(hoi).squeeze()
+    if not hoi.ndim:
+        hoi = hoi.reshape(-1)
 
     # get order and multiplets
     if model:

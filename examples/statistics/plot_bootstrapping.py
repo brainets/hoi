@@ -193,6 +193,8 @@ plt.xlabel("Multiplet")
 plt.ylabel("Oinfo [bits]")
 plt.title("O-information with [5, 95]% confidence interval", fontweight="bold")
 
+plt.show()
+
 # %%
 # This time, the O-information and confidence interval surrounding the
 # multiplet (0, 1, 2, 3) doesn't includes the confidence interval of lower

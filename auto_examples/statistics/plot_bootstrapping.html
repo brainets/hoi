@@ -16,17 +16,19 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
@@ -38,10 +40,11 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/style.css?v=b7615940" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
     <script src="../../_static/documentation_options.js?v=55ff85c6"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
@@ -56,6 +59,7 @@
     <link rel="prev" title="Statistics : bootstrapping and permutations" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -87,19 +91,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../../search.html"
       method="get">
@@ -107,7 +100,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -115,8 +107,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -132,7 +124,8 @@
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -162,7 +155,7 @@
     
     
     <img src="../../_static/hoi-logo.png" class="logo__image only-light" alt="HOI 0.0.1 documentation - Home"/>
-    <script>document.write(`<img src="../../_static/hoi-logo.png" class="logo__image only-dark" alt="HOI 0.0.1 documentation - Home"/>`);</script>
+    <img src="../../_static/hoi-logo.png" class="logo__image only-dark pst-js-only" alt="HOI 0.0.1 documentation - Home"/>
   
   
 </a></div>
@@ -195,15 +188,11 @@
 </ul></div>
         <div class="sidebar-primary-item">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started 🚀</span></p>
@@ -378,24 +367,16 @@
 
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
 
 
-<script>
-document.write(`
-  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
+</button>
 <button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
 </button>
@@ -443,8 +424,8 @@ to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="bootstrapping-and-confidence-interval">
 <span id="sphx-glr-auto-examples-statistics-plot-bootstrapping-py"></span><h1>Bootstrapping and confidence interval<a class="headerlink" href="#bootstrapping-and-confidence-interval" title="Link to this heading">#</a></h1>
-<p>This example illustrates how to estimate the confidence interval arround
-Higher Order Interactions. In addition, it also shows how the boostrapping can
+<p>This example illustrates how to estimate the confidence interval around
+Higher Order Interactions. In addition, it also shows how the bootstrapping can
 be used to fix the spatial spreading limitation of the O-information. For
 further information, checkout the example
 <a class="reference internal" href="../metrics/plot_infotopo.html#sphx-glr-auto-examples-metrics-plot-infotopo-py"><span class="std std-ref">Topological Information : conditioning on orders</span></a></p>
@@ -509,7 +490,7 @@ O-information is achieved for the multiplet (0, 1, 2) at order 3 and the
 multiplet (0, 1, 2, 3, 4) at order 4. However, we simulated redundancy only
 between the nodes (0, 1, 2). To fix this with non-parametric statistics, we
 are going to use bootstrapping to estimate the confidence interval
-surrounding each estimatation of hoi.</p>
+surrounding each estimation of hoi.</p>
 </section>
 <section id="estimation-of-the-confidence-interval-using-a-bootstrapping-approach">
 <h2>Estimation of the confidence interval using a bootstrapping approach<a class="headerlink" href="#estimation-of-the-confidence-interval-using-a-bootstrapping-approach" title="Link to this heading">#</a></h2>
@@ -520,7 +501,7 @@ resample method of scikit-learn</p>
 <h3>Compute bootstrap<a class="headerlink" href="#compute-bootstrap" title="Link to this heading">#</a></h3>
 <p>Regarding the number of bootstraps, the higher the better but is also more
 computationally intensive. Here we are going to use 20 to keep the example
-fast. We recommand at least 200-1000 boostraps.</p>
+fast. We recommand at least 200-1000 bootstraps.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the number of bootstrap.</span>
 <span class="n">n_boots</span> <span class="o">=</span> <span class="mi">20</span>
 
@@ -542,7 +523,7 @@ fast. We recommand at least 200-1000 boostraps.</p>
     <span class="c1"># append to the list</span>
     <span class="n">hoi</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_hoi</span><span class="p">)</span>
 
-<span class="c1"># stack the boostraps over the first dimension</span>
+<span class="c1"># stack the bootstraps over the first dimension</span>
 <span class="n">hoi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -572,7 +553,7 @@ Bootstrap 20 / 20
 <section id="plot-the-o-information-with-the-confidence-interval">
 <h3>Plot the O-information with the confidence interval<a class="headerlink" href="#plot-the-o-information-with-the-confidence-interval" title="Link to this heading">#</a></h3>
 <p>Now we can plot the O-information and its confidence interval.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute the mean of the o-information over the boostraps</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># compute the mean of the o-information over the bootstraps</span>
 <span class="n">hoi_m</span> <span class="o">=</span> <span class="n">hoi</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># get the [5, 95]% confidence interval</span>
@@ -634,7 +615,7 @@ to create redundancy between the quadruplet (0, 1, 2, 3).</p>
 <span class="c1"># stack the boostraps over the first dimension</span>
 <span class="n">hoi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-<span class="c1"># compute the mean of the o-information over the boostraps</span>
+<span class="c1"># compute the mean of the o-information over the bootstraps</span>
 <span class="n">hoi_m</span> <span class="o">=</span> <span class="n">hoi</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1"># get the [5, 95]% confidence interval</span>
@@ -651,6 +632,8 @@ to create redundancy between the quadruplet (0, 1, 2, 3).</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Multiplet&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Oinfo [bits]&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;O-information with [5, 95]</span><span class="si">% c</span><span class="s2">onfidence interval&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_bootstrapping_003.png" srcset="../../_images/sphx_glr_plot_bootstrapping_003.png" alt="O-information with [5, 95]% confidence interval" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap 1 / 20
@@ -673,7 +656,6 @@ Bootstrap 17 / 20
 Bootstrap 18 / 20
 Bootstrap 19 / 20
 Bootstrap 20 / 20
-Text(0.5, 1.0, &#39;O-information with [5, 95]% confidence interval&#39;)
 </pre></div>
 </div>
 <p>This time, the O-information and confidence interval surrounding the
@@ -683,7 +665,7 @@ and not in any of the triplets.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># sphinx_gallery_thumbnail_number = 2</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 15.854 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 15.590 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-statistics-plot-bootstrapping-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d2e94d8bac717c85e2a37d7d973930a2/plot_bootstrapping.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_bootstrapping.ipynb</span></code></a></p>
@@ -736,7 +718,8 @@ and not in any of the triplets.</p>
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -799,8 +782,8 @@ By BraiNets
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
 
     <hr>
     <footer>

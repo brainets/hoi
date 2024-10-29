@@ -2,8 +2,8 @@
 Bootstrapping and confidence interval
 =====================================
 
-This example illustrates how to estimate the confidence interval arround
-Higher Order Interactions. In addition, it also shows how the boostrapping can
+This example illustrates how to estimate the confidence interval around
+Higher Order Interactions. In addition, it also shows how the bootstrapping can
 be used to fix the spatial spreading limitation of the O-information. For
 further information, checkout the example
 :ref:`sphx_glr_auto_examples_metrics_plot_infotopo.py`
@@ -68,7 +68,7 @@ print(get_nbest_mult(hoi, model=model))
 # multiplet (0, 1, 2, 3, 4) at order 4. However, we simulated redundancy only
 # between the nodes (0, 1, 2). To fix this with non-parametric statistics, we
 # are going to use bootstrapping to estimate the confidence interval
-# surrounding each estimatation of hoi.
+# surrounding each estimation of hoi.
 
 
 ###############################################################################
@@ -84,7 +84,7 @@ print(get_nbest_mult(hoi, model=model))
 # ^^^^^^^^^^^^^^^^^
 # Regarding the number of bootstraps, the higher the better but is also more
 # computationally intensive. Here we are going to use 20 to keep the example
-# fast. We recommand at least 200-1000 boostraps.
+# fast. We recommand at least 200-1000 bootstraps.
 
 # define the number of bootstrap.
 n_boots = 20
@@ -107,7 +107,7 @@ for n_b in range(20):
     # append to the list
     hoi.append(_hoi)
 
-# stack the boostraps over the first dimension
+# stack the bootstraps over the first dimension
 hoi = np.stack(hoi, axis=0)
 
 # %%
@@ -115,7 +115,7 @@ hoi = np.stack(hoi, axis=0)
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 # Now we can plot the O-information and its confidence interval.
 
-# compute the mean of the o-information over the boostraps
+# compute the mean of the o-information over the bootstraps
 hoi_m = hoi.mean(0)
 
 # get the [5, 95]% confidence interval
@@ -175,7 +175,7 @@ for n_b in range(20):
 # stack the boostraps over the first dimension
 hoi = np.stack(hoi, axis=0)
 
-# compute the mean of the o-information over the boostraps
+# compute the mean of the o-information over the bootstraps
 hoi_m = hoi.mean(0)
 
 # get the [5, 95]% confidence interval
@@ -192,6 +192,8 @@ plt.gca().set_xticklabels(
 plt.xlabel("Multiplet")
 plt.ylabel("Oinfo [bits]")
 plt.title("O-information with [5, 95]% confidence interval", fontweight="bold")
+
+plt.show()
 
 # %%
 # This time, the O-information and confidence interval surrounding the

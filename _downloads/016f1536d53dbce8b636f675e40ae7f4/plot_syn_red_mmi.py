@@ -201,6 +201,8 @@ plot_landscape(
     plt_kwargs=dict(cmap="turbo"),
 )
 
+plt.show()
+
 # %%
 # Plotting synergy
 
@@ -211,3 +213,5 @@ plot_landscape(
     undersampling=False,
     plt_kwargs=dict(cmap="turbo"),
 )
+
+plt.show()

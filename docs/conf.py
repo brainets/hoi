@@ -90,7 +90,7 @@ sphinx_gallery_conf = {
     "gallery_dirs": "auto_examples",
     "backreferences_dir": "api/generated",
     "show_memory": True,
-    "filename_pattern": "/plot_|sim_",
+    "filename_pattern": "/plot_|sim_|tuto_",
     "default_thumb_file": "_static/hoi-logo.png",
     "subsection_order": ExplicitOrder(
         [

@@ -31,6 +31,7 @@ HOI requires :
 - jax
 - pandas
 - scikit-learn
+- jax-tqdm
 - tqdm
 
 User installation

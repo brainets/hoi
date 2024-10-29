@@ -17,6 +17,7 @@ HOI requires :
 - jax
 - pandas
 - scikit-learn
+- jax-tqdm
 - tqdm
 
 Here's the list of optional dependencies :

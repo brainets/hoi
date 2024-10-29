@@ -6,7 +6,7 @@ import jax
 import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
-from hoi.utils.progressbar import scan_tqdm
+from jax_tqdm import scan_tqdm
 
 
 ###############################################################################

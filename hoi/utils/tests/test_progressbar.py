@@ -1,4 +1,4 @@
-from hoi.utils.progressbar import scan_tqdm, loop_tqdm, build_tqdm
+from jax_tqdm import scan_tqdm, loop_tqdm, build_tqdm
 import typing
 import pytest
 

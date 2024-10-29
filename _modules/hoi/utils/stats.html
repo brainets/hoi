@@ -617,6 +617,8 @@
     <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
     <span class="n">hoi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">hoi</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">hoi</span><span class="o">.</span><span class="n">ndim</span><span class="p">:</span>
+        <span class="n">hoi</span> <span class="o">=</span> <span class="n">hoi</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># get order and multiplets</span>
     <span class="k">if</span> <span class="n">model</span><span class="p">:</span>

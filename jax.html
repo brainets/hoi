@@ -432,6 +432,7 @@
 import<span class="w"> </span>numpy<span class="w"> </span>as<span class="w"> </span>np
 import<span class="w"> </span>jax
 import<span class="w"> </span>jax.numpy<span class="w"> </span>as<span class="w"> </span>jnp
+import<span class="w"> </span>timeit
 from<span class="w"> </span><span class="nb">time</span><span class="w"> </span>import<span class="w"> </span><span class="nb">time</span>
 
 from<span class="w"> </span>hoi.metrics<span class="w"> </span>import<span class="w"> </span>Oinfo
@@ -443,36 +444,44 @@ plt.style.use<span class="o">(</span><span class="s2">&quot;ggplot&quot;</span><
 </pre></div>
 </div>
 <p>In a new cell, past the following code. This code compute the Gaussian Copula entropy for an array with a size growing, both on the CPU or GPU :</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>def<span class="w"> </span>compute_timings<span class="o">(</span><span class="nv">n</span><span class="o">=</span><span class="m">15</span><span class="o">)</span>:
-<span class="w">    </span><span class="nv">n_samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>np.linspace<span class="o">(</span><span class="m">10</span>,<span class="w"> </span>10e2,<span class="w"> </span>n<span class="o">)</span>.astype<span class="o">(</span>int<span class="o">)</span>
-<span class="w">    </span><span class="nv">n_features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>np.linspace<span class="o">(</span><span class="m">1</span>,<span class="w"> </span><span class="m">10</span>,<span class="w"> </span>n<span class="o">)</span>.astype<span class="o">(</span>int<span class="o">)</span>
-<span class="w">    </span><span class="nv">n_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>np.linspace<span class="o">(</span><span class="m">1</span>,<span class="w"> </span>10e2,<span class="w"> </span>n<span class="o">)</span>.astype<span class="o">(</span>int<span class="o">)</span>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># number of repetition</span>
+<span class="nv">n_repeat</span><span class="o">=</span><span class="w"> </span><span class="m">5</span>
 
-<span class="w">    </span><span class="nv">entropy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>jax.vmap<span class="o">(</span>get_entropy<span class="o">(</span><span class="nv">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="o">)</span>,<span class="w"> </span><span class="nv">in_axes</span><span class="o">=(</span><span class="m">0</span>,<span class="o">))</span>
+<span class="c1"># get the entropy function</span>
+<span class="nv">entropy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>jax.jit<span class="o">(</span>jax.vmap<span class="o">(</span>get_entropy<span class="o">(</span><span class="nv">method</span><span class="o">=</span><span class="s2">&quot;gc&quot;</span><span class="o">)</span>,<span class="w"> </span><span class="nv">in_axes</span><span class="o">=(</span><span class="m">0</span>,<span class="o">)))</span>
 
-<span class="w">    </span><span class="c1"># dry run</span>
-<span class="w">    </span>entropy<span class="o">(</span>np.random.rand<span class="o">(</span><span class="m">2</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">10</span><span class="o">))</span>
+<span class="c1"># dry run</span>
+entropy<span class="o">(</span>np.random.rand<span class="o">(</span><span class="m">2</span>,<span class="w"> </span><span class="m">2</span>,<span class="w"> </span><span class="m">10</span><span class="o">))</span>
 
-<span class="w">    </span><span class="nv">timings_cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span>
-<span class="w">    </span><span class="nv">data_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span>
-<span class="w">    </span><span class="k">for</span><span class="w"> </span>n_s,<span class="w"> </span>n_f,<span class="w"> </span>n_v<span class="w"> </span><span class="k">in</span><span class="w"> </span>zip<span class="o">(</span>n_samples,<span class="w"> </span>n_features,<span class="w"> </span>n_variables<span class="o">)</span>:
-<span class="w">        </span><span class="c1"># generate random data</span>
-<span class="w">        </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>np.random.rand<span class="o">(</span>n_v,<span class="w"> </span>n_f,<span class="w"> </span>n_s<span class="o">)</span>
-<span class="w">        </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>jnp.asarray<span class="o">(</span>x<span class="o">)</span>
+<span class="c1"># define the number of samples, features and variables</span>
+<span class="nv">n_samples</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>np.linspace<span class="o">(</span><span class="m">10</span>,<span class="w"> </span>10e2,<span class="w"> </span><span class="m">5</span><span class="o">)</span>.astype<span class="o">(</span>int<span class="o">)</span>
+<span class="nv">n_features</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>np.linspace<span class="o">(</span><span class="m">1</span>,<span class="w"> </span><span class="m">10</span>,<span class="w"> </span><span class="m">5</span><span class="o">)</span>.astype<span class="o">(</span>int<span class="o">)</span>
+<span class="nv">n_variables</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>np.linspace<span class="o">(</span><span class="m">1</span>,<span class="w"> </span>10e2,<span class="w"> </span><span class="m">5</span><span class="o">)</span>.astype<span class="o">(</span>int<span class="o">)</span>
 
-<span class="w">        </span><span class="c1"># compute entropy</span>
-<span class="w">        </span><span class="nv">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>time<span class="o">()</span>
-<span class="w">        </span>entropy<span class="o">(</span>x<span class="o">)</span>
-<span class="w">        </span>timings_cpu.append<span class="o">(</span>time<span class="o">()</span><span class="w"> </span>-<span class="w"> </span>start<span class="o">)</span>
-<span class="w">        </span>data_size.append<span class="o">(</span>n_s<span class="w"> </span>*<span class="w"> </span>n_f<span class="w"> </span>*<span class="w"> </span>n_v<span class="o">)</span>
+data_size,<span class="w"> </span>timings_gpu,<span class="w"> </span><span class="nv">timings_cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[]</span>,<span class="w"> </span><span class="o">[]</span>,<span class="w"> </span><span class="o">[]</span>
+<span class="k">for</span><span class="w"> </span>n_s,<span class="w"> </span>n_f,<span class="w"> </span>n_v<span class="w"> </span><span class="k">in</span><span class="w"> </span>zip<span class="o">(</span>n_samples,<span class="w"> </span>n_features,<span class="w"> </span>n_variables<span class="o">)</span>:
+<span class="w">    </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>np.random.rand<span class="o">(</span>n_v,<span class="w"> </span>n_f,<span class="w"> </span>n_s<span class="o">)</span>
+<span class="w">    </span><span class="nv">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>jnp.asarray<span class="o">(</span>x<span class="o">)</span>
 
-<span class="w">    </span><span class="k">return</span><span class="w"> </span>data_size,<span class="w"> </span>timings_cpu
+<span class="w">    </span><span class="c1"># compute the entropy on cpu</span>
+<span class="w">    </span>with<span class="w"> </span>jax.default_device<span class="o">(</span>jax.devices<span class="o">(</span><span class="s2">&quot;cpu&quot;</span><span class="o">)[</span><span class="m">0</span><span class="o">])</span>:
+<span class="w">        </span><span class="nv">result_cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>timeit.timeit<span class="o">(</span>
+<span class="w">            </span><span class="s1">&#39;entropy(x).block_until_ready()&#39;</span>,
+<span class="w">            </span><span class="nv">number</span><span class="o">=</span>n_repeat,
+<span class="w">            </span><span class="nv">globals</span><span class="o">=</span>globals<span class="o">()</span>
+<span class="w">        </span><span class="o">)</span>
+<span class="w">        </span>timings_cpu.append<span class="o">(</span>result_cpu<span class="w"> </span>/<span class="w"> </span>n_repeat<span class="o">)</span>
 
-with<span class="w"> </span>jax.default_device<span class="o">(</span>jax.devices<span class="o">(</span><span class="s2">&quot;gpu&quot;</span><span class="o">)[</span><span class="m">0</span><span class="o">])</span>:
-<span class="w">    </span>data_size,<span class="w"> </span><span class="nv">timings_gpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>compute_timings<span class="o">()</span>
+<span class="w">    </span><span class="c1"># compute the entropy on gpu</span>
+<span class="w">    </span>with<span class="w"> </span>jax.default_device<span class="o">(</span>jax.devices<span class="o">(</span><span class="s2">&quot;gpu&quot;</span><span class="o">)[</span><span class="m">0</span><span class="o">])</span>:
+<span class="w">        </span><span class="nv">result_gpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>timeit.timeit<span class="o">(</span>
+<span class="w">            </span><span class="s1">&#39;entropy(x).block_until_ready()&#39;</span>,
+<span class="w">            </span><span class="nv">number</span><span class="o">=</span>n_repeat,
+<span class="w">            </span><span class="nv">globals</span><span class="o">=</span>globals<span class="o">()</span>
+<span class="w">        </span><span class="o">)</span>
+<span class="w">        </span>timings_gpu.append<span class="o">(</span>result_gpu<span class="w"> </span>/<span class="w"> </span>n_repeat<span class="o">)</span>
 
-with<span class="w"> </span>jax.default_device<span class="o">(</span>jax.devices<span class="o">(</span><span class="s2">&quot;cpu&quot;</span><span class="o">)[</span><span class="m">0</span><span class="o">])</span>:
-<span class="w">    </span>data_size,<span class="w"> </span><span class="nv">timings_cpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>compute_timings<span class="o">()</span>
+<span class="w">    </span>data_size.append<span class="o">(</span>n_s<span class="w"> </span>*<span class="w"> </span>n_f<span class="w"> </span>*<span class="w"> </span>n_v<span class="o">)</span>
 </pre></div>
 </div>
 <p>Finally, plot the timing comparison :</p>
@@ -485,7 +494,7 @@ plt.legend<span class="o">()</span>
 </pre></div>
 </div>
 <img alt="_images/jax_cgpu_entropy.png" src="_images/jax_cgpu_entropy.png" />
-<p>On CPU, the computing time increase linearly as the array gets larger. However, on GPU, it doesn’t scale as fast.</p>
+<p>As the data size increases, computations on CPU (in red) increase linearly while they remain relatively stable on GPU (in blue).</p>
 </section>
 <section id="computing-higher-order-interactions-on-large-multiplets">
 <h3>Computing Higher-Order Interactions on large multiplets<a class="headerlink" href="#computing-higher-order-interactions-on-large-multiplets" title="Link to this heading">#</a></h3>

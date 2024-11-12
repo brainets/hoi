@@ -1,12 +1,15 @@
 .. -*- mode: rst -*-
 
-|Black|_ |Codecov|_
+|Black|_ |Codecov|_ |JOSS|_
 
 .. |Black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
 .. _Black: https://github.com/psf/black
 
 .. |Codecov| image:: https://codecov.io/gh/brainets/hoi/graph/badge.svg?token=7PNM2VD994
 .. _Codecov: https://codecov.io/gh/brainets/hoi
+
+.. |JOSS| image:: https://joss.theoj.org/papers/10.21105/joss.07360/status.svg
+.. _JOSS: https://doi.org/10.21105/joss.07360
 
 
 HOI : High-Performance Estimation of Higher-Order Interactions

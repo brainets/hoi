@@ -3,8 +3,12 @@ from functools import partial
 import jax
 import jax.numpy as jnp
 import numpy as np
-from xhoi.core.mi import (compute_cmi_comb, compute_mi_doinfo_sub,
-                          compute_mi_doinfo_tot, get_cond_mi)
+from xhoi.core.mi import (
+    compute_cmi_comb,
+    compute_mi_doinfo_sub,
+    compute_mi_doinfo_tot,
+    get_cond_mi,
+)
 
 from hoi.core.entropies import prepare_for_it
 from hoi.metrics.base_hoi import HOIEstimator

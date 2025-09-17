@@ -1,8 +1,19 @@
 import numpy as np
 import pytest
 
-from hoi.metrics import (DTC, RSI, TC, GradientOinfo, InfoTopo, InfoTot, Oinfo,
-                         RedundancyMMI, RedundancyphiID, Sinfo, SynergyMMI)
+from hoi.metrics import (
+    DTC,
+    RSI,
+    TC,
+    GradientOinfo,
+    InfoTopo,
+    InfoTot,
+    Oinfo,
+    RedundancyMMI,
+    RedundancyphiID,
+    Sinfo,
+    SynergyMMI,
+)
 from hoi.utils import get_nbest_mult
 
 np.random.seed(0)

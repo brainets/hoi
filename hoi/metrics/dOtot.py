@@ -3,7 +3,7 @@ from functools import partial
 import jax
 import jax.numpy as jnp
 import numpy as np
-from xhoi.core.mi import (
+from hoi.core.mi import (
     compute_cmi_comb,
     compute_mi_doinfo_sub,
     compute_mi_doinfo_tot,

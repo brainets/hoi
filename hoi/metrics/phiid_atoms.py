@@ -36,15 +36,15 @@ def compute_phiid_atoms(inputs, comb, mi_fcn_r=None, mi_fcn=None):
     rxyt0 = jnp.minimum(i_minj[0, :], i_minj[1, :])
     rxyt1 = jnp.minimum(i_minj[2, :], i_minj[3, :])
     rxyt01 = i_maxj_forward.min(0)
-    I0tx = i_minj[0, :]
-    I0ty = i_minj[1, :]
-    I1tx = i_minj[2, :]
-    I1ty = i_minj[3, :]
-    I01tx = i_maxj_backward[1, :]
-    I01ty = i_maxj_backward[0, :]
-    Ixyt0 = i_maxj_forward[1, :]
-    Ixyt1 = i_maxj_forward[0, :]
-    I01txy = i_tot
+    i0tx = i_minj[0, :]
+    i0ty = i_minj[1, :]
+    i1tx = i_minj[2, :]
+    i1ty = i_minj[3, :]
+    i01tx = i_maxj_backward[1, :]
+    i01ty = i_maxj_backward[0, :]
+    ixyt0 = i_maxj_forward[1, :]
+    ixyt1 = i_maxj_forward[0, :]
+    i01txy = i_tot
 
     knowns_to_atoms_mat = [
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # rtr
@@ -54,15 +54,15 @@ def compute_phiid_atoms(inputs, comb, mi_fcn_r=None, mi_fcn=None):
         [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # Rabtx
         [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],  # Rabty
         [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],  # Rabtxy
-        [1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # Ixta
-        [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # Ixtb
-        [1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],  # Iyta
-        [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0],  # Iytb
-        [1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],  # Ixyta
-        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],  # Ixytb
-        [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],  # Ixtab
-        [1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0],  # Iytab
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # Ixytab
+        [1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # ixta
+        [1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # ixtb
+        [1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],  # iyta
+        [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0],  # iytb
+        [1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0],  # ixyta
+        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],  # ixytb
+        [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0],  # ixtab
+        [1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0],  # iytab
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  # ixytab
     ]
 
     knowns_to_atoms_mat = jnp.array(knowns_to_atoms_mat)
@@ -79,15 +79,15 @@ def compute_phiid_atoms(inputs, comb, mi_fcn_r=None, mi_fcn=None):
             rxyt0[:, jnp.newaxis],
             rxyt1[:, jnp.newaxis],
             rxyt01[:, jnp.newaxis],
-            I0tx[:, jnp.newaxis],
-            I0ty[:, jnp.newaxis],
-            I1tx[:, jnp.newaxis],
-            I1ty[:, jnp.newaxis],
-            I01tx[:, jnp.newaxis],
-            I01ty[:, jnp.newaxis],
-            Ixyt0[:, jnp.newaxis],
-            Ixyt1[:, jnp.newaxis],
-            I01txy[:, jnp.newaxis],
+            i0tx[:, jnp.newaxis],
+            i0ty[:, jnp.newaxis],
+            i1tx[:, jnp.newaxis],
+            i1ty[:, jnp.newaxis],
+            i01tx[:, jnp.newaxis],
+            i01ty[:, jnp.newaxis],
+            ixyt0[:, jnp.newaxis],
+            ixyt1[:, jnp.newaxis],
+            i01txy[:, jnp.newaxis],
         ),
         axis=1,
     )

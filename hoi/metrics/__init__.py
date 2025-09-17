@@ -10,3 +10,6 @@ from .rsi import RSI  # noqa
 from .sinfo import Sinfo  # noqa
 from .syn_mmi import SynergyMMI  # noqa
 from .tc import TC  # noqa
+from .dOtot import dOtot  # noqa
+from .psi_syn import psi_synergy  # noqa
+from .phiid_atoms import atoms_phiID  # noqa

@@ -8,8 +8,10 @@
 
 import os
 import sys
-import hoi
+
 from sphinx_gallery.sorting import ExplicitOrder
+
+import hoi
 
 # sys.path.append(os.path.abspath("sphinxext"))
 

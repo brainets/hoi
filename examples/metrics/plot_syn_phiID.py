@@ -6,12 +6,11 @@ This example illustrates how to use and interpret synergy and redundancy as
 defined in the Integrated Information Decomposition framework
 """
 
+import matplotlib.pyplot as plt
 import numpy as np
 
-from hoi.metrics import SynergyphiID, RedundancyphiID
+from hoi.metrics import RedundancyphiID, SynergyphiID
 from hoi.utils import get_nbest_mult
-
-import matplotlib.pyplot as plt
 
 plt.style.use("ggplot")
 

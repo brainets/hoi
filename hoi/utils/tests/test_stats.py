@@ -1,11 +1,13 @@
-import pytest
-import numpy as np
-import jax
-from hoi.utils.stats import digitize, landscape, normalize, get_nbest_mult
-import pandas as pd
 import math
+
+import jax
+import numpy as np
+import pandas as pd
+import pytest
 import xarray as xr
+
 from hoi.metrics import Oinfo
+from hoi.utils.stats import digitize, get_nbest_mult, landscape, normalize
 
 np.random.seed(42)
 x1 = np.random.rand(1, 50)

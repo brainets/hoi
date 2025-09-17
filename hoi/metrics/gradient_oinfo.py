@@ -1,5 +1,5 @@
-from hoi.metrics.oinfo import Oinfo
 from hoi.metrics.base_hoi import HOIEstimator
+from hoi.metrics.oinfo import Oinfo
 
 
 class GradientOinfo(HOIEstimator):

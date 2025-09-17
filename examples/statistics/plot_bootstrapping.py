@@ -9,16 +9,14 @@ further information, checkout the example
 :ref:`sphx_glr_auto_examples_metrics_plot_infotopo.py`
 """
 
+import matplotlib.pyplot as plt
 # %%
 import numpy as np
+from sklearn.utils import resample
 
 from hoi.metrics import Oinfo
 from hoi.plot import plot_landscape
 from hoi.utils import get_nbest_mult
-
-from sklearn.utils import resample
-
-import matplotlib.pyplot as plt
 
 plt.style.use("ggplot")
 

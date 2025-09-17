@@ -1,22 +1,9 @@
+import numpy as np
 import pytest
 
-import numpy as np
-
-from hoi.metrics import (
-    Oinfo,
-    InfoTopo,
-    TC,
-    DTC,
-    Sinfo,
-    InfoTot,
-    GradientOinfo,
-    RedundancyMMI,
-    SynergyMMI,
-    RSI,
-    RedundancyphiID,
-)
+from hoi.metrics import (DTC, RSI, TC, GradientOinfo, InfoTopo, InfoTot, Oinfo,
+                         RedundancyMMI, RedundancyphiID, Sinfo, SynergyMMI)
 from hoi.utils import get_nbest_mult
-
 
 np.random.seed(0)
 

@@ -18,11 +18,10 @@ Czyz et al., NeurIPS 2023 :cite:`czyz2024beyond`.
 
 # %%
 
+import matplotlib.pyplot as plt
 import numpy as np
 
 from hoi.core import get_mi
-
-import matplotlib.pyplot as plt
 
 plt.style.use("ggplot")
 

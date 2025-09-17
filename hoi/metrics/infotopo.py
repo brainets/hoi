@@ -1,13 +1,11 @@
 import warnings
 
-import numpy as np
-
 import jax
 import jax.numpy as jnp
-
-from hoi.metrics.base_hoi import HOIEstimator
+import numpy as np
 from jax_tqdm import scan_tqdm
 
+from hoi.metrics.base_hoi import HOIEstimator
 
 ###############################################################################
 ###############################################################################

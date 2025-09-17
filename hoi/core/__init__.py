@@ -1,12 +1,5 @@
 from .combinatory import combinations  # noqa
-from .entropies import (  # noqa
-    get_entropy,
-    entropy_gc,
-    entropy_gauss,
-    entropy_bin,
-    entropy_hist,
-    entropy_knn,
-    prepare_for_it,
-    entropy_kernel,
-)
+from .entropies import (entropy_bin, entropy_gauss, entropy_gc,  # noqa
+                        entropy_hist, entropy_kernel, entropy_knn, get_entropy,
+                        prepare_for_it)
 from .mi import get_mi  # noqa

@@ -1,13 +1,12 @@
 from functools import partial
 
-import numpy as np
-
 import jax
 import jax.numpy as jnp
+import numpy as np
 
-from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.entropies import prepare_for_it
-from hoi.core.mi import get_mi, compute_mi_comb, compute_mi_comb_phi
+from hoi.core.mi import compute_mi_comb, compute_mi_comb_phi, get_mi
+from hoi.metrics.base_hoi import HOIEstimator
 from hoi.utils.progressbar import get_pbar
 
 
@@ -201,7 +200,8 @@ class atoms_phiID(HOIEstimator):
             - 'u1ts'
             - 'u2ts'
             - 'sts'
-            The output of this function is going to be the sum of the selected atoms.
+            The output of this function is going to be the sum of the selected
+            atoms.
         kwargs : dict | {}
             Additional arguments are sent to each MI function
 

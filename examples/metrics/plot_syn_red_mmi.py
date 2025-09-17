@@ -7,14 +7,13 @@ computed using the Minimum Mutual Information (MMI) approach to
 approximate the redundancy.
 """
 
+import matplotlib.pyplot as plt
 # %%
 import numpy as np
 
-from hoi.metrics import SynergyMMI, RedundancyMMI
-from hoi.utils import get_nbest_mult
+from hoi.metrics import RedundancyMMI, SynergyMMI
 from hoi.plot import plot_landscape
-
-import matplotlib.pyplot as plt
+from hoi.utils import get_nbest_mult
 
 plt.style.use("ggplot")
 

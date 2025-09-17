@@ -12,12 +12,11 @@ high-dimensional data.
 
 """
 
+import matplotlib.pyplot as plt
 # %%
 import numpy as np
 
 from hoi.core import get_entropy
-
-import matplotlib.pyplot as plt
 
 plt.style.use("ggplot")
 

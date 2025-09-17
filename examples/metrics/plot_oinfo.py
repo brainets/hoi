@@ -8,13 +8,12 @@ other metrics such as the Total Correlation (TC), the Dual Total Correlation
 Rosas et al. 2019 :cite:`rosas2019oinfo`.
 """
 
+import matplotlib.pyplot as plt
 # %%
 import numpy as np
 
-from hoi.metrics import Oinfo, TC, DTC, Sinfo, GradientOinfo
+from hoi.metrics import DTC, TC, GradientOinfo, Oinfo, Sinfo
 from hoi.utils import get_nbest_mult
-
-import matplotlib.pyplot as plt
 
 plt.style.use("ggplot")
 

@@ -15,14 +15,13 @@ the original implementation of this estimator :
 https://infotopo.readthedocs.io/
 """
 
+import matplotlib.pyplot as plt
 # %%
 import numpy as np
 
 from hoi.metrics import InfoTopo, Oinfo
-from hoi.utils import get_nbest_mult
 from hoi.plot import plot_landscape
-
-import matplotlib.pyplot as plt
+from hoi.utils import get_nbest_mult
 
 plt.style.use("ggplot")
 

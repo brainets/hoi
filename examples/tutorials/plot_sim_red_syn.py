@@ -12,13 +12,12 @@ of simulating redundancy and synergy in two different context :
    synergistic interactions **about** a target variable.
 """
 
+import matplotlib.pyplot as plt
 # %%
 import numpy as np
 
-from hoi.metrics import Oinfo, GradientOinfo
+from hoi.metrics import GradientOinfo, Oinfo
 from hoi.simulation import simulate_hoi_gauss
-
-import matplotlib.pyplot as plt
 
 np.random.seed(42)
 plt.style.use("ggplot")

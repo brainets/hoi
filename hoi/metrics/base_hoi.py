@@ -1,13 +1,13 @@
 from functools import partial
 
-import numpy as np
 import jax
 import jax.numpy as jnp
+import numpy as np
 
 from hoi.core.combinatory import combinations
 from hoi.core.entropies import get_entropy, prepare_for_it
-from hoi.utils.progressbar import get_pbar
 from hoi.utils.logging import logger, set_log_level
+from hoi.utils.progressbar import get_pbar
 
 
 @partial(jax.jit, static_argnums=(2,))

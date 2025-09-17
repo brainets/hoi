@@ -15,11 +15,10 @@ to specific values of entropies. In this this tutorial we are going to :
 
 # %%
 
+import matplotlib.pyplot as plt
 import numpy as np
 
 from hoi.core import get_entropy
-
-import matplotlib.pyplot as plt
 
 plt.style.use("ggplot")
 

@@ -201,7 +201,7 @@ is shared by at least two or more variables in the following way:
 .. math::
 
 	DTC(X^{n})  &=  H(X^{n}) - \sum_{j=1}^{n} H(X_j|X_{-j}^{n}) \\
-				&= \sum_{j=1}^{n} H(X_j) - (n-1)H(X^{n})
+				&= (1-n)H(X^{n}) + \sum_{j=1}^{n} H(X_{-j}^{n}) 
 
 Where :math:`X_{-j}^n` is the set of all the variables in :math:`X^n` apart from :math:`X_j`, 
 :math:`X_{-j}^{n}=  \{ X_1, X_2, ..., X_{j-1}, X_{j+1}, ..., X_n  \}`, so that :math:`H(X_j|X_{-j}^{n})` 
@@ -219,7 +219,7 @@ correlation (DTC), :cite:`james2011anatomy`:
 
 .. math::
 
-	\Omega(X^{n})  &=  TC(X^{n}) + DTC(X^{n}) \\
+	S(X^{n})  &=  TC(X^{n}) + DTC(X^{n}) \\
 					&=  nH(X^{n}) + \sum_{j=1}^{n} [H(X_{j}) + H(
 					X_{-j}^{n})]
 
@@ -343,10 +343,10 @@ Where :math:`dO_i(X^n)` can be written as:
 
 .. math::
 
-    dO_j(X^n) = (1-n)I(X_{-j}(t-\tau); X_{j}(t) | X_{-j}(t-\tau)) - 
-    \sum_{i \in X_{-j}} I(X_{-ij}(t-\tau); X_{j}(t) | X_{j}(t-\tau))
+    dO_j(X^n) = & (1-n)I(X_{-j}^n(t-\tau); X_{j}(t) | X_{-j}^n(t-\tau)) + \\
+                & \sum_{i \in X_{-j}^n} I(X_{-ij}(t-\tau); X_{j}(t) | X_{j}(t-\tau))
 
-Here, :math:`X_{-j}` represents the set of all variables in :math:`X^n`
+Here, :math:`X_{-j}^n` represents the set of all variables in :math:`X^n`
 except for :math:`X_j`, and :math:`X_{-ij}` is the set excluding both :math:`X_i`
 and :math:`X_j`. The term :math:`I(A; B | C)` denotes the conditional
 mutual information between variables A and B given C.

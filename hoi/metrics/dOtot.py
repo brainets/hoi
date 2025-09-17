@@ -1,13 +1,13 @@
 from functools import partial
 
-import numpy as np
-
 import jax
 import jax.numpy as jnp
+import numpy as np
+from xhoi.core.mi import (compute_cmi_comb, compute_mi_doinfo_sub,
+                          compute_mi_doinfo_tot, get_cond_mi)
 
-from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.entropies import prepare_for_it
-from xhoi.core.mi import get_mi, compute_mi_comb, compute_cmi_comb, get_cond_mi, compute_mi_doinfo_tot, compute_mi_doinfo_sub
+from hoi.metrics.base_hoi import HOIEstimator
 from hoi.utils.progressbar import get_pbar
 
 
@@ -25,8 +25,9 @@ def compute_dyn_oinfo(inputs, comb, cmi_fcn_tot=None, cmi_fcn_sub=None):
     _, i_tot = jax.lax.scan(cmi_fcn_tot, (x_c, y_c, ind), jnp.arange(n))
 
     # compute max(I(x_{-j}; S))
-    _, i_subj = jax.lax.scan(cmi_fcn_sub, (x_c, y_c, ind, ind_sub), jnp.arange(n))
-
+    _, i_subj = jax.lax.scan(
+        cmi_fcn_sub, (x_c, y_c, ind, ind_sub), jnp.arange(n)
+    )
 
     return inputs, (2 - n) * i_tot.sum(0) + i_subj.sum(0)
 
@@ -39,11 +40,12 @@ class dOtot(HOIEstimator):
     .. math::
 
         dO_{tot}(X^n) =  \sum_{j=1}^{n} dO_j(X^n)
-    
+
     where
     .. math::
 
-        dO_j(X^n) = (1-n)I(X_{-j}(t-\tau); X_{j}(t) | X_{-j}(t-\tau)) - \sum_{i \in X_{-j}} I(X_{-ij}(t-\tau); X_{j}(t) | X_{j}(t-\tau))
+        dO_j(X^n) = & (1-n)I(X_{-j}(t-\tau); X_{j}(t) | X_{-j}(t-\tau)) - \\
+            &- \sum_{i \in X_{-j}} I(X_{-ij}(t-\tau); X_{j}(t) | X_{j}(t-\tau))
 
     Parameters
     ----------
@@ -138,7 +140,11 @@ class dOtot(HOIEstimator):
         cmi_fcn_s = partial(compute_cmi_comb, cmi=cmi_fcn)
         compute_dyn_osub = partial(compute_mi_doinfo_sub, cmi=cmi_fcn_s)
 
-        compute_do = partial(compute_dyn_oinfo, cmi_fcn_tot=compute_dyn_otot, cmi_fcn_sub=compute_dyn_osub)
+        compute_do = partial(
+            compute_dyn_oinfo,
+            cmi_fcn_tot=compute_dyn_otot,
+            cmi_fcn_sub=compute_dyn_osub,
+        )
         # compute_do = partial(compute_dyn_oinfo, mi_fcn=compute_mi)
 
         # get multiplet indices and order
@@ -160,16 +166,16 @@ class dOtot(HOIEstimator):
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
         for msize in pbar:
-            pbar.set_description(
-                desc="dO_tot order %s" % msize, refresh=False
-            )
+            pbar.set_description(desc="dO_tot order %s" % msize, refresh=False)
 
             # combinations of features
             _h_idx = h_idx[order == msize, 0:msize]
 
             # define indices for I(x_{-j}; S)
             ind = (jnp.mgrid[0:msize, 0:msize].sum(0) % msize)[:, 1:]
-            ind_sub = (jnp.mgrid[0:msize-1, 0:msize-1].sum(0) % (msize-1))[:, 1:]
+            ind_sub = (
+                jnp.mgrid[0 : msize - 1, 0 : msize - 1].sum(0) % (msize - 1)
+            )[:, 1:]
 
             if direction_axis == 0:
                 x_c = x[:, :, :-tau]

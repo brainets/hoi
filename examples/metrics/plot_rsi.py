@@ -5,13 +5,13 @@ Redundancy-Synergy Index
 This example illustrates how to use and interpret the Redundancy-Synergy
 Index (RSI).
 """
+import matplotlib.pyplot as plt
 import numpy as np
 
 from hoi.metrics import RSI
-from hoi.utils import get_nbest_mult
 from hoi.plot import plot_landscape
+from hoi.utils import get_nbest_mult
 
-import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 
 

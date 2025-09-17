@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 # License: 3-clause BSD
 import os
-from setuptools import setup, find_packages
+
+from setuptools import find_packages, setup
 
 __version__ = "0.0.5"
 NAME = "hoi"

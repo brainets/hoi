@@ -1,15 +1,10 @@
-import pytest
-import numpy as np
 import jax
-from hoi.core.entropies import (
-    entropy_gc,
-    entropy_gauss,
-    entropy_bin,
-    entropy_hist,
-    entropy_knn,
-    entropy_kernel,
-    get_entropy,
-)
+import numpy as np
+import pytest
+
+from hoi.core.entropies import (entropy_bin, entropy_gauss, entropy_gc,
+                                entropy_hist, entropy_kernel, entropy_knn,
+                                get_entropy)
 from hoi.utils import digitize
 
 x1 = np.random.rand(1, 50)

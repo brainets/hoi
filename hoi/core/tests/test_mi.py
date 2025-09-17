@@ -1,6 +1,7 @@
-import pytest
-import numpy as np
 import jax
+import numpy as np
+import pytest
+
 from hoi.core.mi import get_mi
 from hoi.utils import digitize
 

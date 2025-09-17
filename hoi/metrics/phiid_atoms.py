@@ -127,7 +127,7 @@ class atoms_phiID(HOIEstimator):
 
     __name__ = "phiID MMI"
     _encoding = False
-    _positive = "sum of chosen atoms"
+    _positive = "null"
     _negative = "null"
     _symmetric = False
 
@@ -141,7 +141,7 @@ class atoms_phiID(HOIEstimator):
         minsize=2,
         tau=1,
         direction_axis=0,
-        maxsize=None,
+        maxsize=2,
         method="gc",
         samples=None,
         atoms=["sts"],

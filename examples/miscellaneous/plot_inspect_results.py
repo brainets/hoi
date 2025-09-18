@@ -10,7 +10,6 @@ This example illustrates how to :
 import matplotlib.pyplot as plt
 import numpy as np
 import xgi
-from sklearn.preprocessing import MinMaxScaler
 
 from hoi.metrics import InfoTopo
 from hoi.plot import plot_landscape

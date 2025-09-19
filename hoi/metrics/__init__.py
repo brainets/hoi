@@ -1,4 +1,4 @@
-from .dOtot import dOtot  # noqa
+from .dotot import dOtot  # noqa
 from .dtc import DTC  # noqa
 from .gradient_oinfo import GradientOinfo  # noqa
 from .info_tot import InfoTot  # noqa

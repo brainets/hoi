@@ -1,5 +1,4 @@
-"""Statistics and summary statistics on HOI.
-"""
+"""Statistics and summary statistics on HOI."""
 
 from functools import partial
 

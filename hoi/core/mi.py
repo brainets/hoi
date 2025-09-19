@@ -78,9 +78,9 @@ def get_cond_mi(method="gc", **kwargs):
     Returns
     -------
     fcn : callable
-        Function to compute conditional mutual information on variables of shapes
-        (n_features, n_samples)
-    """
+        Function to compute conditional mutual information on variables of
+        shapes (n_features, n_samples)"""
+
     # get the entropy function
     _entropy = get_entropy(method=method, **kwargs)
 
@@ -201,9 +201,9 @@ def compute_cond_mi(x, y, z, entropy_fcn=None):
     Parameters
     ----------
     x, y, z : array_like
-        Arrays to consider for computing the conditional Mutual Information. The two input
-        variables x and y should have a shape of (n_features_x, n_samples) and
-        (n_features_y, n_samples)
+        Arrays to consider for computing the conditional Mutual Information.
+        The two input variables x and y should have a shape of
+        (n_features_x, n_samples) and (n_features_y, n_samples)
     entropy_fcn : function | None
         Function to use for computing the entropy.
 

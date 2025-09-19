@@ -295,7 +295,6 @@ class AtomsPhiID(HOIEstimator):
             else:
                 raise ValueError("axis can be eaither equal 0 or 2.")
 
-            []
             # compute hoi
             _, _hoi = jax.lax.scan(
                 compute_at, (x_c, y, ind, ind_red, atom), _h_idx

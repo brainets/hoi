@@ -65,6 +65,29 @@ def get_mi(method="gc", **kwargs):
         return partial(compute_mi, entropy_fcn=_entropy)
 
 
+def get_cond_mi(method="gc", **kwargs):
+    """Get Conditional Mutual-Information function.
+
+    Parameters
+    ----------
+    method : {'gc', 'gauss', 'binning', 'knn', 'kernel'}
+        Name of the method to compute mutual-information.
+    kwargs : dict | {}
+        Additional arguments sent to the mutual-information function.
+
+    Returns
+    -------
+    fcn : callable
+        Function to compute conditional mutual information on variables of shapes
+        (n_features, n_samples)
+    """
+    # get the entropy function
+    _entropy = get_entropy(method=method, **kwargs)
+
+    # wrap the mi function with it
+    return partial(compute_cond_mi, entropy_fcn=_entropy)
+
+
 ###############################################################################
 ###############################################################################
 #                             PREPROCESSING
@@ -92,6 +115,14 @@ def compute_mi_comb_phi(inputs, comb, mi=None):
     y_c = y[:, comb[1], :]
 
     return inputs, mi(x_c, y_c)
+
+
+@partial(jax.jit, static_argnums=(2))
+def compute_cmi_comb(inputs, comb, cmi=None):
+    x, y, z = inputs
+    x_c = x[:, comb, :]
+
+    return inputs, cmi(x_c, y, z)
 
 
 ###############################################################################
@@ -126,6 +157,41 @@ def compute_mi(x, y, entropy_fcn=None):
         - entropy_fcn(jnp.concatenate((x, y), axis=0))
     )
     return mi
+
+
+###############################################################################
+###############################################################################
+#                         GENERAL CONDITIONAL MUTUAL INFORMATION
+###############################################################################
+###############################################################################
+
+
+@partial(jax.jit, static_argnums=(3,))
+def compute_cond_mi(x, y, z, entropy_fcn=None):
+    """Compute the mutual-information by providing an entropy function.
+
+    Parameters
+    ----------
+    x, y, z : array_like
+        Arrays to consider for computing the conditional Mutual Information. The two input
+        variables x and y should have a shape of (n_features_x, n_samples) and
+        (n_features_y, n_samples)
+    entropy_fcn : function | None
+        Function to use for computing the entropy.
+
+    Returns
+    -------
+    mi : float
+        Floating value describing the mutual-information between x and y
+    """
+    # compute mi
+
+    hxz = entropy_fcn(jnp.concatenate((x, z), axis=0))
+    hyz = entropy_fcn(jnp.concatenate((y, z), axis=0))
+    hxyz = entropy_fcn(jnp.concatenate((x, y, z), axis=0))
+    hz = entropy_fcn(z)
+
+    return hxz + hyz - hz - hxyz
 
 
 ###############################################################################

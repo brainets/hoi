@@ -125,6 +125,34 @@ def compute_cmi_comb(inputs, comb, cmi=None):
     return inputs, cmi(x_c, y, z)
 
 
+@partial(jax.jit, static_argnums=(2))
+def compute_mi_doinfo_tot(inputs, a, cmi=None):
+    x, y, ind = inputs
+    x_c = x[:, ind[a, :], :]
+    y_c = y[:, a, :]
+    y_c0 = x[:, a, :]
+
+    y_c = y_c[:, jnp.newaxis, :]
+    y_c0 = y_c0[:, jnp.newaxis, :]
+
+    return inputs, cmi(x_c, y_c, y_c0)
+
+
+@partial(jax.jit, static_argnums=(2))
+def compute_mi_doinfo_sub(inputs, a, cmi=None):
+    x, y, ind, ind_sub = inputs
+    x_c = x[:, ind[a, :], :]
+    y_c = y[:, a, :]
+    y_c0 = x[:, a, :]
+
+    y_c = y_c[:, jnp.newaxis, :]
+    y_c0 = y_c0[:, jnp.newaxis, :]
+
+    _, i_maxj = jax.lax.scan(cmi, (x_c, y_c, y_c0), ind_sub)
+
+    return inputs, i_maxj.sum(0)
+
+
 ###############################################################################
 ###############################################################################
 #                         GENERAL MUTUAL INFORMATION

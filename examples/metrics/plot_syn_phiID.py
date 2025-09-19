@@ -9,7 +9,7 @@ defined in the Integrated Information Decomposition framework
 import matplotlib.pyplot as plt
 import numpy as np
 
-from hoi.metrics import RedundancyphiID, SynergyphiID
+from hoi.metrics import RedundancyphiID, AtomsPhiID
 from hoi.utils import get_nbest_mult
 
 plt.style.use("ggplot")
@@ -19,32 +19,22 @@ plt.style.use("ggplot")
 # Definition
 # ----------
 #
-# The synergy as defined in the Integrated Information decomposition framework
-# is a pairwise measure of the synergistic information that two variables
-# carry about their own future. For a couple of variables,
-# :math:`X` and  :math:`Y`, when using the minimum mutual information (MMI)
-# approximation for the redundancy, it is defined in the following way:
-
-# %%
-# .. math::
-#     Syn(X,Y) =  I(X_{t-\tau},Y_{t-\tau};X_{t},Y_t) -
-#                 max \{ I(X_{t-\tau};X_t,Y_t),I(Y_{t-\tau};X_t,Y_t) \}
-#
-# Synergy is a positive defined measures that relates to emergent properties of
-# the couple of variables under study. It measures how much we can predict the
-# future state of the couple of variables when considering them as a whole with
-# respect to when considering them separately.
-# Redundancy instead, following the MMI framework approximation is computed in
-# the following way:
+# The Integrated Information decomposition framework (phiID) was introduced by
+# Mediano et al (2021) :cite:`mediano2021beyond` to obtain a detailed
+# description of information dynamics. One of the atoms of this decomposition,
+# that received particular attention in the literature, are the
+# synergy -> synergy atom (sts) and the redundancy -> redundancy atom (rtr).
+# To compute these two atoms, one needs first to estimate the rtr atom, which
+# can be done using the Minumum Mutual Information (MMI) approach, as:
 
 # %%
 # .. math::
 #     Red(X,Y) =  min (I(X_{t-\tau}; Y_{t}), I(X_{t-\tau}; X_t),
 #                      I(Y_{t-\tau}; X_t), I(Y_{t-\tau}; Y_t))
 #
-# Redundancy relates to the amount of information the two variables share
-# about their own future. A high presence of redundancy can be associated with
-# robustness, while a stronger presence of synergy to emergence.
+# rtr relates to the amount of information the two variables share
+# about their own future. sts instead relate to the amount of information
+# the two variables provide about their joint future.
 
 ###############################################################################
 # Simulate synergy
@@ -66,8 +56,8 @@ for i in range(190):
     x[i, 0] = np.sum(x[i : i + 20, 1]) + 0.2 * np.sum(x[i : i + 20, 0])
     x[i, 1] = np.sum(x[i : i + 20, 0]) + 0.2 * np.sum(x[i : i + 20, 1])
 
-# define the SynergyphiID model and launch it
-model = SynergyphiID(x)
+# define the sts model and launch it (AtomsPhiID return by default sts)
+model = AtomsPhiID(x)
 hoi = model.fit(minsize=2, maxsize=2)
 
 # now we can take a look at the multiplets with the highest and lowest values
@@ -87,7 +77,7 @@ print(df)
 # simulate x again
 x = np.random.rand(200, 7)
 
-# now to create synergy between the two first features, we do the following:
+# now to create redundancy between the two first features, we do the following:
 # to create interdependencies between past and future we use a uniform
 # kernel in the following way
 
@@ -130,10 +120,10 @@ for i in range(190):
 x[:, 2] = x[:, 0] + np.random.rand(200) * 0.05
 
 # %%
-# define the Synergy_phiID, launch it and inspect the best couples of
+# define the AtomsPhiID, launch it and inspect the best couples of
 # variables
 
-model = SynergyphiID(x)
+model = AtomsPhiID(x)
 syn_results = model.fit(minsize=2, maxsize=2)
 df = get_nbest_mult(hoi, model=model, minsize=2, maxsize=2, n_best=3)
 print(df)
@@ -154,8 +144,8 @@ plt.colorbar()
 plt.show()
 
 # %%
-# define the Synergy_phiID, launch it and inspect the best couples of
-# variables
+# define the RedundancyphiID, launch it and inspect the best couples of
+# variables (smilar results can be obtained using AtomsPhiID, with atom='rtr')
 
 model = RedundancyphiID(x)
 red_results = model.fit(minsize=2, maxsize=2)

@@ -315,7 +315,7 @@ class AtomsPhiID(HOIEstimator):
                 c = 0
 
                 for j in range(n_f):
-                    for k in np.arange(j + 1, 119):
+                    for k in np.arange(j + 1, n_f):
                         mat[j, k, i] = np.asarray(hoi)[c, i]
                         c += 1
 

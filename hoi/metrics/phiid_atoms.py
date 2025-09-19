@@ -102,7 +102,7 @@ def compute_phiid_atoms(inputs, comb, mi_fcn_r=None, mi_fcn=None):
     return inputs, out
 
 
-class atoms_phiID(HOIEstimator):
+class AtomsPhiID(HOIEstimator):
     r"""Integrated Information Decomposition (phiID).
 
     For each couple of variable the phiID is performed,

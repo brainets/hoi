@@ -309,24 +309,6 @@ defined as:
 
 .. minigallery:: hoi.metrics.RedundancyphiID
 
-Integrated synergy :math:`\psi`
--------------------------------
-
-Another metric that has been developed to quantify the synergy between a set
-of variables about their own future is the integrated synergy :cite:`mediano2018measuring`.
-Employing the MMI principle to estimate redundancy, the integrated synergy
-between a set of variables :math:`X^n` is defined as:
-
-.. math::
-
-    \psi(X^{n}) =  I(X^{n}(t-\tau);X^{n}(t)) - \max_{k}\{ I(X^n_{-k}(t-\tau);X^{n}(t)) \}
-
-Where :math:`X^n_{-k}` is the set of variables :math:`X^n`, excluding
-the variable :math:`k`. This metric has been proven to be accurate when
-working with gaussian systems; we advise care when employing it in other
-contexts.
-.. minigallery:: hoi.metrics.psi_synergy
-
 Total dynamical O-information
 -----------------------------
 The total dynamical O-information, :class:`hoi.metrics.dOtot`, has been

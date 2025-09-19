@@ -36,7 +36,7 @@ def compute_dyn_oinfo(inputs, comb, cmi_fcn_tot=None, cmi_fcn_sub=None):
     return inputs, (2 - n) * i_tot.sum(0) + i_subj.sum(0)
 
 
-class dOtot(HOIEstimator):
+class DOtot(HOIEstimator):
     r"""The total dynamic O-information (dOtot).
 
     For each multiplet of size n, the dO is defined as follows:

@@ -6,8 +6,8 @@ This introduction guides you through the core information theoretical metrics
 available. These metrics are the entropy and the mutual information.
 """
 import numpy as np
-from hoi.core import get_entropy
-from hoi.core import get_mi
+
+from hoi.core import get_entropy, get_mi
 
 ###############################################################################
 # Entropy

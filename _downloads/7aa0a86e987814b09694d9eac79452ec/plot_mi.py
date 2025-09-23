@@ -15,13 +15,13 @@ to :
 
 # %%
 
-import numpy as np
 from functools import partial
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 from hoi.core import get_mi
 from hoi.utils import digitize
-
-import matplotlib.pyplot as plt
 
 plt.style.use("ggplot")
 

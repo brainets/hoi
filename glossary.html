@@ -16,22 +16,20 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx_contributors.css?v=f079e67e" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
@@ -40,11 +38,10 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/style.css?v=b7615940" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=0078c2eb"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
@@ -59,7 +56,6 @@
     <link rel="prev" title="Quick introduction to jax" href="auto_examples/miscellaneous/tuto_jax.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
   </head>
   
   
@@ -91,8 +87,19 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <dialog id="pst-search-dialog">
-    
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
 <form class="bd-search d-flex align-items-center"
       action="search.html"
       method="get">
@@ -100,6 +107,7 @@
   <input type="search"
          class="form-control"
          name="q"
+         id="search-input"
          placeholder="Search..."
          aria-label="Search..."
          autocomplete="off"
@@ -107,8 +115,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
+</form></div>
+  </div>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -124,8 +132,7 @@
       
       
       
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -155,7 +162,7 @@
     
     
     <img src="_static/hoi-logo.png" class="logo__image only-light" alt="HOI 0.0.5 documentation - Home"/>
-    <img src="_static/hoi-logo.png" class="logo__image only-dark pst-js-only" alt="HOI 0.0.5 documentation - Home"/>
+    <script>document.write(`<img src="_static/hoi-logo.png" class="logo__image only-dark" alt="HOI 0.0.5 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -188,11 +195,15 @@
 </ul></div>
         <div class="sidebar-primary-item">
 
-<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">Search</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started 🚀</span></p>
@@ -219,7 +230,6 @@
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.metrics.SynergyphiID.html">hoi.metrics.SynergyphiID</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api/generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
@@ -367,16 +377,24 @@
 
 
 
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
 
 
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
+  </button>
+`);
+</script>
 
 </div></div>
       
@@ -405,29 +423,29 @@
   <section id="glossary">
 <span id="id1"></span><h1>Glossary<a class="headerlink" href="#glossary" title="Link to this heading">#</a></h1>
 <dl class="simple glossary">
-<dt id="term-Higher-Order-Interactions">Higher Order Interactions<a class="headerlink" href="#term-Higher-Order-Interactions" title="Link to this term">#</a></dt><dd><p>Higher Order Interactions (HOI) <span id="id2">[<a class="reference internal" href="theory.html#id51" title="Federico Battiston, Giulia Cencetti, Iacopo Iacopini, Vito Latora, Maxime Lucas, Alice Patania, Jean-Gabriel Young, and Giovanni Petri. Networks beyond pairwise interactions: structure and dynamics. Physics Reports, 874:1–92, 2020.">3</a>]</span> refer to complex relationships or effects among three or more variables in a system, which cannot be explained by simply considering pairwise interactions. These interactions are often found in biological, ecological, and social networks, and require advanced analytical techniques to be fully understood.</p>
+<dt id="term-Higher-Order-Interactions">Higher Order Interactions<a class="headerlink" href="#term-Higher-Order-Interactions" title="Link to this term">#</a></dt><dd><p>Higher Order Interactions (HOI) <span id="id2">[<a class="reference internal" href="theory.html#id54" title="Federico Battiston, Giulia Cencetti, Iacopo Iacopini, Vito Latora, Maxime Lucas, Alice Patania, Jean-Gabriel Young, and Giovanni Petri. Networks beyond pairwise interactions: structure and dynamics. Physics Reports, 874:1–92, 2020.">3</a>]</span> refer to complex relationships or effects among three or more variables in a system, which cannot be explained by simply considering pairwise interactions. These interactions are often found in biological, ecological, and social networks, and require advanced analytical techniques to be fully understood.</p>
 </dd>
-<dt id="term-Information-Theory">Information Theory<a class="headerlink" href="#term-Information-Theory" title="Link to this term">#</a></dt><dd><p>Information Theory (IT) <span id="id3">[<a class="reference internal" href="theory.html#id52" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">28</a>, <a class="reference internal" href="theory.html#id67" title="Nicholas M. Timme and Christopher Lapish. A tutorial for information theory in neuroscience. eNeuro, 2018.">35</a>]</span> is a mathematical framework that studies the quantification, storage, and communication of information. It was developed by Claude Shannon in the 1940s and provides a way to measure the amount of information in a message, as well as the capacity of a communication channel to transmit that information. The theory also addresses the compression and encoding of data, error detection and correction, and cryptography. In essence, Information Theory provides a fundamental understanding of how information is represented, processed, and transmitted.</p>
+<dt id="term-Information-Theory">Information Theory<a class="headerlink" href="#term-Information-Theory" title="Link to this term">#</a></dt><dd><p>Information Theory (IT) <span id="id3">[<a class="reference internal" href="theory.html#id55" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">27</a>, <a class="reference internal" href="theory.html#id70" title="Nicholas M. Timme and Christopher Lapish. A tutorial for information theory in neuroscience. eNeuro, 2018.">34</a>]</span> is a mathematical framework that studies the quantification, storage, and communication of information. It was developed by Claude Shannon in the 1940s and provides a way to measure the amount of information in a message, as well as the capacity of a communication channel to transmit that information. The theory also addresses the compression and encoding of data, error detection and correction, and cryptography. In essence, Information Theory provides a fundamental understanding of how information is represented, processed, and transmitted.</p>
 </dd>
-<dt id="term-Entropy">Entropy<a class="headerlink" href="#term-Entropy" title="Link to this term">#</a></dt><dd><p>Entropy <span id="id4">[<a class="reference internal" href="theory.html#id52" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">28</a>, <a class="reference internal" href="theory.html#id67" title="Nicholas M. Timme and Christopher Lapish. A tutorial for information theory in neuroscience. eNeuro, 2018.">35</a>]</span> is a measure of the randomness or uncertainty in a system. It quantifies the amount of information required to describe the state of a system.</p>
+<dt id="term-Entropy">Entropy<a class="headerlink" href="#term-Entropy" title="Link to this term">#</a></dt><dd><p>Entropy <span id="id4">[<a class="reference internal" href="theory.html#id55" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">27</a>, <a class="reference internal" href="theory.html#id70" title="Nicholas M. Timme and Christopher Lapish. A tutorial for information theory in neuroscience. eNeuro, 2018.">34</a>]</span> is a measure of the randomness or uncertainty in a system. It quantifies the amount of information required to describe the state of a system.</p>
 </dd>
-<dt id="term-Mutual-Information">Mutual Information<a class="headerlink" href="#term-Mutual-Information" title="Link to this term">#</a></dt><dd><p>Mutual information (MI) <span id="id5">[<a class="reference internal" href="theory.html#id52" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">28</a>, <a class="reference internal" href="theory.html#id67" title="Nicholas M. Timme and Christopher Lapish. A tutorial for information theory in neuroscience. eNeuro, 2018.">35</a>]</span> is a measure of the amount of information that one variable provides about another variable. It quantifies the reduction in uncertainty about one variable given knowledge of the other variable. In other words, mutual information measures the shared information between two variables.</p>
+<dt id="term-Mutual-Information">Mutual Information<a class="headerlink" href="#term-Mutual-Information" title="Link to this term">#</a></dt><dd><p>Mutual information (MI) <span id="id5">[<a class="reference internal" href="theory.html#id55" title="Claude Elwood Shannon. A mathematical theory of communication. The Bell system technical journal, 27(3):379–423, 1948.">27</a>, <a class="reference internal" href="theory.html#id70" title="Nicholas M. Timme and Christopher Lapish. A tutorial for information theory in neuroscience. eNeuro, 2018.">34</a>]</span> is a measure of the amount of information that one variable provides about another variable. It quantifies the reduction in uncertainty about one variable given knowledge of the other variable. In other words, mutual information measures the shared information between two variables.</p>
 </dd>
-<dt id="term-Redundancy">Redundancy<a class="headerlink" href="#term-Redundancy" title="Link to this term">#</a></dt><dd><p>Redundancy <span id="id6">[<a class="reference internal" href="theory.html#id66" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M. Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">34</a>, <a class="reference internal" href="theory.html#id39" title="Paul L Williams and Randall D Beer. Nonnegative decomposition of multivariate information. arXiv preprint arXiv:1004.2515, 2010.">38</a>]</span> quantify the presence of multiple copies or versions of the same information in a system. It is often generated by complex systems to improve reliability and fault tolerance, as it allows for the recovery of information in case of errors or failures.</p>
+<dt id="term-Redundancy">Redundancy<a class="headerlink" href="#term-Redundancy" title="Link to this term">#</a></dt><dd><p>Redundancy <span id="id6">[<a class="reference internal" href="theory.html#id69" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M. Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">33</a>, <a class="reference internal" href="theory.html#id41" title="Paul L Williams and Randall D Beer. Nonnegative decomposition of multivariate information. arXiv preprint arXiv:1004.2515, 2010.">37</a>]</span> quantify the presence of multiple copies or versions of the same information in a system. It is often generated by complex systems to improve reliability and fault tolerance, as it allows for the recovery of information in case of errors or failures.</p>
 </dd>
-<dt id="term-Synergy">Synergy<a class="headerlink" href="#term-Synergy" title="Link to this term">#</a></dt><dd><p>Synergy <span id="id7">[<a class="reference internal" href="theory.html#id66" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M. Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">34</a>, <a class="reference internal" href="theory.html#id39" title="Paul L Williams and Randall D Beer. Nonnegative decomposition of multivariate information. arXiv preprint arXiv:1004.2515, 2010.">38</a>]</span> quantify the presence of more information in the system considered as a whole with respect to its separated parts. It index the ability of two or more elements of a system to work together to produce an effect that is greater than the sum of their individual contributions. In other words, synergy occurs when the combined effect of multiple components is more than what would be expected from their separate effects. This concept is often used in biology, ecology, and engineering to describe the cooperative interactions between different components of a system.</p>
+<dt id="term-Synergy">Synergy<a class="headerlink" href="#term-Synergy" title="Link to this term">#</a></dt><dd><p>Synergy <span id="id7">[<a class="reference internal" href="theory.html#id69" title="Nicholas Timme, Wesley Alford, Benjamin Flecker, and John M. Beggs. Synergy, redundancy, and multivariate information measures: an experimentalist’s perspective. Journal of computational neuroscience, 36:119–140, 2014.">33</a>, <a class="reference internal" href="theory.html#id41" title="Paul L Williams and Randall D Beer. Nonnegative decomposition of multivariate information. arXiv preprint arXiv:1004.2515, 2010.">37</a>]</span> quantify the presence of more information in the system considered as a whole with respect to its separated parts. It index the ability of two or more elements of a system to work together to produce an effect that is greater than the sum of their individual contributions. In other words, synergy occurs when the combined effect of multiple components is more than what would be expected from their separate effects. This concept is often used in biology, ecology, and engineering to describe the cooperative interactions between different components of a system.</p>
 </dd>
-<dt id="term-Partial-Information-Decomposition">Partial Information Decomposition<a class="headerlink" href="#term-Partial-Information-Decomposition" title="Link to this term">#</a></dt><dd><p>Partial Information Decomposition (PID) <span id="id8">[<a class="reference internal" href="theory.html#id39" title="Paul L Williams and Randall D Beer. Nonnegative decomposition of multivariate information. arXiv preprint arXiv:1004.2515, 2010.">38</a>]</span> is a framework for quantifying the unique, shared, and synergistic information that multiple variables provide about a target variable. It aims to decompose the mutual information between a set of predictor variables and a target variable into non-negative components, representing the unique information contributed by each predictor variable, the redundant information shared among predictor variables, and the synergistic information that can only be obtained by considering multiple predictor variables together. PID provides a more nuanced understanding of the relationships between variables in complex systems, beyond traditional pairwise measures of association.</p>
+<dt id="term-Partial-Information-Decomposition">Partial Information Decomposition<a class="headerlink" href="#term-Partial-Information-Decomposition" title="Link to this term">#</a></dt><dd><p>Partial Information Decomposition (PID) <span id="id8">[<a class="reference internal" href="theory.html#id41" title="Paul L Williams and Randall D Beer. Nonnegative decomposition of multivariate information. arXiv preprint arXiv:1004.2515, 2010.">37</a>]</span> is a framework for quantifying the unique, shared, and synergistic information that multiple variables provide about a target variable. It aims to decompose the mutual information between a set of predictor variables and a target variable into non-negative components, representing the unique information contributed by each predictor variable, the redundant information shared among predictor variables, and the synergistic information that can only be obtained by considering multiple predictor variables together. PID provides a more nuanced understanding of the relationships between variables in complex systems, beyond traditional pairwise measures of association.</p>
 </dd>
 <dt id="term-Network-behavior">Network behavior<a class="headerlink" href="#term-Network-behavior" title="Link to this term">#</a></dt><dd><p>Higher Order Interactions between a set of variables. Metrics of intrinsic
-information  <span id="id9">[<a class="reference internal" href="theory.html#id63" title="Andrea I Luppi, Fernando E Rosas, Pedro AM Mediano, David K Menon, and Emmanuel A Stamatakis. Information decomposition and the informational architecture of the brain. Trends in Cognitive Sciences, 2024.">18</a>]</span>, i.e. information carried by a group of variables about their
-future, are part of this category. <cite>Undirected</cite> metrics <span id="id10">[<a class="reference internal" href="theory.html#id61" title="Fernando E Rosas, Pedro AM Mediano, and Michael Gastpar. Characterising directed and undirected metrics of high-order interdependence. arXiv preprint arXiv:2404.07140, 2024.">22</a>]</span> as the
+information  <span id="id9">[<a class="reference internal" href="theory.html#id66" title="Andrea I Luppi, Fernando E Rosas, Pedro AM Mediano, David K Menon, and Emmanuel A Stamatakis. Information decomposition and the informational architecture of the brain. Trends in Cognitive Sciences, 2024.">17</a>]</span>, i.e. information carried by a group of variables about their
+future, are part of this category. <cite>Undirected</cite> metrics <span id="id10">[<a class="reference internal" href="theory.html#id64" title="Fernando E Rosas, Pedro AM Mediano, and Michael Gastpar. Characterising directed and undirected metrics of high-order interdependence. arXiv preprint arXiv:2404.07140, 2024.">21</a>]</span> as the
 O-information, fall as well in this category.</p>
 </dd>
 <dt id="term-Network-encoding">Network encoding<a class="headerlink" href="#term-Network-encoding" title="Link to this term">#</a></dt><dd><p>Higher Order Interactions between a set of variables modulated by a target variable.
-Measures of extrinsic information  <span id="id11">[<a class="reference internal" href="theory.html#id63" title="Andrea I Luppi, Fernando E Rosas, Pedro AM Mediano, David K Menon, and Emmanuel A Stamatakis. Information decomposition and the informational architecture of the brain. Trends in Cognitive Sciences, 2024.">18</a>]</span>, i.e. information carried by a group of
+Measures of extrinsic information  <span id="id11">[<a class="reference internal" href="theory.html#id66" title="Andrea I Luppi, Fernando E Rosas, Pedro AM Mediano, David K Menon, and Emmanuel A Stamatakis. Information decomposition and the informational architecture of the brain. Trends in Cognitive Sciences, 2024.">17</a>]</span>, i.e. information carried by a group of
 variables about an external target are part of this group.
-<cite>Directed</cite> metrics <span id="id12">[<a class="reference internal" href="theory.html#id61" title="Fernando E Rosas, Pedro AM Mediano, and Michael Gastpar. Characterising directed and undirected metrics of high-order interdependence. arXiv preprint arXiv:2404.07140, 2024.">22</a>]</span>, as the
+<cite>Directed</cite> metrics <span id="id12">[<a class="reference internal" href="theory.html#id64" title="Fernando E Rosas, Pedro AM Mediano, and Michael Gastpar. Characterising directed and undirected metrics of high-order interdependence. arXiv preprint arXiv:2404.07140, 2024.">21</a>]</span>, as the
 Redundancy-synergy index (RSI), are also part of this group.</p>
 </dd>
 </dl>
@@ -512,8 +530,8 @@ By BraiNets
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <hr>
     <footer>

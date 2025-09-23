@@ -10,14 +10,12 @@ where various entropy estimators are compared using data sampled from a
 multivariate normal distribution with increasing dimensionality.
 """
 
+import matplotlib.pyplot as plt
 # %%
 import numpy as np
-
 from sklearn.datasets import make_spd_matrix
 
 from hoi.core import get_entropy
-
-import matplotlib.pyplot as plt
 
 plt.style.use("ggplot")
 

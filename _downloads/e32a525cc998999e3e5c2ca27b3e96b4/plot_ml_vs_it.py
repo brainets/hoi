@@ -5,14 +5,13 @@ Machine-learning vs. Information theoretic approaches for HOI
 This example compares Machine-learning and Information theoretic approaches to
 investigate Higher Order Interactions.
 """
+import matplotlib.pyplot as plt
 import numpy as np
-
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import cross_val_score
 
 from hoi.metrics import GradientOinfo
 
-import matplotlib.pyplot as plt
 plt.style.use('ggplot')
 
 

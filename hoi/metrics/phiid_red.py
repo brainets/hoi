@@ -1,10 +1,12 @@
 from functools import partial
-import numpy as np
+
 import jax
 import jax.numpy as jnp
-from hoi.metrics.base_hoi import HOIEstimator
+import numpy as np
+
 from hoi.core.entropies import prepare_for_it
-from hoi.core.mi import get_mi, compute_mi_comb_phi
+from hoi.core.mi import compute_mi_comb_phi, get_mi
+from hoi.metrics.base_hoi import HOIEstimator
 from hoi.utils.progressbar import get_pbar
 
 

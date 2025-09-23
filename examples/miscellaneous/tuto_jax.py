@@ -22,15 +22,13 @@ modules and functions used in HOI. In particular, we will see :
 # Jax has a module called `numpy`. As the name suggests, it allows to write
 # NumPy like code except that it can be executed on CPU or on GPU.
 
+import timeit
 # %%
 from functools import partial
 
-import numpy as np
-
 import jax
 import jax.numpy as jnp
-
-import timeit
+import numpy as np
 
 x = jnp.asarray([1, 2, 3, 1, 6, 9, 3])
 

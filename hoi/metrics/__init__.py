@@ -1,9 +1,10 @@
+from .do_tot import DOtot  # noqa
 from .dtc import DTC  # noqa
 from .gradient_oinfo import GradientOinfo  # noqa
-from .infotopo import InfoTopo  # noqa
 from .info_tot import InfoTot  # noqa
+from .infotopo import InfoTopo  # noqa
 from .oinfo import Oinfo  # noqa
-from .phiid_syn import SynergyphiID  # noqa
+from .phiid_atoms import AtomsPhiID  # noqa
 from .phiid_red import RedundancyphiID  # noqa
 from .red_mmi import RedundancyMMI  # noqa
 from .rsi import RSI  # noqa

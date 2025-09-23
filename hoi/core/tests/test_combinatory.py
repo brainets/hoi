@@ -1,11 +1,11 @@
+from collections.abc import Iterable
+from math import comb as ccomb
+
+import jax.numpy as jnp
+import numpy as np
 import pytest
 
-import numpy as np
-import jax.numpy as jnp
-
-from math import comb as ccomb
-from hoi.core.combinatory import combinations, _combinations
-from collections.abc import Iterable
+from hoi.core.combinatory import _combinations, combinations
 
 
 class TestCombinatory(object):

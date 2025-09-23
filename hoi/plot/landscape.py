@@ -1,6 +1,6 @@
 import numpy as np
 
-from hoi.utils import normalize, landscape
+from hoi.utils import landscape, normalize
 
 
 def plot_landscape(

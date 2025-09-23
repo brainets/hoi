@@ -1,23 +1,20 @@
+import numpy as np
 import pytest
 
-import numpy as np
-
 from hoi.metrics import (
-    Oinfo,
-    InfoTopo,
-    TC,
     DTC,
-    Sinfo,
-    InfoTot,
-    GradientOinfo,
-    RedundancyMMI,
-    SynergyMMI,
     RSI,
+    TC,
+    GradientOinfo,
+    InfoTopo,
+    InfoTot,
+    Oinfo,
+    RedundancyMMI,
     RedundancyphiID,
-    SynergyphiID,
+    Sinfo,
+    SynergyMMI,
 )
 from hoi.utils import get_nbest_mult
-
 
 np.random.seed(0)
 
@@ -29,7 +26,7 @@ N_FEATURES_Y = 3
 N_VARIABLES = 5
 
 # metrics settings
-METRICS_NET = [Oinfo, InfoTopo, TC, DTC, Sinfo, RedundancyphiID, SynergyphiID]
+METRICS_NET = [Oinfo, InfoTopo, TC, DTC, Sinfo, RedundancyphiID]
 METRICS_ENC = [RedundancyMMI, SynergyMMI, GradientOinfo, RSI, InfoTot]
 METRICS_ALL = METRICS_NET + METRICS_ENC
 
@@ -93,7 +90,7 @@ class TestMetricsSmoke(object):
             return None
 
         # skip phiid when there's a target
-        if (y is not None) and (metric in [RedundancyphiID, SynergyphiID]):
+        if (y is not None) and (metric in [RedundancyphiID]):
             return None
 
         # skip infotopo if multiplets or y
@@ -101,7 +98,7 @@ class TestMetricsSmoke(object):
             kw_def = dict()
             if (y is not None) or (multiplets is not None):
                 return None
-        elif metric in [RedundancyphiID, SynergyphiID]:
+        elif metric in [RedundancyphiID]:
             kw_def = dict(multiplets=multiplets)
         else:
             kw_def = dict(y=y, multiplets=multiplets)
@@ -168,7 +165,7 @@ class TestMetricsSmoke(object):
         # ------------------------------ BEHAVIOR -----------------------------
         if metric in METRICS_NET:
             # special case of InfoTopo
-            if metric in [InfoTopo, RedundancyphiID, SynergyphiID]:
+            if metric in [InfoTopo, RedundancyphiID]:
                 model = metric(x.copy())
                 model.fit(minsize=2, maxsize=5)
                 np.testing.assert_array_equal(model.order.min(), 2)
@@ -323,7 +320,7 @@ class TestMetricsFunc(object):
         np.testing.assert_array_equal(df["multiplet"].values[0], [3, 4])
 
     @pytest.mark.parametrize("xy", [(x_phiid, None)])
-    @pytest.mark.parametrize("metric", [RedundancyphiID, SynergyphiID])
+    @pytest.mark.parametrize("metric", [RedundancyphiID])
     def test_phiid(self, metric, xy):
         x, y = xy
         model = metric(x.copy())
@@ -331,8 +328,6 @@ class TestMetricsFunc(object):
 
         df = get_nbest_mult(hoi, model=model, minsize=2, maxsize=2, n_best=1)
 
-        if metric == SynergyphiID:
-            mult = [0, 1]
-        elif metric == RedundancyphiID:
+        if metric == RedundancyphiID:
             mult = [0, 2]
         np.testing.assert_array_equal(df["multiplet"].values[0], mult)

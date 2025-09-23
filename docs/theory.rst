@@ -201,7 +201,7 @@ is shared by at least two or more variables in the following way:
 .. math::
 
 	DTC(X^{n})  &=  H(X^{n}) - \sum_{j=1}^{n} H(X_j|X_{-j}^{n}) \\
-				&= \sum_{j=1}^{n} H(X_j) - (n-1)H(X^{n})
+				&= (1-n)H(X^{n}) + \sum_{j=1}^{n} H(X_{-j}^{n}) 
 
 Where :math:`X_{-j}^n` is the set of all the variables in :math:`X^n` apart from :math:`X_j`, 
 :math:`X_{-j}^{n}=  \{ X_1, X_2, ..., X_{j-1}, X_{j+1}, ..., X_n  \}`, so that :math:`H(X_j|X_{-j}^{n})` 
@@ -219,7 +219,7 @@ correlation (DTC), :cite:`james2011anatomy`:
 
 .. math::
 
-	\Omega(X^{n})  &=  TC(X^{n}) + DTC(X^{n}) \\
+	S(X^{n})  &=  TC(X^{n}) + DTC(X^{n}) \\
 					&=  nH(X^{n}) + \sum_{j=1}^{n} [H(X_{j}) + H(
 					X_{-j}^{n})]
 
@@ -270,8 +270,8 @@ when it is negative, synergy.
 
 .. minigallery:: hoi.metrics.InfoTopo
 
-Synergy and redundancy integrated Information Decomposition (MMI)
-----------------------------------------------------------------
+The Integrated Information Decomposition
+----------------------------------------
 
 Recently it has been drawn a lot of attention by different metrics focusing 
 on decomposing the information that two variables carry about their own 
@@ -290,8 +290,13 @@ less vulnerable by the lost of elements  :cite:`luppi2024information`.
 It provides already many results in simulated complex systems or in different 
 studies within the field of 
 neuroscience :cite:`rosas2020reconciling, luppi2020synergistic, luppi2020synergistic`. 
-These functions allow to compute redundancy 
-and synergy using the approximation of 
+In our toolbox, it is possible to compute any atoms of the Integrated Information Decomposition
+(IphiD) :cite:`mediano2021towards`, using the function:
+
+.. minigallery:: hoi.metrics.atoms_phiID
+
+This function allow to compute the atoms of interest of the integrated information decomposition 
+framework (phiID). The redundancy is estimated using the approximation of 
 Minimum Mutual Information (MMI) :cite:`barrett2015exploration`, 
 in which the redundancy, :class:`hoi.metrics.RedundancyphiID`, between a couple 
 of variables :math:`(X, Y)` is 
@@ -304,22 +309,33 @@ defined as:
 
 .. minigallery:: hoi.metrics.RedundancyphiID
 
-Within the MMI approximation the computation of the synergy, :class:`hoi.metrics.SynergyphiID`, 
-reduces to the
-following formula: 
+Total dynamical O-information
+-----------------------------
+The total dynamical O-information, :class:`hoi.metrics.dOtot`, has been
+developed to study the balance between redundancy and synergy in the
+context of dynamical systems. This metric provides a comprehensive
+framework to analyze the interplay between redundant and synergistic
+interactions among a set of variables over time. It is defined as:
 
 .. math::
 
-    Syn(X,Y) =  I(X_{t-\tau},Y_{t-\tau};X_{t},Y_t) -
-                        max \{ I(X_{t-\tau};X_t,Y_t),
-                        I(Y_{t-\tau};X_t,Y_t) \}
+    dO_{tot}(X^n) = \sum_{i=1}^{n} dO_i(X^n)
 
-These two metrics are always positive and have as upper bound the value of temporal delayed
-mutual information (TDMI), :math:`I(X(t-\tau),Y(t-\tau);X(t),Y(t))`.
+Where :math:`dO_i(X^n)` can be written as:
 
-.. minigallery:: hoi.metrics.SynergyphiID
+.. math::
 
-Network encoding 
+    dO_j(X^n) = & (1-n)I(X_{-j}^n(t-\tau); X_{j}(t) | X_{-j}^n(t-\tau)) + \\
+                & \sum_{i \in X_{-j}^n} I(X_{-ij}(t-\tau); X_{j}(t) | X_{j}(t-\tau))
+
+Here, :math:`X_{-j}^n` represents the set of all variables in :math:`X^n`
+except for :math:`X_j`, and :math:`X_{-ij}` is the set excluding both :math:`X_i`
+and :math:`X_j`. The term :math:`I(A; B | C)` denotes the conditional
+mutual information between variables A and B given C.
+
+.. minigallery:: hoi.metrics.dOtot
+
+Network encoding
 ****************
 
 The metrics that are listed in this section focus on measuring the information 

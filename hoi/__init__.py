@@ -1,3 +1,3 @@
-from hoi import core, metrics, utils, simulation  # noqa
+from hoi import core, metrics, simulation, utils  # noqa
 
 __version__ = "0.0.5"

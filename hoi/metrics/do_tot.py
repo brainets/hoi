@@ -1,44 +1,55 @@
 from functools import partial
 
-import numpy as np
-
 import jax
 import jax.numpy as jnp
+import numpy as np
 
-from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.entropies import prepare_for_it
-from hoi.core.mi import get_mi, compute_mi_comb
+from hoi.core.mi import (
+    compute_cmi_comb,
+    compute_mi_doinfo_sub,
+    compute_mi_doinfo_tot,
+    get_cond_mi,
+)
+from hoi.metrics.base_hoi import HOIEstimator
 from hoi.utils.progressbar import get_pbar
 
 
-@partial(jax.jit, static_argnums=(2,))
-def _compute_phi_syn(inputs, comb, mi_fcn=None):
-    x, y, ind = inputs
+@partial(jax.jit, static_argnums=(2, 3))
+def compute_dyn_oinfo(inputs, comb, cmi_fcn_tot=None, cmi_fcn_sub=None):
+    x, y, ind, ind_sub = inputs
+
+    n = len(ind)
 
     # select combination
-    x_c = x[:, :, :]
+    x_c = x[:, comb, :]
     y_c = y[:, comb, :]
 
     # compute info tot I({x_{1}, ..., x_{n}}; S)
-    _, i_tot = mi_fcn((x_c, y_c), comb)
+    _, i_tot = jax.lax.scan(cmi_fcn_tot, (x_c, y_c, ind), jnp.arange(n))
 
     # compute max(I(x_{-j}; S))
-    _, i_maxj = jax.lax.scan(mi_fcn, (x_c[:, comb, :], y_c), ind)
+    _, i_subj = jax.lax.scan(
+        cmi_fcn_sub, (x_c, y_c, ind, ind_sub), jnp.arange(n)
+    )
 
-    return inputs, i_tot - i_maxj.max(0)
+    return inputs, (2 - n) * i_tot.sum(0) + i_subj.sum(0)
 
 
-class SynergyphiID(HOIEstimator):
-    r"""Synergy (phiID).
+class DOtot(HOIEstimator):
+    r"""The total dynamic O-information (dOtot).
 
-    For each couple of variable the synergy about their future as in
-    Luppi et al (2022), using the Minimum Mutual Information (MMI) approach:
+    For each multiplet of size n, the dO is defined as follows:
 
     .. math::
 
-        Syn(X,Y) =  I(X_{t-\tau},Y_{t-\tau};X_{t},Y_t) -
-                            max \{ I(X_{t-\tau};X_t,Y_t),
-                            I(Y_{t-\tau};X_t,Y_t) \}
+        dO_{tot}(X^n) =  \sum_{j=1}^{n} dO_j(X^n)
+
+    where
+    .. math::
+
+        dO_j(X^n) = & (1-n)I(X_{-j}(t-\tau); X_{j}(t) | X_{-j}(t-\tau)) - \\
+            &- \sum_{i \in X_{-j}} I(X_{-ij}(t-\tau); X_{j}(t) | X_{j}(t-\tau))
 
     Parameters
     ----------
@@ -52,7 +63,7 @@ class SynergyphiID(HOIEstimator):
 
     References
     ----------
-    Luppi et al, 2022 :cite:`luppi2022synergistic`
+    Stramaglia et al, 2022 :cite:`stramaglia2021quantifying`
     """
 
     __name__ = "Synergy phiID MMI"
@@ -68,7 +79,7 @@ class SynergyphiID(HOIEstimator):
 
     def fit(
         self,
-        minsize=2,
+        minsize=3,
         tau=1,
         direction_axis=0,
         maxsize=None,
@@ -121,15 +132,24 @@ class SynergyphiID(HOIEstimator):
         """
         # ________________________________ I/O ________________________________
         # check minsize and maxsize
-        minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
+        minsize, maxsize = self._check_minmax(max(minsize, 3), maxsize)
 
         # prepare the x for computing mi
         x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
 
         # prepare mi functions
-        mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
-        compute_mi = partial(compute_mi_comb, mi=mi_fcn)
-        compute_syn = partial(_compute_phi_syn, mi_fcn=compute_mi)
+        cmi_fcn = jax.vmap(get_cond_mi(method=method, **kwargs))
+        compute_dyn_otot = partial(compute_mi_doinfo_tot, cmi=cmi_fcn)
+
+        cmi_fcn_s = partial(compute_cmi_comb, cmi=cmi_fcn)
+        compute_dyn_osub = partial(compute_mi_doinfo_sub, cmi=cmi_fcn_s)
+
+        compute_do = partial(
+            compute_dyn_oinfo,
+            cmi_fcn_tot=compute_dyn_otot,
+            cmi_fcn_sub=compute_dyn_osub,
+        )
+        # compute_do = partial(compute_dyn_oinfo, mi_fcn=compute_mi)
 
         # get multiplet indices and order
         h_idx, order = self.get_combinations(minsize, maxsize=maxsize)
@@ -150,15 +170,16 @@ class SynergyphiID(HOIEstimator):
             hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
         for msize in pbar:
-            pbar.set_description(
-                desc="SynPhiIDMMI order %s" % msize, refresh=False
-            )
+            pbar.set_description(desc="dO_tot order %s" % msize, refresh=False)
 
             # combinations of features
             _h_idx = h_idx[order == msize, 0:msize]
 
             # define indices for I(x_{-j}; S)
             ind = (jnp.mgrid[0:msize, 0:msize].sum(0) % msize)[:, 1:]
+            ind_sub = (
+                jnp.mgrid[0 : msize - 1, 0 : msize - 1].sum(0) % (msize - 1)
+            )[:, 1:]
 
             if direction_axis == 0:
                 x_c = x[:, :, :-tau]
@@ -172,7 +193,7 @@ class SynergyphiID(HOIEstimator):
                 raise ValueError("axis can be eaither equal 0 or 2.")
 
             # compute hoi
-            _, _hoi = jax.lax.scan(compute_syn, (x_c, y, ind), _h_idx)
+            _, _hoi = jax.lax.scan(compute_do, (x_c, y, ind, ind_sub), _h_idx)
 
             # fill variables
             n_combs = _h_idx.shape[0]

@@ -1,8 +1,10 @@
-from jax_tqdm import scan_tqdm, loop_tqdm
-from hoi.utils.progressbar import get_pbar
 import typing
+
 import pytest
+from jax_tqdm import loop_tqdm, scan_tqdm
 from tqdm.auto import tqdm
+
+from hoi.utils.progressbar import get_pbar
 
 
 class TestProgressBar(object):

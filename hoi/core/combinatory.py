@@ -1,7 +1,8 @@
-import jax.numpy as jnp
-import numpy as np
 import itertools
 from math import comb as ccomb
+
+import jax.numpy as jnp
+import numpy as np
 
 
 def _combinations(n, k, order, target):

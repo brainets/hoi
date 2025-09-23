@@ -1,7 +1,7 @@
 import pytest
 
+from hoi.metrics import GradientOinfo, Oinfo
 from hoi.simulation import simulate_hoi_gauss
-from hoi.metrics import Oinfo, GradientOinfo
 
 n_samples = [100, 1000, 10000]
 target = [True, False]

@@ -1,13 +1,14 @@
-import pytest
-import numpy as np
 import jax
+import numpy as np
+import pytest
+
 from hoi.core.entropies import (
-    entropy_gc,
-    entropy_gauss,
     entropy_bin,
+    entropy_gauss,
+    entropy_gc,
     entropy_hist,
-    entropy_knn,
     entropy_kernel,
+    entropy_knn,
     get_entropy,
 )
 from hoi.utils import digitize

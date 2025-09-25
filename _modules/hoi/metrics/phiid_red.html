@@ -229,6 +229,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.metrics.AtomsPhiID.html">hoi.metrics.AtomsPhiID</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../api/generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
@@ -403,7 +404,9 @@ document.write(`
 <span class="k">class</span><span class="w"> </span><span class="nc">RedundancyphiID</span><span class="p">(</span><span class="n">HOIEstimator</span><span class="p">):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Redundancy (phiID).</span>
 
-<span class="sd">    Estimated using the Minimum Mutual Information (MMI) as follow:</span>
+<span class="sd">    This function computes the redundancy to redundancy atom of the</span>
+<span class="sd">    Integrated Information Decomposition (phiID) framework,</span>
+<span class="sd">    estimated using the Minimum Mutual Information (MMI) as follow:</span>
 
 <span class="sd">    .. math::</span>
 

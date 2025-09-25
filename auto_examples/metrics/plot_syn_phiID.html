@@ -231,6 +231,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.AtomsPhiID.html">hoi.metrics.AtomsPhiID</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
@@ -446,7 +447,7 @@ defined in the Integrated Information Decomposition framework</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">hoi.metrics</span><span class="w"> </span><span class="kn">import</span> <a href="../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RedundancyphiID</span></a><span class="p">,</span> <span class="n">AtomsPhiID</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">hoi.metrics</span><span class="w"> </span><span class="kn">import</span> <a href="../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">RedundancyphiID</span></a><span class="p">,</span> <a href="../../api/generated/hoi.metrics.AtomsPhiID.html#hoi.metrics.AtomsPhiID" title="hoi.metrics.AtomsPhiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">AtomsPhiID</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">hoi.utils</span><span class="w"> </span><span class="kn">import</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s2">&quot;ggplot&quot;</span><span class="p">)</span>
@@ -486,7 +487,7 @@ we will observe redundancy between <span class="math notranslate nohighlight">\(
     <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 
 <span class="c1"># define the sts model and launch it (AtomsPhiID return by default sts)</span>
-<a href="../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <span class="n">AtomsPhiID</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<a href="../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.AtomsPhiID.html#hoi.metrics.AtomsPhiID" title="hoi.metrics.AtomsPhiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">AtomsPhiID</span></a><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">hoi</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID.fit" title="hoi.metrics.RedundancyphiID.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
 <span class="c1"># now we can take a look at the multiplets with the highest and lowest values</span>
@@ -496,7 +497,7 @@ we will observe redundancy between <span class="math notranslate nohighlight">\(
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| SynPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    1.30it/s]
+100%|██████████| SynPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    1.27it/s]
 
    index  order       hoi multiplet
 0      0      2  0.845804    [0, 1]
@@ -533,7 +534,7 @@ synergy is [0,1]</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| RedPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    5.89it/s]
+100%|██████████| RedPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    5.82it/s]
 
    index  order       hoi multiplet
 0      0      2  1.698441    [0, 1]
@@ -562,7 +563,7 @@ synergy is [0,1]</p>
 </div>
 <p>define the AtomsPhiID, launch it and inspect the best couples of
 variables</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <span class="n">AtomsPhiID</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.AtomsPhiID.html#hoi.metrics.AtomsPhiID" title="hoi.metrics.AtomsPhiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class"><span class="n">AtomsPhiID</span></a><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 <span class="n">syn_results</span> <span class="o">=</span> <a href="../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID.fit" title="hoi.metrics.RedundancyphiID.fit" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-method"><span class="n">model</span><span class="o">.</span><span class="n">fit</span></a><span class="p">(</span><span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <a href="../../api/generated/hoi.utils.get_nbest_mult.html#hoi.utils.get_nbest_mult" title="hoi.utils.get_nbest_mult" class="sphx-glr-backref-module-hoi-utils sphx-glr-backref-type-py-function"><span class="n">get_nbest_mult</span></a><span class="p">(</span><span class="n">hoi</span><span class="p">,</span> <a href="../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="o">=</span><a href="../../api/generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID" class="sphx-glr-backref-module-hoi-metrics sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">model</span></a><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_best</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -584,7 +585,7 @@ variables</p>
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_syn_phiID_001.png" srcset="../../_images/sphx_glr_plot_syn_phiID_001.png" alt="plot syn phiID" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| SynPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    1.84it/s]
+100%|██████████| SynPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    1.83it/s]
 
    index  order       hoi multiplet
 0      0      2  1.698441    [0, 1]
@@ -616,7 +617,7 @@ variables (smilar results can be obtained using AtomsPhiID, with atom=’rtr’)
 </pre></div>
 </div>
 <img src="../../_images/sphx_glr_plot_syn_phiID_002.png" srcset="../../_images/sphx_glr_plot_syn_phiID_002.png" alt="plot syn phiID" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/1 [00:00&lt;?,       ?it/s]
-100%|██████████| RedPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    5.79it/s]
+100%|██████████| RedPhiIDMMI order 2:  1/1 [00:00&lt;00:00,    5.78it/s]
 
    index  order       hoi multiplet
 0      1      2  1.134994    [0, 2]
@@ -624,7 +625,7 @@ variables (smilar results can be obtained using AtomsPhiID, with atom=’rtr’)
 2      6      2  0.597383    [1, 2]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.133 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.169 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-metrics-plot-syn-phiid-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/fc28b610171f69bef0470c1f4ae19f0c/plot_syn_phiID.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syn_phiID.ipynb</span></code></a></p>

@@ -106,7 +106,17 @@ class AtomsPhiID(HOIEstimator):
     r"""Integrated Information Decomposition (phiID).
 
     For each couple of variable the phiID is performed,
-    using the Minimum Mutual Information (MMI) approach:
+    using the Minimum Mutual Information (MMI) approach to estimate
+    the redundancy to redundancy atoms in this way:
+
+    .. math::
+
+        Red(X,Y) =   min \{ I(X_{t- \tau};X_t), I(X_{t-\tau};Y_t),
+                            I(Y_{t-\tau}; X_t), I(Y_{t-\tau};Y_t) \}
+
+    Important note: this function only works for multiplets of size 2.
+    To compute the redundancy it is better to use the dedicated function
+    :class:`hoi.metrics.RedundancyphiID`.
 
     Parameters
     ----------
@@ -233,6 +243,11 @@ class AtomsPhiID(HOIEstimator):
         }
 
         atom = jnp.array([dic[i] for i in atoms])
+
+        if maxsize > 2:
+            raise ValueError(
+                "For AtomsPhiID, " "only multiplets of size 2 are allowed."
+            )
 
         # ________________________________ I/O ________________________________
         # check minsize and maxsize

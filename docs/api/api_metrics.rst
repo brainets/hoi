@@ -23,8 +23,8 @@ Network behavior
    DTC
    Sinfo
    RedundancyphiID
-   SynergyphiID
-
+   AtomsPhiID
+   dOtot
 
 Network encoding
 ++++++++++++++++

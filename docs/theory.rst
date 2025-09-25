@@ -326,10 +326,10 @@ Where :math:`dO_i(X^n)` can be written as:
 .. math::
 
     dO_j(X^n) = & (1-n)I(X_{-j}^n(t-\tau); X_{j}(t) | X_{-j}^n(t-\tau)) + \\
-                & \sum_{i \in X_{-j}^n} I(X_{-ij}(t-\tau); X_{j}(t) | X_{j}(t-\tau))
+                & \sum_{i \in X_{-j}^n} I(X_{-ij}^n(t-\tau); X_{j}(t) | X_{j}(t-\tau))
 
 Here, :math:`X_{-j}^n` represents the set of all variables in :math:`X^n`
-except for :math:`X_j`, and :math:`X_{-ij}` is the set excluding both :math:`X_i`
+except for :math:`X_j`, and :math:`X_{-ij}^n` is the set excluding both :math:`X_i`
 and :math:`X_j`. The term :math:`I(A; B | C)` denotes the conditional
 mutual information between variables A and B given C.
 

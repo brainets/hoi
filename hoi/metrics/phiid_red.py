@@ -27,7 +27,9 @@ def _compute_phiid_red(inputs, comb, mi_fcn=None):
 class RedundancyphiID(HOIEstimator):
     r"""Redundancy (phiID).
 
-    Estimated using the Minimum Mutual Information (MMI) as follow:
+    This function computes the redundancy to redundancy atom of the
+    Integrated Information Decomposition (phiID) framework,
+    estimated using the Minimum Mutual Information (MMI) as follow:
 
     .. math::
 

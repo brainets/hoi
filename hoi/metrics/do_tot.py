@@ -48,8 +48,8 @@ class DOtot(HOIEstimator):
     where
     .. math::
 
-        dO_j(X^n) = & (1-n)I(X_{-j}(t-\tau); X_{j}(t) | X_{-j}(t-\tau)) - \\
-            &- \sum_{i \in X_{-j}} I(X_{-ij}(t-\tau); X_{j}(t) | X_{j}(t-\tau))
+        dO_j(X^n) = & (1-n)I(X_{-j}^n(t-\tau); X_{j}(t) | X_{-j}^n(t-\tau))-\\
+        &- \sum_{i \in X_{-j}^n} I(X_{-ij}^n(t-\tau); X_{j}(t) | X_{j}(t-\tau))
 
     Parameters
     ----------
@@ -63,7 +63,8 @@ class DOtot(HOIEstimator):
 
     References
     ----------
-    Stramaglia et al, 2022 :cite:`stramaglia2021quantifying`
+    Stramaglia et al, 2022 :cite:`stramaglia2021quantifying` and Robiglio
+    et al, 2025 :cite:`robiglio2025synergistic`
     """
 
     __name__ = "Synergy phiID MMI"

@@ -41,8 +41,8 @@ class DTC(HOIEstimator):
 
     .. math::
 
-        DTC(X^{n})  &=  H(X^{n}) - \sum_{j=1}^{n} H(X_j|X_{-j}^{n}) \\
-                    &= \sum_{j=1}^{n} H(X_j) - (n-1)H(X^{n})
+        DTC(X^{n})  &= H(X^{n}) - \sum_{j=1}^{n} H(X_j|X_{-j}^{n}) \\
+                    &= (1-n)H(X^{n}) + \sum_{j=1}^{n} H(X_{-j}^n)
 
     Parameters
     ----------

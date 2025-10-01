@@ -248,7 +248,7 @@ class TestMetricsSmoke(object):
         elif metric in METRICS_ENC:
             model = metric(x.copy(), y=y.copy(), verbose=False)
 
-        if metric == AtomsPhiID:
+        if metric in [AtomsPhiID]:
             model.fit(minsize=2, maxsize=2, samples=samples)
         else:
             model.fit(minsize=3, maxsize=3, samples=samples)

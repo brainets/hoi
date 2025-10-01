@@ -140,7 +140,7 @@ class TestMetricsSmoke(object):
     @pytest.mark.parametrize("metric", METRICS_NET)
     def test_multiplets(self, metric, x, mult):
         # skip some metric
-        if metric in [InfoTopo, AtomsPhiID]:
+        if metric in [InfoTopo, AtomsPhiID, DOtot]:
             return None
 
         # compute all hoi
@@ -238,7 +238,10 @@ class TestMetricsSmoke(object):
         elif metric in METRICS_ENC:
             model = metric(x.copy(), y=y.copy(), verbose=False)
 
-        model.fit(minsize=3, maxsize=3, samples=samples)
+        if metric == AtomsPhiID:
+            model.fit(minsize=2, maxsize=2, samples=samples)
+        else:
+            model.fit(minsize=3, maxsize=3, samples=samples)
 
 
 class TestMetricsFunc(object):

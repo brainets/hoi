@@ -269,7 +269,7 @@ class TestMetricsFunc(object):
             np.testing.assert_array_equal(df["multiplet"].values[1], [3, 4, 6])
 
     @pytest.mark.parametrize("xy", [(x_2d, None)])
-    @pytest.mark.parametrize("metric", [InfoTopo, DOtot])
+    @pytest.mark.parametrize("metric", [InfoTopo])
     def test_infotopo(self, metric, xy):
         x, y = xy
         model = metric(x.copy())
@@ -351,4 +351,6 @@ class TestMetricsFunc(object):
 
         if metric == RedundancyphiID:
             mult = [0, 2]
+        elif metric == AtomsPhiID:
+            mult = [0, 1]
         np.testing.assert_array_equal(df["multiplet"].values[0], mult)

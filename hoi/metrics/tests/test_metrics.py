@@ -199,7 +199,7 @@ class TestMetricsSmoke(object):
                 np.testing.assert_array_equal(model.order.min(), 2)
                 np.testing.assert_array_equal(model.order.max(), 2)
                 return None
-            elif metric not in [AtomsPhiID]:
+            else:
                 # compute task-free and task-related
                 model_tf = metric(x.copy())
                 hoi_tf = model_tf.fit(minsize=2, maxsize=5)

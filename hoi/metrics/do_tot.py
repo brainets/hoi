@@ -67,10 +67,10 @@ class DOtot(HOIEstimator):
     et al, 2025 :cite:`robiglio2025synergistic`
     """
 
-    __name__ = "Synergy phiID MMI"
+    __name__ = "Dynamic O-information total"
     _encoding = False
-    _positive = "synergy"
-    _negative = "null"
+    _positive = "redundancy"
+    _negative = "synergy"
     _symmetric = False
 
     def __init__(self, x, multiplets=None, verbose=None):

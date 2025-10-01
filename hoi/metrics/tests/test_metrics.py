@@ -79,6 +79,29 @@ for i in range(190):
 # redundancy between (0, 2)
 x_phiid[:, 2] = x_phiid[:, 0] + np.random.rand(200) * 0.05
 
+# ---------------------------------- Dyn Oinfo --------------------------------
+
+# simulate the variable x
+n_features = 6
+x_dotot = np.random.rand(200, 6)
+
+# synergy between (0, 1, 2)
+for i in range(190):
+    x_dotot[i, 0] = np.sum(x_dotot[i : i + 20, 1]) + 0.1 * np.sum(
+        x_dotot[i : i + 20, 0]
+    )
+    x_dotot[i, 1] = np.sum(x_dotot[i : i + 20, 0]) + 0.1 * np.sum(
+        x_dotot[i : i + 20, 1]
+    )
+    x_dotot[i, 2] = 0.1 * np.sum(x_dotot[i : i + 20, 2]) + 0.1 * np.sum(
+        x_dotot[i : i + 20, 0]
+    )
+
+# redundancy between (3, 4, 5)
+x_dotot[:, 3] = x_dotot[:, 4] + np.random.rand(200) * 0.05
+x_dotot[:, 5] = x_dotot[:, 4] + np.random.rand(200) * 0.05
+# -----------------------------------------------------------------------------
+
 
 class TestMetricsSmoke(object):
     @staticmethod
@@ -343,6 +366,7 @@ class TestMetricsFunc(object):
     @pytest.mark.parametrize("xy", [(x_phiid, None)])
     @pytest.mark.parametrize("metric", [RedundancyphiID, AtomsPhiID])
     def test_phiid(self, metric, xy):
+
         x, y = xy
         model = metric(x.copy())
         hoi = model.fit(minsize=2, maxsize=2)
@@ -354,3 +378,14 @@ class TestMetricsFunc(object):
         elif metric == AtomsPhiID:
             mult = [0, 1]
         np.testing.assert_array_equal(df["multiplet"].values[0], mult)
+
+    @pytest.mark.parametrize("xy", [(x_dotot, None)])
+    @pytest.mark.parametrize("metric", [DOtot])
+    def test_dotot(self, metric, xy):
+        x, y = xy
+        model = metric(x.copy())
+        hoi = model.fit(minsize=3, maxsize=3)
+
+        df = get_nbest_mult(hoi, model=model, minsize=3, maxsize=3, n_best=1)
+        np.testing.assert_array_equal(df["multiplet"].values[0], [0, 1, 2])
+        np.testing.assert_array_equal(df["multiplet"].values[-1], [3, 4, 5])

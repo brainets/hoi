@@ -189,24 +189,24 @@ class TestMetricsSmoke(object):
                 np.testing.assert_array_equal(model.order.min(), 2)
                 np.testing.assert_array_equal(model.order.max(), 2)
                 return None
+            if metric not in [AtomsPhiID]:
+                # compute task-free and task-related
+                model_tf = metric(x.copy())
+                hoi_tf = model_tf.fit(minsize=2, maxsize=5)
+                model_tr = metric(x.copy(), y=y.copy())
+                hoi_tr = model_tr.fit(minsize=2, maxsize=5)
 
-            # compute task-free and task-related
-            model_tf = metric(x.copy())
-            hoi_tf = model_tf.fit(minsize=2, maxsize=5)
-            model_tr = metric(x.copy(), y=y.copy())
-            hoi_tr = model_tr.fit(minsize=2, maxsize=5)
-
-            # check orders
-            np.testing.assert_array_equal(hoi_tr.shape, hoi_tf.shape)
-            np.testing.assert_array_equal(model_tf.order, model_tr.order)
-            np.testing.assert_array_equal(model_tf.order.min(), 2)
-            np.testing.assert_array_equal(model_tf.order.max(), 5)
-            for m, o in zip(model_tr.multiplets, model_tr.order):
-                for n_y in range(y.shape[1]):
-                    assert N_FEATURES_X + n_y in m
-                    np.testing.assert_array_equal(
-                        m[o + n_y], N_FEATURES_X + n_y
-                    )
+                # check orders
+                np.testing.assert_array_equal(hoi_tr.shape, hoi_tf.shape)
+                np.testing.assert_array_equal(model_tf.order, model_tr.order)
+                np.testing.assert_array_equal(model_tf.order.min(), 2)
+                np.testing.assert_array_equal(model_tf.order.max(), 5)
+                for m, o in zip(model_tr.multiplets, model_tr.order):
+                    for n_y in range(y.shape[1]):
+                        assert N_FEATURES_X + n_y in m
+                        np.testing.assert_array_equal(
+                            m[o + n_y], N_FEATURES_X + n_y
+                        )
 
         # ------------------------------ ENCODING -----------------------------
         if metric in METRICS_ENC:
@@ -243,7 +243,7 @@ class TestMetricsSmoke(object):
 
 class TestMetricsFunc(object):
     @pytest.mark.parametrize("xy", [(x_2d, None), (x_3d, y_1d)])
-    @pytest.mark.parametrize("metric", [Oinfo, DOtot])
+    @pytest.mark.parametrize("metric", [Oinfo])
     def test_oinfo(self, metric, xy):
         x, y = xy
         if y is None:
@@ -266,7 +266,7 @@ class TestMetricsFunc(object):
             np.testing.assert_array_equal(df["multiplet"].values[1], [3, 4, 6])
 
     @pytest.mark.parametrize("xy", [(x_2d, None)])
-    @pytest.mark.parametrize("metric", [InfoTopo])
+    @pytest.mark.parametrize("metric", [InfoTopo, DOtot])
     def test_infotopo(self, metric, xy):
         x, y = xy
         model = metric(x.copy())

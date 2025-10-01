@@ -368,7 +368,7 @@ class TestMetricsFunc(object):
         df = get_nbest_mult(hoi, model=model, minsize=2, maxsize=2, n_best=1)
 
         if metric == RedundancyphiID:
-            mult = [0, 2]
+            mult = [2, 3]
         elif metric == AtomsPhiID:
             mult = [0, 1]
         np.testing.assert_array_equal(df["multiplet"].values[0], mult)

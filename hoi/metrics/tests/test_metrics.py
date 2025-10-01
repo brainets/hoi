@@ -69,7 +69,6 @@ x_phiid = np.random.rand(200, 4)
 
 # synergy between (0, 1)
 for i in range(190):
-    x_phiid[i, 0] = np.sum(x_phiid[i : i + 20, 1])
     x_phiid[i, 1] = np.sum(x_phiid[i : i + 20, 0])
     x_phiid[i, 2] = 0.1 * np.sum(x_phiid[i : i + 20, 2])
 
@@ -364,7 +363,7 @@ class TestMetricsFunc(object):
         if metric == RedundancyphiID:
             mult = [2, 3]
         elif metric == AtomsPhiID:
-            mult = [0, 1]
+            mult = [1, 2]
         np.testing.assert_array_equal(df["multiplet"].values[0], mult)
 
     @pytest.mark.parametrize("xy", [(x_dotot, None)])

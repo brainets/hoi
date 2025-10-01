@@ -13,6 +13,8 @@ from hoi.metrics import (
     RedundancyphiID,
     Sinfo,
     SynergyMMI,
+    AtomsPhiID,
+    DOtot,
 )
 from hoi.utils import get_nbest_mult
 
@@ -26,7 +28,16 @@ N_FEATURES_Y = 3
 N_VARIABLES = 5
 
 # metrics settings
-METRICS_NET = [Oinfo, InfoTopo, TC, DTC, Sinfo, RedundancyphiID]
+METRICS_NET = [
+    Oinfo,
+    InfoTopo,
+    TC,
+    DTC,
+    Sinfo,
+    RedundancyphiID,
+    AtomsPhiID,
+    DOtot,
+]
 METRICS_ENC = [RedundancyMMI, SynergyMMI, GradientOinfo, RSI, InfoTot]
 METRICS_ALL = METRICS_NET + METRICS_ENC
 
@@ -98,7 +109,7 @@ class TestMetricsSmoke(object):
             kw_def = dict()
             if (y is not None) or (multiplets is not None):
                 return None
-        elif metric in [RedundancyphiID]:
+        elif metric in [RedundancyphiID, DOtot, AtomsPhiID]:
             kw_def = dict(multiplets=multiplets)
         else:
             kw_def = dict(y=y, multiplets=multiplets)
@@ -165,11 +176,18 @@ class TestMetricsSmoke(object):
         # ------------------------------ BEHAVIOR -----------------------------
         if metric in METRICS_NET:
             # special case of InfoTopo
-            if metric in [InfoTopo, RedundancyphiID]:
+            if metric in [InfoTopo, RedundancyphiID, DOtot]:
                 model = metric(x.copy())
                 model.fit(minsize=2, maxsize=5)
                 np.testing.assert_array_equal(model.order.min(), 2)
                 np.testing.assert_array_equal(model.order.max(), 5)
+                return None
+
+            if metric in [AtomsPhiID]:
+                model = metric(x.copy())
+                model.fit(minsize=2, maxsize=2)
+                np.testing.assert_array_equal(model.order.min(), 2)
+                np.testing.assert_array_equal(model.order.max(), 2)
                 return None
 
             # compute task-free and task-related
@@ -225,7 +243,7 @@ class TestMetricsSmoke(object):
 
 class TestMetricsFunc(object):
     @pytest.mark.parametrize("xy", [(x_2d, None), (x_3d, y_1d)])
-    @pytest.mark.parametrize("metric", [Oinfo])
+    @pytest.mark.parametrize("metric", [Oinfo, DOtot])
     def test_oinfo(self, metric, xy):
         x, y = xy
         if y is None:
@@ -320,7 +338,7 @@ class TestMetricsFunc(object):
         np.testing.assert_array_equal(df["multiplet"].values[0], [3, 4])
 
     @pytest.mark.parametrize("xy", [(x_phiid, None)])
-    @pytest.mark.parametrize("metric", [RedundancyphiID])
+    @pytest.mark.parametrize("metric", [RedundancyphiID, AtomsPhiID])
     def test_phiid(self, metric, xy):
         x, y = xy
         model = metric(x.copy())

@@ -353,7 +353,6 @@ class TestMetricsFunc(object):
     @pytest.mark.parametrize("xy", [(x_phiid, None)])
     @pytest.mark.parametrize("metric", [RedundancyphiID, AtomsPhiID])
     def test_phiid(self, metric, xy):
-
         x, y = xy
         model = metric(x.copy())
         hoi = model.fit(minsize=2, maxsize=2)

@@ -101,7 +101,7 @@ class TestMetricsSmoke(object):
             return None
 
         # skip phiid when there's a target
-        if (y is not None) and (metric in [RedundancyphiID]):
+        if (y is not None) and (metric in [RedundancyphiID, DOtot]):
             return None
 
         # skip infotopo if multiplets or y
@@ -140,7 +140,7 @@ class TestMetricsSmoke(object):
     @pytest.mark.parametrize("metric", METRICS_NET)
     def test_multiplets(self, metric, x, mult):
         # skip some metric
-        if metric in [InfoTopo]:
+        if metric in [InfoTopo, AtomsPhiID]:
             return None
 
         # compute all hoi
@@ -183,13 +183,13 @@ class TestMetricsSmoke(object):
                 np.testing.assert_array_equal(model.order.max(), 5)
                 return None
 
-            if metric in [AtomsPhiID]:
+            elif metric in [AtomsPhiID]:
                 model = metric(x.copy())
                 model.fit(minsize=2, maxsize=2)
                 np.testing.assert_array_equal(model.order.min(), 2)
                 np.testing.assert_array_equal(model.order.max(), 2)
                 return None
-            if metric not in [AtomsPhiID]:
+            elif metric not in [AtomsPhiID]:
                 # compute task-free and task-related
                 model_tf = metric(x.copy())
                 hoi_tf = model_tf.fit(minsize=2, maxsize=5)

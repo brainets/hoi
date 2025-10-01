@@ -105,11 +105,11 @@ class TestMetricsSmoke(object):
             return None
 
         # skip infotopo if multiplets or y
-        if metric == InfoTopo:
+        if metric == InfoTopo or metric == AtomsPhiID:
             kw_def = dict()
             if (y is not None) or (multiplets is not None):
                 return None
-        elif metric in [RedundancyphiID, DOtot, AtomsPhiID]:
+        elif metric in [RedundancyphiID, DOtot]:
             kw_def = dict(multiplets=multiplets)
         else:
             kw_def = dict(y=y, multiplets=multiplets)

@@ -75,9 +75,7 @@ for i in range(190):
     x_phiid[i, 1] = np.sum(x_phiid[i : i + 20, 0]) + 0.1 * np.sum(
         x_phiid[i : i + 20, 1]
     )
-    x_phiid[i, 2] = np.sum(x_phiid[i : i + 20, 2]) + 0.1 * np.sum(
-        x_phiid[i : i + 20, 3]
-    )
+    x_phiid[i, 2] = 0.2 * np.sum(x_phiid[i : i + 20, 2])
 
 # redundancy between (0, 2)
 x_phiid[:, 3] = x_phiid[:, 2] + np.random.rand(200) * 0.05

@@ -199,7 +199,7 @@ class TestMetricsSmoke(object):
                 np.testing.assert_array_equal(model.order.min(), 2)
                 np.testing.assert_array_equal(model.order.max(), 2)
                 return None
-            elif metric not in [AtomsPhiID]:
+            else:
                 # compute task-free and task-related
                 model_tf = metric(x.copy())
                 hoi_tf = model_tf.fit(minsize=2, maxsize=5)
@@ -248,7 +248,7 @@ class TestMetricsSmoke(object):
         elif metric in METRICS_ENC:
             model = metric(x.copy(), y=y.copy(), verbose=False)
 
-        if metric == AtomsPhiID:
+        if metric in [AtomsPhiID]:
             model.fit(minsize=2, maxsize=2, samples=samples)
         else:
             model.fit(minsize=3, maxsize=3, samples=samples)
@@ -353,7 +353,6 @@ class TestMetricsFunc(object):
     @pytest.mark.parametrize("xy", [(x_phiid, None)])
     @pytest.mark.parametrize("metric", [RedundancyphiID, AtomsPhiID])
     def test_phiid(self, metric, xy):
-
         x, y = xy
         model = metric(x.copy())
         hoi = model.fit(minsize=2, maxsize=2)

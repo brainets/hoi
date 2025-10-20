@@ -30,21 +30,21 @@ def compute_phiid_atoms(inputs, comb, mi_fcn_r=None, mi_fcn=None):
     _, i_maxj_backward = jax.lax.scan(mi_fcn, (y_c, x_c), ind)
 
     rtr = i_minj.min(0)
-    r01tx = jnp.minimum(i_minj[0, :], i_minj[2, :])
-    r01ty = jnp.minimum(i_minj[1, :], i_minj[3, :])
-    r01txy = i_maxj_backward.min(0)
-    rxyt0 = jnp.minimum(i_minj[0, :], i_minj[1, :])
-    rxyt1 = jnp.minimum(i_minj[2, :], i_minj[3, :])
-    rxyt01 = i_maxj_forward.min(0)
-    i0tx = i_minj[0, :]
-    i0ty = i_minj[1, :]
-    i1tx = i_minj[2, :]
-    i1ty = i_minj[3, :]
-    i01tx = i_maxj_backward[1, :]
-    i01ty = i_maxj_backward[0, :]
-    ixyt0 = i_maxj_forward[1, :]
-    ixyt1 = i_maxj_forward[0, :]
-    i01txy = i_tot
+    rxyta = jnp.minimum(i_minj[0, :], i_minj[2, :])
+    rxytb = jnp.minimum(i_minj[1, :], i_minj[3, :])
+    rxytab = i_maxj_forward.min(0)
+    rabtx = jnp.minimum(i_minj[0, :], i_minj[1, :])
+    rabty = jnp.minimum(i_minj[2, :], i_minj[3, :])
+    rabtxy = i_maxj_backward.min(0)
+    ixta = i_minj[0, :]
+    ixtb = i_minj[1, :]
+    iyta = i_minj[2, :]
+    iytb = i_minj[3, :]
+    ixtab = i_maxj_forward[1, :]
+    iytab = i_maxj_forward[0, :]
+    ixyta = i_maxj_backward[1, :]
+    ixytb = i_maxj_backward[0, :]
+    ixytab = i_tot
 
     knowns_to_atoms_mat = [
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],  # rtr
@@ -73,21 +73,21 @@ def compute_phiid_atoms(inputs, comb, mi_fcn_r=None, mi_fcn=None):
     b = jnp.concatenate(
         (
             rtr[:, jnp.newaxis],
-            r01tx[:, jnp.newaxis],
-            r01ty[:, jnp.newaxis],
-            r01txy[:, jnp.newaxis],
-            rxyt0[:, jnp.newaxis],
-            rxyt1[:, jnp.newaxis],
-            rxyt01[:, jnp.newaxis],
-            i0tx[:, jnp.newaxis],
-            i0ty[:, jnp.newaxis],
-            i1tx[:, jnp.newaxis],
-            i1ty[:, jnp.newaxis],
-            i01tx[:, jnp.newaxis],
-            i01ty[:, jnp.newaxis],
-            ixyt0[:, jnp.newaxis],
-            ixyt1[:, jnp.newaxis],
-            i01txy[:, jnp.newaxis],
+            rxyta[:, jnp.newaxis],
+            rxytb[:, jnp.newaxis],
+            rxytab[:, jnp.newaxis],
+            rabtx[:, jnp.newaxis],
+            rabty[:, jnp.newaxis],
+            rabtxy[:, jnp.newaxis],
+            ixta[:, jnp.newaxis],
+            ixtb[:, jnp.newaxis],
+            iyta[:, jnp.newaxis],
+            iytb[:, jnp.newaxis],
+            ixyta[:, jnp.newaxis],
+            ixytb[:, jnp.newaxis],
+            ixtab[:, jnp.newaxis],
+            iytab[:, jnp.newaxis],
+            ixytab[:, jnp.newaxis],
         ),
         axis=1,
     )
@@ -238,7 +238,7 @@ class AtomsPhiID(HOIEstimator):
             "stu1": 13,
             "stu2": 14,
             "u1ts": 7,
-            "u2ts": 11,
+            "u2ts": 9,
             "sts": 15,
         }
 

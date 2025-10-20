@@ -405,21 +405,21 @@ document.write(`
     <span class="n">_</span><span class="p">,</span> <span class="n">i_maxj_backward</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">lax</span><span class="o">.</span><span class="n">scan</span><span class="p">(</span><span class="n">mi_fcn</span><span class="p">,</span> <span class="p">(</span><span class="n">y_c</span><span class="p">,</span> <span class="n">x_c</span><span class="p">),</span> <span class="n">ind</span><span class="p">)</span>
 
     <span class="n">rtr</span> <span class="o">=</span> <span class="n">i_minj</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">r01tx</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">i_minj</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:])</span>
-    <span class="n">r01ty</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">i_minj</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:])</span>
-    <span class="n">r01txy</span> <span class="o">=</span> <span class="n">i_maxj_backward</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">rxyt0</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">i_minj</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
-    <span class="n">rxyt1</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">i_minj</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:],</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:])</span>
-    <span class="n">rxyt01</span> <span class="o">=</span> <span class="n">i_maxj_forward</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">i0tx</span> <span class="o">=</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="n">i0ty</span> <span class="o">=</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="n">i1tx</span> <span class="o">=</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="n">i1ty</span> <span class="o">=</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="n">i01tx</span> <span class="o">=</span> <span class="n">i_maxj_backward</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="n">i01ty</span> <span class="o">=</span> <span class="n">i_maxj_backward</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="n">ixyt0</span> <span class="o">=</span> <span class="n">i_maxj_forward</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="n">ixyt1</span> <span class="o">=</span> <span class="n">i_maxj_forward</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="n">i01txy</span> <span class="o">=</span> <span class="n">i_tot</span>
+    <span class="n">rxyta</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">i_minj</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">rxytb</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">i_minj</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:],</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">rxytab</span> <span class="o">=</span> <span class="n">i_maxj_forward</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">rabtx</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">i_minj</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:],</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">rabty</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">i_minj</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:],</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:])</span>
+    <span class="n">rabtxy</span> <span class="o">=</span> <span class="n">i_maxj_backward</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ixta</span> <span class="o">=</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">ixtb</span> <span class="o">=</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">iyta</span> <span class="o">=</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">iytb</span> <span class="o">=</span> <span class="n">i_minj</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">ixtab</span> <span class="o">=</span> <span class="n">i_maxj_forward</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">iytab</span> <span class="o">=</span> <span class="n">i_maxj_forward</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">ixyta</span> <span class="o">=</span> <span class="n">i_maxj_backward</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">ixytb</span> <span class="o">=</span> <span class="n">i_maxj_backward</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">ixytab</span> <span class="o">=</span> <span class="n">i_tot</span>
 
     <span class="n">knowns_to_atoms_mat</span> <span class="o">=</span> <span class="p">[</span>
         <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># rtr</span>
@@ -448,21 +448,21 @@ document.write(`
     <span class="n">b</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
         <span class="p">(</span>
             <span class="n">rtr</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">r01tx</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">r01ty</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">r01txy</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">rxyt0</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">rxyt1</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">rxyt01</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">i0tx</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">i0ty</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">i1tx</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">i1ty</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">i01tx</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">i01ty</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">ixyt0</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">ixyt1</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
-            <span class="n">i01txy</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">rxyta</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">rxytb</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">rxytab</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">rabtx</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">rabty</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">rabtxy</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">ixta</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">ixtb</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">iyta</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">iytb</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">ixyta</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">ixytb</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">ixtab</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">iytab</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="n">ixytab</span><span class="p">[:,</span> <span class="n">jnp</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
         <span class="p">),</span>
         <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="p">)</span>
@@ -617,7 +617,7 @@ document.write(`
             <span class="s2">&quot;stu1&quot;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
             <span class="s2">&quot;stu2&quot;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
             <span class="s2">&quot;u1ts&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
-            <span class="s2">&quot;u2ts&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+            <span class="s2">&quot;u2ts&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
             <span class="s2">&quot;sts&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
         <span class="p">}</span>
 

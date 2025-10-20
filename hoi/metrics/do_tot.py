@@ -67,10 +67,10 @@ class DOtot(HOIEstimator):
     et al, 2025 :cite:`robiglio2025synergistic`
     """
 
-    __name__ = "Synergy phiID MMI"
+    __name__ = "Dynamic O-information total"
     _encoding = False
-    _positive = "synergy"
-    _negative = "null"
+    _positive = "redundancy"
+    _negative = "synergy"
     _symmetric = False
 
     def __init__(self, x, multiplets=None, verbose=None):
@@ -133,7 +133,7 @@ class DOtot(HOIEstimator):
         """
         # ________________________________ I/O ________________________________
         # check minsize and maxsize
-        minsize, maxsize = self._check_minmax(max(minsize, 3), maxsize)
+        minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
         # prepare the x for computing mi
         x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)

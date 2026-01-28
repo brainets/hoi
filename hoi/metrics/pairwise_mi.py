@@ -121,7 +121,8 @@ class MI(HOIEstimator):
         mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
         compute_mi = partial(_compute_pairwise_mi, mi_fcn=mi_fcn)
 
-        # get multiplet indices and order - let to a general format, but max possible order = 2
+        # get multiplet indices and order - let to a general format, but max
+        # possible order = 2
 
         h_idx, order = self.get_combinations(minsize, maxsize=maxsize)
 

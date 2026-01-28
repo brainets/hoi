@@ -11,3 +11,4 @@ from .rsi import RSI  # noqa
 from .sinfo import Sinfo  # noqa
 from .syn_mmi import SynergyMMI  # noqa
 from .tc import TC  # noqa
+from .pairwise_mi import MI  # noqa

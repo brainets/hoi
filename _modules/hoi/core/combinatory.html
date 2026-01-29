@@ -375,13 +375,14 @@ document.write(`
   <h1>Source code for hoi.core.combinatory</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">comb</span> <span class="k">as</span> <span class="n">ccomb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">perm</span> <span class="k">as</span> <span class="n">pperm</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">k</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">fnc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">fnc</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">k</span><span class="p">):</span>
         <span class="c1"># convert to list</span>
         <span class="n">c</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="n">target</span>
 
@@ -402,6 +403,7 @@ document.write(`
     <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">fill_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">target</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Get combinations.</span>
 
@@ -430,13 +432,21 @@ document.write(`
 <span class="sd">        combinations of k elements.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># ________________________________ ITERATOR _______________________________</span>
+
+    <span class="k">if</span> <span class="n">directed</span><span class="p">:</span>
+        <span class="n">fnc</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span>
+        <span class="n">fnc_nmult</span> <span class="o">=</span> <span class="n">pperm</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fnc</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">combinations</span>
+        <span class="n">fnc_nmult</span> <span class="o">=</span> <span class="n">ccomb</span>
+
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">maxsize</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
         <span class="n">maxsize</span> <span class="o">=</span> <span class="n">minsize</span>
     <span class="n">target</span> <span class="o">=</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">list</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">maxsize</span> <span class="o">&gt;=</span> <span class="n">minsize</span>
     <span class="n">iterators</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">msize</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">iterators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">msize</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">target</span><span class="p">))</span>
+        <span class="n">iterators</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_combinations</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">msize</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">fnc</span><span class="p">))</span>
     <span class="n">iterators</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="nb">tuple</span><span class="p">(</span><span class="n">iterators</span><span class="p">))</span>
 
     <span class="k">if</span> <span class="n">astype</span> <span class="o">==</span> <span class="s2">&quot;iterator&quot;</span><span class="p">:</span>
@@ -447,7 +457,7 @@ document.write(`
         <span class="n">combs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">iterators</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="c1"># get the number of combinations</span>
-        <span class="n">n_mults</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">ccomb</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
+        <span class="n">n_mults</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">fnc_nmult</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">minsize</span><span class="p">,</span> <span class="n">maxsize</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)])</span>
 
         <span class="c1"># prepare output</span>
         <span class="n">combs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span>

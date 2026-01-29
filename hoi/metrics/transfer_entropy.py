@@ -7,27 +7,29 @@ import jax.numpy as jnp
 
 from hoi.metrics.base_hoi import HOIEstimator
 from hoi.core.entropies import prepare_for_it
-from hoi.core.mi import get_mi
+from hoi.core.mi import get_cond_mi
 from hoi.utils.progressbar import get_pbar
 
 
 @partial(jax.jit, static_argnums=(2,))
-def _compute_pairwise_mi(variables, comb, mi_fcn=None):
-    x_c = variables[:, comb[0], np.newaxis, :]
-    y_c = variables[:, comb[1], np.newaxis, :]
+def _compute_pairwise_te(variables, comb, cmi_fcn=None):
+    x_past, y_future, y_past = variables
 
-    return variables, mi_fcn(x_c, y_c)
+    x_c = x_past[:, comb[0], jnp.newaxis, :]
+    y_c = y_future[:, comb[1], jnp.newaxis, :]
+    t_c = y_past[:, comb[1], jnp.newaxis, :]
+
+    return variables, cmi_fcn(x_c, y_c, t_c)
 
 
-class MI(HOIEstimator):
-    r"""Pairwise mutual information in a dynamical system.
+class TransferEntropy(HOIEstimator):
+    r"""Pairwise transfer entropy in a dynamical system.
 
-    For each pair of variables, compute the mutual information between past
-    and future (phiID-style):
+    For each pair of variables, compute the transfer entropy:
 
     .. math::
 
-        I((X_i, X_j)_{t-\tau}; (X_i, X_j)_t)
+        T_{X_i \rightarrow X_j} = I(X_i(t-\tau); X_j(t) | X_j(t-\tau))
 
     Parameters
     ----------
@@ -39,12 +41,12 @@ class MI(HOIEstimator):
         example [(0, 1), (2, 7)]. By default, all pairs are computed.
     """
 
-    __name__ = "MI (phiID-style)"
+    __name__ = "Transfer Entropy"
     _encoding = False
     _positive = "info"
     _negative = "null"
-    _symmetric = True
-    _directed = False
+    _symmetric = False
+    _directed = True
 
     def __init__(self, x, multiplets=None, verbose=None):
         HOIEstimator.__init__(
@@ -62,7 +64,7 @@ class MI(HOIEstimator):
         matrix=False,
         **kwargs,
     ):
-        r"""Compute pairwise mutual information.
+        r"""Compute pairwise transfer entropy.
 
         Parameters
         ----------
@@ -82,14 +84,14 @@ class MI(HOIEstimator):
                 * 'kernel': kernel-based estimator of entropy
                   see :func:`hoi.core.entropy_kernel`
                 * A custom entropy estimator can be provided. It should be a
-                  callable function written with Jax taking two 2D inputs
+                  callable function written with Jax taking three 2D inputs
                   of shape (n_features, n_samples) and returning a float.
 
         samples : np.ndarray
             List of samples to use to compute HOI. If None, all samples are
             going to be used.
         tau : int | 1
-            The length of the delay to use to compute the pairwise MI.
+            The length of the delay to use to compute the transfer entropy.
             Default 1
         direction_axis : {0,2}
             The axis on which to consider the evolution,
@@ -98,33 +100,32 @@ class MI(HOIEstimator):
         matrix : bool | False
             If True, return a (n_features, n_features, n_variables) matrix.
         kwargs : dict | {}
-            Additional arguments are sent to each MI function
+            Additional arguments are sent to each CMI function
 
         Returns
         -------
         hoi : array_like
-            The NumPy array containing pairwise mutual information of
+            The NumPy array containing pairwise transfer entropy of
             shape (n_pairs, n_variables), or the full matrix if matrix=True.
         """
         if maxsize is None:
             maxsize = 2
         if maxsize != 2:
-            raise ValueError("Pairwise MI is defined for order=2 only.")
+            raise ValueError("Transfer entropy is defined for order=2 only.")
 
         # ________________________________ I/O ________________________________
         # check minsize and maxsize
         minsize, maxsize = self._check_minmax(max(minsize, 2), maxsize)
 
-        # prepare the x for computing mi
+        # prepare the x for computing cmi
         x, kwargs = prepare_for_it(self._x, method, samples=samples, **kwargs)
 
-        # prepare mi functions
-        mi_fcn = jax.vmap(get_mi(method=method, **kwargs))
-        compute_mi = partial(_compute_pairwise_mi, mi_fcn=mi_fcn)
+        # prepare cmi functions
+        cmi_fcn = jax.vmap(get_cond_mi(method=method, **kwargs))
+        compute_te = partial(_compute_pairwise_te, cmi_fcn=cmi_fcn)
 
         # get multiplet indices and order - let to a general format, but max
         # possible order = 2
-
         h_idx, order = self.get_combinations(minsize, maxsize=maxsize)
 
         # get progress bar
@@ -134,18 +135,36 @@ class MI(HOIEstimator):
 
         # _______________________________ HOI _________________________________
         offset = 0
-        hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
+        if direction_axis == 2:
+            hoi = jnp.zeros(
+                (len(order), self.n_variables - tau), dtype=jnp.float32
+            )
+        else:
+            hoi = jnp.zeros((len(order), self.n_variables), dtype=jnp.float32)
 
         for msize in pbar:
             pbar.set_description(
-                desc="Pairwise MI order %s" % msize, refresh=False
+                desc="Transfer Entropy order %s" % msize, refresh=False
             )
 
             # combinations of features
             _h_idx = h_idx[order == msize, 0:msize]
 
-            # compute pairwise mi
-            _, _hoi = jax.lax.scan(compute_mi, x, _h_idx)
+            if direction_axis == 0:
+                x_past = x[:, :, :-tau]
+                y_future = x[:, :, tau:]
+                y_past = x[:, :, :-tau]
+            elif direction_axis == 2:
+                x_past = x[:-tau, :, :]
+                y_future = x[tau:, :, :]
+                y_past = x[:-tau, :, :]
+            else:
+                raise ValueError("axis can be eaither equal 0 or 2.")
+
+            # compute pairwise te
+            _, _hoi = jax.lax.scan(
+                compute_te, (x_past, y_future, y_past), _h_idx
+            )
 
             # fill variables
             n_combs = _h_idx.shape[0]
@@ -159,10 +178,9 @@ class MI(HOIEstimator):
             hoi_np = np.asarray(hoi)
             mat = np.zeros((n_feat, n_feat, hoi_np.shape[1]))
 
-            for n_m, mult in enumerate(self.multiplets):
+            for n_m, mult in enumerate(_h_idx):
                 i, j = mult[0], mult[1]
                 mat[i, j, :] = hoi_np[n_m, :]
-                mat[j, i, :] = hoi_np[n_m, :]
 
             return mat
 

@@ -42,6 +42,7 @@ class GradientOinfo(HOIEstimator):
     _positive = "redundancy"
     _negative = "synergy"
     _symmetric = True
+    _directed = False
 
     def __init__(self, x, y, multiplets=None, base_model=Oinfo, verbose=None):
         kw_oinfo = dict(multiplets=multiplets, verbose=verbose)

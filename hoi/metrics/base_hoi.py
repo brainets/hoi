@@ -283,6 +283,7 @@ class HOIEstimator(object):
                 astype=astype,
                 order=False,
                 fill_value=-1,
+                directed=self._directed,
             )
 
         return self._multiplets, self.order

@@ -31,6 +31,7 @@ class RedundancyMMI(HOIEstimator):
     _positive = "redundancy"
     _negative = "null"
     _symmetric = False
+    _directed = False
 
     def __init__(self, x, y, multiplets=None, verbose=None):
         HOIEstimator.__init__(

@@ -67,6 +67,7 @@ class Sinfo(HOIEstimator):
     _positive = "null"
     _negative = "null"
     _symmetric = True
+    _directed = False
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
         HOIEstimator.__init__(

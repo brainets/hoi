@@ -1,12 +1,13 @@
 import itertools
 from math import comb as ccomb
+from math import perm as pperm
 
 import jax.numpy as jnp
 import numpy as np
 
 
-def _combinations(n, k, order, target):
-    for c in itertools.combinations(range(n), k):
+def _combinations(n, k, order, target, fnc=None):
+    for c in fnc(range(n), k):
         # convert to list
         c = list(c) + target
 
@@ -25,6 +26,7 @@ def combinations(
     order=False,
     fill_value=-1,
     target=None,
+    directed=False,
 ):
     """Get combinations.
 
@@ -53,13 +55,21 @@ def combinations(
         combinations of k elements.
     """
     # ________________________________ ITERATOR _______________________________
+
+    if directed:
+        fnc = itertools.permutations
+        fnc_nmult = pperm
+    else:
+        fnc = itertools.combinations
+        fnc_nmult = ccomb
+
     if not isinstance(maxsize, int):
         maxsize = minsize
     target = [] if target is None else list(target)
     assert maxsize >= minsize
     iterators = []
     for msize in range(minsize, maxsize + 1):
-        iterators.append(_combinations(n, msize, order, target))
+        iterators.append(_combinations(n, msize, order, target, fnc))
     iterators = itertools.chain(*tuple(iterators))
 
     if astype == "iterator":
@@ -70,7 +80,7 @@ def combinations(
         combs = np.asarray([c for c in iterators]).astype(int)
     else:
         # get the number of combinations
-        n_mults = sum([ccomb(n, c) for c in range(minsize, maxsize + 1)])
+        n_mults = sum([fnc_nmult(n, c) for c in range(minsize, maxsize + 1)])
 
         # prepare output
         combs = np.full(

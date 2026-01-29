@@ -72,6 +72,7 @@ class DOtot(HOIEstimator):
     _positive = "redundancy"
     _negative = "synergy"
     _symmetric = False
+    _directed = False
 
     def __init__(self, x, multiplets=None, verbose=None):
         HOIEstimator.__init__(

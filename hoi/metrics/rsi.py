@@ -62,6 +62,7 @@ class RSI(HOIEstimator):
     _positive = "synergy"
     _negative = "redundancy"
     _symmetric = True
+    _directed = False
 
     def __init__(self, x, y, multiplets=None, verbose=None):
         HOIEstimator.__init__(

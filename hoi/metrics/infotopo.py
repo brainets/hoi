@@ -75,6 +75,7 @@ class InfoTopo(HOIEstimator):
     _positive = "redundancy"
     _negative = "synergy"
     _symmetric = True
+    _directed = False
 
     def __init__(self, x, y=None, verbose=None):
         # for infotopo, the multiplets are set to None because this metric

@@ -65,6 +65,7 @@ class TC(HOIEstimator):
     _negative = "null"
     _positive = "null"
     _symmetric = True
+    _directed = False
 
     def __init__(self, x, y=None, multiplets=None, verbose=None):
         HOIEstimator.__init__(

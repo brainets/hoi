@@ -1,5 +1,6 @@
 from collections.abc import Iterable
 from math import comb as ccomb
+from math import perm as pperm
 
 import jax.numpy as jnp
 import numpy as np
@@ -37,6 +38,7 @@ class TestCombinatory(object):
     @pytest.mark.parametrize("target", [None, [20], [20, 21]])
     @pytest.mark.parametrize("order", [True, False])
     @pytest.mark.parametrize("astype", ["numpy", "jax", "iterator"])
+    @pytest.mark.parametrize("directed", [False, True])
     @pytest.mark.parametrize(
         "max", [_ for _ in range(2)]
     )  # addition to minimum size
@@ -44,7 +46,9 @@ class TestCombinatory(object):
         "min", [np.random.randint(1, 10) for _ in range(2)]
     )
     @pytest.mark.parametrize("n", [np.random.randint(5, 10) for _ in range(2)])
-    def test_combinations(self, n, min, max, astype, order, target, fill):
+    def test_combinations(
+        self, n, min, max, astype, order, target, fill, directed
+    ):
         # get combinations
         combs = combinations(
             n,
@@ -54,12 +58,16 @@ class TestCombinatory(object):
             order=order,
             target=target,
             fill_value=fill,
+            directed=directed,
         )
 
         # check the number of multiplets
         n_mults = 0
         for c in range(min, min + max + 1):
-            n_mults += ccomb(n, c)
+            if directed:
+                n_mults += pperm(n, c)
+            else:
+                n_mults += ccomb(n, c)
         if astype in ["jax", "numpy"]:
             assert combs.shape[0] == n_mults
         elif astype == "iterator":

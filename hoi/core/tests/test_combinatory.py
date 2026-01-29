@@ -1,4 +1,5 @@
 from collections.abc import Iterable
+import itertools
 from math import comb as ccomb
 from math import perm as pperm
 
@@ -17,12 +18,17 @@ class TestCombinatory(object):
     @pytest.mark.parametrize(
         "k", [np.random.randint(5, 10) for _ in range(10)]
     )
+    @pytest.mark.parametrize("directed", [False, True])
     @pytest.mark.parametrize("order", [True, False])
-    def test_single_combinations(self, n, k, order, target):
-        c = list(_combinations(n, k, order, target))
+    def test_single_combinations(self, n, k, order, target, directed):
+        fnc = itertools.permutations if directed else itertools.combinations
+        c = list(_combinations(n, k, order, target, fnc=fnc))
 
         # test that the number of combinations is correct
-        assert len(c) == ccomb(n, k)
+        if directed:
+            assert len(c) == pperm(n, k)
+        else:
+            assert len(c) == ccomb(n, k)
 
         # check the order
         if order:

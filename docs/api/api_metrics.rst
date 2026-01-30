@@ -22,6 +22,7 @@ Network behavior
    TC
    DTC
    Sinfo
+   MI
    RedundancyphiID
    AtomsPhiID
    dOtot
@@ -37,3 +38,4 @@ Network encoding
    RedundancyMMI
    SynergyMMI
    InfoTot
+   TransferEntropy

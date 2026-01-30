@@ -11,7 +11,7 @@ Dependencies
 
 HOI requires :
 
-- Python (>= 3.8)
+- Python (>= 3.9)
 - numpy(>=1.22)
 - scipy (>=1.9)
 - jax

@@ -229,6 +229,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.TC.html">hoi.metrics.TC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.MI.html">hoi.metrics.MI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.AtomsPhiID.html">hoi.metrics.AtomsPhiID</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
@@ -236,6 +237,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.TransferEntropy.html">hoi.metrics.TransferEntropy</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_sim.html"><code class="docutils literal notranslate"><span class="pre">hoi.simulation</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -540,8 +542,8 @@ higher performance.</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time taken by jitted function: </span><span class="si">{</span><span class="n">t2</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Time taken by pure NumPy function: 0.5705937140000401 seconds
-Time taken by jitted function: 0.36202565299998923 seconds
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Time taken by pure NumPy function: 0.571396682999989 seconds
+Time taken by jitted function: 0.3584414520000223 seconds
 </pre></div>
 </div>
 <p>if the function takes optional argument, you can use the <cite>static_argnums</cite>
@@ -641,7 +643,7 @@ official documentation</p></li>
 nice introduction to <cite>jax.lax.scan</cite></p></li>
 </ul>
 </div></blockquote>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.547 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.602 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-miscellaneous-tuto-jax-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/c9df0fdd61c061c32221dcc575a693a9/tuto_jax.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tuto_jax.ipynb</span></code></a></p>

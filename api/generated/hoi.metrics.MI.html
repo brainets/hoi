@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>hoi.metrics.AtomsPhiID &#8212; HOI 0.0.6 documentation</title>
+    <title>hoi.metrics.MI &#8212; HOI 0.0.6 documentation</title>
   
   
   
@@ -49,12 +49,12 @@
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.metrics.AtomsPhiID';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/generated/hoi.metrics.MI';</script>
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="hoi.metrics.GradientOinfo" href="hoi.metrics.GradientOinfo.html" />
-    <link rel="prev" title="hoi.metrics.RedundancyphiID" href="hoi.metrics.RedundancyphiID.html" />
+    <link rel="next" title="hoi.metrics.RedundancyphiID" href="hoi.metrics.RedundancyphiID.html" />
+    <link rel="prev" title="hoi.metrics.Sinfo" href="hoi.metrics.Sinfo.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -230,9 +230,9 @@
 <li class="toctree-l3"><a class="reference internal" href="hoi.metrics.TC.html">hoi.metrics.TC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
-<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.MI.html">hoi.metrics.MI</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">hoi.metrics.MI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">hoi.metrics.AtomsPhiID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hoi.metrics.AtomsPhiID.html">hoi.metrics.AtomsPhiID</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.metrics.RSI.html">hoi.metrics.RSI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
@@ -412,7 +412,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>hoi.metrics.AtomsPhiID</h1>
+    <h1>hoi.metrics.MI</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -422,18 +422,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.__iter__"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.__iter__()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.compute_entropies"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.compute_entropies()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.entropies"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.entropies</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.fit"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.fit()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.get_combinations"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.get_combinations()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.multiplets"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.multiplets</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.order"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.order</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.undersampling"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.undersampling</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI"><code class="docutils literal notranslate"><span class="pre">MI</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.__iter__"><code class="docutils literal notranslate"><span class="pre">MI.__iter__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.compute_entropies"><code class="docutils literal notranslate"><span class="pre">MI.compute_entropies()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.entropies"><code class="docutils literal notranslate"><span class="pre">MI.entropies</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.fit"><code class="docutils literal notranslate"><span class="pre">MI.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.get_combinations"><code class="docutils literal notranslate"><span class="pre">MI.get_combinations()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.multiplets"><code class="docutils literal notranslate"><span class="pre">MI.multiplets</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.order"><code class="docutils literal notranslate"><span class="pre">MI.order</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.undersampling"><code class="docutils literal notranslate"><span class="pre">MI.undersampling</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-using-hoi-metrics-atomsphiid">Examples using <code class="docutils literal notranslate"><span class="pre">hoi.metrics.AtomsPhiID</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -445,43 +444,36 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="hoi-metrics-atomsphiid">
-<h1>hoi.metrics.AtomsPhiID<a class="headerlink" href="#hoi-metrics-atomsphiid" title="Link to this heading">#</a></h1>
+  <section id="hoi-metrics-mi">
+<h1>hoi.metrics.MI<a class="headerlink" href="#hoi-metrics-mi" title="Link to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="hoi.metrics.AtomsPhiID">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">AtomsPhiID</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/phiid_atoms.html#AtomsPhiID"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.AtomsPhiID" title="Link to this definition">#</a></dt>
-<dd><p>Integrated Information Decomposition (phiID).</p>
-<p>For each couple of variable the phiID is performed,
-using the Minimum Mutual Information (MMI) approach to estimate
-the redundancy to redundancy atoms in this way:</p>
+<dt class="sig sig-object py" id="hoi.metrics.MI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">hoi.metrics.</span></span><span class="sig-name descname"><span class="pre">MI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multiplets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/pairwise_mi.html#MI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.MI" title="Link to this definition">#</a></dt>
+<dd><p>Pairwise mutual information in a dynamical system.</p>
+<p>For each pair of variables, compute the mutual information between past
+and future (phiID-style):</p>
 <div class="math notranslate nohighlight">
-\[Red(X,Y) =   min \{ I(X_{t- \tau};X_t), I(X_{t-\tau};Y_t),
-                    I(Y_{t-\tau}; X_t), I(Y_{t-\tau};Y_t) \}\]</div>
-<p>Important note: this function only works for multiplets of size 2.
-To compute the redundancy it is better to use the dedicated function
-<a class="reference internal" href="hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID"><code class="xref py py-class docutils literal notranslate"><span class="pre">hoi.metrics.RedundancyphiID</span></code></a>.</p>
+\[I((X_i, X_j)_{t-\tau}; (X_i, X_j)_t)\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>x</strong><span class="classifier">array_like</span></dt><dd><p>Standard NumPy arrays of shape (n_samples, n_features) or
 (n_samples, n_features, n_variables)</p>
 </dd>
-<dt><strong>multiplets</strong><span class="classifier">list | None</span></dt><dd><p>List of multiplets to compute. Should be a list of multiplets, for
-example [(0, 1), (2, 7)]. By default, all multiplets are
-going to be computed. Note that for this functions only multiplets of
-size 2 are allowed.</p>
+<dt><strong>multiplets</strong><span class="classifier">list | None</span></dt><dd><p>List of multiplets to compute. Should be a list of pairs, for
+example [(0, 1), (2, 7)]. By default, all pairs are computed.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Attributes<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><a class="reference internal" href="#hoi.metrics.AtomsPhiID.entropies" title="hoi.metrics.AtomsPhiID.entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropies</span></code></a></dt><dd><p>Entropies of shape (n_mult,)</p>
+<dt><a class="reference internal" href="#hoi.metrics.MI.entropies" title="hoi.metrics.MI.entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">entropies</span></code></a></dt><dd><p>Entropies of shape (n_mult,)</p>
 </dd>
-<dt><a class="reference internal" href="#hoi.metrics.AtomsPhiID.multiplets" title="hoi.metrics.AtomsPhiID.multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiplets</span></code></a></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
+<dt><a class="reference internal" href="#hoi.metrics.MI.multiplets" title="hoi.metrics.MI.multiplets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiplets</span></code></a></dt><dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
 </dd>
-<dt><a class="reference internal" href="#hoi.metrics.AtomsPhiID.order" title="hoi.metrics.AtomsPhiID.order"><code class="xref py py-obj docutils literal notranslate"><span class="pre">order</span></code></a></dt><dd><p>Order of each multiplet of shape (n_mult,).</p>
+<dt><a class="reference internal" href="#hoi.metrics.MI.order" title="hoi.metrics.MI.order"><code class="xref py py-obj docutils literal notranslate"><span class="pre">order</span></code></a></dt><dd><p>Order of each multiplet of shape (n_mult,).</p>
 </dd>
-<dt><a class="reference internal" href="#hoi.metrics.AtomsPhiID.undersampling" title="hoi.metrics.AtomsPhiID.undersampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undersampling</span></code></a></dt><dd><p>Under-sampling threshold.</p>
+<dt><a class="reference internal" href="#hoi.metrics.MI.undersampling" title="hoi.metrics.MI.undersampling"><code class="xref py py-obj docutils literal notranslate"><span class="pre">undersampling</span></code></a></dt><dd><p>Under-sampling threshold.</p>
 </dd>
 </dl>
 </dd>
@@ -489,29 +481,27 @@ size 2 are allowed.</p>
 <p class="rubric">Methods</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.AtomsPhiID.compute_entropies" title="hoi.metrics.AtomsPhiID.compute_entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code></a>([method, minsize, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.MI.compute_entropies" title="hoi.metrics.MI.compute_entropies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_entropies</span></code></a>([method, minsize, ...])</p></td>
 <td><p>Compute entropies for all multiplets.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.AtomsPhiID.fit" title="hoi.metrics.AtomsPhiID.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, tau, direction_axis, maxsize, ...])</p></td>
-<td><p>Integrated Information Decomposition (phiID).</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#hoi.metrics.MI.fit" title="hoi.metrics.MI.fit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code></a>([minsize, tau, direction_axis, maxsize, ...])</p></td>
+<td><p>Compute pairwise mutual information.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.AtomsPhiID.get_combinations" title="hoi.metrics.AtomsPhiID.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(minsize[, maxsize, astype])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#hoi.metrics.MI.get_combinations" title="hoi.metrics.MI.get_combinations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_combinations</span></code></a>(minsize[, maxsize, astype])</p></td>
 <td><p>Get combinations of features.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<p class="rubric">References</p>
-<p>Mediano et al, 2021 <span id="id1">[<a class="reference internal" href="../../theory.html#id35" title="Pedro AM Mediano, Fernando E Rosas, Andrea I Luppi, Robin L Carhart-Harris, Daniel Bor, Anil K Seth, and Adam B Barrett. Towards an extended taxonomy of information dynamics via integrated information decomposition. arXiv preprint arXiv:2109.13186, 2021.">18</a>]</span></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.AtomsPhiID.__iter__">
-<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.AtomsPhiID.__iter__" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.MI.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.MI.__iter__" title="Link to this definition">#</a></dt>
 <dd><p>Iteration over orders.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.AtomsPhiID.compute_entropies">
-<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.AtomsPhiID.compute_entropies" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.MI.compute_entropies">
+<span class="sig-name descname"><span class="pre">compute_entropies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.MI.compute_entropies" title="Link to this definition">#</a></dt>
 <dd><p>Compute entropies for all multiplets.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -556,20 +546,19 @@ going to be used.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.AtomsPhiID.entropies">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entropies</span></span><a class="headerlink" href="#hoi.metrics.AtomsPhiID.entropies" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.MI.entropies">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">entropies</span></span><a class="headerlink" href="#hoi.metrics.MI.entropies" title="Link to this definition">#</a></dt>
 <dd><p>Entropies of shape (n_mult,)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.AtomsPhiID.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atoms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['sts']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/phiid_atoms.html#AtomsPhiID.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.AtomsPhiID.fit" title="Link to this definition">#</a></dt>
-<dd><p>Integrated Information Decomposition (phiID).</p>
+<dt class="sig sig-object py" id="hoi.metrics.MI.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/hoi/metrics/pairwise_mi.html#MI.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#hoi.metrics.MI.fit" title="Link to this definition">#</a></dt>
+<dd><p>Compute pairwise mutual information.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl>
-<dt><strong>minsize, maxsize</strong><span class="classifier">int | 2, None</span></dt><dd><p>Minimum and maximum size of the multiplets. Note that for this
-functions only multiplets of size 2 are allowed.</p>
+<dt><strong>minsize, maxsize</strong><span class="classifier">int | 2, 2</span></dt><dd><p>Minimum and maximum size of the multiplets. Must be 2.</p>
 </dd>
 <dt><strong>method</strong><span class="classifier">{‘gc’, ‘binning’, ‘knn’, ‘kernel’, callable}</span></dt><dd><p>Name of the method to compute entropy. Use either :</p>
 <blockquote>
@@ -585,7 +574,7 @@ use this estimator, the data have be to discretized. See
 <li><p>‘kernel’: kernel-based estimator of entropy
 see <a class="reference internal" href="hoi.core.entropy_kernel.html#hoi.core.entropy_kernel" title="hoi.core.entropy_kernel"><code class="xref py py-func docutils literal notranslate"><span class="pre">hoi.core.entropy_kernel()</span></code></a></p></li>
 <li><p>A custom entropy estimator can be provided. It should be a
-callable function written with Jax taking a single 2D input
+callable function written with Jax taking two 2D inputs
 of shape (n_features, n_samples) and returning a float.</p></li>
 </ul>
 </div></blockquote>
@@ -593,33 +582,14 @@ of shape (n_features, n_samples) and returning a float.</p></li>
 <dt><strong>samples</strong><span class="classifier">np.ndarray</span></dt><dd><p>List of samples to use to compute HOI. If None, all samples are
 going to be used.</p>
 </dd>
-<dt><strong>tau</strong><span class="classifier">int | 1</span></dt><dd><p>The length of the delay to use to compute the redundancy as
-defined in the phiID.
+<dt><strong>tau</strong><span class="classifier">int | 1</span></dt><dd><p>The length of the delay to use to compute the pairwise MI.
 Default 1</p>
 </dd>
 <dt><strong>direction_axis</strong><span class="classifier">{0,2}</span></dt><dd><p>The axis on which to consider the evolution,
 0 for the samples axis, 2 for the variables axis.
 Default 0</p>
 </dd>
-<dt><strong>atoms</strong><span class="classifier">list | [‘sts’]</span></dt><dd><p>List of atoms to compute. Possible atoms are:
-- ‘rtr’
-- ‘rtu1’
-- ‘rtu2’
-- ‘rts’
-- ‘u1tr’
-- ‘u2tr’
-- ‘str’
-- ‘u1tu1’
-- ‘u1tu2’
-- ‘u2tu1’
-- ‘u2tu2’
-- ‘stu1’
-- ‘stu2’
-- ‘u1ts’
-- ‘u2ts’
-- ‘sts’
-The output of this function is going to be the sum of the selected
-atoms.</p>
+<dt><strong>matrix</strong><span class="classifier">bool | False</span></dt><dd><p>If True, return a (n_features, n_features, n_variables) matrix.</p>
 </dd>
 <dt><strong>kwargs</strong><span class="classifier">dict | {}</span></dt><dd><p>Additional arguments are sent to each MI function</p>
 </dd>
@@ -627,8 +597,8 @@ atoms.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>hoi</strong><span class="classifier">array_like</span></dt><dd><p>The NumPy array containing values of higher-order interactions of
-shape (n_multiplets, n_variables)</p>
+<dt><strong>hoi</strong><span class="classifier">array_like</span></dt><dd><p>The NumPy array containing pairwise mutual information of
+shape (n_pairs, n_variables), or the full matrix if matrix=True.</p>
 </dd>
 </dl>
 </dd>
@@ -636,8 +606,8 @@ shape (n_multiplets, n_variables)</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="hoi.metrics.AtomsPhiID.get_combinations">
-<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">astype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jax'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.AtomsPhiID.get_combinations" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.MI.get_combinations">
+<span class="sig-name descname"><span class="pre">get_combinations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">astype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'jax'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#hoi.metrics.MI.get_combinations" title="Link to this definition">#</a></dt>
 <dd><p>Get combinations of features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -661,33 +631,27 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.AtomsPhiID.multiplets">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">multiplets</span></span><a class="headerlink" href="#hoi.metrics.AtomsPhiID.multiplets" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.MI.multiplets">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">multiplets</span></span><a class="headerlink" href="#hoi.metrics.MI.multiplets" title="Link to this definition">#</a></dt>
 <dd><p>Indices of the multiplets of shape (n_mult, maxsize).</p>
 <p>By convention, we used -1 to indicate that a feature has been ignored.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.AtomsPhiID.order">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order</span></span><a class="headerlink" href="#hoi.metrics.AtomsPhiID.order" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.MI.order">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">order</span></span><a class="headerlink" href="#hoi.metrics.MI.order" title="Link to this definition">#</a></dt>
 <dd><p>Order of each multiplet of shape (n_mult,).</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="hoi.metrics.AtomsPhiID.undersampling">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">undersampling</span></span><a class="headerlink" href="#hoi.metrics.AtomsPhiID.undersampling" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="hoi.metrics.MI.undersampling">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">undersampling</span></span><a class="headerlink" href="#hoi.metrics.MI.undersampling" title="Link to this definition">#</a></dt>
 <dd><p>Under-sampling threshold.</p>
 </dd></dl>
 
 </dd></dl>
 
-<section id="examples-using-hoi-metrics-atomsphiid">
-<span id="sphx-glr-backreferences-hoi-metrics-atomsphiid"></span><h2>Examples using <code class="docutils literal notranslate"><span class="pre">hoi.metrics.AtomsPhiID</span></code><a class="headerlink" href="#examples-using-hoi-metrics-atomsphiid" title="Link to this heading">#</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example illustrates how to use and interpret synergy and redundancy as defined in the Integrated Information Decomposition framework"><img alt="" src="../../_images/sphx_glr_plot_syn_phiID_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/metrics/plot_syn_phiID.html"><span class="doc">Integrated Information Decomposition</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Integrated Information Decomposition</div>
-</div></div></section>
-</section>
+<span class="target" id="sphx-glr-backreferences-hoi-metrics-mi"></span></section>
 
 
                 </article>
@@ -701,20 +665,20 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="hoi.metrics.RedundancyphiID.html"
+       href="hoi.metrics.Sinfo.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">hoi.metrics.RedundancyphiID</p>
+        <p class="prev-next-title">hoi.metrics.Sinfo</p>
       </div>
     </a>
     <a class="right-next"
-       href="hoi.metrics.GradientOinfo.html"
+       href="hoi.metrics.RedundancyphiID.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">hoi.metrics.GradientOinfo</p>
+        <p class="prev-next-title">hoi.metrics.RedundancyphiID</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -734,18 +698,17 @@ array [default], ‘numpy’ for NumPy array or ‘iterator’.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.__iter__"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.__iter__()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.compute_entropies"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.compute_entropies()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.entropies"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.entropies</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.fit"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.fit()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.get_combinations"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.get_combinations()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.multiplets"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.multiplets</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.order"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.order</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.AtomsPhiID.undersampling"><code class="docutils literal notranslate"><span class="pre">AtomsPhiID.undersampling</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI"><code class="docutils literal notranslate"><span class="pre">MI</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.__iter__"><code class="docutils literal notranslate"><span class="pre">MI.__iter__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.compute_entropies"><code class="docutils literal notranslate"><span class="pre">MI.compute_entropies()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.entropies"><code class="docutils literal notranslate"><span class="pre">MI.entropies</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.fit"><code class="docutils literal notranslate"><span class="pre">MI.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.get_combinations"><code class="docutils literal notranslate"><span class="pre">MI.get_combinations()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.multiplets"><code class="docutils literal notranslate"><span class="pre">MI.multiplets</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.order"><code class="docutils literal notranslate"><span class="pre">MI.order</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoi.metrics.MI.undersampling"><code class="docutils literal notranslate"><span class="pre">MI.undersampling</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#examples-using-hoi-metrics-atomsphiid">Examples using <code class="docutils literal notranslate"><span class="pre">hoi.metrics.AtomsPhiID</span></code></a></li>
 </ul>
   </nav></div>
 

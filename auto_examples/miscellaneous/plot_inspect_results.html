@@ -229,6 +229,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.TC.html">hoi.metrics.TC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.MI.html">hoi.metrics.MI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.AtomsPhiID.html">hoi.metrics.AtomsPhiID</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
@@ -236,6 +237,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/generated/hoi.metrics.TransferEntropy.html">hoi.metrics.TransferEntropy</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../api/api_sim.html"><code class="docutils literal notranslate"><span class="pre">hoi.simulation</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -484,18 +486,18 @@ but you can use any implemented metric.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|          |  0/6 [00:00&lt;?,       ?it/s]
- 17%|█▋        | Entropy H(1):  1/6 [00:00&lt;00:01,    4.29it/s]
- 33%|███▎      | Entropy H(2):  2/6 [00:00&lt;00:00,    4.17it/s]
- 50%|█████     | Entropy H(3):  3/6 [00:00&lt;00:00,    4.72it/s]
- 67%|██████▋   | Entropy H(4):  4/6 [00:00&lt;00:00,    5.42it/s]
- 83%|████████▎ | Entropy H(5):  5/6 [00:00&lt;00:00,    5.87it/s]
-100%|██████████| Entropy H(6):  6/6 [00:00&lt;00:00,    6.21it/s]
+ 17%|█▋        | Entropy H(1):  1/6 [00:00&lt;00:01,    4.00it/s]
+ 33%|███▎      | Entropy H(2):  2/6 [00:00&lt;00:01,    3.91it/s]
+ 50%|█████     | Entropy H(3):  3/6 [00:00&lt;00:00,    4.44it/s]
+ 67%|██████▋   | Entropy H(4):  4/6 [00:00&lt;00:00,    5.11it/s]
+ 83%|████████▎ | Entropy H(5):  5/6 [00:00&lt;00:00,    5.57it/s]
+100%|██████████| Entropy H(6):  6/6 [00:01&lt;00:00,    5.89it/s]
 
 
 Mutual information:   0%|          | 0/42 [00:00&lt;?, ?it/s]
 
 
-Mutual information: 100%|██████████| 42/42 [00:00&lt;00:00, 11943.10it/s]
+Mutual information: 100%|██████████| 42/42 [00:00&lt;00:00, 11871.47it/s]
 </pre></div>
 </div>
 </section>
@@ -576,7 +578,7 @@ multiplets with the 2 highest redundancy and the two highest synergy.</p>
 <span class="c1"># sphinx_gallery_thumbnail_number = 2</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_inspect_results_002.png" srcset="../../_images/sphx_glr_plot_inspect_results_002.png" alt="plot inspect results" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.913 seconds)</p>
+<img src="../../_images/sphx_glr_plot_inspect_results_002.png" srcset="../../_images/sphx_glr_plot_inspect_results_002.png" alt="plot inspect results" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.930 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-miscellaneous-plot-inspect-results-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/ad4b98878b000f24685a5165bd000d07/plot_inspect_results.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_inspect_results.ipynb</span></code></a></p>

@@ -230,6 +230,7 @@
 <li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.TC.html">hoi.metrics.TC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.DTC.html">hoi.metrics.DTC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.Sinfo.html">hoi.metrics.Sinfo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.MI.html">hoi.metrics.MI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.RedundancyphiID.html">hoi.metrics.RedundancyphiID</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.AtomsPhiID.html">hoi.metrics.AtomsPhiID</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.GradientOinfo.html">hoi.metrics.GradientOinfo</a></li>
@@ -237,6 +238,7 @@
 <li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.RedundancyMMI.html">hoi.metrics.RedundancyMMI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.SynergyMMI.html">hoi.metrics.SynergyMMI</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.InfoTot.html">hoi.metrics.InfoTot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/hoi.metrics.TransferEntropy.html">hoi.metrics.TransferEntropy</a></li>
 </ul>
 </details></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="api_sim.html"><code class="docutils literal notranslate"><span class="pre">hoi.simulation</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -455,10 +457,13 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.Sinfo.html#hoi.metrics.Sinfo" title="hoi.metrics.Sinfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Sinfo</span></code></a>(x[, y, multiplets, verbose])</p></td>
 <td><p>S-information.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RedundancyphiID</span></code></a>(x[, multiplets, verbose])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.MI.html#hoi.metrics.MI" title="hoi.metrics.MI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MI</span></code></a>(x[, multiplets, verbose])</p></td>
+<td><p>Pairwise mutual information in a dynamical system.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.RedundancyphiID.html#hoi.metrics.RedundancyphiID" title="hoi.metrics.RedundancyphiID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RedundancyphiID</span></code></a>(x[, multiplets, verbose])</p></td>
 <td><p>Redundancy (phiID).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.AtomsPhiID.html#hoi.metrics.AtomsPhiID" title="hoi.metrics.AtomsPhiID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AtomsPhiID</span></code></a>(x[, multiplets, verbose])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.AtomsPhiID.html#hoi.metrics.AtomsPhiID" title="hoi.metrics.AtomsPhiID"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AtomsPhiID</span></code></a>(x[, multiplets, verbose])</p></td>
 <td><p>Integrated Information Decomposition (phiID).</p></td>
 </tr>
 </tbody>
@@ -483,6 +488,9 @@ document.write(`
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/hoi.metrics.InfoTot.html#hoi.metrics.InfoTot" title="hoi.metrics.InfoTot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InfoTot</span></code></a>(x, y[, multiplets, verbose])</p></td>
 <td><p>Total information.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/hoi.metrics.TransferEntropy.html#hoi.metrics.TransferEntropy" title="hoi.metrics.TransferEntropy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TransferEntropy</span></code></a>(x[, multiplets, verbose])</p></td>
+<td><p>Pairwise transfer entropy in a dynamical system.</p></td>
 </tr>
 </tbody>
 </table>

@@ -102,14 +102,14 @@ def prepare_for_it(data, method, samples=None, **kwargs):
 
     # -------------------------------------------------------------------------
     # type checking
-    if (method in ["binning"]) and (data.dtype != int):
+    if (method in ["binning"]) and not np.issubdtype(data.dtype, np.integer):
         raise ValueError(
             "data dtype should be integer. Check that you discretized your"
             " data. If so, use `data.astype(int)`"
         )
-    elif (method in ["kernel", "gc", "knn", "histogram"]) and (
-        data.dtype != float
-    ):
+    elif (
+        method in ["kernel", "gc", "knn", "histogram"]
+    ) and not np.issubdtype(data.dtype, np.floating):
         raise ValueError(f"data dtype should be float, not {data.dtype}")
 
     # -------------------------------------------------------------------------
